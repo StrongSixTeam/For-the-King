@@ -19,24 +19,31 @@ public class HexMapCreator : MonoBehaviour
     private int width = 80;
     private int height = 80;
 
-    //materials (숲=0, 평원=1, 바다=2)
+    public int mapSize;
+
+    //materials (바다=0, 숲=1, 평원=2)
     [SerializeField] Material[] materials= new Material[3];
 
 
     [SerializeField] HexMember hexMember; //hexOverlayGeo01_0
     private HexMember[] hexMembers;
 
-    Canvas gridCanvas;
-    [SerializeField] Image gridImage;
-    Image[] gridImages;
+
+    //이동횟수를 표시할 캔버스
+    private Canvas gridCanvas;
+    [SerializeField] private Image gridImage; //나중에 이미지 교체할거임
+    private Image[] gridImages; //인덱스 정보로 관리할예정 (hexMembers[0] =짝꿍= gridImages[0])
+
 
     private void Start()
     {
+        mapSize = height * width;
+
         gridCanvas = GetComponentInChildren<Canvas>();
 
         //지정한 개수만큼 생성
-        hexMembers = new HexMember[height * width];
-        gridImages = new Image[height * width];
+        hexMembers = new HexMember[mapSize];
+        gridImages = new Image[mapSize];
 
 
         //x와 z가 좌표가 된다
@@ -65,47 +72,51 @@ public class HexMapCreator : MonoBehaviour
 
         HexMember hex = hexMembers[i] = Instantiate(hexMember);
         hex.transform.SetParent(transform, false);
-        hex.xNum = x;
-        hex.zNum = z;
-        hex.index = i;
         hex.transform.localPosition = position;
 
-        SetMaterial(x, z, i);
+        hex.SetHexMemberData(x, z, i, SetMaterial(x, z, i));
     }
 
-    private void SetMaterial(int x, int z, int i)
+    //땅이 될 노드를 지정한다 (나중에 시간이 되면 [랜덤 맵 생성] 도전!~)
+    private int SetMaterial(int x, int z, int i)
     {
         if (z < 34 && z > 15 && x > 40 && x < 57)
         {
-            ChangeMaterial(i, 0);
+            ChangeMaterial(i, 1);
+            return 1;
         }
         else if (z < 35 && z > 23 && x > 33 && x < 47)
         {
-            ChangeMaterial(i, 0);
+            ChangeMaterial(i, 1);
+            return 1;
         }
         else if (z < 24 && z > 18 && x > 36 && x < 41)
         {
-            ChangeMaterial(i, 0);
+            ChangeMaterial(i, 1);
+            return 1;
         }
 
         if (z < 46 && z > 27 && x > 25 && x < 40)
         {
-            ChangeMaterial(i, 1);
+            ChangeMaterial(i, 2);
+            return 2;
         }
         else if (z < 57 && z > 35 && x > 28 && x < 52)
         {
-            ChangeMaterial(i, 1);
+            ChangeMaterial(i, 2);
+            return 2;
         }
+
+        return 0;
     }
 
+    //매개변수로 전달받는 index의 Material를 바꾼다
     private void ChangeMaterial(int i, int materialsNumber)
     {
         Renderer renderer = hexMembers[i].gameObject.GetComponent<Renderer>();
         if (renderer.material != materials[materialsNumber])
         {
             renderer.material = materials[materialsNumber];
-            hexMembers[i].isGround = true;
-            hexMembers[i].Setelevation();
         }
     }
 
