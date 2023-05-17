@@ -8,30 +8,62 @@ public class QuickSlotController : MonoBehaviour
 {
     public static QuickSlotController instance = null;
 
-    /*
-    1. 선입 선출한 대로 퀵슬롯에 이미지 띄우기 (사용 아이템만)
-    2. 같은 아이템을 먹을 시 텍스트로 갯수 증가
-    3. 아이템 사용 함수
-    */
+    [Header("퀵슬롯 오브젝트")]
+    public Image[] itemSlotImg; //아이템 슬롯 (5개)
+    public Text[] itemCntTxt; //아이템 텍스트 (5개)
 
-    public Image[] itemSlotImg;
-    public GameObject[] itemSlot;
-
-    public List<string> ItemList = new List<string>();
-
-    public Sprite herb;
+    [Header("아이템 스프라이트")]
+    public Sprite herb; 
     public Sprite danceherb;
     public Sprite blank;
+
+    public List<string> ItemList = new List<string>(); //획득한 아이템 정보 => 아이템 이름으로 받음 (string)
+
+    public int herbCnt = 0;
+    public int danceherbCnt = 0;
 
     void Awake()
     {
         instance = this;
     }
+    private void Start()
+    {
+        itemCntTxt = GetComponentsInChildren<Text>();
+    }
     private void Update()
     {
-        ItemStack();
+        ItemShow();
     }
-    private void ItemStack()
+    public void ItemStack(string Item) //아이템 넣기
+    {
+        for (int i = 0; i < ItemList.Count; i++)
+        {
+            if (ItemList[i] == Item)
+            {
+                if (Item.Equals("Herb"))
+                {
+                    herbCnt++;
+                    itemCntTxt[i].text = "" + herbCnt;
+                    if (herbCnt > 1)
+                    {
+                        ItemList.RemoveAt(ItemList.Count - 1);
+                    }
+
+                }
+                if (Item.Equals("Danceherb"))
+                {
+                    danceherbCnt++;
+                    itemCntTxt[i].text = "" + danceherbCnt;
+                    if (danceherbCnt > 1)
+                    {
+                        ItemList.RemoveAt(ItemList.Count - 1);
+                    }
+                }
+            }
+        }
+
+    }
+    private void ItemShow() //아이템 보여주기
     {
         for (int i = 0; i < ItemList.Count; i++)
         {
@@ -39,34 +71,47 @@ public class QuickSlotController : MonoBehaviour
             {
                 if (ItemList[i] == "Herb")
                 {
-                    itemSlotImg[i].sprite = herb;
+                    itemSlotImg[i].GetComponent<Image>().sprite = herb;
                 }
                 else if (ItemList[i] == "Danceherb")
                 {
-                    itemSlotImg[i].sprite = danceherb;
+                    itemSlotImg[i].GetComponent<Image>().sprite = danceherb;
                 }
             }
-            else
-            {
-                return;
-            }
+        }
+
+        for (int i = 4; i > ItemList.Count - 1; i--)
+        {
+            itemSlotImg[i].GetComponent<Image>().sprite = blank;
         }
     }
-    public void ItemUse()
+    public void ItemUse() //아이템 사용하기
     {
         GameObject Click = EventSystem.current.currentSelectedGameObject;
 
-        int num = 0;
-
-        for(int i = 0; i < itemSlot.Length; i++)
+        for (int i = 0; i < itemSlotImg.Length; i++)
         {
-            if(Click == itemSlot[i])
+            if (Click == itemSlotImg[i].gameObject && itemSlotImg[i].GetComponent<Image>().sprite != blank)
             {
-                num = i;
-                Debug.Log("num 설정");
-                Debug.Log(num);
+                if (ItemList[i] == "Herb")
+                {
+                    herbCnt--;
+                    itemCntTxt[i].text = "" + herbCnt;
+                    if (herbCnt < 1)
+                    {
+                        ItemList.RemoveAt(i);
+                    }
+                }
+                else if (ItemList[i] == "Danceherb")
+                {
+                    danceherbCnt--;
+                    itemCntTxt[i].text = "" + danceherbCnt;
+                    if (danceherbCnt < 1)
+                    {
+                        ItemList.RemoveAt(i);
+                    }
+                }
             }
         }
-        ItemList.RemoveAt(num);
     }
 }

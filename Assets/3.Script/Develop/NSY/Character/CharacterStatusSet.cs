@@ -8,19 +8,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="CharacterBaseStatsData", menuName = "ScriptableObjects/CharacterBaseStatsData", order =1)  ]
 public class CharacterStatusSet : ScriptableObject
 {
-    
-    public int Hp;
+
+
+
+    public string className= "Normal";
+    public float maxHp = 60f;
+    public float nowHp = 60f;
     //지력 (학자 특화 스탯)
-    public int intelligence;
+    public int intelligence=50;
     //힘 (대장장이 특화 스탯)
-    public int strength;
+    public int strength=50;
     //인지 (사냥꾼 특화 스탯)
-    public int awareness;
+    public int awareness=50;
     //속도 (사냥꾼 특화 스탯)
-    public int speed;
+    public int speed=50;
     //경험치
-    public int Exp;
-    public int Lv;
+    public float nowExp=1;
+    public float maxExp=100;
+    public int Lv=1;
 
     
 
