@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class InventoryBtn : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject inventory;
+    public void InventoryOnOff()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (!inventory.activeSelf)
+        {
+            inventory.SetActive(true);
+        }
+        else
+        {
+            inventory.SetActive(false);
+        }
     }
 }
