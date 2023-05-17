@@ -80,7 +80,7 @@ MonoBehaviour:
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 10
+  m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
 --- !u!1 &6953857765399451942
 GameObject:
@@ -126,11 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674334fc71944e34cb219d877eb019bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  player: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 3419052a02854af4a955e8ff3b825b6b, type: 2}
+  - {fileID: 2100000, guid: 3dd882bb5b4a69f499ead5133b5c6b2b, type: 2}
+  - {fileID: 2100000, guid: 564e61dd7ea3555418c9adedefdccce9, type: 2}
   hexMember: {fileID: 8076084435860098234, guid: 97ec72c3338d1084dba1d7c54d4c83b5, type: 3}
+  hexMembers: []
   gridImage: {fileID: 6953857765494349923}
 --- !u!1 &6953857765494349925
 GameObject:
@@ -184,7 +186,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6953857765494349925}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
