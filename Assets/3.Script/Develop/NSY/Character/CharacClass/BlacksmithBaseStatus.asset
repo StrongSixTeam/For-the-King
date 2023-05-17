@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc99b649adb1ae47b3decc82d61fe2f, type: 3}
   m_Name: BlacksmithBaseStatus
   m_EditorClassIdentifier: 
-  Hp: 80
-  intelligence: 40
+  className: Blacksmith
+  maxHp: 80
+  nowHp: 80
+  intelligence: 42
   strength: 76
   awareness: 52
   speed: 56
-  Exp: 0
+  nowExp: 1
+  maxExp: 100
   Lv: 1
