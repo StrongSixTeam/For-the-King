@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc99b649adb1ae47b3decc82d61fe2f, type: 3}
   m_Name: ScholarBaseStatus
   m_EditorClassIdentifier: 
-  Hp: 0
-  intelligence: 0
-  strength: 0
-  awareness: 0
-  speed: 0
-  Exp: 0
-  Lv: 0
+  className: Scholar
+  MaxHp: 60
+  nowHp: 60
+  intelligence: 78
+  strength: 42
+  awareness: 66
+  speed: 70
+  nowExp: 1
+  maxExp: 100
+  Lv: 1
