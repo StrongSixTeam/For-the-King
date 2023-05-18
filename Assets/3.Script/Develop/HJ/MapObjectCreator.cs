@@ -9,7 +9,8 @@ public class MapObjectCreator : MonoBehaviour
     HexMapCreator hexMapCreator;
 
     //노드의 위치정보
-    Vector3[] hexNode;
+    Vector3[] ForestNode;
+    Vector3[] PlainsNode;
 
     //필수 오브젝트 8개
     GameObject[] fixedObject;
@@ -24,11 +25,12 @@ public class MapObjectCreator : MonoBehaviour
 
     GameObject[] objectPool;
 
+    
+
     private void Start()
     {
         hexMapCreator = FindObjectOfType<HexMapCreator>();
 
-        hexNode = new Vector3[hexMapCreator.mapSize];
         fixedObject = new GameObject[8];
     }
 
