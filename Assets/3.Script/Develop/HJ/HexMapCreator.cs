@@ -68,13 +68,39 @@ public class HexMapCreator : MonoBehaviour
         Vector3 position;
         position.x = (x + z * 0.5f - z / 2) * (hexSixe.hexWidth);
         position.y = -0.5f;
-        position.z = (z) * (hexSixe.hexHeight * 0.75f);
+        position.z = z * (hexSixe.hexHeight * 0.75f);
 
         HexMember hex = hexMembers[i] = Instantiate(hexMember);
         hex.transform.SetParent(transform, false);
         hex.transform.localPosition = position;
 
         hex.SetHexMemberData(x, z, i, SetMaterial(x, z, i));
+
+
+        ////이웃 설정
+        //if (x > 0)
+        //{
+        //    hex.SetNeighbor(HexDirection.W, hexMembers[i - 1]);
+        //}
+        //if (z > 0)
+        //{
+        //    if ((z & 1) == 0)
+        //    {
+        //        hex.SetNeighbor(HexDirection.SE, hexMembers[i - width]);
+        //        if (x > 0)
+        //        {
+        //            hex.SetNeighbor(HexDirection.SW, hexMembers[i - width - 1]);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        hex.SetNeighbor(HexDirection.SW, hexMembers[i - width]);
+        //        if (x < width - 1)
+        //        {
+        //            hex.SetNeighbor(HexDirection.SE, hexMembers[i - width + 1]);
+        //        }
+        //    }
+        //}
     }
 
     //땅이 될 노드를 지정한다 (나중에 시간이 되면 [랜덤 맵 생성] 도전!~)
