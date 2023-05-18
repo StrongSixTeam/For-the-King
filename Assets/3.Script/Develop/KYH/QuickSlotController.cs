@@ -12,14 +12,14 @@ public class QuickSlotController : MonoBehaviour
     private Image[] itemSlotImg; //아이템 슬롯 (5개)
     private Text[] itemCntTxt; //아이템 텍스트 (5개)
 
-    //아이템 갯수
-    private int herbCnt = 0;
-    private int danceherbCnt = 0;
+    [Header("아이템 갯수")]
+    public int herbCnt = 0;
+    public int danceherbCnt = 0;
 
     [Header("아이템 스프라이트 => 직접 설정")]
-    [SerializeField] private Sprite herb;
-    [SerializeField] private Sprite danceherb;
-    [SerializeField] private Sprite blank;
+    public Sprite herb;
+    public Sprite danceherb;
+    public Sprite blank;
 
     [Header("아이템 정보")]
     public List<string> ItemList = new List<string>(); //획득한 아이템 => 아이템 이름으로 받음 (string)
