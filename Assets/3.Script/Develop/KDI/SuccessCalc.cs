@@ -38,12 +38,17 @@ public class SuccessCalc : MonoBehaviour
         }
         SlotController.instance.percent = percent;
         maxSlot = maxSlot - testFix;
+
         for (int i = maxSlot; i >= 0; i--)
         {
             float successPercent = percent * (float)0.01;
             float failPercent = (100 - percent) * (float)0.01;
             float result = Mathf.Pow(failPercent, maxSlot - i) * Mathf.Pow(successPercent, maxSlot - (maxSlot - i)) * formula.Combination(maxSlot, i) * 100;
             result = Mathf.Round(result);
+            if (maxSlot <= 0)
+            {
+                result = 100;
+            }
             if (i >= successLimit - testFix)
             {
                 Debug.Log(i + testFix + " " + result + "% ¼º°ø");
@@ -70,6 +75,10 @@ public class SuccessCalc : MonoBehaviour
     public void FixAdd()
     {
         testFix++;
+        if (testFix > testMax)
+        {
+            testFix = testMax;  
+        }
         Calculate(testMax, testPercent, testFix);
     }
 
