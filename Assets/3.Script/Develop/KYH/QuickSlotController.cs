@@ -8,19 +8,21 @@ public class QuickSlotController : MonoBehaviour
 {
     public static QuickSlotController instance = null;
 
-    [Header("퀵슬롯 오브젝트")]
-    public Image[] itemSlotImg; //아이템 슬롯 (5개)
-    public Text[] itemCntTxt; //아이템 텍스트 (5개)
+    //퀵슬롯 UI
+    private Image[] itemSlotImg; //아이템 슬롯 (5개)
+    private Text[] itemCntTxt; //아이템 텍스트 (5개)
 
-    [Header("아이템 스프라이트")]
-    public Sprite herb; 
-    public Sprite danceherb;
-    public Sprite blank;
+    //아이템 갯수
+    private int herbCnt = 0;
+    private int danceherbCnt = 0;
 
-    public List<string> ItemList = new List<string>(); //획득한 아이템 정보 => 아이템 이름으로 받음 (string)
+    [Header("아이템 스프라이트 => 직접 설정")]
+    [SerializeField] private Sprite herb;
+    [SerializeField] private Sprite danceherb;
+    [SerializeField] private Sprite blank;
 
-    public int herbCnt = 0;
-    public int danceherbCnt = 0;
+    [Header("아이템 정보")]
+    public List<string> ItemList = new List<string>(); //획득한 아이템 => 아이템 이름으로 받음 (string)
 
     void Awake()
     {
@@ -29,6 +31,7 @@ public class QuickSlotController : MonoBehaviour
     private void Start()
     {
         itemCntTxt = GetComponentsInChildren<Text>();
+        itemSlotImg = GetComponentsInChildren<Image>();
     }
     private void Update()
     {
@@ -48,7 +51,6 @@ public class QuickSlotController : MonoBehaviour
                     {
                         ItemList.RemoveAt(ItemList.Count - 1);
                     }
-
                 }
                 if (Item.Equals("Danceherb"))
                 {
@@ -72,10 +74,12 @@ public class QuickSlotController : MonoBehaviour
                 if (ItemList[i] == "Herb")
                 {
                     itemSlotImg[i].GetComponent<Image>().sprite = herb;
+                    itemCntTxt[i].text = "" + herbCnt;
                 }
                 else if (ItemList[i] == "Danceherb")
                 {
                     itemSlotImg[i].GetComponent<Image>().sprite = danceherb;
+                    itemCntTxt[i].text = "" + danceherbCnt;
                 }
             }
         }
@@ -83,6 +87,7 @@ public class QuickSlotController : MonoBehaviour
         for (int i = 4; i > ItemList.Count - 1; i--)
         {
             itemSlotImg[i].GetComponent<Image>().sprite = blank;
+            itemCntTxt[i].text = "" + 0;
         }
     }
     public void ItemUse() //아이템 사용하기
@@ -96,7 +101,6 @@ public class QuickSlotController : MonoBehaviour
                 if (ItemList[i] == "Herb")
                 {
                     herbCnt--;
-                    itemCntTxt[i].text = "" + herbCnt;
                     if (herbCnt < 1)
                     {
                         ItemList.RemoveAt(i);
@@ -105,7 +109,6 @@ public class QuickSlotController : MonoBehaviour
                 else if (ItemList[i] == "Danceherb")
                 {
                     danceherbCnt--;
-                    itemCntTxt[i].text = "" + danceherbCnt;
                     if (danceherbCnt < 1)
                     {
                         ItemList.RemoveAt(i);
