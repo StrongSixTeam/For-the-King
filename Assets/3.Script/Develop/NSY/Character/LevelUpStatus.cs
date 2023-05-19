@@ -53,8 +53,10 @@ public class LevelUpStatus : MonoBehaviour
 
 
                     }
-
+                    
                     characters[i].intelligence = characters[i].intelligence + 2;
+                    characters[i].atk = characters[i].atk*characters[i].Lv;
+                    characters[i].def = characters[i].def + 2;
                     characters[i].strength= characters[i].strength + 5;
                     characters[i].awareness = characters[i].awareness + 2;
                     characters[i].speed = characters[i].speed+ 2;
@@ -76,6 +78,8 @@ public class LevelUpStatus : MonoBehaviour
 
                     }
                     characters[i].intelligence = characters[i].intelligence + 2;
+                    characters[i].atk = characters[i].atk * characters[i].Lv+ 1.5f;
+                    characters[i].def = characters[i].def + 1.5f;
                     characters[i].strength = characters[i].strength + 2;
                     characters[i].awareness = characters[i].awareness + 5;
                     characters[i].speed = characters[i].speed + 5;
@@ -95,6 +99,8 @@ public class LevelUpStatus : MonoBehaviour
 
                     }
                     characters[i].intelligence = characters[i].intelligence + 5;
+                    characters[i].atk = characters[i].atk * characters[i].Lv + 2f;
+                    characters[i].def = characters[i].def + 1;
                     characters[i].strength = characters[i].strength + 2;
                     characters[i].awareness = characters[i].awareness + 5;
                     characters[i].speed = characters[i].speed + 2;

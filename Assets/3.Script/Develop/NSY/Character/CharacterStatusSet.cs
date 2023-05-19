@@ -12,6 +12,8 @@ public class CharacterStatusSet : ScriptableObject
 
 
     public string className= "Normal";
+    public float atk = 10f;
+    public float def = 10f;
     public float maxHp = 60f;
     public float nowHp = 60f;
     //지력 (학자 특화 스탯)
