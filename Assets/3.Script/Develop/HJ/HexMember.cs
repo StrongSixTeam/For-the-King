@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public enum HexDirection
@@ -39,52 +40,55 @@ public class HexMember : MonoBehaviour
 
 
 
-	public void SetHexMemberData(int xNum, int zNum, int index, int mapType)
+	public void SetHexMemberData(int xNum, int zNum, int index)
     {
 		if (!isGround)
 		{
 			this.xNum = xNum;
 			this.zNum = zNum;
 			this.index = index;
+		}
+	}
 
-			this.mapType = mapType;
-            if (mapType != 0)
-            {
-				Vector3 position = transform.localPosition;
-				position.y = 0;
-				transform.localPosition = position;
+	public void SetMapType(int mapType)
+    {
+		this.mapType = mapType;
+		if (mapType != 0)
+		{
+			Vector3 position = transform.localPosition;
+			position.y = 0;
+			transform.localPosition = position;
 
-				isGround = true;
-				ispass = true;
+			isGround = true;
+			ispass = true;
 
-                switch (mapType)
-                {
-					case 1:
-						//맵오브젝트크리에이터 스크립트에 자신을 넘김
-						break;
-					case 2:
+			switch (mapType)
+			{
+				case 1:
+					//맵오브젝트크리에이터 스크립트에 자신을 넘김
+					break;
+				case 2:
 
-						break;
-					default:
-						Debug.Log("mapType null");
-						break;
-                }
+					break;
+				default:
+					Debug.Log("mapType null");
+					break;
 			}
 		}
 	}
 
-	
 
-	//[SerializeField] HexMember[] neighbors = new HexMember[6];
 
-	//   public HexMember GetNeighbor(HexDirection direction)
-	//   {
-	//       return neighbors[(int)direction];
-	//   }
+	[ReadOnly] public HexMember[] neighbors = new HexMember[6];
 
-	//   public void SetNeighbor(HexDirection direction, HexMember neighbor)
-	//   {
-	//       neighbors[(int)direction] = neighbor;
-	//	neighbor.neighbors[(int)direction.Opposite()] = this;
-	//}
+    public HexMember GetNeighbor(HexDirection direction)
+    {
+        return neighbors[(int)direction];
+    }
+
+    public void SetNeighbor(HexDirection direction, HexMember neighbor)
+    {
+        neighbors[(int)direction] = neighbor;
+        neighbor.neighbors[(int)direction.Opposite()] = this;
+    }
 }
