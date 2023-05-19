@@ -6,6 +6,7 @@ public class ItemInputTest1 : MonoBehaviour
 {
     // 아이템 먹는 이벤트 임시로 만들어 놓은 스크립트
     public Item[] EatItem; //먹은 아이템
+    public QuickSlotController1 quick;
 
     private void OnApplicationQuit()
     {
@@ -19,7 +20,13 @@ public class ItemInputTest1 : MonoBehaviour
     {
         int num = Random.Range(0, EatItem.Length);
 
-        QuickSlotController1.instance.ItemStack(EatItem[num]);
-        QuickSlotController1.instance.ItemShow();
+        InventoryController1.instance.ItemStack(EatItem[num]);
+        quick.QuickSlotShow();
+        if (InventoryController1.instance.itemlistCnt < InventoryController1.instance.itemList.Count)
+        {
+            InventoryController1.instance.ItemListStack();
+            InventoryController1.instance.itemlistCnt++;
+        }
+        InventoryController1.instance.InventoryShow();
     }
 }
