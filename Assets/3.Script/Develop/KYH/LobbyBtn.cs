@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class LobbyBtn : MonoBehaviour
 {
-    public GameObject Background;
+    [Header("on/off UI ¼³Á¤")]
+    [SerializeField] private GameObject LobbyMenuUI;
+    [SerializeField] private GameObject CharacterSelectUI;
     
     private GameObject MainCam;
 
@@ -20,14 +22,16 @@ public class LobbyBtn : MonoBehaviour
     }
     private IEnumerator CameraMove_co()
     {
-        Background.SetActive(false);
+        LobbyMenuUI.SetActive(false);
         
         while(Vector3.Distance(MainCam.transform.position, MoveCamPos) > 0.01f)
         {
-            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.05f);
+            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.03f);
             yield return null;
         }
         MainCam.transform.position = MoveCamPos;
+        CharacterSelectUI.SetActive(true);
+
         yield break;
     }
 
