@@ -18,6 +18,10 @@ public class SlotController : MonoBehaviour
     public int fail = 0; //실패 몇개
     public int percent = 40; //확률 몇퍼
 
+    private void Awake()
+    {
+        instance = this;
+    }
     public enum Type
     {
         move,
@@ -76,15 +80,16 @@ public class SlotController : MonoBehaviour
         StartCoroutine(MakeMove());
     }
 
-    IEnumerator MakeMove()
+    IEnumerator MakeMove() //슬롯 보여주는 용(only)
     {
+        int a = fixCount;
         for (int i = 0; i < maxSlotCount; i++)
         {
             transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
             yield return new WaitForSeconds(0.4f);
             if (fixCount > 0)
             {
-                transform.GetChild(i).GetChild(1).gameObject.SetActive(true); //집중 슬롯칸 표시
+                transform.GetChild(i).GetChild(1).gameObject.SetActive(true); //고정 이동칸
                 fixCount--;
                 success++;
                 continue;
@@ -105,5 +110,7 @@ public class SlotController : MonoBehaviour
             }
         }
             transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
+        fixCount = a;
     }
+
 }
