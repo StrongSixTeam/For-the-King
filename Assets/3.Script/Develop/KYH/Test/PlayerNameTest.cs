@@ -6,8 +6,12 @@ public class PlayerNameTest : MonoBehaviour
 {
     public void PlayerNameDebug()
     {
-        Debug.Log(PlayerPrefs.GetString("Player1"));
-        Debug.Log(PlayerPrefs.GetString("Player2"));
-        Debug.Log(PlayerPrefs.GetString("Player3"));
+        Debug.Log(PlayerPrefs.GetString("Name0"));
+        Debug.Log(PlayerPrefs.GetString("Name1"));
+        Debug.Log(PlayerPrefs.GetString("Name2"));
+
+        Debug.Log(PlayerPrefs.GetString("Class0"));
+        Debug.Log(PlayerPrefs.GetString("Class1"));
+        Debug.Log(PlayerPrefs.GetString("Class2"));
     }
 }

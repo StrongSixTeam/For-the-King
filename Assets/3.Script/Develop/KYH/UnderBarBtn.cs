@@ -10,30 +10,34 @@ public class UnderBarBtn : MonoBehaviour
     [SerializeField] private GameObject LobbyMenuUI;
     [SerializeField] private GameObject CharacterSelectUI;
 
-    [Header("플레이어 입력 필드")]
-    [SerializeField] private Text[] playerNames;
+    [Header("플레이어 이름")]
+    public List<Text> playerNames;
+
+    [Header("플레이어 클래스")]
+    public List<Text> playerClass;
 
     private GameObject MainCam;
 
-    private Vector3 MoveCamPos = new Vector3(0, 100, -10); //뒤로 눌렀을 때 이동할 카메라 위치
+    private Vector3 MoveCamPos = new Vector3(0, 100, 0); //뒤로 눌렀을 때 이동할 카메라 위치
 
     private void Awake()
     {
         MainCam = GameObject.Find("Main Camera");
     }
-
     private void PlayerNameSave()
     {
-        for (int i = 0; i < playerNames.Length; i++)
+        for (int i = 0; i < playerNames.Count; i++)
         {
             if (playerNames[i].text == "")
             {
-                PlayerPrefs.SetString(string.Format("Player{0}", i + 1), string.Format("플레이어 {0}", i + 1));
+                PlayerPrefs.SetString(string.Format("Name{0}", i), string.Format("플레이어 {0}", i + 1));
             }
             else
             {
-                PlayerPrefs.SetString(string.Format("Player{0}", i + 1), playerNames[i].text);
+                PlayerPrefs.SetString(string.Format("Name{0}", i), playerNames[i].text);
             }
+
+            PlayerPrefs.SetString(string.Format("Class{0}", i), playerClass[i].text);
         }
     }
     public void GameStart()
@@ -44,7 +48,7 @@ public class UnderBarBtn : MonoBehaviour
     }
     public void Back()
     {
-        StartCoroutine(CameraMove_co());   
+        StartCoroutine(CameraMove_co());
     }
     private IEnumerator CameraMove_co()
     {
