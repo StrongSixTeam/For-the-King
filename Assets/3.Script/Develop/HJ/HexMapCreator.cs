@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 //가로 세로
@@ -7,6 +9,12 @@ public class HexSixe
     public float hexWidth = 2.886311f;
 }
 
+[System.Serializable]
+public class MapSaveData
+{
+    public int index;
+    public int mapType = 0;
+}
 
 public class HexMapCreator : MonoBehaviour
 {
@@ -23,7 +31,7 @@ public class HexMapCreator : MonoBehaviour
 
 
     [SerializeField] HexMember hexMember; //hexOverlayGeo01_0
-    private HexMember[] hexMembers;
+    public HexMember[] hexMembers;
 
 
     //이동횟수를 표시할 캔버스
@@ -48,18 +56,23 @@ public class HexMapCreator : MonoBehaviour
     [SerializeField] int forestNodeCount = 0;
     [SerializeField] int plainsNodeCount = 0;
 
-    //Stack<int> saveIndex = new Stack<int>();
-    //List<int> saveCenterIndex = new List<int>();
-    //바다와의 거리
-    int[] sstemp = new int[6];
 
     bool plainsStartDir;
 
+    MapObjectCreator mapObjectCreator;
+    public GameObject player;
+
+    MapSaveData[] mapSaveData;
+    string path;
+
+
     private void Start()
     {
+        path = Path.Combine(Application.dataPath + "MapSaveData.json");
         mapSize = height * width;
 
         gridCanvas = GetComponentInChildren<Canvas>();
+        mapObjectCreator = gameObject.GetComponent<MapObjectCreator>();
 
         //지정한 개수만큼 생성
         hexMembers = new HexMember[mapSize];
@@ -74,27 +87,53 @@ public class HexMapCreator : MonoBehaviour
                 CreateHex(x, z, i++);
             }
         }
-        //for (int z = 0, i = 0; z < height; z++)
-        //{
-        //    for (int x = 0; x < width; x++)
-        //    {
-        //        CreateGrid(x, z, i++);
-        //    }
-        //}
+
 
         //땅 영역 지정
         SetGround();
-
-        //그중 50%는 황금평원이 된다
-        //for(int i=0; i<saveIndex.Count/2; i++)
+        //Debug.Log(path);
+        //if (File.Exists(path))
         //{
-        //    ChangeMaterial(saveIndex.Pop(), 2);
-        //}
-        //for(int i=0; i<saveIndex.Count; i++)
-        //{
-        //    ChangeMaterial(saveIndex.Pop(), 1);
-        //}
+        //    //맵 정보 불러오기
+        //    string jsonData = File.ReadAllText(path);
+        //    mapSaveData = JsonUtility.FromJson<MapSaveData[]>(jsonData);
 
+        //    for (int i = 0; i > mapSize; i++)
+        //    {
+        //        if (mapSaveData[i].mapType != 0)
+        //        {
+        //            ChangeMaterial(i, mapSaveData[i].mapType);
+        //        }
+        //    }
+
+        //}
+        //else
+        //{
+        //    //땅 영역 지정
+        //    SetGround();
+
+
+        //    mapSaveData = new MapSaveData[forestNodeCount + plainsNodeCount];
+        //    int indexCount = 0;
+
+        //    //맵 정보를 저장
+        //    for (int i = 0; i < mapSize; i++)
+        //    {
+        //        if (hexMembers[i].mapType != 0)
+        //        {
+        //            mapSaveData[indexCount] = new MapSaveData
+        //            {
+        //                index = i,
+        //                mapType = hexMembers[i].mapType
+        //            };
+        //            indexCount++;
+        //        }
+        //    }
+
+        //    string jsonData = JsonUtility.ToJson(mapSaveData);
+        //    Debug.Log(jsonData);
+        //    //File.WriteAllText(path, jsonData);
+        //}
     }
 
     private void CreateHex(int x, int z, int i)
@@ -141,11 +180,13 @@ public class HexMapCreator : MonoBehaviour
     //땅이 될 노드를 지정한다
     private void SetGround()
     {
+        player.transform.position = hexMembers[centerIndex].transform.position;
+        player.transform.position += Vector3.up;
+
         //포레스트
         ForestNode();
         while (forestNodeCount < 100)
         {
-            Debug.Log("숲이 너무 작아요! " + forestNodeCount);
             ForestNode();
         }
 
@@ -192,7 +233,6 @@ public class HexMapCreator : MonoBehaviour
         PlainsNode();
         while (plainsNodeCount < 100)
         {
-            Debug.Log("평원이 너무 작아요! " + plainsNodeCount);
             PlainsNode();
         }
 
@@ -281,6 +321,7 @@ public class HexMapCreator : MonoBehaviour
             {
                 plainsNodeCount++;
             }
+
             hexMembers[i].SetMapType(materialsNumber);
         }
     }

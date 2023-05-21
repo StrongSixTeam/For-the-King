@@ -8,9 +8,9 @@ public class MapObjectCreator : MonoBehaviour
     //모든 노드의 정보를 들고오자
     HexMapCreator hexMapCreator;
 
-    //노드의 위치정보
-    Vector3[] ForestNode;
-    Vector3[] PlainsNode;
+    //노드 정보
+    public HexMember[] forestNode;
+    public HexMember[] plainsNode;
 
     //필수 오브젝트 8개
     GameObject[] fixedObject;
