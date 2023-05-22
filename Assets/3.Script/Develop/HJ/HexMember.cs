@@ -35,6 +35,7 @@ public class HexMember : MonoBehaviour
 	[Header("플레이어가 지나갈 수 있나요?")]
 	public bool ispass = false; //통행 가능한가요?
 
+	[Header("Astar G H F 값")]
 	public float G; //G : 시작으로 부터 이동했던 거리
 	public float H; //H : 추정값 즉 가로+세로 장애물을 무시하여 목표까지의 거리 
 	public float F  //F : G+H
