@@ -15,7 +15,6 @@ public enum HexDirection
 
 public static class HexDirectionExtensions
 {
-
 	public static HexDirection Opposite(this HexDirection direction)
 	{
 		return (int)direction < 3 ? (direction + 3) : (direction - 3);
@@ -36,8 +35,14 @@ public class HexMember : MonoBehaviour
 	[Header("플레이어가 지나갈 수 있나요?")]
 	public bool ispass = false; //통행 가능한가요?
 
-	//바다(디폴트) y값은 -0.5f이지만, 육지라면 y가 0임
-
+	[Header("Astar G H F 값")]
+	public float G; //G : 시작으로 부터 이동했던 거리
+	public float H; //H : 추정값 즉 가로+세로 장애물을 무시하여 목표까지의 거리 
+	public float F  //F : G+H
+	{
+		get { return H + G; }
+	}
+	public HexMember parentNode;
 
 
 	public void SetHexMemberData(int xNum, int zNum, int index)
@@ -61,19 +66,6 @@ public class HexMember : MonoBehaviour
 
 			isGround = true;
 			ispass = true;
-
-			switch (mapType)
-			{
-				case 1:
-					//맵오브젝트크리에이터 스크립트에 자신을 넘김
-					break;
-				case 2:
-
-					break;
-				default:
-					Debug.Log("mapType null");
-					break;
-			}
 		}
 	}
 
