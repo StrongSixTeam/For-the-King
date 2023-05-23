@@ -5,8 +5,9 @@ using UnityEngine;
 public class AstsrPathfinding : MonoBehaviour
 {
 
-    HexMapCreator hexMapCreator = new HexMapCreator();
+    //11시 40분에 소영언니 플레이어컨트롤이랑 연결하기
 
+    HexMapCreator hexMapCreator = new HexMapCreator();
 
     HexMember endNode, currentNode;
     HexMember saveTargetNode;
@@ -20,17 +21,15 @@ public class AstsrPathfinding : MonoBehaviour
 
     [SerializeField] GameObject[] moveNumberPrefabs = new GameObject[10];
     GameObject[] showMoveCount = new GameObject[10];
-    bool ismovingTurn = false;
-    [SerializeField] int canMoveCount = 5; //플레이어의 이동 횟수
+    bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
+    [SerializeField] int canMoveCount = 5; //플레이어의 이동가능횟수 조절
 
 
-
-
-    int temp = 0;
+    int loopCount = 0;
     private void Start()
     {
         hexMapCreator = FindObjectOfType<HexMapCreator>();
-        
+
         for (int i = 0; i < 10; i++)
         {
             showMoveCount[i] = Instantiate(moveNumberPrefabs[i]);
@@ -46,7 +45,6 @@ public class AstsrPathfinding : MonoBehaviour
 
             if (endNode != null && endNode != saveTargetNode)
             {
-                Debug.Log("에이스타 계산");
                 saveTargetNode = endNode;
                 ShowMovingPath();
             }
@@ -86,6 +84,7 @@ public class AstsrPathfinding : MonoBehaviour
 
             for (int i = 0; i < openList.Count; i++)
             {
+
                 //열린 리스트 중, 현재노드보다 F가 작거나 같다면
                 //H가 작은 것을 현재 노드로 설정
                 if (openList[i].F <= currentNode.F &&
@@ -93,6 +92,7 @@ public class AstsrPathfinding : MonoBehaviour
                 {
                     currentNode = openList[i];
                 }
+
             }
 
 
@@ -116,30 +116,27 @@ public class AstsrPathfinding : MonoBehaviour
 
                 if (finalNodeList.Count > canMoveCount)
                 {
-                    temp = 0;
+                    loopCount = 0;
                     ListReset();
                     return;
                 }
 
                 finalNodeList.Add(startNode);
-                finalNodeList.Reverse(); //순서를 거꾸로 뒤집니다
+                finalNodeList.Reverse();
 
                 ShowMoveNumber(finalNodeList);
-                //for (int i = 0; i < finalNodeList.Count; i++)
-                //{
-                //    Debug.Log(i + "번 째는 " + finalNodeList[i].xNum + " | " + finalNodeList[i].zNum);
-                //}
                 return;
             }
 
             //openList에 추가한다
             OpenListAdd(currentNode);
 
-            temp++;
-            if (temp > 500)
+
+            loopCount++;
+            if (loopCount > 500)
             {
                 Debug.Log("무한루프");
-                temp = 0;
+                loopCount = 0;
                 ListReset();
                 return;
             }
@@ -169,15 +166,9 @@ public class AstsrPathfinding : MonoBehaviour
 
     private void GetH(HexMember currentNode, int i)
     {
-        //currentNode.neighbors[i].H =
-        //            Mathf.Abs(currentNode.neighbors[i].zNum - endNode.zNum) + Mathf.Abs(currentNode.neighbors[i].xNum - endNode.xNum);
 
-        //z를 플레이어와 수평
-        //플레이어까지의 x
-
-
-        int dx = endNode.xNum - currentNode.neighbors[i].xNum;
-        int dy = endNode.zNum - currentNode.neighbors[i].zNum;
+        int dx = endNode.xNum - currentNode.neighbors[i].xNum; //타겟과 이웃노드의 x거리
+        int dy = endNode.zNum - currentNode.neighbors[i].zNum; //타겟과 이웃노드의 z거리
         int x = Mathf.Abs(dx);
         int y = Mathf.Abs(dy);
 
@@ -203,8 +194,6 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 showMoveCount[i].SetActive(true);
             }
-            Debug.Log(showMoveCount[i].transform.position);
-            Debug.Log(finalNodeList[i].transform.position);
         }
     }
 

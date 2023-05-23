@@ -44,6 +44,9 @@ public class HexMember : MonoBehaviour
 	}
 	public HexMember parentNode;
 
+	[Header("ÀÌ¿ô³ëµå")]
+	[ReadOnly] public HexMember[] neighbors = new HexMember[6];
+
 
 	public void SetHexMemberData(int xNum, int zNum, int index)
     {
@@ -69,9 +72,6 @@ public class HexMember : MonoBehaviour
 		}
 	}
 
-
-
-	[ReadOnly] public HexMember[] neighbors = new HexMember[6];
 
     public HexMember GetNeighbor(HexDirection direction)
     {
