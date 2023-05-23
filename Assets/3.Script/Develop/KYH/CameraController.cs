@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -9,42 +10,50 @@ public class CameraController : MonoBehaviour
     private Vector3 worldPos;
 
     //플레이어 변경 시 카메라 초기 값
-    private Vector3 DefaultPos = new Vector3(0, 6f, -7.3f);
+    private Vector3 DefaultPos = new Vector3(0, 7f, -8f);
 
-    private bool isPlayerChange = false;
+    private bool isCameraPosChange = false;
 
-    [Header("줌 최대/최소 거리")]
-    [SerializeField] private float zoomMax;
-    [SerializeField] private float zoomMin;
-
-    [Header("속도")]
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float zoomSpeed;
+    private float zoomMax;
+    private float zoomMin;
+    private float moveSpeed;
+    private float zoomSpeed;
 
     //플레이어 관련 변수 (변경 예정)
     private GameObject[] Players;
-    private GameObject MainPlayer;
+    public GameObject MainPlayer;
     private int num = 0;
+
+    private QuestManager questManager;
 
     private void Awake()
     {
         Players = GameObject.FindGameObjectsWithTag("Player");
+        questManager = FindObjectOfType<QuestManager>();
     }
     private void Start()
     {
         PlayerChange();
+
+        moveSpeed = 10f;
+        zoomSpeed = 10f;
+        zoomMax = 7f;
+        zoomMin = 4f;
     }
     private void Update()
     {
-        CameraMove();
-        CameraZoom();
+        if (!questManager.isQuest)
+        {
+            CameraMove();
+            CameraZoom();
+        }
     }
     private void CameraMove() //마우스 위치가 화면 모서리 부근에 있을 때 카메라 이동시키기
     {
         mousePos = Input.mousePosition;
         worldPos = Camera.main.ScreenToViewportPoint(mousePos);
 
-        if (!isPlayerChange)
+        if (!isCameraPosChange)
         {
             if (worldPos.x < 0.01f)
             {
@@ -73,7 +82,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        if (!isPlayerChange)
+        if (!isCameraPosChange)
         {
             transform.position += transform.forward * zoomDir * zoomSpeed;
         }
@@ -91,19 +100,18 @@ public class CameraController : MonoBehaviour
             num = 0;
         }
     }
-    private IEnumerator CameraSoftMove() //부드러운 카메라 무빙
+    public IEnumerator CameraSoftMove() //부드러운 카메라 무빙
     {
-        isPlayerChange = true;
+        isCameraPosChange = true;
 
         while (Vector3.Distance(transform.localPosition, DefaultPos) > 0.01)
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, DefaultPos, 0.02f);
             yield return null;
-            Debug.Log(0);
         }
 
         transform.localPosition = DefaultPos;
-        isPlayerChange = false;
+        isCameraPosChange = false;
         yield break;
     }
 
