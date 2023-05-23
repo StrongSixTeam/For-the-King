@@ -1,20 +1,21 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-//가로 세로
+//육각형의 가로 세로
 public class HexSixe
 {
     public float hexHeight = 3.332823f;
     public float hexWidth = 2.886311f;
 }
 
-[System.Serializable]
-public class MapSaveData
-{
-    public int index;
-    public int mapType = 0;
-}
+//[System.Serializable]
+//public class MapSaveData
+//{
+//    public int index;
+//    public int mapType = 0;
+//}
 
 public class HexMapCreator : MonoBehaviour
 {
@@ -53,16 +54,16 @@ public class HexMapCreator : MonoBehaviour
     int randomNum;
     bool isLoop = true;
 
-    [SerializeField] int forestNodeCount = 0;
-    [SerializeField] int plainsNodeCount = 0;
+    public int forestNodeCount = 0;
+    public int plainsNodeCount = 0;
 
 
     bool plainsStartDir;
 
-    MapObjectCreator mapObjectCreator;
+    [SerializeField] GameObject mapObjectCreatorObj;
     public GameObject player;
 
-    MapSaveData[] mapSaveData;
+    //MapSaveData[] mapSaveData;
     string path;
 
 
@@ -72,7 +73,6 @@ public class HexMapCreator : MonoBehaviour
         mapSize = height * width;
 
         gridCanvas = GetComponentInChildren<Canvas>();
-        mapObjectCreator = gameObject.GetComponent<MapObjectCreator>();
 
         //지정한 개수만큼 생성
         hexMembers = new HexMember[mapSize];
@@ -134,6 +134,9 @@ public class HexMapCreator : MonoBehaviour
         //    Debug.Log(jsonData);
         //    //File.WriteAllText(path, jsonData);
         //}
+
+        //맵 오브젝트 크리에이터 생성
+        StartCoroutine(StartMapObjectCreate_co());
     }
 
     private void CreateHex(int x, int z, int i)
@@ -237,6 +240,17 @@ public class HexMapCreator : MonoBehaviour
         }
 
     }
+
+
+    IEnumerator StartMapObjectCreate_co()
+    {
+        yield return null; //hexMembers[]가 채워지고 다음 프레임에 실행
+
+        Instantiate(mapObjectCreatorObj);
+        
+        yield break;
+    }
+
 
     void ForestNode()
     {
