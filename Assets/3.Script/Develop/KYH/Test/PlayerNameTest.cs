@@ -13,5 +13,7 @@ public class PlayerNameTest : MonoBehaviour
         Debug.Log(PlayerPrefs.GetString("Class0"));
         Debug.Log(PlayerPrefs.GetString("Class1"));
         Debug.Log(PlayerPrefs.GetString("Class2"));
+
+        Debug.Log(PlayerPrefs.GetInt("PlayerCnt"));
     }
 }
