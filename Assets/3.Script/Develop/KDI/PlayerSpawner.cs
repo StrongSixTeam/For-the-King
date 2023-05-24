@@ -11,34 +11,35 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject hunter;
     [SerializeField] private GameObject scholar;
 
+    [SerializeField] private List<CharacterStatusSet> characterStatusSets;
+
 
     private void Awake()
     {
-        int n = PlayerPrefs.GetInt("PlayerCnt");
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 반복 생성
         {
+            GameObject player;
+            int x; 
             if (PlayerPrefs.GetString(string.Format("Class{0}", i)).Equals("대장장이"))
             {
-                GameObject player = Instantiate(blackSmith, startPos, Quaternion.identity);
-                player.AddComponent<PlayerController>();
-                player.GetComponent<PlayerController>().order = i+1;  //순서 넣어주기
+                player = Instantiate(blackSmith, startPos, Quaternion.identity);
+                x = 0;
             }
             else if (PlayerPrefs.GetString(string.Format("Class{0}", i)).Equals("사냥꾼"))
             {
-                GameObject player = Instantiate(hunter, startPos, Quaternion.identity);
-                player.AddComponent<PlayerController>();
-                player.GetComponent<PlayerController>().order = i+1; 
-            }
-            else if (PlayerPrefs.GetString(string.Format("Class{0}", i)).Equals("학자"))
-            {
-                GameObject player = Instantiate(scholar, startPos, Quaternion.identity);
-                player.AddComponent<PlayerController>();
-                player.GetComponent<PlayerController>().order = i+1; 
+                player = Instantiate(hunter, startPos, Quaternion.identity);
+                x = 1;
             }
             else
             {
-                Debug.Log("직업 비교 실패");
+                player = Instantiate(scholar, startPos, Quaternion.identity);
+                x = 2;
             }
+            player.AddComponent<PlayerStat>();
+            player.GetComponent<PlayerStat>().name = PlayerPrefs.GetString(string.Format("Name{0}", i)); //이름 연결
+            player.GetComponent<PlayerStat>().order = i; //몇번째 플레이어인지
+            player.GetComponent<PlayerStat>().SetStat(characterStatusSets[x]);
+
         }
     }
 }
