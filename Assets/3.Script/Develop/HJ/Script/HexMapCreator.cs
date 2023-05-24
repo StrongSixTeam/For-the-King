@@ -61,7 +61,6 @@ public class HexMapCreator : MonoBehaviour
     bool plainsStartDir;
 
     [SerializeField] GameObject mapObjectCreatorObj;
-    public GameObject player;
 
     //MapSaveData[] mapSaveData;
     string path;
@@ -183,12 +182,9 @@ public class HexMapCreator : MonoBehaviour
     //땅이 될 노드를 지정한다
     private void SetGround()
     {
-        player.transform.position = hexMembers[centerIndex].transform.position;
-        player.transform.position += Vector3.up;
-
         //포레스트
         ForestNode();
-        while (forestNodeCount < 100)
+        while (forestNodeCount < 130)
         {
             ForestNode();
         }
@@ -224,7 +220,7 @@ public class HexMapCreator : MonoBehaviour
                 break;
             }
 
-            if (loopNum++ > 100)
+            if (loopNum++ > 500)
             {
                 throw new System.Exception("Infinite Loop : 1");
             }
@@ -234,7 +230,7 @@ public class HexMapCreator : MonoBehaviour
 
         //황금평원
         PlainsNode();
-        while (plainsNodeCount < 100)
+        while (plainsNodeCount < 140)
         {
             PlainsNode();
         }
@@ -304,7 +300,7 @@ public class HexMapCreator : MonoBehaviour
                     }
                 }
 
-                if (loopNum++ > 100)
+                if (loopNum++ > 500)
                 {
                     throw new System.Exception("Infinite Loop : 2");
                 }
