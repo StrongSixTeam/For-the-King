@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private Vector3 startPos;
+    public Vector3 startPos;
+    public int startIndex;
 
     [Header("플레이어 모델 프리팹")]
     [SerializeField] private GameObject blackSmith;
@@ -14,7 +15,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private List<CharacterStatusSet> characterStatusSets;
 
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 반복 생성
         {
@@ -40,6 +41,7 @@ public class PlayerSpawner : MonoBehaviour
             player.GetComponent<PlayerStat>().order = i; //몇번째 플레이어인지
             player.GetComponent<PlayerStat>().SetStat(characterStatusSets[x]);
 
+            player.GetComponent<PlayerController_Jin>().myHexNum = startIndex;
         }
     }
 }

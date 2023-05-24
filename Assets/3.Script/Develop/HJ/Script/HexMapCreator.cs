@@ -184,7 +184,7 @@ public class HexMapCreator : MonoBehaviour
     {
         //포레스트
         ForestNode();
-        while (forestNodeCount < 130)
+        while (forestNodeCount < 140)
         {
             ForestNode();
         }
