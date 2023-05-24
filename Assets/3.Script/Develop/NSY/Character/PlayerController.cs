@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int order; //플레이어 순서
-
     //여기서부터
+    [Header("Node")]
     public HexMember targetNode;
     public HexMember middletargetNode;
     public List<HexMember> targetNodes = new List<HexMember>();
