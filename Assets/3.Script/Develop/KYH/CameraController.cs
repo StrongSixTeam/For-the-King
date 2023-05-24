@@ -20,27 +20,14 @@ public class CameraController : MonoBehaviour
     private float moveSpeed;
     private float zoomSpeed;
 
-    public GameObject[] Players;
-    public GameObject MainPlayer;
-    private int num = 0;
-
     private QuestManager questManager;
 
     private void Awake()
     {
-        Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
-
         questManager = FindObjectOfType<QuestManager>();
     }
     private void Start()
     {
-        for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
-        {
-            Players[i] = GameObject.FindGameObjectsWithTag("Player")[i];
-        }
-
-        PlayerChange();
-
         moveSpeed = 10f;
         zoomSpeed = 10f;
         zoomMax = 8f;
@@ -95,16 +82,8 @@ public class CameraController : MonoBehaviour
     }
     public void PlayerChange()
     {
-        MainPlayer = Players[num].gameObject;
-
-        transform.SetParent(MainPlayer.transform);
+        transform.SetParent(GameManager.instance.MainPlayer.transform);
         StartCoroutine(CameraSoftMove());
-
-        num++;
-        if (num > Players.Length - 1)
-        {
-            num = 0;
-        }
     }
     public IEnumerator CameraSoftMove() //부드러운 카메라 무빙
     {

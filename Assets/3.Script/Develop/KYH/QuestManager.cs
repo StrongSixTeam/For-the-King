@@ -69,7 +69,7 @@ public class QuestManager : MonoBehaviour
         {
             if (questTurn == 2 || questTurn == 5 || questTurn == 8 || questTurn != 11)
             {
-                Camera.main.transform.SetParent(cameraController.MainPlayer.transform);
+                Camera.main.transform.SetParent(GameManager.instance.MainPlayer.transform);
                 StartCoroutine(cameraController.CameraSoftMove());
 
                 if (questTurn == 5)
