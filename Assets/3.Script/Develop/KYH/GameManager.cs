@@ -26,34 +26,40 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        questManager = FindObjectOfType<QuestManager>();
+        cameraController = FindObjectOfType<CameraController>();
+        moveSlot = FindObjectOfType<MoveSlot>();
+
+        StartCoroutine(Setting_co());
+    }
+    private IEnumerator Setting_co()
+    {
+        yield return null;
+        yield return null;
+
         Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
+
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
         {
             Players[i] = GameObject.FindGameObjectsWithTag("Player")[i];
         }
 
-        questManager = FindObjectOfType<QuestManager>();
-        cameraController = FindObjectOfType<CameraController>();
-        moveSlot = FindObjectOfType<MoveSlot>();
-
         questManager.PopUp(questManager.questTurn);
 
         MainPlayer = Players[turnNum];
     }
-
     private void Update()
     {
         if (questManager.isQuest)
         {
             isMoveSlot = false;
         }
-        if (!questManager.isQuest && !isMoveSlot)
+        if (!questManager.isQuest && !isMoveSlot && Players.Length > 0)
         {
             isMoveSlot = true;
             TurnChange();
         }
     }
-
     public void TurnChange()
     {
         MainPlayer = Players[turnNum];
@@ -65,7 +71,7 @@ public class GameManager : MonoBehaviour
         SlotController.instance.OnClick();
 
         turnNum++;
-        if(turnNum >= Players.Length)
+        if (turnNum >= Players.Length)
         {
             turnNum = 0;
         }
