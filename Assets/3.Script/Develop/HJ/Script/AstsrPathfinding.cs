@@ -14,8 +14,6 @@ public class AstsrPathfinding : MonoBehaviour
     List<HexMember> closeList = new List<HexMember>();
     List<HexMember> finalNodeList = new List<HexMember>();
 
-    [SerializeField] GameObject startPos, endPos;
-
 
     [SerializeField] GameObject[] moveNumberPrefabs = new GameObject[10];
     GameObject[] showMoveCount = new GameObject[10];
@@ -116,9 +114,6 @@ public class AstsrPathfinding : MonoBehaviour
             //목적지에 도착했나요?
             if (currentNode == endNode)
             {
-                startPos.transform.position = startNode.transform.position;
-                endPos.transform.position = endNode.transform.position;
-
                 HexMember targetNode = endNode;
                 while (targetNode != startNode)
                 {
@@ -227,20 +222,4 @@ public class AstsrPathfinding : MonoBehaviour
     }
 
 
-
-    private void OnDrawGizmos()
-    {
-
-        if (finalNodeList != null)
-        {
-            for (int i = 0; i < finalNodeList.Count - 1; i++)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine
-                    (new Vector3(finalNodeList[i].transform.position.x, 1f, finalNodeList[i].transform.position.z),
-                    new Vector3(finalNodeList[i + 1].transform.position.x, 1f, finalNodeList[i + 1].transform.position.z));
-
-            }
-        }
-    }
 }
