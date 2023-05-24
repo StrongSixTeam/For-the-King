@@ -20,7 +20,10 @@ public class AstsrPathfinding : MonoBehaviour
 
     [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
     [SerializeField] int canMoveCount = 5; //플레이어의 이동가능횟수 조절
-    [SerializeField] PlayerController_Jin playerController;
+    [SerializeField] int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
+
+    //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정
+    [SerializeField] PlayerController_Jin[] playerController;
 
 
     int loopCount = 0;
@@ -33,6 +36,16 @@ public class AstsrPathfinding : MonoBehaviour
             showMoveCount[i] = Instantiate(moveNumberPrefabs[i]);
             showMoveCount[i].SetActive(false);
         }
+    }
+
+    public void SetPlayerCount(int playerCount)
+    {
+        playerController = new PlayerController_Jin[playerCount];
+    }
+
+    public void SetPlayer(int index, PlayerController_Jin player)
+    {
+        playerController[index] = player;
     }
 
     void Update()
@@ -50,7 +63,7 @@ public class AstsrPathfinding : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
             {
-                playerController.StartMove(finalNodeList);
+                playerController[WhoseTurn].StartMove(finalNodeList);
                 for (int i = 0; i < 10; i++)
                 {
                     if (showMoveCount[i].activeSelf)
@@ -78,7 +91,7 @@ public class AstsrPathfinding : MonoBehaviour
     public void ShowMovingPath()
     {
         ismovingTurn = true;
-        Pathfinding(hexMapCreator.hexMembers[playerController.myHexNum]);
+        Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
     }
 
     //플레이어로부터 마우스까지의 패스파인딩
