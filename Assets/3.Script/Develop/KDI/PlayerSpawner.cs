@@ -7,6 +7,8 @@ public class PlayerSpawner : MonoBehaviour
     public Vector3 startPos;
     public int startIndex;
 
+    AstsrPathfinding astsrPathfinding;
+
     [Header("플레이어 모델 프리팹")]
     [SerializeField] private GameObject blackSmith;
     [SerializeField] private GameObject hunter;
@@ -17,6 +19,10 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
+        astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+        astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
+
+
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 반복 생성
         {
             GameObject player;
@@ -42,6 +48,10 @@ public class PlayerSpawner : MonoBehaviour
             player.GetComponent<PlayerStat>().SetStat(characterStatusSets[x]);
 
             player.GetComponent<PlayerController_Jin>().myHexNum = startIndex;
+            astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>());
         }
+
     }
+
+
 }
