@@ -13,16 +13,24 @@ public class GameManager : MonoBehaviour
 
     private CameraController cameraController;
 
+    private QuestManager questManager;
+
+    private CharacterStatusSet[] moveCharacter;
+
     private void Start()
     {
+        //moveCharacter = GameObject.FindGameObjectsWithTag("Player")[];
         cameraController = FindObjectOfType<CameraController>();
-    }
+        questManager = FindObjectOfType<QuestManager>();
 
+        questManager.PopUp(questManager.questTurn);
+    }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             cameraController.PlayerChange();
         }
     }
+
 }
