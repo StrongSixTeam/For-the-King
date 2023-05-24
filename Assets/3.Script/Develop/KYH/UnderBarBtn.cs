@@ -22,7 +22,7 @@ public class UnderBarBtn : MonoBehaviour
     {
         MainCam = GameObject.Find("Main Camera");
     }
-    private void PlayerNameSave()
+    public void PlayerNameSave()
     {
         PlayerPrefs.SetInt("PlayerCnt", playerNames.Count);
 
