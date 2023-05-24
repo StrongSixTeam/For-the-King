@@ -10,10 +10,8 @@ public class UnderBarBtn : MonoBehaviour
     [SerializeField] private GameObject LobbyMenuUI;
     [SerializeField] private GameObject CharacterSelectUI;
 
-    [Header("플레이어 이름")]
+    [Header("플레이어 정보")]
     public List<Text> playerNames;
-
-    [Header("플레이어 클래스")]
     public List<Text> playerClass;
 
     private GameObject MainCam;
@@ -26,6 +24,8 @@ public class UnderBarBtn : MonoBehaviour
     }
     private void PlayerNameSave()
     {
+        PlayerPrefs.SetInt("PlayerCnt", playerNames.Count);
+
         for (int i = 0; i < playerNames.Count; i++)
         {
             if (playerNames[i].text == "")
