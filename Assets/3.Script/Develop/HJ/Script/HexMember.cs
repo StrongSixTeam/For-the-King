@@ -47,6 +47,8 @@ public class HexMember : MonoBehaviour
 	[Header("이웃노드")]
 	[ReadOnly] public HexMember[] neighbors = new HexMember[6];
 
+	public bool doNotUse = false; //본인 노드에 오브젝트 설치가 가능한지
+
 
 	public void SetHexMemberData(int xNum, int zNum, int index)
     {
