@@ -63,6 +63,11 @@ public class AstsrPathfinding : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
             {
+                if (!endNode.ispass)
+                {
+                    return;
+                }
+
                 playerController[WhoseTurn].StartMove(finalNodeList);
                 for (int i = 0; i < 10; i++)
                 {

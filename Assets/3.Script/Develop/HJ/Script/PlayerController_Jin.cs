@@ -39,10 +39,12 @@ public class PlayerController_Jin : MonoBehaviour
     //플레이어가 이동을 멈췄을때 밑에 있는 노드 확인
     private void CheckNode()
     {
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, new Vector3(0f, -1f, 0f), 50f);
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position, -transform.up, 50f);
 
         for(int i=0; i<hits.Length; i++)
         {
+            Debug.Log(hits[i]);
             if(hits[i].transform.GetComponent<HexMember>() != null)
             {
                 myHexNum = hits[i].transform.GetComponent<HexMember>().index;
@@ -53,7 +55,7 @@ public class PlayerController_Jin : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, Vector3.down * 50f, Color.black);
+        Debug.DrawRay(transform.position, -transform.up * 50f, Color.black);
 
     }
 

@@ -16,13 +16,18 @@ public class PlayerSpawner : MonoBehaviour
 
     [SerializeField] private List<CharacterStatusSet> characterStatusSets;
 
+    private void Awake()
+    {
+        startIndex = FindObjectOfType<MapObjectCreator>().objectIndex[0];
+        startPos = FindObjectOfType<HexMapCreator>().hexMembers[startIndex].transform.position + new Vector3(0f, 0.5f, 0f);
+
+        astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+        astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
+    }
 
     private void Start()
     {
-        astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
-        astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
-
-
+        
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 반복 생성
         {
             GameObject player;

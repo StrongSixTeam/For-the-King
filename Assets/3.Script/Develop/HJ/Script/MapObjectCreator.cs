@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,11 +88,18 @@ public class MapObjectCreator : MonoBehaviour
         PlainsMapObject();
 
 
+
         //맵 생성이 완료되었으니 플레이어스포너를 생성해주자
-        //그녀석의 스타트포스를 오아튼으로
-        GameObject playerSpawner = Instantiate(this.playerSpawner);
-        playerSpawner.GetComponent<PlayerSpawner>().startIndex = forestNode[objectIndex[0]].index;
-        playerSpawner.GetComponent<PlayerSpawner>().startPos = forestNode[objectIndex[0]].transform.position + new Vector3(0f, 0.2f, 0f);
+        StartCoroutine(PlayerSpawner_co());
+        
+    }
+
+
+    IEnumerator PlayerSpawner_co()
+    {
+        yield return null;
+        Instantiate(playerSpawner);
+        yield break;
     }
 
 
@@ -155,6 +163,36 @@ public class MapObjectCreator : MonoBehaviour
                         }
                     }
 
+                    //오브젝트별 이동불가지역 설정
+                    switch (i)
+                    {
+                        case 0: //오아튼 1
+                            forestNode[random].eventType = 1;
+                            forestNode[random].neighbors[5].eventType = 1;
+                            forestNode[random].neighbors[5].ispass = false;
+                            forestNode[random].neighbors[5].neighbors[0].eventType = 1;
+                            forestNode[random].neighbors[5].neighbors[0].ispass = false;
+                            forestNode[random].neighbors[5].neighbors[1].eventType = 1;
+                            forestNode[random].neighbors[5].neighbors[1].ispass = false;
+                            break;
+                        case 1: //우드스모크 2
+                            forestNode[random].eventType = 2;
+                            forestNode[random].neighbors[0].eventType = 2;
+                            forestNode[random].neighbors[0].ispass = false;
+                            forestNode[random].neighbors[5].eventType = 2;
+                            forestNode[random].neighbors[5].ispass = false;
+                            forestNode[random].neighbors[5].neighbors[0].eventType = 2;
+                            forestNode[random].neighbors[5].neighbors[0].ispass = false;
+                            forestNode[random].neighbors[5].neighbors[5].eventType = 2;
+                            forestNode[random].neighbors[5].neighbors[5].ispass = false;
+                            forestNode[random].neighbors[0].neighbors[0].eventType = 2;
+                            forestNode[random].neighbors[0].neighbors[0].ispass = false;
+                            break;
+
+                        case 3: //눈부신 광산 5
+                            forestNode[random].eventType = 5;
+                            break;
+                    }
                     
 
                     objectIndex.Add(forestNode[random].index);
@@ -225,6 +263,28 @@ public class MapObjectCreator : MonoBehaviour
                                 plainsNode[random].neighbors[o].neighbors[p].doNotUse = true;
                             }
                         }
+                    }
+
+
+                    //오브젝트별 이동불가지역 설정
+                    switch (i)
+                    {
+                        case 0: //패리드 6
+                            plainsNode[random].eventType = 6;
+                            plainsNode[random].neighbors[5].eventType = 6;
+                            plainsNode[random].neighbors[5].ispass = false;
+                            plainsNode[random].neighbors[0].eventType = 6;
+                            plainsNode[random].neighbors[0].ispass = false;
+                            break;
+                        case 1: //잊혀진저장고 7
+                            plainsNode[random].eventType = 7;
+                            break;
+
+                        case 3: //카젤리의 시계 8
+                            plainsNode[random].eventType = 8;
+                            plainsNode[random].neighbors[0].eventType = 8;
+                            plainsNode[random].neighbors[0].ispass = false;
+                            break;
                     }
 
 
