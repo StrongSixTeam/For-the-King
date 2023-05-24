@@ -29,14 +29,9 @@ public class GameManager : MonoBehaviour
         questManager = FindObjectOfType<QuestManager>();
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
-
-        StartCoroutine(Setting_co());
     }
-    private IEnumerator Setting_co()
+    public void Setting()
     {
-        yield return null;
-        yield return null;
-
         Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
 
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
@@ -45,8 +40,9 @@ public class GameManager : MonoBehaviour
         }
 
         questManager.PopUp(questManager.questTurn);
-
         MainPlayer = Players[turnNum];
+
+        cameraController.PlayerChange();
     }
     private void Update()
     {
