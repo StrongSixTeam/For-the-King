@@ -16,6 +16,11 @@ public class PlayerSpawner : MonoBehaviour
 
     [SerializeField] private List<CharacterStatusSet> characterStatusSets;
 
+    private void Awake()
+    {
+        startIndex = FindObjectOfType<MapObjectCreator>().objectIndex[0];
+        startPos = FindObjectOfType<HexMapCreator>().hexMembers[startIndex].transform.position + new Vector3(0f, 0.2f, 0f);
+    }
 
     private void Start()
     {
