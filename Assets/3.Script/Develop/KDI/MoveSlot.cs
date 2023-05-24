@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveSlot : MonoBehaviour
 {
-    public CharacterStatusSet player;
+    public PlayerStat player;
 
     public void SetMove()
     {
