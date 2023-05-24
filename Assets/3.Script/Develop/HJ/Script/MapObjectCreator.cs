@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,11 +88,18 @@ public class MapObjectCreator : MonoBehaviour
         PlainsMapObject();
 
 
+
         //맵 생성이 완료되었으니 플레이어스포너를 생성해주자
-        //그녀석의 스타트포스를 오아튼으로
-        GameObject playerSpawner = Instantiate(this.playerSpawner);
-        playerSpawner.GetComponent<PlayerSpawner>().startIndex = forestNode[objectIndex[0]].index;
-        playerSpawner.GetComponent<PlayerSpawner>().startPos = forestNode[objectIndex[0]].transform.position + new Vector3(0f, 0.2f, 0f);
+        StartCoroutine(PlayerSpawner_co());
+        
+    }
+
+
+    IEnumerator PlayerSpawner_co()
+    {
+        yield return null;
+        Instantiate(playerSpawner);
+        yield break;
     }
 
 
