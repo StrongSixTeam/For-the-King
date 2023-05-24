@@ -42,11 +42,13 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        if (!questManager.isQuest)
-        {
-            CameraMove();
-            CameraZoom();
-        }
+        //if (!questManager.isQuest)
+        //{
+        //    CameraMove();
+        //    CameraZoom();
+        //}
+        CameraMove();
+        CameraZoom();
     }
     private void CameraMove() //마우스 위치가 화면 모서리 부근에 있을 때 카메라 이동시키기
     {
@@ -95,7 +97,7 @@ public class CameraController : MonoBehaviour
         StartCoroutine(CameraSoftMove());
 
         num++;
-        if (num > 2)
+        if (num > Players.Length - 1)
         {
             num = 0;
         }
