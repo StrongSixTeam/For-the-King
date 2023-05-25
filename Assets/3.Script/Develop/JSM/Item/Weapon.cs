@@ -4,14 +4,16 @@ using UnityEngine;
 
 public enum EquipType
 {
-    Weapon,
-    Armor,
-    Accessory
+    무기,
+    헬멧,
+    방어구,
+    신발,
+    장신구
 }
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Item/weapon")]
 public class Weapon : Item
 {
-    public EquipType equipType = EquipType.Weapon;
+    public EquipType equipType = EquipType.무기;
     public float maxAdDmg;        // 최대 데미지 (AD)
     public float adDmg;           // 공격력
     public float maxApDmg;        // 최대 데미지 (AP)
