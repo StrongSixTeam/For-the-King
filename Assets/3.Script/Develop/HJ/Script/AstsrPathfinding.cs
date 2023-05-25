@@ -61,62 +61,77 @@ public class AstsrPathfinding : MonoBehaviour
 
     void Update()
     {
-
-        MouseInput();
-
-        if (endNode != saveTargetNode)
+        if (!GameManager.instance.isBlock)
         {
-            saveTargetNode = endNode;
+            MouseInput();
 
-            switch (endNode.ispass)
+            if (endNode != saveTargetNode)
             {
-                case true:
-                    ShowHexCursorGreen();
-                    break;
-                case false:
-                    ShowHexCursorRad();
-                    break;
-            }
-        }
+                saveTargetNode = endNode;
 
-        if (ismovingTurn)
-        {
-
-            Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
-
-            if(endNode != saveTargetNode)
-            {
-                for (int i = 0; i < finalNodeList.Count; i++)
+                switch (endNode.ispass)
                 {
-                    if (endNode.transform.position != finalNodeList[i].transform.position)
-                    {
+                    case true:
+                        ShowHexCursorGreen();
+                        break;
+                    case false:
                         ShowHexCursorRad();
-                    }
+                        break;
                 }
             }
 
-
-            if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
+            if (ismovingTurn)
             {
-                if (!endNode.ispass)
-                {
-                    return;
-                }
 
-                //이동
-                playerController[WhoseTurn].StartMove(finalNodeList);
+                Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
 
-                //번호 없앰
-                for (int i = 0; i < 10; i++)
+                if (endNode != saveTargetNode)
                 {
-                    if (showMoveCount[i].activeSelf)
+                    for (int i = 0; i < finalNodeList.Count; i++)
                     {
-                        showMoveCount[i].SetActive(false);
+                        if (endNode.transform.position != finalNodeList[i].transform.position)
+                        {
+                            ShowHexCursorRad();
+                        }
                     }
                 }
-                ismovingTurn = false;
+
+
+                if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
+                {
+                    if (!endNode.ispass)
+                    {
+                        return;
+                    }
+
+                    //이동
+                    playerController[WhoseTurn].StartMove(finalNodeList);
+
+                    //번호 없앰
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (showMoveCount[i].activeSelf)
+                        {
+                            showMoveCount[i].SetActive(false);
+                        }
+                    }
+                    ismovingTurn = false;
+                }
+            }
+
+            if (SlotController.instance.success + SlotController.instance.fail == SlotController.instance.maxSlotCount && GameManager.instance.isTrunChange)
+            {
+                GameManager.instance.isTrunChange = false;
+                ismovingTurn = true;
+                canMoveCount = SlotController.instance.success;
+                WhoseTurn = GameManager.instance.nextTurn - 1;
+                if (WhoseTurn < 0)
+                {
+                    WhoseTurn = PlayerPrefs.GetInt("PlayerCnt") - 1;
+                }
             }
         }
+
     }
 
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -327,8 +327,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Players: []
   MainPlayer: {fileID: 0}
-  isMoveSlot: 0
+  nextTurn: 0
+  isQuestFinish: 0
   isSettingDone: 0
+  isTrunChange: 0
+  isBlock: 0
+  turnChageBtn: {fileID: 8337259541062103716}
 --- !u!4 &514105501
 Transform:
   m_ObjectHideFlags: 0
@@ -566,6 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539cb039ca1d7ae4f91fff430adf8ad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
+  defaultPos: {x: 0, y: 7, z: -8}
 --- !u!1 &696460582605733024
 GameObject:
   m_ObjectHideFlags: 0
@@ -4307,6 +4313,7 @@ MonoBehaviour:
   success: 0
   fail: 0
   percent: 80
+  isSlot: 0
   type: 0
 --- !u!4 &3251791843725406745
 Transform:

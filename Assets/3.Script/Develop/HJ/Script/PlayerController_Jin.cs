@@ -10,6 +10,8 @@ public class PlayerController_Jin : MonoBehaviour
     private MapObjectCreator map;
     private QuestManager quest;
 
+    public bool isRun;
+
     private void Start()
     {
         map = FindObjectOfType<MapObjectCreator>();
@@ -70,24 +72,27 @@ public class PlayerController_Jin : MonoBehaviour
 
     private IEnumerator MoveTargetNode()
     {
-        for (int i = 0; i < targetNodes.Count;)
+        List<HexMember> nowtTargetNodes = new List<HexMember>();
+        nowtTargetNodes = targetNodes;
+        for (int i = 0; i < nowtTargetNodes.Count;)
         {
 
             Rotation(i);
-            while (Vector3.Distance(transform.position, targetNodes[i].transform.position) > 0.01f)
+            while (Vector3.Distance(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0)) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetNodes[i].transform.position, 4f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 4f * Time.deltaTime);
                 yield return null;
             }
 
-            transform.position = targetNodes[i].transform.position;
+            transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             i++;
-            myHexNum = targetNodes[i].index;
+            myHexNum = nowtTargetNodes[i].index;
             if (CheckObject()) //이동중 오브젝트를 만나면 이동 정지
             {
                 yield break;
             }
         }
+        nowtTargetNodes.Clear();
         targetNodes.Clear();
         yield break;
     }

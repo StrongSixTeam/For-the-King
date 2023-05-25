@@ -19,6 +19,8 @@ public class SlotController : MonoBehaviour
     public int fail = 0; //실패 몇개
     public int percent = 40; //확률 몇퍼
 
+    public bool isSlot = false;
+
     private void Awake()
     {
         instance = this;
@@ -83,6 +85,7 @@ public class SlotController : MonoBehaviour
 
     IEnumerator MakeMove() //슬롯 보여주는 용(only)
     {
+        isSlot = true;
         int a = fixCount;
         for (int i = 0; i < maxSlotCount; i++)
         {
@@ -113,6 +116,7 @@ public class SlotController : MonoBehaviour
         transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
         fixCount = a;
         Invoke("SlotOff", 2f);
+        isSlot = false;
     }
 
     private void SlotOff()

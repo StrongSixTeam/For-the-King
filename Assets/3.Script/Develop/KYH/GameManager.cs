@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,15 +16,20 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] Players;
     public GameObject MainPlayer;
-    private int turnNum = 0;
+    public int nextTurn = 0;
 
     private QuestManager questManager;
+    private PlayerController_Jin playerController;
 
     private CameraController cameraController;
     private MoveSlot moveSlot;
 
-    public bool isMoveSlot = false;
+    public bool isQuestFinish = false;
     public bool isSettingDone = false;
+    public bool isTrunChange = false;
+    public bool isBlock = false;
+
+    public Button turnChageBtn;
 
     private void Start()
     {
@@ -41,26 +47,40 @@ public class GameManager : MonoBehaviour
         }
 
         questManager.PopUp(questManager.questTurn);
-        MainPlayer = Players[turnNum];
+        MainPlayer = Players[nextTurn];
+        playerController = MainPlayer.GetComponent<PlayerController_Jin>();
 
         cameraController.PlayerChange();
         isSettingDone = true;
     }
     private void Update()
     {
-        if (questManager.isQuest)
+        if (playerController != null)
         {
-            isMoveSlot = false;
-        }
-        if (!questManager.isQuest && !isMoveSlot && Players.Length > 0)
-        {
-            isMoveSlot = true;
-            TurnChange();
+            if (questManager.isQuest || playerController.isRun || SlotController.instance.isSlot)
+            {
+                isBlock = true;
+                turnChageBtn.interactable = false;
+            }
+            else if (!questManager.isQuest && !playerController.isRun)
+            {
+                isBlock = false;
+                turnChageBtn.interactable = true;
+            }
+            if (!questManager.isQuest && !isQuestFinish && Players.Length > 0)
+            {
+                isQuestFinish = true;
+                TurnChange();
+            }
         }
     }
     public void TurnChange()
     {
-        MainPlayer = Players[turnNum];
+        isTrunChange = true;
+
+        MainPlayer = Players[nextTurn];
+        playerController = MainPlayer.GetComponent<PlayerController_Jin>();
+
         cameraController.PlayerChange();
 
         moveSlot.player = MainPlayer.GetComponent<PlayerStat>();
@@ -68,10 +88,10 @@ public class GameManager : MonoBehaviour
 
         SlotController.instance.OnClick();
 
-        turnNum++;
-        if (turnNum >= Players.Length)
+        nextTurn++;
+        if (nextTurn >= Players.Length)
         {
-            turnNum = 0;
+            nextTurn = 0;
         }
     }
 }
