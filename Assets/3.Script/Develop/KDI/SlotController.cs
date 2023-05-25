@@ -8,8 +8,9 @@ public class SlotController : MonoBehaviour
     public static SlotController instance = null;
 
     public Sprite[] move; //이동 UI 이미지
+    public Sprite[] attackBlackSmith; //공격 UI 이미지 - 대장장이
+    public Sprite[] attackHunter; //공격 UI 이미지 - 사냥꾼
     public Sprite[] attackScholar; //공격 UI 이미지 - 학자
-    public Sprite[] attack; //뭐
 
     [Header("여기서 수치값 조정 가능 + 다른 스크립트에서도 참조 가능")]
     public int maxSlotCount; //육각형 슬롯 개수
@@ -25,9 +26,9 @@ public class SlotController : MonoBehaviour
     public enum Type
     {
         move,
-        attackScholar,
         attackBlackSmith,
-        attackHunter
+        attackHunter,
+        attackScholar
     }
     public Type type;
 
@@ -109,8 +110,16 @@ public class SlotController : MonoBehaviour
                 }
             }
         }
-            transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
+        transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
         fixCount = a;
+        Invoke("SlotOff", 2f);
     }
 
+    private void SlotOff()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
 }
