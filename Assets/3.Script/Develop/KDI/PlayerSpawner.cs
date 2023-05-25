@@ -14,6 +14,9 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject hunter;
     [SerializeField] private GameObject scholar;
 
+    [Header("플레이어 UI")]
+    [SerializeField] private PlayerUI[] playerUI; 
+
     [SerializeField] private List<CharacterStatusSet> characterStatusSets;
 
     private void Awake()
@@ -23,13 +26,19 @@ public class PlayerSpawner : MonoBehaviour
 
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
         astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
+
+        playerUI = FindObjectsOfType<PlayerUI>();
+        playerUI[0].gameObject.SetActive(false);
+        playerUI[1].gameObject.SetActive(false);
+        playerUI[2].gameObject.SetActive(false);
     }
 
     private void Start()
     {
-        
-        for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 반복 생성
+        for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 모델 반복 생성
         {
+            playerUI[i].gameObject.SetActive(true); //해당 UI도 켜주기
+            
             GameObject player;
             int x; 
             if (PlayerPrefs.GetString(string.Format("Class{0}", i)).Equals("대장장이"))
@@ -56,7 +65,6 @@ public class PlayerSpawner : MonoBehaviour
             astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>());
         }
         GameManager.instance.Setting();
-
     }
 
 

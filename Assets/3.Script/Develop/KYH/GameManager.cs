@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private MoveSlot moveSlot;
 
     public bool isMoveSlot = false;
+    public bool isSettingDone = false;
 
     private void Start()
     {
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         MainPlayer = Players[turnNum];
 
         cameraController.PlayerChange();
+        isSettingDone = true;
     }
     private void Update()
     {
