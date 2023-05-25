@@ -2861,8 +2861,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Players: []
   MainPlayer: {fileID: 0}
-  isMoveSlot: 0
+  nextTurn: 0
+  isQuestFinish: 0
   isSettingDone: 0
+  isTrunChange: 0
+  isBlock: 0
+  turnChageBtn: {fileID: 8337259541062103716}
 --- !u!4 &514105501
 Transform:
   m_ObjectHideFlags: 0
@@ -5393,6 +5397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539cb039ca1d7ae4f91fff430adf8ad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
+  defaultPos: {x: 0, y: 7, z: -8}
 --- !u!1 &1064524161
 GameObject:
   m_ObjectHideFlags: 0
@@ -15604,6 +15610,7 @@ MonoBehaviour:
   success: 0
   fail: 0
   percent: 80
+  isSlot: 0
   type: 0
 --- !u!4 &3251791843725406745
 Transform:
