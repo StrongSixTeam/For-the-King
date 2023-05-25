@@ -12,7 +12,7 @@ public class MapObjectCreator : MonoBehaviour
     public HexMember[] forestNode;
     public HexMember[] plainsNode;
 
-    [Header("Index6 : 오아튼, 우드스모크, 눈부신광산, 패리드, 잊혀진저장고, 카젤리의시계")]
+    [Header("Index7 : 오아튼, 우드스모크, 눈부신광산, 패리드, 잊혀진저장고, 카젤리의시계, 시체의지하실")]
     public List<int> objectIndex = new List<int>();
 
 
@@ -25,10 +25,11 @@ public class MapObjectCreator : MonoBehaviour
     //[SerializeField] GameObject forest04; //카오스 우두머리 - 소영언니가 프리팹 만들어줌
     [SerializeField] GameObject forest05; //눈부신 광산 (dungeon05)
 
-    private GameObject[] plainsObj = new GameObject[3];
+    private GameObject[] plainsObj = new GameObject[4];
     [SerializeField] GameObject plains01; //패리드 (townPlains1)
     [SerializeField] GameObject plains02; //잊혀진 저장고 (dungeon07)
     [SerializeField] GameObject plains03; //카젤리의 시계 (townPlains2)
+    [SerializeField] GameObject plains04; //시체의 지하실 (licheCrypt_0)
 
 
     [Header("수호의 숲")]
@@ -213,6 +214,7 @@ public class MapObjectCreator : MonoBehaviour
         plainsObj[0] = plains01;
         plainsObj[1] = plains02;
         plainsObj[2] = plains03;
+        plainsObj[3] = plains04;
 
 
         for (int i = 0; i < plainsObj.Length; i++)
@@ -280,11 +282,15 @@ public class MapObjectCreator : MonoBehaviour
                             plainsNode[random].eventType = 7;
                             break;
 
-                        case 3: //카젤리의 시계 8
+                        case 2: //카젤리의 시계 8
                             plainsNode[random].eventType = 8;
                             plainsNode[random].neighbors[0].eventType = 8;
                             plainsNode[random].neighbors[0].ispass = false;
                             break;
+                        case 3:
+                            plainsNode[random].eventType = 9;
+                            break;
+
                     }
 
 
