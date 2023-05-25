@@ -18,12 +18,16 @@ public class AstsrPathfinding : MonoBehaviour
     [SerializeField] GameObject[] moveNumberPrefabs = new GameObject[10];
     GameObject[] showMoveCount = new GameObject[10];
 
-    [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
-    [SerializeField] int canMoveCount = 5; //플레이어의 이동가능횟수 조절
+    [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 
+    [SerializeField] int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
     [SerializeField] int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
     //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정
     [SerializeField] PlayerController_Jin[] playerController;
+
+    [SerializeField] GameObject hexCursorRadPrefab;
+    [SerializeField] GameObject hexCursorGreenPrefab;
+    GameObject[] hexCursor;
 
 
     int loopCount = 0;
@@ -36,6 +40,9 @@ public class AstsrPathfinding : MonoBehaviour
             showMoveCount[i] = Instantiate(moveNumberPrefabs[i]);
             showMoveCount[i].SetActive(false);
         }
+
+        hexCursor[0] = Instantiate(hexCursorRadPrefab);
+        hexCursor[1] = Instantiate(hexCursorGreenPrefab);
     }
 
     public void SetPlayerCount(int playerCount)
@@ -59,6 +66,16 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 saveTargetNode = endNode;
                 ShowMovingPath();
+            }
+
+            switch (endNode.ispass)
+            {
+                case true:
+                    ShowHexCursorGreen();
+                    break;
+                case false:
+                    ShowHexCursorRad();
+                    break;
             }
 
             if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
@@ -98,6 +115,33 @@ public class AstsrPathfinding : MonoBehaviour
         ismovingTurn = true;
         Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
     }
+
+    private void ShowHexCursorRad()
+    {
+        if (!hexCursor[0].activeSelf)
+        {
+            hexCursor[0].SetActive(true);
+        }
+        if (hexCursor[1].activeSelf)
+        {
+            hexCursor[1].SetActive(false);
+        }
+        hexCursor[0].transform.position = endNode.transform.position;
+    }
+    private void ShowHexCursorGreen()
+    {
+        if (!hexCursor[1].activeSelf)
+        {
+            hexCursor[1].SetActive(true);
+        }
+        if (hexCursor[0].activeSelf)
+        {
+            hexCursor[0].SetActive(false);
+        }
+
+        hexCursor[1].transform.position = endNode.transform.position;
+    }
+
 
     //플레이어로부터 마우스까지의 패스파인딩
     private void Pathfinding(HexMember startNode)
@@ -161,7 +205,8 @@ public class AstsrPathfinding : MonoBehaviour
             loopCount++;
             if (loopCount > 500)
             {
-                Debug.Log("무한루프");
+                Debug.Log("너무 멀어요");
+                ShowHexCursorRad();
                 loopCount = 0;
                 ListReset();
                 return;

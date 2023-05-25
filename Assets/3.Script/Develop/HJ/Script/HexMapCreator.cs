@@ -184,7 +184,7 @@ public class HexMapCreator : MonoBehaviour
     {
         //포레스트
         ForestNode();
-        while (forestNodeCount < 140)
+        while (forestNodeCount < 150)
         {
             ForestNode();
         }
@@ -230,7 +230,7 @@ public class HexMapCreator : MonoBehaviour
 
         //황금평원
         PlainsNode();
-        while (plainsNodeCount < 140)
+        while (plainsNodeCount < 150)
         {
             PlainsNode();
         }

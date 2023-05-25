@@ -27,37 +27,15 @@ public class PlayerController_Jin : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, targetNodes[i].transform.position, 2f * Time.deltaTime);
                 yield return null;
             }
+
             transform.position = targetNodes[i].transform.position;
             i++;
-            CheckNode();
+            myHexNum = targetNodes[i].index;
         }
         targetNodes.Clear();
         yield break;
     }
 
-
-    //플레이어가 이동을 멈췄을때 밑에 있는 노드 확인
-    private void CheckNode()
-    {
-        RaycastHit[] hits;
-        hits = Physics.RaycastAll(transform.position, -transform.up, 50f);
-
-        for(int i=0; i<hits.Length; i++)
-        {
-            Debug.Log(hits[i]);
-            if(hits[i].transform.GetComponent<HexMember>() != null)
-            {
-                myHexNum = hits[i].transform.GetComponent<HexMember>().index;
-                return;
-            }
-        }
-    }
-
-    private void Update()
-    {
-        Debug.DrawRay(transform.position, -transform.up * 50f, Color.black);
-
-    }
 
 
     //플레이어의 이동을 멈추고 싶을 때 호출
