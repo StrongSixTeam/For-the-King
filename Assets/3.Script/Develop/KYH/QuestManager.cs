@@ -102,8 +102,8 @@ public class QuestManager : MonoBehaviour
         NPCimg.sprite = questText[num].NPCImg;
         if (questText[num].questPos != "")
         {
-            //Camera.main.transform.SetParent(GameObject.FindGameObjectWithTag(questText[num].questPos).transform);
-            //¸Ê ÁÂÇ¥ ¹Þ¾Æ¿Â µÚ È°¼ºÈ­
+            Camera.main.transform.SetParent(GameObject.FindGameObjectWithTag(questText[num].questPos).transform);
+            StartCoroutine(cameraController.CameraSoftMove());
         }
     }
     private void QuestSet(string questName)
@@ -159,7 +159,6 @@ public class QuestManager : MonoBehaviour
     public void PopUp(int turn)
     {
         QuestSet(turn);
-        StartCoroutine(cameraController.CameraSoftMove());
         questPopUpUI.SetActive(true);
         isQuest = true;
     }
@@ -167,7 +166,6 @@ public class QuestManager : MonoBehaviour
     {
         this.questName = questName;
         QuestSet(questName);
-        StartCoroutine(cameraController.CameraSoftMove());
         questPopUpUI.SetActive(true);
         isClear = true;
         isQuest = true;
