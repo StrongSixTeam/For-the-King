@@ -12,17 +12,17 @@ public class MapObjectCreator : MonoBehaviour
     public HexMember[] forestNode;
     public HexMember[] plainsNode;
 
-    [Header("Index7 : 오아튼, 우드스모크, 눈부신광산, 패리드, 잊혀진저장고, 카젤리의시계, 시체의지하실")]
+    [Header("Index9 : 오아튼, 우드스모크, 신의의식도구, 카오스우두머리, 눈부신광산, 패리드, 잊혀진저장고, 카젤리의시계, 시체의지하실")]
     public List<int> objectIndex = new List<int>();
 
 
     [Header("필수(퀘스트) 오브젝트 8개")]
-    private GameObject[] forestObj = new GameObject[3];
+    private GameObject[] forestObj = new GameObject[5];
     //[SerializeField] GameObject[] fixedObject;
     [SerializeField] GameObject forest01; //오아튼(시작지점) (townForest1)
     [SerializeField] GameObject forest02; //우드스모크 (townForest2)
-    //[SerializeField] GameObject forest03; //신의 의식도구
-    //[SerializeField] GameObject forest04; //카오스 우두머리 - 소영언니가 프리팹 만들어줌
+    [SerializeField] GameObject forest03; //신의 의식도구 (sealMovingParts)
+    [SerializeField] GameObject forest04; //카오스 우두머리 (enCultistA3)
     [SerializeField] GameObject forest05; //눈부신 광산 (dungeon05)
 
     private GameObject[] plainsObj = new GameObject[4];
@@ -113,7 +113,9 @@ public class MapObjectCreator : MonoBehaviour
     {
         forestObj[0] = forest01;
         forestObj[1] = forest02;
-        forestObj[2] = forest05;
+        forestObj[2] = forest03;
+        forestObj[3] = forest04;
+        forestObj[4] = forest05;
 
         for (int i = 0; i < forestObj.Length; i++)
         {
@@ -140,7 +142,7 @@ public class MapObjectCreator : MonoBehaviour
                         }
                     }
 
-                    if (loopNum++ > 3000)
+                    if (loopNum++ > 5000)
                     {
                         throw new System.Exception("아 설마 숲");
                     }
@@ -242,7 +244,7 @@ public class MapObjectCreator : MonoBehaviour
                         }
                     }
 
-                    if (loopNum++ > 3000)
+                    if (loopNum++ > 5000)
                     {
                         throw new System.Exception("아 설마 평원");
                     }
