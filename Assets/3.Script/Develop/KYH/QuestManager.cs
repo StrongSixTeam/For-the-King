@@ -32,9 +32,10 @@ public class QuestManager : MonoBehaviour
     private bool isClear = false;
     private bool isChaosLoss = false;
 
-    private int questTurn = 0;
+    [Header("퀘스트 순서")]
+    public int questTurn = 0;
+    public string questName;
     private int MaxTurn = 11;
-    private string questName;
 
     private CameraController cameraController;
 
@@ -68,7 +69,7 @@ public class QuestManager : MonoBehaviour
         {
             if (questTurn == 2 || questTurn == 5 || questTurn == 8 || questTurn != 11)
             {
-                Camera.main.transform.SetParent(cameraController.MainPlayer.transform);
+                Camera.main.transform.SetParent(GameManager.instance.MainPlayer.transform);
                 StartCoroutine(cameraController.CameraSoftMove());
 
                 if (questTurn == 5)
@@ -101,7 +102,8 @@ public class QuestManager : MonoBehaviour
         NPCimg.sprite = questText[num].NPCImg;
         if (questText[num].questPos != "")
         {
-            Camera.main.transform.SetParent(GameObject.FindGameObjectWithTag(questText[num].questPos).transform);
+            //Camera.main.transform.SetParent(GameObject.FindGameObjectWithTag(questText[num].questPos).transform);
+            //맵 좌표 받아온 뒤 활성화
         }
     }
     private void QuestSet(string questName)
@@ -205,32 +207,32 @@ public class QuestManager : MonoBehaviour
 
     //테스트용, 함수 호출 형태
 
-    public void TestMain()
-    {
-        PopUp(questTurn);
-    }
-    public void TestClear1()
-    {
-        PopUp("WoodSmoke");
-    }
-    public void TestClear2()
-    {
-        PopUp("ChaosBoss");
-    }
-    public void TestClear3()
-    {
-        PopUp("God");
-    }
-    public void TestClear4()
-    {
-        PopUp("ShinyCave");
-    }
-    public void TestClear5()
-    {
-        PopUp("Parid");
-    }
-    public void TestClear6()
-    {
-        PopUp("Corpse");
-    }
+    //public void TestMain()
+    //{
+    //    PopUp(questTurn);
+    //}
+    //public void TestClear1()
+    //{
+    //    PopUp("WoodSmoke");
+    //}
+    //public void TestClear2()
+    //{
+    //    PopUp("ChaosBoss");
+    //}
+    //public void TestClear3()
+    //{
+    //    PopUp("God");
+    //}
+    //public void TestClear4()
+    //{
+    //    PopUp("ShinyCave");
+    //}
+    //public void TestClear5()
+    //{
+    //    PopUp("Parid");
+    //}
+    //public void TestClear6()
+    //{
+    //    PopUp("Corpse");
+    //}
 }

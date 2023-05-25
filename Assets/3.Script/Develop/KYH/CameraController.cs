@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEditor;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -19,25 +20,17 @@ public class CameraController : MonoBehaviour
     private float moveSpeed;
     private float zoomSpeed;
 
-    //플레이어 관련 변수 (변경 예정)
-    private GameObject[] Players;
-    public GameObject MainPlayer;
-    private int num = 0;
-
     private QuestManager questManager;
 
     private void Awake()
     {
-        Players = GameObject.FindGameObjectsWithTag("Player");
         questManager = FindObjectOfType<QuestManager>();
     }
     private void Start()
     {
-        PlayerChange();
-
         moveSpeed = 10f;
         zoomSpeed = 10f;
-        zoomMax = 7f;
+        zoomMax = 8f;
         zoomMin = 4f;
     }
     private void Update()
@@ -77,7 +70,7 @@ public class CameraController : MonoBehaviour
     {
         float zoomDir = Input.GetAxis("Mouse ScrollWheel");
 
-        if ((transform.position.y >= zoomMax && zoomDir < 0) || (transform.position.y <= zoomMin && zoomDir > 0))
+        if ((transform.localPosition.y >= zoomMax && zoomDir < 0) || (transform.localPosition.y <= zoomMin && zoomDir > 0))
         {
             return;
         }
@@ -89,16 +82,8 @@ public class CameraController : MonoBehaviour
     }
     public void PlayerChange()
     {
-        MainPlayer = Players[num];
-
-        transform.SetParent(MainPlayer.transform);
+        transform.SetParent(GameManager.instance.MainPlayer.transform);
         StartCoroutine(CameraSoftMove());
-
-        num++;
-        if (num > 2)
-        {
-            num = 0;
-        }
     }
     public IEnumerator CameraSoftMove() //부드러운 카메라 무빙
     {

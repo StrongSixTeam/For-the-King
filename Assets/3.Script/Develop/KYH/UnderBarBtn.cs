@@ -10,10 +10,8 @@ public class UnderBarBtn : MonoBehaviour
     [SerializeField] private GameObject LobbyMenuUI;
     [SerializeField] private GameObject CharacterSelectUI;
 
-    [Header("플레이어 이름")]
+    [Header("플레이어 정보")]
     public List<Text> playerNames;
-
-    [Header("플레이어 클래스")]
     public List<Text> playerClass;
 
     private GameObject MainCam;
@@ -24,8 +22,10 @@ public class UnderBarBtn : MonoBehaviour
     {
         MainCam = GameObject.Find("Main Camera");
     }
-    private void PlayerNameSave()
+    public void PlayerNameSave()
     {
+        PlayerPrefs.SetInt("PlayerCnt", playerNames.Count);
+
         for (int i = 0; i < playerNames.Count; i++)
         {
             if (playerNames[i].text == "")
@@ -56,7 +56,7 @@ public class UnderBarBtn : MonoBehaviour
 
         while (Vector3.Distance(MainCam.transform.position, MoveCamPos) > 0.01f)
         {
-            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.03f);
+            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.01f);
             yield return null;
         }
         MainCam.transform.position = MoveCamPos;

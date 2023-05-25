@@ -10,7 +10,7 @@ public class LobbyBtn : MonoBehaviour
     
     private GameObject MainCam;
 
-    private Vector3 MoveCamPos = Vector3.zero; //게임 시작 눌렀을 때 이동할 카메라 위치
+    private Vector3 MoveCamPos = new Vector3(0, 85, 0); //게임 시작 눌렀을 때 이동할 카메라 위치
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class LobbyBtn : MonoBehaviour
         
         while(Vector3.Distance(MainCam.transform.position, MoveCamPos) > 0.01f)
         {
-            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.03f);
+            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.01f);
             yield return null;
         }
         MainCam.transform.position = MoveCamPos;
