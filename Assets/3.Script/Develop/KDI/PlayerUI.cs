@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private int order;
+   public int order;
 
     [SerializeField] private PlayerStat playerStat;
 
@@ -22,7 +22,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.isSettingDone)
+        if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Length > order))
         {
             playerStat = GameManager.instance.Players[order].GetComponent<PlayerStat>();
             name.text = playerStat.name;
