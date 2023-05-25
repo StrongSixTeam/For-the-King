@@ -24,7 +24,7 @@ public class PlayerController_Jin : MonoBehaviour
             Rotation(i);
             while (Vector3.Distance(transform.position, targetNodes[i].transform.position) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetNodes[i].transform.position, 2f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetNodes[i].transform.position, 4f * Time.deltaTime);
                 yield return null;
             }
 

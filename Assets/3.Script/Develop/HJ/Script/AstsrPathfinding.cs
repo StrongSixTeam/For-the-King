@@ -41,8 +41,12 @@ public class AstsrPathfinding : MonoBehaviour
             showMoveCount[i].SetActive(false);
         }
 
+        //부모설정 캔버스로 해두자
+        Transform gridCanvas = FindObjectOfType<HexMapCreator>().transform.GetChild(0);
         hexCursor[0] = Instantiate(hexCursorRadPrefab);
         hexCursor[1] = Instantiate(hexCursorGreenPrefab);
+        hexCursor[0].transform.parent = gridCanvas;
+        hexCursor[1].transform.parent = gridCanvas;
     }
 
     public void SetPlayerCount(int playerCount)
@@ -57,16 +61,12 @@ public class AstsrPathfinding : MonoBehaviour
 
     void Update()
     {
-        if (ismovingTurn) //(Input.GetMouseButton(0))
-        {
-            MouseInput();
 
-            //이동수를 보여줌
-            if (endNode != null && endNode != saveTargetNode)
-            {
-                saveTargetNode = endNode;
-                ShowMovingPath();
-            }
+        MouseInput();
+
+        if (endNode != saveTargetNode)
+        {
+            saveTargetNode = endNode;
 
             switch (endNode.ispass)
             {
@@ -77,6 +77,24 @@ public class AstsrPathfinding : MonoBehaviour
                     ShowHexCursorRad();
                     break;
             }
+        }
+
+        if (ismovingTurn)
+        {
+
+            Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
+
+            if(endNode != saveTargetNode)
+            {
+                for (int i = 0; i < finalNodeList.Count; i++)
+                {
+                    if (endNode.transform.position != finalNodeList[i].transform.position)
+                    {
+                        ShowHexCursorRad();
+                    }
+                }
+            }
+
 
             if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
             {
@@ -85,7 +103,10 @@ public class AstsrPathfinding : MonoBehaviour
                     return;
                 }
 
+                //이동
                 playerController[WhoseTurn].StartMove(finalNodeList);
+
+                //번호 없앰
                 for (int i = 0; i < 10; i++)
                 {
                     if (showMoveCount[i].activeSelf)
@@ -97,6 +118,7 @@ public class AstsrPathfinding : MonoBehaviour
             }
         }
     }
+
 
     //타겟노드 설정
     private void MouseInput()
@@ -110,11 +132,6 @@ public class AstsrPathfinding : MonoBehaviour
         }
     }
 
-    public void ShowMovingPath()
-    {
-        ismovingTurn = true;
-        Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
-    }
 
     private void ShowHexCursorRad()
     {
@@ -126,7 +143,7 @@ public class AstsrPathfinding : MonoBehaviour
         {
             hexCursor[1].SetActive(false);
         }
-        hexCursor[0].transform.position = endNode.transform.position;
+        hexCursor[0].transform.position = new Vector3(endNode.transform.position.x, 0.1f, endNode.transform.position.z);
     }
     private void ShowHexCursorGreen()
     {
@@ -139,7 +156,7 @@ public class AstsrPathfinding : MonoBehaviour
             hexCursor[0].SetActive(false);
         }
 
-        hexCursor[1].transform.position = endNode.transform.position;
+        hexCursor[1].transform.position = new Vector3(endNode.transform.position.x, 0.1f, endNode.transform.position.z);
     }
 
 
@@ -186,6 +203,7 @@ public class AstsrPathfinding : MonoBehaviour
 
                 if (finalNodeList.Count > canMoveCount)
                 {
+                    ShowHexCursorRad();
                     loopCount = 0;
                     ListReset();
                     return;
@@ -205,8 +223,6 @@ public class AstsrPathfinding : MonoBehaviour
             loopCount++;
             if (loopCount > 500)
             {
-                Debug.Log("너무 멀어요");
-                ShowHexCursorRad();
                 loopCount = 0;
                 ListReset();
                 return;
