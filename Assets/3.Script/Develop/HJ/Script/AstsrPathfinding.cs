@@ -27,7 +27,7 @@ public class AstsrPathfinding : MonoBehaviour
 
     [SerializeField] GameObject hexCursorRadPrefab;
     [SerializeField] GameObject hexCursorGreenPrefab;
-    GameObject[] hexCursor;
+    GameObject[] hexCursor = new GameObject[2];
 
 
     int loopCount = 0;
