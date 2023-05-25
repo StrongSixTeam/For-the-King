@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     private Vector3 DefaultPos = new Vector3(0, 7f, -8f);
 
     private bool isCameraPosChange = false;
+    private bool isMove = false;
 
     private float zoomMax;
     private float zoomMin;
@@ -40,6 +41,10 @@ public class CameraController : MonoBehaviour
             CameraMove();
             CameraZoom();
         }
+        if (!isCameraPosChange && !isMove && GameManager.instance.MainPlayer.transform.position != null)
+        {
+            transform.position = DefaultPos + GameManager.instance.MainPlayer.transform.position;
+        }
     }
     private void CameraMove() //마우스 위치가 화면 모서리 부근에 있을 때 카메라 이동시키기
     {
@@ -50,18 +55,22 @@ public class CameraController : MonoBehaviour
         {
             if (worldPos.x < 0.01f)
             {
+                isMove = true;
                 transform.position += Vector3.left * moveSpeed * Time.deltaTime;
             }
             if (worldPos.x > 0.99f)
             {
+                isMove = true;
                 transform.position += Vector3.right * moveSpeed * Time.deltaTime;
             }
             if (worldPos.y < 0.01f)
             {
+                isMove = true;
                 transform.position += Vector3.back * moveSpeed * Time.deltaTime;
             }
             if (worldPos.y > 0.99f)
             {
+                isMove = true;
                 transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
             }
         }
@@ -96,7 +105,12 @@ public class CameraController : MonoBehaviour
         }
 
         transform.localPosition = DefaultPos;
-        isCameraPosChange = false;
+        if (!questManager.isQuest)
+        {
+            transform.SetParent(null);
+            isCameraPosChange = false;
+            isMove = false;
+        }
         yield break;
     }
 
