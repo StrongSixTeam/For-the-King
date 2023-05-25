@@ -24,7 +24,6 @@ public class ItemInputTest1 : MonoBehaviour
         quick.QuickSlotShow();
         if (InventoryController1.instance.itemlistCnt < InventoryController1.instance.itemList.Count)
         {
-            InventoryController1.instance.ItemListStack();
             InventoryController1.instance.itemlistCnt++;
         }
         InventoryController1.instance.InventoryShow();
