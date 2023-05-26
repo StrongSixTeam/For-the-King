@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class BattleLoader : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> Players;
-    [SerializeField] private List<GameObject> Enemys;
+    public List<GameObject> Players;
+    public List<GameObject> Enemys;
+
+    [SerializeField] GameObject battleUI;
+    [SerializeField] GameObject fieldUI;
 
     Vector3 defaultPos;
     int enemyZPos = -98;
@@ -17,7 +20,7 @@ public class BattleLoader : MonoBehaviour
     {
         defaultPos = new Vector3(-103.5f, 0, -11f);
 
-        Invoke("PrefsInstantiate", 1f);
+        Invoke("PrefsInstantiate", 1f); //테스트
     }
     private void PrefsInstantiate() //전투 돌입 시 실행할 함수
     {
@@ -35,6 +38,9 @@ public class BattleLoader : MonoBehaviour
             Players[0].transform.position += Vector3.back * 2;
             Players[2].transform.position += Vector3.forward * 2;
         }
+
+        battleUI.SetActive(true);
+        fieldUI.SetActive(false);
     }
     private void PrefsDestroy()
     {
