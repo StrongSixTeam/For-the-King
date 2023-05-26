@@ -18,6 +18,7 @@ public class SlotController : MonoBehaviour
     public int success = 0; //성공 몇개
     public int fail = 0; //실패 몇개
     public int percent = 40; //확률 몇퍼
+    public int limit = 0;
 
     public bool isSlot = false;
 
@@ -34,7 +35,8 @@ public class SlotController : MonoBehaviour
     }
     public Type type;
 
-    private void Initialized() //초기화
+
+    public void Initialized() //초기화
     {
         success = 0;
         fail = 0;
@@ -45,7 +47,7 @@ public class SlotController : MonoBehaviour
                 transform.GetChild(i).GetChild(j).gameObject.SetActive(false); //모든 오브젝트 끄기
             }
         }
-        transform.GetChild(6).gameObject.SetActive(false);
+        transform.GetChild(6).gameObject.SetActive(false); //텍스트 끄기
 
         for (int i = 0; i < maxSlotCount; i++)
         {
@@ -72,6 +74,7 @@ public class SlotController : MonoBehaviour
                         transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
                     }
                 }
+                Debug.Log("Initialized end");
             }
         }
     }

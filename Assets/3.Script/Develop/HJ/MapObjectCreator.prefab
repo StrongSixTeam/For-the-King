@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &86828125471249697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8398649165553229917}
+  m_Layer: 0
+  m_Name: Obstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8398649165553229917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86828125471249697}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 814152802457992663}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &967862670593394626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 814152802457992663}
+  m_Layer: 0
+  m_Name: FixedObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &814152802457992663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967862670593394626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8398649165553229917}
+  m_Father: {fileID: 4206465801367493474}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4206465801367493472
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +88,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 814152802457992663}
+  - {fileID: 5155270403919692891}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,6 +110,7 @@ MonoBehaviour:
   forestNode: []
   plainsNode: []
   objectIndex: 
+  randomObjectIndex: 
   forest01: {fileID: 1089782899645764163, guid: 02d1630d2b20eec47ae44e0fbeb8ec54, type: 3}
   forest02: {fileID: 5413650634167189445, guid: 7c32a5b41d759ad43858546ff5b269ad, type: 3}
   forest03: {fileID: 7895344502317097393, guid: e5722796d0fa0054c89873bf77042c51, type: 3}
@@ -56,25 +120,50 @@ MonoBehaviour:
   plains02: {fileID: 8759384007448388627, guid: 3f1289e31857c3444ac0545adc17d280, type: 3}
   plains03: {fileID: 4967205741637804292, guid: 3b21b8971ef9279429e35b37de7cb97f, type: 3}
   plains04: {fileID: 1311003865724928210, guid: f333adef5c74f6944a0cb6c018606ff7, type: 3}
-  sanctum:
-  - {fileID: 3142866259497976069, guid: 57a96525f63ccec4096c2805b514aca6, type: 3}
-  - {fileID: 3120060140414101672, guid: 780d2f1b38ba3a345bad674d3eae00cd, type: 3}
-  - {fileID: 8370057087251622903, guid: 432164455b51d4340afaf1a4df41e38c, type: 3}
+  sanctumFocus: {fileID: 3142866259497976069, guid: 57a96525f63ccec4096c2805b514aca6, type: 3}
+  sanctumLife: {fileID: 3120060140414101672, guid: 780d2f1b38ba3a345bad674d3eae00cd, type: 3}
+  sanctumWisdow: {fileID: 8370057087251622903, guid: 432164455b51d4340afaf1a4df41e38c, type: 3}
   tree: {fileID: 436459074804776310, guid: cd9185e90e69be544975d68243be2d95, type: 3}
-  stoneForest:
-  - {fileID: 695666878996391207, guid: 145b66cd7dfbef24997bf255997e8ead, type: 3}
-  - {fileID: 6370315032450676449, guid: 131837a8dd63819409fa58497957454e, type: 3}
-  - {fileID: 7501656452491552942, guid: 7c7cdfc6006bc6e44a793508b93eb408, type: 3}
+  stoneForest01: {fileID: 695666878996391207, guid: 145b66cd7dfbef24997bf255997e8ead, type: 3}
+  stoneForest02: {fileID: 6370315032450676449, guid: 131837a8dd63819409fa58497957454e, type: 3}
+  stoneForest03: {fileID: 7501656452491552942, guid: 7c7cdfc6006bc6e44a793508b93eb408, type: 3}
   grass: {fileID: 2132971231978481493, guid: 9bb7f332bc05ade4e9a247593debb180, type: 3}
-  stonePlains:
-  - {fileID: 695666878996391207, guid: e178503211e252348a24ef42f92eb252, type: 3}
-  - {fileID: 6370315032450676449, guid: 069cc34fd95056a4698d02eea1b38f50, type: 3}
-  - {fileID: 7501656452491552942, guid: 285b52f02a538384c9d2897f65e6b598, type: 3}
-  monstarObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  randomObj:
-  - {fileID: 0}
-  - {fileID: 0}
+  stonePlains01: {fileID: 695666878996391207, guid: e178503211e252348a24ef42f92eb252, type: 3}
+  stonePlains02: {fileID: 6370315032450676449, guid: 069cc34fd95056a4698d02eea1b38f50, type: 3}
+  stonePlains03: {fileID: 7501656452491552942, guid: 285b52f02a538384c9d2897f65e6b598, type: 3}
+  monster01: {fileID: 3675015340740892206, guid: 389cbfedfcfaa7947ab121d921a99c60, type: 3}
+  monster02: {fileID: 2765426467768479422, guid: 2e55b240c6b398940a7889e6e83de3b8, type: 3}
+  monster03: {fileID: 6541223531711131642, guid: 5368714bca5f5c2449c35282c1d59a6b, type: 3}
+  monster04: {fileID: 3742400009106858217, guid: 03e40db1bd76a6a4c97d55b20d2ef577, type: 3}
+  exclamation01: {fileID: 317518826156295344, guid: cd06c0515933ac049a1e69997e1cae34, type: 3}
+  exclamation02: {fileID: 1574962076900650377, guid: 18a62b1d47b005e44907910befac90cd, type: 3}
+--- !u!1 &9042725260943253884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5155270403919692891}
+  m_Layer: 0
+  m_Name: HideObject(random)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5155270403919692891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9042725260943253884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4206465801367493474}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
