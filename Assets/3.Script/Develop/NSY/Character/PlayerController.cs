@@ -11,9 +11,14 @@ public class PlayerController : MonoBehaviour
     public List<HexMember> targetNodes = new List<HexMember>();
 
     bool moveSwitch = false;
+    private Animator playerAni;
 
     //[SerializeField] private float movementDuration = 1, rotationDuration = 0.3f;
 
+    private void Awake()
+    {
+        TryGetComponent(out playerAni);
+    }
 
     public void Update()
     {
@@ -27,6 +32,7 @@ public class PlayerController : MonoBehaviour
         {
             moveSwitch = true;
             StartCoroutine(MoveTargetNode());
+            playerAni.SetBool("MapRun" ,true );
             // StartCoroutine(RotationCoroutine());
         }
 
@@ -36,6 +42,7 @@ public class PlayerController : MonoBehaviour
             //targetNodes.Clear();
             moveSwitch = false;
             Debug.Log("µµÂø");
+            playerAni.SetBool("MapRun", false);
         }
     }
 

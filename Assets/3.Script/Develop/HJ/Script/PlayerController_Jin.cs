@@ -9,6 +9,7 @@ public class PlayerController_Jin : MonoBehaviour
     public List<HexMember> targetNodes = new List<HexMember>();
     private MapObjectCreator map;
     private QuestManager quest;
+    private Animator animator;
 
     public bool isRun;
 
@@ -17,6 +18,8 @@ public class PlayerController_Jin : MonoBehaviour
         map = FindObjectOfType<MapObjectCreator>();
         quest = FindObjectOfType<QuestManager>();
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        animator = GetComponent<Animator>();
+        
     }
 
 
@@ -25,6 +28,7 @@ public class PlayerController_Jin : MonoBehaviour
     {
         targetNodes = finalNodeList;
         StartCoroutine(MoveTargetNode());
+        animator.SetBool("MapRun", true);
     }
 
     private bool CheckObject()
@@ -124,6 +128,7 @@ public class PlayerController_Jin : MonoBehaviour
         CheckMyHexNum();
         nowtTargetNodes.Clear();
         targetNodes.Clear();
+        animator.SetBool("MapRun", false);
         yield break;
     }
 
