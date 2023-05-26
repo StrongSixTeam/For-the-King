@@ -28,13 +28,12 @@ public class PlayerController_Jin : MonoBehaviour
 
     private bool CheckObject()
     {
-        if (map.objectIndex[0] == myHexNum)
+        if (map.objectIndex[0] == myHexNum) //오아튼
         {
-            EncounterManager.instance.type = EncounterManager.Type.town; //scriptable data 짜도되고 연결 이쁘게만 하기
-            EncounterManager.instance.ActiveEncounter("오아튼", "오아튼에 온걸 환영");
+            EncounterManager.instance.ActiveEncounter(0);
             return true;
         }
-        else if (map.objectIndex[1] == myHexNum)
+        else if (map.objectIndex[1] == myHexNum) //우드스모크
         {
             if (quest.questTurn == 2)
             {
@@ -43,40 +42,44 @@ public class PlayerController_Jin : MonoBehaviour
             }
             else
             {
-                EncounterManager.instance.type = EncounterManager.Type.town;
-                EncounterManager.instance.ActiveEncounter("우드스모크", "우드스모크 환영 티비");
+                EncounterManager.instance.ActiveEncounter(1);
             }
             return true;
         }
-        else if (map.objectIndex[2] == myHexNum)
+        else if (map.objectIndex[2] == myHexNum) //신의의식도구
         {
-            EncounterManager.instance.type = EncounterManager.Type.dungeon;
-            EncounterManager.instance.ActiveEncounter("눈부신 광산", "여기는 던전 티비");
+            EncounterManager.instance.ActiveEncounter(2);
             return true;
         }
-        else if (map.objectIndex[3] == myHexNum)
+        else if (map.objectIndex[3] == myHexNum) //카오스 우두머리
         {
-            EncounterManager.instance.type = EncounterManager.Type.town;
-            EncounterManager.instance.ActiveEncounter("패리드", "패리드 환영 티비");
+            EncounterManager.instance.ActiveEncounter(3);
             //if (quest) quest 클리어 설정해주기 (추후에)
             return true;
         }
-        else if (map.objectIndex[4] == myHexNum)
+        else if (map.objectIndex[4] == myHexNum) //눈부신 광산
         {
-            EncounterManager.instance.type = EncounterManager.Type.dungeon;
-            EncounterManager.instance.ActiveEncounter("잊혀진 저장고", "버려짐 티비");
+            EncounterManager.instance.ActiveEncounter(4);
             return true;
         }
-        else if (map.objectIndex[5] == myHexNum)
+        else if (map.objectIndex[5] == myHexNum) //패리드
         {
-            EncounterManager.instance.type = EncounterManager.Type.town;
-            EncounterManager.instance.ActiveEncounter("카젤리의 시계", "여기 마을 맞나?");
+            EncounterManager.instance.ActiveEncounter(5);
             return true;
         }
-        else if (map.objectIndex[6] == myHexNum)
+        else if (map.objectIndex[6] == myHexNum) //잊혀진 저장고
         {
-            EncounterManager.instance.type = EncounterManager.Type.dungeon;
-            EncounterManager.instance.ActiveEncounter("시체의 지하실", "던전 티비");
+            EncounterManager.instance.ActiveEncounter(6);
+            return true;
+        }
+        else if (map.objectIndex[7] == myHexNum) //카젤리의 시계
+        {
+            EncounterManager.instance.ActiveEncounter(7);
+            return true;
+        }
+        else if (map.objectIndex[8] == myHexNum) //시체의 지하실
+        {
+            EncounterManager.instance.ActiveEncounter(8);
             return true;
         }
         else
@@ -91,20 +94,25 @@ public class PlayerController_Jin : MonoBehaviour
         nowtTargetNodes = targetNodes;
         for (int i = 0; i < nowtTargetNodes.Count;)
         {
-
+            int origin = myHexNum;
             Rotation(i);
             while (Vector3.Distance(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0)) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 4f * Time.deltaTime);
                 yield return null;
             }
-
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             myHexNum = nowtTargetNodes[i].index;
             i++;
-            if (CheckObject()) //이동중 오브젝트를 만나면 이동 정지
+            if (myHexNum != origin)
             {
-                yield break;
+                if (CheckObject())
+                {
+                    CheckMyHexNum();
+                    nowtTargetNodes.Clear();
+                    targetNodes.Clear();
+                    yield break;
+                }
             }
         }
         CheckMyHexNum();
