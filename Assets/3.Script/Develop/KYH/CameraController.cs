@@ -54,22 +54,22 @@ public class CameraController : MonoBehaviour
 
         if (!isCameraPosChange)
         {
-            if (worldPos.x < 0.01f)
+            if (worldPos.x < 0.01f || Input.GetKey(KeyCode.A))
             {
                 isMove = true;
                 transform.position += Vector3.left * moveSpeed * Time.deltaTime;
             }
-            if (worldPos.x > 0.99f)
+            if (worldPos.x > 0.99f || Input.GetKey(KeyCode.D))
             {
                 isMove = true;
                 transform.position += Vector3.right * moveSpeed * Time.deltaTime;
             }
-            if (worldPos.y < 0.01f)
+            if (worldPos.y < 0.01f || Input.GetKey(KeyCode.S))
             {
                 isMove = true;
                 transform.position += Vector3.back * moveSpeed * Time.deltaTime;
             }
-            if (worldPos.y > 0.99f)
+            if (worldPos.y > 0.99f || Input.GetKey(KeyCode.W))
             {
                 isMove = true;
                 transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
