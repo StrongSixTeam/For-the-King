@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public bool isTrunChange = false;
     public bool isBlock = false;
 
+    public bool isBattle = false;
+
     public Button turnChageBtn;
 
     private void Start()
