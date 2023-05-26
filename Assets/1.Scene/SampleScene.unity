@@ -8763,7 +8763,10 @@ MonoBehaviour:
   txtName: {fileID: 1666116819}
   txtContext: {fileID: 16080410}
   parent: {fileID: 0}
-  type: 0
+  encounter: []
+  btns: []
+  slot: {fileID: 0}
+  successCalc: {fileID: 0}
 --- !u!224 &1769912809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15701,6 +15704,7 @@ MonoBehaviour:
   success: 0
   fail: 0
   percent: 80
+  limit: 0
   isSlot: 0
   type: 0
 --- !u!4 &3251791843725406745
