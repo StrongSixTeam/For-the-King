@@ -26,7 +26,14 @@ public class PlayerController_Jin : MonoBehaviour
     //Astar 스크립트에서 호출
     public void StartMove(List<HexMember> finalNodeList)
     {
+        if(finalNodeList[finalNodeList.Count-1].index == myHexNum)
+        {
+            animator.SetBool("MapRun", false);
+            return;
+        }
         targetNodes = finalNodeList;
+
+
         StartCoroutine(MoveTargetNode());
         animator.SetBool("MapRun", true);
     }
@@ -104,10 +111,12 @@ public class PlayerController_Jin : MonoBehaviour
             while (Vector3.Distance(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0)) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 4f * Time.deltaTime);
+
                 yield return null;
             }
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             myHexNum = nowtTargetNodes[i].index;
+
             i++;
             if (myHexNum != origin)
             {
@@ -117,6 +126,7 @@ public class PlayerController_Jin : MonoBehaviour
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
                     targetNodes.Clear();
+                    animator.SetBool("MapRun", false);
                     yield break;
                 }
                 else
@@ -158,6 +168,8 @@ public class PlayerController_Jin : MonoBehaviour
         {
             if(targetNodes[i].index == stopIndex)
             {
+                animator.SetBool("MapRun", false);
+
                 while (targetNodes[targetNodes.Count-1].index != stopIndex)
                 {
                     targetNodes.RemoveAt(targetNodes.Count-1);
