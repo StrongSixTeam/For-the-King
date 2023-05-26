@@ -100,16 +100,33 @@ public class PlayerController_Jin : MonoBehaviour
             }
 
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
-            i++;
             myHexNum = nowtTargetNodes[i].index;
+            i++;
             if (CheckObject()) //이동중 오브젝트를 만나면 이동 정지
             {
                 yield break;
             }
         }
+        CheckMyHexNum();
         nowtTargetNodes.Clear();
         targetNodes.Clear();
         yield break;
+    }
+
+    private void CheckMyHexNum()
+    {
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position, -transform.up, 10f);
+
+        for(int i=0; i<hits.Length; i++)
+        {
+            if(hits[i].transform.GetComponent<HexMember>() != null)
+            {
+                myHexNum = hits[i].transform.GetComponent<HexMember>().index;
+                return;
+            }
+        }
+
     }
 
 
