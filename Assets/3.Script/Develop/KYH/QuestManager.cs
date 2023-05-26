@@ -69,7 +69,7 @@ public class QuestManager : MonoBehaviour
         {
             if (questTurn == 2 || questTurn == 5 || questTurn == 8 || questTurn != 11)
             {
-                Camera.main.transform.SetParent(GameManager.instance.MainPlayer.transform);
+                cameraController.targetPos = GameManager.instance.MainPlayer.transform.position + cameraController.defaultPos;
                 StartCoroutine(cameraController.CameraSoftMove());
 
                 if (questTurn == 5)
@@ -102,7 +102,7 @@ public class QuestManager : MonoBehaviour
         NPCimg.sprite = questText[num].NPCImg;
         if (questText[num].questPos != "")
         {
-            Camera.main.transform.SetParent(GameObject.FindGameObjectWithTag(questText[num].questPos).transform);
+            cameraController.targetPos = GameObject.FindGameObjectWithTag(questText[num].questPos).transform.position + cameraController.defaultPos;
             StartCoroutine(cameraController.CameraSoftMove());
         }
     }

@@ -11,7 +11,8 @@ public class CameraController : MonoBehaviour
     private Vector3 worldPos;
 
     //플레이어 변경 시 카메라 초기 값
-    private Vector3 DefaultPos = new Vector3(0, 7f, -8f);
+    public Vector3 targetPos;
+    public Vector3 defaultPos = new Vector3(0, 7f, -8f);
 
     private bool isCameraPosChange = false;
     private bool isMove = false;
@@ -41,9 +42,9 @@ public class CameraController : MonoBehaviour
             CameraMove();
             CameraZoom();
         }
-        if (!isCameraPosChange && !isMove && GameManager.instance.MainPlayer.transform.position != null)
+        if (!isCameraPosChange && !isMove && GameManager.instance.MainPlayer != null)
         {
-            transform.position = DefaultPos + GameManager.instance.MainPlayer.transform.position;
+            transform.position = defaultPos + GameManager.instance.MainPlayer.transform.position;
         }
     }
     private void CameraMove() //마우스 위치가 화면 모서리 부근에 있을 때 카메라 이동시키기
@@ -53,22 +54,22 @@ public class CameraController : MonoBehaviour
 
         if (!isCameraPosChange)
         {
-            if (worldPos.x < 0.01f)
+            if (worldPos.x < 0.01f || Input.GetKey(KeyCode.A))
             {
                 isMove = true;
                 transform.position += Vector3.left * moveSpeed * Time.deltaTime;
             }
-            if (worldPos.x > 0.99f)
+            if (worldPos.x > 0.99f || Input.GetKey(KeyCode.D))
             {
                 isMove = true;
                 transform.position += Vector3.right * moveSpeed * Time.deltaTime;
             }
-            if (worldPos.y < 0.01f)
+            if (worldPos.y < 0.01f || Input.GetKey(KeyCode.S))
             {
                 isMove = true;
                 transform.position += Vector3.back * moveSpeed * Time.deltaTime;
             }
-            if (worldPos.y > 0.99f)
+            if (worldPos.y > 0.99f || Input.GetKey(KeyCode.W))
             {
                 isMove = true;
                 transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
@@ -91,23 +92,21 @@ public class CameraController : MonoBehaviour
     }
     public void PlayerChange()
     {
-        transform.SetParent(GameManager.instance.MainPlayer.transform);
+        targetPos = GameManager.instance.MainPlayer.transform.position + defaultPos;
         StartCoroutine(CameraSoftMove());
     }
     public IEnumerator CameraSoftMove() //부드러운 카메라 무빙
     {
         isCameraPosChange = true;
 
-        while (Vector3.Distance(transform.localPosition, DefaultPos) > 0.01)
+        while (Vector3.Distance(transform.position, targetPos) > 0.01)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, DefaultPos, 0.02f);
+            transform.position = Vector3.Lerp(transform.position, targetPos, 0.02f);
             yield return null;
         }
-
-        transform.localPosition = DefaultPos;
+        transform.position = targetPos;
         if (!questManager.isQuest)
         {
-            transform.SetParent(null);
             isCameraPosChange = false;
             isMove = false;
         }

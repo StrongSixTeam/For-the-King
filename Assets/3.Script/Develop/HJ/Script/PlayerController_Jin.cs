@@ -10,6 +10,8 @@ public class PlayerController_Jin : MonoBehaviour
     private MapObjectCreator map;
     private QuestManager quest;
 
+    public bool isRun;
+
     private void Start()
     {
         map = FindObjectOfType<MapObjectCreator>();
@@ -28,38 +30,53 @@ public class PlayerController_Jin : MonoBehaviour
     {
         if (map.objectIndex[0] == myHexNum)
         {
-            Debug.Log("오아튼에 도착!");
+            EncounterManager.instance.type = EncounterManager.Type.town; //scriptable data 짜도되고 연결 이쁘게만 하기
+            EncounterManager.instance.ActiveEncounter("오아튼", "오아튼에 온걸 환영");
             return true;
         }
         else if (map.objectIndex[1] == myHexNum)
         {
-            Debug.Log("우드스모크에 도착!");
             if (quest.questTurn == 2)
             {
                 quest.PopUp("WoodSmoke");
                 quest.questTurn = 3;
             }
+            else
+            {
+                EncounterManager.instance.type = EncounterManager.Type.town;
+                EncounterManager.instance.ActiveEncounter("우드스모크", "우드스모크 환영 티비");
+            }
             return true;
         }
         else if (map.objectIndex[2] == myHexNum)
         {
-            Debug.Log("눈부신 광산에 도착!");
+            EncounterManager.instance.type = EncounterManager.Type.dungeon;
+            EncounterManager.instance.ActiveEncounter("눈부신 광산", "여기는 던전 티비");
             return true;
         }
         else if (map.objectIndex[3] == myHexNum)
         {
-            Debug.Log("패리드에 도착!");
+            EncounterManager.instance.type = EncounterManager.Type.town;
+            EncounterManager.instance.ActiveEncounter("패리드", "패리드 환영 티비");
             //if (quest) quest 클리어 설정해주기 (추후에)
             return true;
         }
         else if (map.objectIndex[4] == myHexNum)
         {
-            Debug.Log("잊혀진 저장고에 도착!");
+            EncounterManager.instance.type = EncounterManager.Type.dungeon;
+            EncounterManager.instance.ActiveEncounter("잊혀진 저장고", "버려짐 티비");
             return true;
         }
         else if (map.objectIndex[5] == myHexNum)
         {
-            Debug.Log("카젤리의 시계에 도착!");
+            EncounterManager.instance.type = EncounterManager.Type.town;
+            EncounterManager.instance.ActiveEncounter("카젤리의 시계", "여기 마을 맞나?");
+            return true;
+        }
+        else if (map.objectIndex[6] == myHexNum)
+        {
+            EncounterManager.instance.type = EncounterManager.Type.dungeon;
+            EncounterManager.instance.ActiveEncounter("시체의 지하실", "던전 티비");
             return true;
         }
         else
@@ -70,26 +87,46 @@ public class PlayerController_Jin : MonoBehaviour
 
     private IEnumerator MoveTargetNode()
     {
-        for (int i = 0; i < targetNodes.Count;)
+        List<HexMember> nowtTargetNodes = new List<HexMember>();
+        nowtTargetNodes = targetNodes;
+        for (int i = 0; i < nowtTargetNodes.Count;)
         {
 
             Rotation(i);
-            while (Vector3.Distance(transform.position, targetNodes[i].transform.position) > 0.01f)
+            while (Vector3.Distance(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0)) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetNodes[i].transform.position, 4f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 4f * Time.deltaTime);
                 yield return null;
             }
 
-            transform.position = targetNodes[i].transform.position;
+            transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
+            myHexNum = nowtTargetNodes[i].index;
             i++;
-            myHexNum = targetNodes[i].index;
             if (CheckObject()) //이동중 오브젝트를 만나면 이동 정지
             {
                 yield break;
             }
         }
+        CheckMyHexNum();
+        nowtTargetNodes.Clear();
         targetNodes.Clear();
         yield break;
+    }
+
+    private void CheckMyHexNum()
+    {
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position, -transform.up, 10f);
+
+        for(int i=0; i<hits.Length; i++)
+        {
+            if(hits[i].transform.GetComponent<HexMember>() != null)
+            {
+                myHexNum = hits[i].transform.GetComponent<HexMember>().index;
+                return;
+            }
+        }
+
     }
 
 

@@ -15,10 +15,10 @@ public class MapObjectCreator : MonoBehaviour
     [Header("Index9 : 오아튼, 우드스모크, 신의의식도구, 카오스우두머리, 눈부신광산, 패리드, 잊혀진저장고, 카젤리의시계, 시체의지하실")]
     public List<int> objectIndex = new List<int>();
 
+    //성소의 인덱스번호도 추가함 (집중, 생명, 지혜
 
     [Header("필수(퀘스트) 오브젝트 8개")]
     private GameObject[] forestObj = new GameObject[5];
-    //[SerializeField] GameObject[] fixedObject;
     [SerializeField] GameObject forest01; //오아튼(시작지점) (townForest1)
     [SerializeField] GameObject forest02; //우드스모크 (townForest2)
     [SerializeField] GameObject forest03; //신의 의식도구 (sealMovingParts)
@@ -31,16 +31,24 @@ public class MapObjectCreator : MonoBehaviour
     [SerializeField] GameObject plains03; //카젤리의 시계 (townPlains2)
     [SerializeField] GameObject plains04; //시체의 지하실 (licheCrypt_0)
 
+    [Header("성소 : 집중, 생명, 지혜")]
+    [SerializeField] GameObject[] sanctumObj = new GameObject[3];
+
 
     [Header("수호의 숲")]
-    //[SerializeField] GameObject tree;
-    //[SerializeField] GameObject stoneForest;
+    [SerializeField] GameObject tree; //(Tree_Fir)
+    [SerializeField] GameObject[] stoneForest = new GameObject[3]; //(Stone_(n)F)
 
     [Header("황금평원")]
     [SerializeField] GameObject grass; //(hexPlains01_grass)
-    //[SerializeField] GameObject stonePlains; 
+    [SerializeField] GameObject[] stonePlains = new GameObject[3]; //(Stone_(n)P)
 
 
+    [Header("랜덤 몬스터 4")]
+    [SerializeField] GameObject[] monstarObj = new GameObject[4];
+
+    [Header("랜덤 오브젝트 2")]
+    [SerializeField] GameObject[] randomObj = new GameObject[2];
 
     List<int> closeList = new List<int>();
 
@@ -92,7 +100,7 @@ public class MapObjectCreator : MonoBehaviour
 
         //맵 생성이 완료되었으니 플레이어스포너를 생성해주자
         StartCoroutine(PlayerSpawner_co());
-        
+
     }
 
 
@@ -132,7 +140,7 @@ public class MapObjectCreator : MonoBehaviour
                     {
                         for (int p = 0; p < 6; p++)
                         {
-                            if (forestNode[random].neighbors[o].neighbors[p].mapType != 1 || 
+                            if (forestNode[random].neighbors[o].neighbors[p].mapType != 1 ||
                                 forestNode[random].neighbors[o].neighbors[p].doNotUse)
                             {
                                 checkPlace = false;
@@ -196,7 +204,7 @@ public class MapObjectCreator : MonoBehaviour
                             forestNode[random].eventType = 5;
                             break;
                     }
-                    
+
 
                     objectIndex.Add(forestNode[random].index);
                     GameObject temp = Instantiate(forestObj[i]);
@@ -306,6 +314,53 @@ public class MapObjectCreator : MonoBehaviour
             closeList.Clear();
         }
     }
+
+    //성소 3개 생성 
+    private void CreateSanctum()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+
+            random = Random.Range(0, 2);
+            if (random == 1)
+            {
+                while (true)
+                {
+                    random = Random.Range(0, forestNode.Length);
+                    if (!forestNode[random].doNotUse)
+                    {
+                        GameObject sanctum = Instantiate(sanctumObj[i]);
+                        sanctum.transform.position = forestNode[random].transform.position;
+                    }
+                }
+                
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+    //장애물 생성
+    private void CreateObstacle()
+    {
+        //생성하고 배열에 넣자
+        //남은 노드에 장애물을 생성하고
+        //ispass를 false로 하자
+
+
+
+
+    }
+
+
+
 
 
     //플레이어가 이동할때마다 랜덤으로 생성
