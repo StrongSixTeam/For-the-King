@@ -16,6 +16,7 @@ public class PlayerController_Jin : MonoBehaviour
     {
         map = FindObjectOfType<MapObjectCreator>();
         quest = FindObjectOfType<QuestManager>();
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
 
@@ -108,10 +109,15 @@ public class PlayerController_Jin : MonoBehaviour
             {
                 if (CheckObject())
                 {
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
                     targetNodes.Clear();
                     yield break;
+                }
+                else
+                {
+                    gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
         }
