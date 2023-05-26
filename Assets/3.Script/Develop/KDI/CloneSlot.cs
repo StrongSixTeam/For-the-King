@@ -51,4 +51,41 @@ public class CloneSlot : MonoBehaviour
             }
         }
     }
+
+    public void Try()
+    {
+        StartCoroutine(TryCo());
+    }
+    IEnumerator TryCo() //슬롯 보여주는 용
+    {
+        SlotController.instance.isSlot = true;
+        int a = SlotController.instance.fixCount;
+        for (int i = 0; i < SlotController.instance.maxSlotCount; i++)
+        {
+            yield return new WaitForSeconds(0.4f);
+            if (SlotController.instance.fixCount > 0)
+            {
+                transform.GetChild(i).GetChild(1).gameObject.SetActive(true); //고정 이동칸
+                SlotController.instance.fixCount--;
+                SlotController.instance.success++;
+                continue;
+            }
+            else
+            {
+                int j = Random.Range(0, 100);
+                if (j < SlotController.instance.percent)
+                {
+                    transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
+                    SlotController.instance.success++;
+                }
+                else
+                {
+                    transform.GetChild(i).GetChild(3).gameObject.SetActive(true);
+                    SlotController.instance.fail++;
+                }
+            }
+        }
+        SlotController.instance.fixCount = a;
+        SlotController.instance.isSlot = false;
+    }
 }
