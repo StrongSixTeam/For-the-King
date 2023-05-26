@@ -78,8 +78,8 @@ public class MapObjectCreator : MonoBehaviour
     {
         hexMapCreator = FindObjectOfType<HexMapCreator>();
         fixedObjectBox = transform.GetChild(0);
-        hideObjectBox = fixedObjectBox.transform.GetChild(0);
-        obstacleBox = transform.GetChild(1);
+        obstacleBox = fixedObjectBox.transform.GetChild(0);
+        hideObjectBox = transform.GetChild(1);
 
         forestNode = new HexMember[hexMapCreator.forestNodeCount];
         plainsNode = new HexMember[hexMapCreator.plainsNodeCount];
@@ -497,7 +497,7 @@ public class MapObjectCreator : MonoBehaviour
                         GameObject sanctum = Instantiate(randomObj[i]);
                         sanctum.transform.position = plainsNode[random].transform.position;
                         sanctum.transform.SetParent(hideObjectBox);
-                        forestNode[random].doNotUse = true;
+                        plainsNode[random].doNotUse = true;
                         randomObjectIndex.Add(plainsNode[random].index);
                         randomObj[i].SetActive(false);
                         break;
