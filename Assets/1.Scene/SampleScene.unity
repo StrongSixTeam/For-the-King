@@ -15646,6 +15646,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1713013736058947054}
   - component: {fileID: 1713013736058947055}
+  - component: {fileID: 1713013736058947056}
+  - component: {fileID: 1713013736058947057}
   m_Layer: 5
   m_Name: Battle
   m_TagString: Untagged
@@ -15716,6 +15718,41 @@ MonoBehaviour:
   PBground: {fileID: 21300000, guid: d2f84eeaf8a611148b179318a7c795ae, type: 3}
   EBground: {fileID: 21300000, guid: c895942ddd6aca340b292ae7fa40a46b, type: 3}
   Order: []
+  turn: 0
+--- !u!114 &1713013736058947056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713013736058947053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88bd7d3c4d7e2b4281a7c9e63d8dd65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefs: {fileID: 1851063823908688456, guid: af267be4b3e29964591da37c79c36830, type: 3}
+  target: {fileID: 0}
+  attackDamage: 0
+--- !u!95 &1713013736058947057
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713013736058947053}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5596aaeedd54e0e47a7ade443e1f3e3f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1713013736097783527
 GameObject:
   m_ObjectHideFlags: 0
