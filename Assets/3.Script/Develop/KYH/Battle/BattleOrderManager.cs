@@ -13,15 +13,19 @@ public class BattleOrderManager : MonoBehaviour
 
     List<int> order = new List<int>();
     public List<GameObject> Order = new List<GameObject>();
+    public int turn = 0; //전투 스크립트에서 관리
 
     private BattleLoader battleLoader;
+    private Animator UIAni;
 
     private void Awake()
     {
         battleLoader = FindObjectOfType<BattleLoader>();
+        TryGetComponent(out UIAni);
     }
-    private void OnEnable()
+    private void Start()
     {
+        SetOrder();
         SetUI();
     }
     private void SetOrder()
@@ -61,9 +65,7 @@ public class BattleOrderManager : MonoBehaviour
         //단이가 초상화 심어주면 이미지 설정하기 구현
         //적 스탯 구현 후 적 이미지 심기 설정
 
-        SetOrder();
-
-        for (int i = 0; i < portrait.Length; i++)
+        for (int i = turn; i < portrait.Length + turn; i++)
         {
             int temp = i;
             if (Order.Count - 1 < temp)
@@ -81,5 +83,15 @@ public class BattleOrderManager : MonoBehaviour
                 background[i].sprite = EBground;
             }
         }
+    }
+    public void TurnChange()
+    {
+        SetUI();
+        
+        UIAni.SetBool("TurnOn", true); //bool false 관리해주기
+    }
+    private void PlayerDie(int num)
+    {
+
     }
 }

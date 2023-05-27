@@ -12,7 +12,7 @@ public class BattleLoader : MonoBehaviour
     [SerializeField] GameObject fieldUI;
 
     Vector3 defaultPos;
-    int enemyZPos = -98;
+    int enemyXPos = -98;
 
     [SerializeField] int EnemyNum;
 
@@ -42,12 +42,19 @@ public class BattleLoader : MonoBehaviour
         battleUI.SetActive(true);
         fieldUI.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        PrefsDestroy();
+    }
     private void PrefsDestroy()
     {
         for(int i = 0; i<Players.Count; i++)
         {
             Destroy(Players[i]);
+            //Destroy(Enemys[i]);
         }
         Players.Clear();
+        //Enemys.Clear();
     }
 }
