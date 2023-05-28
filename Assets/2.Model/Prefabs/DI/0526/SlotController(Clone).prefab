@@ -583,9 +583,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444c8f30e6ff18f4289351cbccfe0ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: []
-  attackBlackSmith: []
-  attackHunter: []
+  move:
+  - {fileID: 21300000, guid: eabf456f0e09cdd45915437da8b6d6a0, type: 3}
+  - {fileID: 21300000, guid: 13786dc1dbffe1641ae0920117e075fd, type: 3}
+  - {fileID: 21300000, guid: eabf456f0e09cdd45915437da8b6d6a0, type: 3}
+  attackBlackSmith:
+  - {fileID: 21300000, guid: dc55cebb0487cc64e8bad2cba8a03530, type: 3}
+  - {fileID: 21300000, guid: d7ed669fbcd65ab47bc9d0e3ea0bb60e, type: 3}
+  - {fileID: 21300000, guid: dc55cebb0487cc64e8bad2cba8a03530, type: 3}
+  attackHunter:
+  - {fileID: 21300000, guid: 72c3b909cc689484ab117e52db332dec, type: 3}
+  - {fileID: 21300000, guid: b653d3d0960246042a87b9513e3b05a2, type: 3}
+  - {fileID: 21300000, guid: 72c3b909cc689484ab117e52db332dec, type: 3}
   attackScholar:
   - {fileID: 21300000, guid: 952c982d19cee6a4fa052afa48a6fa69, type: 3}
   - {fileID: 21300000, guid: fb1c56a2aab4a6b47a74ac7047359d95, type: 3}

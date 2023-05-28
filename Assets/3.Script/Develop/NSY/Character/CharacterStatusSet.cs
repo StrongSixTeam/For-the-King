@@ -8,9 +8,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="CharacterBaseStatsData", menuName = "ScriptableObjects/CharacterBaseStatsData", order =1)  ]
 public class CharacterStatusSet : ScriptableObject
 {
-
-
-
     public string className= "Normal";
     public float atk = 10f;
     public float def = 10f;
@@ -29,10 +26,9 @@ public class CharacterStatusSet : ScriptableObject
     public float maxExp=100;
     public int Lv=1;
 
-    public Sprite UIImage;
+    public Sprite UIImage; //초상화 이미지
 
+    public int focus = 6; //집중력
     
-
-
-
+    
 }
