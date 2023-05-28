@@ -12,7 +12,8 @@ public class EncounterContent : ScriptableObject
         town,
         interactiveObject,
         enemy,
-        dungeon
+        dungeon,
+        sanctum
     }
     public Type type;
 
