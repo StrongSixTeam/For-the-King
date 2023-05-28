@@ -20,6 +20,7 @@ public class PlayerStat : MonoBehaviour
     public float nowExp = 1;
     public float maxExp = 100;
     public int Lv = 1;
+    public Sprite portrait;
 
     public void SetStat(CharacterStatusSet data)
     {
@@ -32,5 +33,6 @@ public class PlayerStat : MonoBehaviour
         strength = data.strength;
         awareness = data.awareness;
         speed = data.speed;
+        portrait = data.UIImage;
     }
 }

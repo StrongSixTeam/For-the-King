@@ -18,6 +18,7 @@ public class PlayerController_Jin : MonoBehaviour
         map = FindObjectOfType<MapObjectCreator>();
         quest = FindObjectOfType<QuestManager>();
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.transform.GetChild(1).gameObject.SetActive(false);
         animator = GetComponent<Animator>();
         
     }
@@ -94,7 +95,52 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(8);
             return true;
         }
-        else
+        else if (map.objectIndex[9] == myHexNum) //집중 성소
+        {
+            EncounterManager.instance.ActiveEncounter(9);
+            return true;
+        }
+        else if (map.objectIndex[10] == myHexNum) //생명 성소
+        {
+            EncounterManager.instance.ActiveEncounter(10);
+            return true;
+        }
+        else if (map.objectIndex[11] == myHexNum) //지혜 성소
+        {
+            EncounterManager.instance.ActiveEncounter(11);
+            return true;
+        }
+        else if (map.randomObjectIndex[0] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            EncounterManager.instance.ActiveEncounter(12);
+            return false;
+        }
+        else if (map.randomObjectIndex[1] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            EncounterManager.instance.ActiveEncounter(13);
+            return false;
+        }
+        else if (map.randomObjectIndex[2] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            EncounterManager.instance.ActiveEncounter(14);
+            return false;
+        }
+        else if (map.randomObjectIndex[3] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            EncounterManager.instance.ActiveEncounter(15);
+            return false;
+        }
+        else if (map.randomObjectIndex[4] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            EncounterManager.instance.ActiveEncounter(16);
+            return false;
+        }
+        else if (map.randomObjectIndex[5] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            EncounterManager.instance.ActiveEncounter(17);
+            return false;
+        }
+        else 
         {
             return false;
         }
@@ -120,18 +166,20 @@ public class PlayerController_Jin : MonoBehaviour
             i++;
             if (myHexNum != origin)
             {
-                if (CheckObject())
+                if (CheckObject()) //현재 오브젝트에 도달하면
                 {
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
                     targetNodes.Clear();
                     animator.SetBool("MapRun", false);
                     yield break;
                 }
-                else
+                else //낫띵이라면
                 {
                     gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 }
             }
         }

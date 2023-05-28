@@ -29,6 +29,8 @@ public class CharacterStatusSet : ScriptableObject
     public float maxExp=100;
     public int Lv=1;
 
+    public Sprite UIImage;
+
     
 
 

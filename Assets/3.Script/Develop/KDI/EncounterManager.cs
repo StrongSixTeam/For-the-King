@@ -59,6 +59,13 @@ public class EncounterManager : MonoBehaviour
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
         }
+        else if (encounter[n].type == EncounterContent.Type.sanctum)
+        {
+            ActiveBtn(1);
+            //ActiveBtn(4)
+            parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+            parent.GetChild(2).gameObject.SetActive(false);
+        }
     }
 
     public void ExitButton()
