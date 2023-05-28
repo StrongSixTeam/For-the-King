@@ -25,7 +25,7 @@ public class SuccessCalc : MonoBehaviour
         formula = FindObjectOfType<Formula>();
         //SlotController.instance.maxSlotCount = maxSlot;
         //SlotController.instance.type = SlotController.Type.attackScholar;
-        SlotController.instance.fixCount = testFix;
+        testFix = SlotController.instance.fixCount;
         if (testFix == 1)
         {
             percent += 10;
@@ -39,7 +39,7 @@ public class SuccessCalc : MonoBehaviour
             percent += 18;
         }
         //SlotController.instance.percent = percent;
-        maxSlot = maxSlot - testFix;
+        //maxSlot = maxSlot - testFix;
 
         for (int i = maxSlot; i >= 0; i--)
         {
@@ -47,11 +47,12 @@ public class SuccessCalc : MonoBehaviour
             float failPercent = (100 - percent) * (float)0.01;
             float result = Mathf.Pow(failPercent, maxSlot - i) * Mathf.Pow(successPercent, maxSlot - (maxSlot - i)) * formula.Combination(maxSlot, i) * 100;
             result = Mathf.Round(result);
-            if (maxSlot <= 0)
+            if (maxSlot == testFix) //슬롯 크기 == 집중력 사용 일때
             {
                 result = 100;
             }
-            if (i >= successLimit - testFix)
+
+            if (i >= successLimit)
             {
                 resultNumbers[i].SetActive(true);
                 resultNumbers[i].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 성공";

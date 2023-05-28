@@ -54,6 +54,7 @@ public class SlotController : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(true); //전체 슬롯창 개수 맞춰서 키기
             if (type == Type.move)
             {
+                SlotController.instance.fixCount = 2;
                 for (int j = 0; j < 3; j++)
                 {
                     transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = move[j]; //이미지 이동 이미지로 바꾸기

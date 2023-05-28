@@ -22,5 +22,7 @@ public class EncounterContent : ScriptableObject
     public string slotType;
     public int limit; //성공 기준
 
+    public bool isCleared = false; //클리어 여부
+
 }
 
