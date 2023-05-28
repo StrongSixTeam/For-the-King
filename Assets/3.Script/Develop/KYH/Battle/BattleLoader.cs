@@ -11,22 +11,28 @@ public class BattleLoader : MonoBehaviour
     [SerializeField] GameObject battleUI;
     [SerializeField] GameObject fieldUI;
 
-    Vector3 defaultPos;
-    int enemyXPos = -98;
+    Vector3 playerPos;
+    Vector3 enemyPos;
 
-    [SerializeField] int EnemyNum;
+    private BattleCameraController battleCameraController;
 
+    private void Awake()
+    {
+        battleCameraController = FindObjectOfType<BattleCameraController>();
+    }
     private void Start()
     {
-        defaultPos = new Vector3(-103.5f, 0, -11f);
+        playerPos = new Vector3(-103.5f, 0, -11f);
+        enemyPos = new Vector3(-98f, 0, -11f);
 
         Invoke("PrefsInstantiate", 1f); //테스트
     }
     private void PrefsInstantiate() //전투 돌입 시 실행할 함수
     {
+        //플레이어 소환
         for (int i = 0; i < GameManager.instance.Players.Length; i++)
         {
-            Players.Add(Instantiate(GameManager.instance.Players[i], defaultPos, Quaternion.Euler(new Vector3(0, 90, 0))));
+            Players.Add(Instantiate(GameManager.instance.Players[i], playerPos, Quaternion.Euler(new Vector3(0, 90, 0))));
         }
         if (GameManager.instance.Players.Length == 2)
         {
@@ -38,6 +44,22 @@ public class BattleLoader : MonoBehaviour
             Players[0].transform.position += Vector3.back * 2;
             Players[2].transform.position += Vector3.forward * 2;
         }
+        //적 소환
+        for (int i = 0; i < 1; i++) //에너미 수정 필요 > enemys.count 받아야함
+        {
+            Enemys.Add(Instantiate(Enemys[i], enemyPos, Quaternion.Euler(new Vector3(0, 270, 0)))); //에너미 수정 필요
+        }
+        Enemys.RemoveAt(0); //삭제
+        if (Enemys.Count == 2)
+        {
+            Enemys[0].transform.position += Vector3.back;
+            Enemys[1].transform.position += Vector3.forward;
+        }
+        if (Enemys.Count == 3)
+        {
+            Enemys[0].transform.position += Vector3.back * 2;
+            Enemys[2].transform.position += Vector3.forward * 2;
+        }
 
         battleUI.SetActive(true);
         fieldUI.SetActive(false);
@@ -45,16 +67,16 @@ public class BattleLoader : MonoBehaviour
 
     private void OnDisable()
     {
-        PrefsDestroy();
+        //PrefsDestroy();
     }
     private void PrefsDestroy()
     {
         for(int i = 0; i<Players.Count; i++)
         {
             Destroy(Players[i]);
-            //Destroy(Enemys[i]);
+            Destroy(Enemys[i]);
         }
         Players.Clear();
-        //Enemys.Clear();
+        Enemys.Clear();
     }
 }
