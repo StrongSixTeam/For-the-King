@@ -34,6 +34,13 @@ public class BattleLoader : MonoBehaviour
         {
             Players.Add(Instantiate(GameManager.instance.Players[i], playerPos, Quaternion.Euler(new Vector3(0, 90, 0))));
         }
+
+        for (int i = 0; i < Players.Count; i++)
+        {
+            Players[i].GetComponent<PlayerController_Jin>().enabled = false;
+            Players[i].transform.GetChild(0).gameObject.SetActive(true);
+            Players[i].transform.GetChild(1).gameObject.SetActive(true);
+        }
         if (GameManager.instance.Players.Length == 2)
         {
             Players[0].transform.position += Vector3.back;
@@ -45,7 +52,7 @@ public class BattleLoader : MonoBehaviour
             Players[2].transform.position += Vector3.forward * 2;
         }
         //적 소환
-        for (int i = 0; i < 1; i++) //에너미 수정 필요 > enemys.count 받아야함
+        for (int i = 0; i < 3; i++) //에너미 수정 필요 > enemys.count 받아야함
         {
             Enemys.Add(Instantiate(Enemys[i], enemyPos, Quaternion.Euler(new Vector3(0, 270, 0)))); //에너미 수정 필요
         }

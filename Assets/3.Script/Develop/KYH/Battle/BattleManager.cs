@@ -11,7 +11,9 @@ public class BattleManager : MonoBehaviour
     //순서 결정하는 스크립트 참조하기
 
     private BattleOrderManager battleOrderManager;
-    private BattleLoader battleLoader;
+    [SerializeField] private BattleLoader battleLoader;
+
+    Camera battlecam;
 
     [SerializeField] private GameObject bulletPrefs;
 
@@ -23,21 +25,20 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
+        battlecam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
     }
     private void Update()
     {
         if (isPlayer)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = battlecam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log(hit.transform.gameObject.name);
-
                 for (int i = 0; i < battleLoader.Enemys.Count; i++)
                 {
-                    if (hit.transform.gameObject == battleLoader.Enemys[i])
+                    if (hit.transform.gameObject == battleLoader.Enemys[i] && Input.GetMouseButtonDown(0))
                     {
                         battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Enemys[i].transform);
                         target = battleLoader.Enemys[i];

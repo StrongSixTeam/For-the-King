@@ -67,7 +67,6 @@ public class BattleOrderManager : MonoBehaviour
     {
         //단이가 초상화 심어주면 이미지 설정하기 구현
         //적 스탯 구현 후 적 이미지 심기 설정
-
         turn++;
 
         if (Order.Count - 1 < turn)
@@ -81,12 +80,12 @@ public class BattleOrderManager : MonoBehaviour
 
             if (Order[j].GetComponent<PlayerStat>() != null)
             {
-                //portrait[i-turn].sprite = Order[j].GetComponent<PlayerStat>().초상화변수;
+                portrait[i-turn].sprite = Order[j].GetComponent<PlayerStat>().portrait;
                 background[i-turn].sprite = PBground;
             }
             else
             {
-                //portrait[i-turn].sprite = Order[j].GetComponent<EnemyStat>().초상화변수;
+                //portrait[i-turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
                 background[i- turn].sprite = EBground;
             }
         }
@@ -102,9 +101,15 @@ public class BattleOrderManager : MonoBehaviour
     }
     public void TurnChange()
     {
-        UIAni.SetBool("TurnOn", true); //bool false 관리해주기
-
+        StartCoroutine(Ani_co());
         SetUI();
+
+    }
+    private IEnumerator Ani_co()
+    {
+        UIAni.SetBool("TurnOn", true);
+        yield return new WaitForSeconds(2f);
+        UIAni.SetBool("TurnOn", false);
     }
     private void PlayerDie(int num)
     {

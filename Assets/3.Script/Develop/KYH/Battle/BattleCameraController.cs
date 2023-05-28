@@ -7,7 +7,12 @@ public class BattleCameraController : MonoBehaviour
     private Vector3 targetPosP;
     private Vector3 targetPosE;
 
+    [SerializeField] private Transform lookPosP;
+    [SerializeField] private Transform lookPosE;
+
     [SerializeField] private Vector3 targetPos;
+    [SerializeField] private Vector3 lookPos;
+
     [SerializeField] private BattleOrderManager battleOrderManager;
     [SerializeField] private BattleManager battleManager;
 
@@ -21,26 +26,25 @@ public class BattleCameraController : MonoBehaviour
     public void PlayerTurnCamera()
     {
         targetPos = targetPosP;
+        lookPos = lookPosP.position;
         StartCoroutine(CameraSoftMove_co());
     }
     public void EnemyTurnCamera()
     {
         targetPos = targetPosE;
+        lookPos = lookPosE.position;
         StartCoroutine(CameraSoftMove_co());
     }
     private IEnumerator CameraSoftMove_co()
     {
-        yield return new WaitForSeconds(3f);
-        
         while (Vector3.Distance(transform.position, targetPos) > 0.01)
         {
-            transform.LookAt(battleOrderManager.Order[battleOrderManager.turn].transform);
-            transform.position = Vector3.Lerp(transform.position, targetPos, 0.02f);
+            transform.LookAt(lookPos);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, 0.05f);
             yield return null;
         }
         transform.position = targetPos;
         battleManager.RookAt();
-        UIAni.SetBool("TurnOn", false);
         //È®·ü ui ÄÑ±â
         yield break;
     }
