@@ -17,6 +17,9 @@ public class PlayerStat : MonoBehaviour
     public int awareness;
     public int speed;
 
+    public int nowFocus; //집중력
+    public int maxFocus; //집중력
+
     public float nowExp = 1;
     public float maxExp = 100;
     public int Lv = 1;
@@ -34,5 +37,7 @@ public class PlayerStat : MonoBehaviour
         awareness = data.awareness;
         speed = data.speed;
         portrait = data.UIImage;
+        maxFocus = data.focus;
+        nowFocus = maxFocus;
     }
 }

@@ -60,7 +60,7 @@ public class EncounterManager : MonoBehaviour
             parent.GetChild(2).gameObject.SetActive(false);
         }
         else if (encounter[n].type == EncounterContent.Type.sanctum)
-        {
+        {//집중력과 체력 모두 회복
             ActiveBtn(1);
             //ActiveBtn(4)
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
