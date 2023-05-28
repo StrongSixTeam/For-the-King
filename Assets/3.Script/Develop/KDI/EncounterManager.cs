@@ -37,6 +37,7 @@ public class EncounterManager : MonoBehaviour
         else if (encounter[n].type == EncounterContent.Type.interactiveObject)
         {
             ActiveBtn(1);
+            SlotController.instance.fixCount = 0;
             SlotController.instance.maxSlotCount = encounter[n].slotCount;
             SlotController.instance.type = StringToType(encounter[n].slotType);
             SlotController.instance.limit = encounter[n].limit;
@@ -84,6 +85,17 @@ public class EncounterManager : MonoBehaviour
         btns[n].SetActive(true);
     }
 
+    public void UseFocus()
+    {
+        if (GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus >= 1)
+        {
+            GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus -= 1;
+            SlotController.instance.fixCount += 1;
+            slot.GetComponent<CloneSlot>().Initialized();
+            successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
+        }
+    }
+
     private SlotController.Type StringToType(string some)
     {
         if (some.Equals("move"))
@@ -106,5 +118,16 @@ public class EncounterManager : MonoBehaviour
         {
             return SlotController.Type.move;
         }
+    }
+
+    public void ClearBool(int n)
+    {
+        encounter[n].isCleared = true;
+    }
+
+    public void TryConnect()
+    {
+        slot.GetComponent<CloneSlot>().Try();
+
     }
 }

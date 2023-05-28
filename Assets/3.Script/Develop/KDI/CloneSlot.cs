@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class CloneSlot : MonoBehaviour
 {
+    private bool isSuccess = false;
     public Sprite[] move; //이동 UI 이미지
     public Sprite[] attackBlackSmith; //공격 UI 이미지 - 대장장이
     public Sprite[] attackHunter; //공격 UI 이미지 - 사냥꾼
     public Sprite[] attackScholar; //공격 UI 이미지 - 학자
     public void Initialized()
     {
+        isSuccess = false;
         SlotController.instance.success = 0;
         SlotController.instance.fail = 0;
         for (int i = 0; i < transform.childCount; i++)
@@ -40,9 +42,45 @@ public class CloneSlot : MonoBehaviour
             }
             else if (SlotController.instance.type == SlotController.Type.attackScholar)
             {
+                if (i < SlotController.instance.fixCount) //집중력 사용했으면
+                {
+                    for (int j = 0; j < 3; j++) //show focus
+                    {
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackScholar[j];
+                        if (j == 1)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < 3; j++) //show pre
+                    {
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackScholar[j];
+                        if (j == 0)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+            else if (SlotController.instance.type == SlotController.Type.attackHunter)
+            {
                 for (int j = 0; j < 3; j++)
                 {
-                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackScholar[j];
+                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackHunter[j];
+                    if (j == 0)
+                    {
+                        transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                    }
+                }
+            }
+            else if (SlotController.instance.type == SlotController.Type.attackBlackSmith)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackBlackSmith[j];
                     if (j == 0)
                     {
                         transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
@@ -87,5 +125,21 @@ public class CloneSlot : MonoBehaviour
         }
         SlotController.instance.fixCount = a;
         SlotController.instance.isSlot = false;
+        if (SlotController.instance.limit <= SlotController.instance.success)
+        {
+            //성공 처리
+            isSuccess = true;
+        }
+        else
+        {
+            isSuccess = false;
+            //실패 페널티 처리
+        }
+        Invoke("OffAll", 1f); //끄기
+    }
+
+    private void OffAll()
+    {
+        FindObjectOfType<EncounterManager>().ExitButton();
     }
 }
