@@ -19,12 +19,16 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Slider expSlider;
     [SerializeField] private Text hpText;
     [SerializeField] private Text expText;
+    public Image portrait;
 
     private void Update()
     {
         if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Length > order))
         {
             playerStat = GameManager.instance.Players[order].GetComponent<PlayerStat>();
+
+            portrait.sprite = playerStat.portrait;
+
             name.text = playerStat.name;
             strength.text = playerStat.strength.ToString();
             intelligence.text = playerStat.intelligence.ToString();
