@@ -1393,6 +1393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8110154726263250257}
   - component: {fileID: 4439123074085932112}
+  - component: {fileID: 8506941241252045125}
   m_Layer: 0
   m_Name: hag02
   m_TagString: Untagged
@@ -1503,6 +1504,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0009794165, y: 0.00017002854, z: -0.000025196467}
     m_Extent: {x: 0.012184951, y: 0.0038195124, z: 0.012063017}
   m_DirtyAABB: 0
+--- !u!136 &8506941241252045125
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976444654401367292}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.005
+  m_Height: 0.025
+  m_Direction: 1
+  m_Center: {x: 0.000025196481, y: 0.010620609, z: 0.00082988455}
 --- !u!1 &7149820246778591454
 GameObject:
   m_ObjectHideFlags: 0

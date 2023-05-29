@@ -357,6 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 390036242975108555}
   - component: {fileID: 1396137257034695246}
+  - component: {fileID: 2323642887968767700}
   m_Layer: 0
   m_Name: rockman01
   m_TagString: Untagged
@@ -469,6 +470,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0025001578, y: 0.0007159456, z: 0.00013396703}
     m_Extent: {x: 0.01663785, y: 0.0063168053, z: 0.022032505}
   m_DirtyAABB: 0
+--- !u!136 &2323642887968767700
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998381028647731308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.007
+  m_Height: 0.035
+  m_Direction: 1
+  m_Center: {x: -0.00013396703, y: 0.015540972, z: 0.0016050499}
 --- !u!1 &1029485983075869410
 GameObject:
   m_ObjectHideFlags: 0
