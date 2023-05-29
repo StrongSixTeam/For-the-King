@@ -1069,6 +1069,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138302731283418834}
   - component: {fileID: 2138302731283418833}
+  - component: {fileID: 5383792289948836760}
   m_Layer: 0
   m_Name: Character_Male_Rouge_01
   m_TagString: Untagged
@@ -1084,7 +1085,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138302731283418835}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0.057, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 2138302730815330476}
@@ -1191,6 +1192,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000038146973, y: 84.66399, z: -6.071087}
     m_Extent: {x: 102.45599, y: 94.77333, z: 25.698645}
   m_DirtyAABB: 0
+--- !u!136 &5383792289948836760
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138302731283418835}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 20
+  m_Height: 189.54666
+  m_Direction: 1
+  m_Center: {x: 0.0000038146973, y: 84, z: -1}
 --- !u!1 &2138302731321620296
 GameObject:
   m_ObjectHideFlags: 0
