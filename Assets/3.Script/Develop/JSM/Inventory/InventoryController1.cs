@@ -11,6 +11,7 @@ public class InventoryController1 : MonoBehaviour
     [SerializeField] private GameObject itemlistPrebs;
     public GameObject itemSelectUI;                     // 인벤토리 내 아이템 클릭 시 생성되는 UI
     public GameObject equipItemSelectUI;                // 장비창 내 착용 아이템 클릭 시 생성되는 UI
+    public GameObject detailUI;                         // 마우스 오버 시 나타나는 UI
 
     private Vector3 poolPos;
     private Vector2 ListPos; //프리팹 생성 위치
@@ -43,10 +44,13 @@ public class InventoryController1 : MonoBehaviour
     [Header("인벤토리 장비창")]
     public Item[] equipArr = new Item[5];
     public Text[] equipItemName = new Text[5];
-    string itemName = "";
+    public string itemName = "";
 
     private EquipType equipType;
     [SerializeField] Button[] equipBtn;
+
+    [Header("퀵슬롯")]
+    [SerializeField] QuickSlotController1 quickSlot;
 
 
     private void Awake()
@@ -127,7 +131,7 @@ public class InventoryController1 : MonoBehaviour
         item.transform.SetParent(this.transform);
         item.transform.localPosition = ListPos;
         ListPos.y -= 25f;
-        Debug.Log(ListPos.y);
+        //Debug.Log(ListPos.y);
 
         item.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = putitem.itemImage;
         item.transform.GetChild(0).GetChild(2).GetComponent<Text>().text = putitem.itemName;
@@ -159,8 +163,7 @@ public class InventoryController1 : MonoBehaviour
             transform.GetChild(i).GetChild(0).GetChild(2).GetComponent<Text>().text = itemList[i].itemName + " " + itemList[i].itemCount.ToString();
             transform.GetChild(i).gameObject.SetActive(true);
             transform.GetChild(i).localPosition = ListPos;
-            Debug.Log(transform.childCount);
-            Debug.Log(itemList.Count);
+            
             ListPos.y -= 25f;
         }
     }
@@ -182,10 +185,6 @@ public class InventoryController1 : MonoBehaviour
             }
         }
         //transform.GetChild(transform.childCount - 1).gameObject.SetActive(true);
-    }
-    private void ItemListUse()
-    {
-
     }
 
     private void ResetCategory()
@@ -297,7 +296,7 @@ public class InventoryController1 : MonoBehaviour
         itemName = "";
     }
 
-    public void SelectInvenEquipItem()
+    public void SelectInvenEquipItem()              // 인벤토리에 있는 아이템 클릭 시 아이템의 이름을 받아오는 함수
     {
         itemName = "";
         GameObject Click = EventSystem.current.currentSelectedGameObject;
@@ -305,11 +304,23 @@ public class InventoryController1 : MonoBehaviour
         for (int i = 0; i < itemNameArr.Length - 1; i++)
         {
             itemName += itemNameArr[i];
-            if (i % 2 == 1)
+            if(itemNameArr.Length % 2 == 0)
             {
-                itemName += " ";
+                if (i % 2 == 1)
+                {
+                    itemName += " ";
+                }
+            }
+            
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    itemName += " ";
+                }
             }
         }
+        Debug.Log(itemName);
     }
 
 
@@ -323,6 +334,83 @@ public class InventoryController1 : MonoBehaviour
         InventoryShow();
     }
 
+    public void UseItem()
+    {
+        ItemListUse();
+        QuitItemSelectUI();
+        InventoryReset();
+        InventoryShow();
+        quickSlot.QuickSlotShow();
+    }
+
+    private void ItemListUse()
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i].itemName.Equals(itemName))
+            {
+                switch (itemList[i].itemType)
+                {
+                    case ItemType.허브:
+                        if(itemList[i].itemCount == 1)
+                        {
+                            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            quickSlot.quickSlot.Remove(itemList[i]);
+                            itemList.RemoveAt(i);
+                            for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
+                            {
+                                quickSlot.itemSlotImg[a].sprite = quickSlot.blank;
+                                quickSlot.itemCntTxt[a].text = 0.ToString();
+                            }
+                        }
+
+                        else
+                        {
+                            itemList[i].itemCount--;
+                        }
+                        break;
+
+                    case ItemType.스크롤:
+                        if (itemList[i].itemCount == 1)
+                        {
+                            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            quickSlot.quickSlot.Remove(itemList[i]);
+                            itemList.RemoveAt(i);
+                            for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
+                            {
+                                quickSlot.itemSlotImg[a].sprite = quickSlot.blank;
+                                quickSlot.itemCntTxt[a].text = 0.ToString();
+                            }
+                        }
+
+                        else
+                        {
+                            itemList[i].itemCount--;
+                        }
+                        break;
+
+                    case ItemType.기타:
+                        if (itemList[i].itemCount == 1)
+                        {
+                            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            quickSlot.quickSlot.Remove(itemList[i]);
+                            itemList.RemoveAt(i);
+                            for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
+                            {
+                                quickSlot.itemSlotImg[a].sprite = quickSlot.blank;
+                                quickSlot.itemCntTxt[a].text = 0.ToString();
+                            }
+                        }
+
+                        else
+                        {
+                            itemList[i].itemCount--;
+                        }
+                        break;
+                }
+            }
+        }
+    }
 
     private void Equip(string ItemName)
     {
@@ -532,5 +620,23 @@ public class InventoryController1 : MonoBehaviour
             itemList[i].itemCount++;
             equipArr[index] = null;
         }
+    }
+
+    public void ShowDetailUI()
+    {
+        for (int i = 0; i < instance.itemList.Count; i++)
+        {
+            if (itemList[i].itemName.Equals(itemName))
+            {
+                detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = itemList[i].itemDetailImage;
+                detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite = itemList[i].itemImage;
+                detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text = itemList[i].itemName;
+                detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text = itemList[i].detail_1;
+                detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text = itemList[i].detail_2;
+                Debug.Log(detailUI.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.name);
+                break;
+            }
+        }
+        detailUI.gameObject.SetActive(true);
     }
 }

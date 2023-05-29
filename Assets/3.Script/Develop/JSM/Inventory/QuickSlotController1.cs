@@ -53,8 +53,9 @@ public class QuickSlotController1 : MonoBehaviour
     public void QuickSlotItemUse() //아이템 사용하기
     {
         GameObject Click = EventSystem.current.currentSelectedGameObject;
+        //GameObject Hover = EventSystem.current.IsPointerOverGameObject;
         int j;
-        for(int i = 0; i < quickSlot.Count; i++)
+        for (int i = 0; i < quickSlot.Count; i++)
         {
             if (Click == itemSlotImg[i].gameObject && itemSlotImg[i].GetComponent<Image>().sprite != blank)
             {
