@@ -153,9 +153,17 @@ public class PlayerController_Jin : MonoBehaviour
         for (int i = 0; i < nowtTargetNodes.Count;)
         {
             int origin = myHexNum;
-            Rotation(i);
+            //Rotation(i);
+
+            Vector3 direction = targetNodes[i].transform.position - transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            float rTime = 0f;
+
             while (Vector3.Distance(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0)) > 0.01f)
             {
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rTime);
+                rTime += Time.deltaTime;
+
                 transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 4f * Time.deltaTime);
 
                 yield return null;
