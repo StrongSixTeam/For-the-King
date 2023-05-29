@@ -18,9 +18,12 @@ public class BattleOrderManager : MonoBehaviour
     private BattleLoader battleLoader;
     private Animator UIAni;
 
+    private BattleCameraController battleCameraController;
+
     private void Awake()
     {
         battleLoader = FindObjectOfType<BattleLoader>();
+        battleCameraController = FindObjectOfType<BattleCameraController>();
         TryGetComponent(out UIAni);
     }
     private void Start()
@@ -33,12 +36,12 @@ public class BattleOrderManager : MonoBehaviour
         GameObject temp = null;
 
         int j = 0;
-        for (int i = 0; i < battleLoader.Players.Count/* + battleLoader.Enemys.Count */; i++)
+        for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
         {
             if (battleLoader.Players.Count - 1 < i)
             {
                 //order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
-                //Order.Add(battleLoader.Enemys[j]);
+                Order.Add(battleLoader.Enemys[j]);
 
                 j++;
                 continue;
@@ -64,31 +67,49 @@ public class BattleOrderManager : MonoBehaviour
     {
         //단이가 초상화 심어주면 이미지 설정하기 구현
         //적 스탯 구현 후 적 이미지 심기 설정
+        turn++;
+
+        if (Order.Count - 1 < turn)
+        {
+            turn = 0;
+        }
 
         for (int i = turn; i < portrait.Length + turn; i++)
         {
-            int temp = i;
-            if (Order.Count - 1 < temp)
+            int j = i % Order.Count;
+
+            if (Order[j].GetComponent<PlayerStat>() != null)
             {
-                temp = 0;
-            }
-            if (Order[temp].GetComponent<PlayerStat>() != null)
-            {
-                //portrait[i].sprite = Order[temp].GetComponent<PlayerStat>().초상화변수;
-                background[i].sprite = PBground;
+                portrait[i-turn].sprite = Order[j].GetComponent<PlayerStat>().portrait;
+                background[i-turn].sprite = PBground;
             }
             else
             {
-                //portrait[i].sprite = Order[tempj].GetComponent<EnemyStat>().초상화변수;
-                background[i].sprite = EBground;
+                //portrait[i-turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
+                background[i- turn].sprite = EBground;
             }
+        }
+        //카메라 돌리기
+        if (Order[turn].GetComponent<PlayerStat>() != null)
+        {
+            battleCameraController.PlayerTurnCamera();
+        }
+        else
+        {
+            battleCameraController.EnemyTurnCamera();
         }
     }
     public void TurnChange()
     {
+        StartCoroutine(Ani_co());
         SetUI();
-        
-        UIAni.SetBool("TurnOn", true); //bool false 관리해주기
+
+    }
+    private IEnumerator Ani_co()
+    {
+        UIAni.SetBool("TurnOn", true);
+        yield return new WaitForSeconds(2f);
+        UIAni.SetBool("TurnOn", false);
     }
     private void PlayerDie(int num)
     {
