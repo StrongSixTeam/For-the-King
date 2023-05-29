@@ -71,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2247177799540314462}
   - component: {fileID: 5644025943549511566}
+  - component: {fileID: 582818380518730988}
   m_Layer: 0
   m_Name: cultist3
   m_TagString: Untagged
@@ -181,6 +182,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0027389606, y: 0.0008302154, z: -4.656613e-10}
     m_Extent: {x: 0.013651431, y: 0.006333216, z: 0.012204835}
   m_DirtyAABB: 0
+--- !u!136 &582818380518730988
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234438547471691059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.004
+  m_Height: 0.027302861
+  m_Direction: 1
+  m_Center: {x: 4.656613e-10, y: 0.012380151, z: 0.0014900714}
 --- !u!1 &506460095343817486
 GameObject:
   m_ObjectHideFlags: 0

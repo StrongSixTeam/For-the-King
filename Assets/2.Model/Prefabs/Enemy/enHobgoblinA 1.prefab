@@ -650,7 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2347701138429409713}
   m_Layer: 0
-  m_Name: enHobgoblinA
+  m_Name: enHobgoblinA 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1365,6 +1365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3728724712578885233}
   - component: {fileID: 4079339541251456380}
+  - component: {fileID: 4082657617769340725}
   m_Layer: 0
   m_Name: enHobGoblinA
   m_TagString: Untagged
@@ -1476,6 +1477,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0014535584, y: 0.00063153845, z: -0.000016007107}
     m_Extent: {x: 0.0121614635, y: 0.004378612, z: 0.012436036}
   m_DirtyAABB: 0
+--- !u!136 &4082657617769340725
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7370209922926162119}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.005
+  m_Height: 0.026
+  m_Direction: 1
+  m_Center: {x: 0.000016007107, y: 0.012, z: 0.0005}
 --- !u!1 &7729265993274897626
 GameObject:
   m_ObjectHideFlags: 0

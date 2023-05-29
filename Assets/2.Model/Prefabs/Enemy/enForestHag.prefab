@@ -1797,6 +1797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2216944919569275369}
   - component: {fileID: 8847427696187741073}
+  - component: {fileID: 2936845158321963778}
   m_Layer: 0
   m_Name: hag01
   m_TagString: Untagged
@@ -1907,3 +1908,17 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0011595115, y: 0.0003453195, z: -0.000010811724}
     m_Extent: {x: 0.011842184, y: 0.0038305065, z: 0.012037857}
   m_DirtyAABB: 0
+--- !u!136 &2936845158321963778
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073381468436383800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.005
+  m_Height: 0.023684368
+  m_Direction: 1
+  m_Center: {x: 0.000010811737, y: 0.010800703, z: 0.0010051755}
