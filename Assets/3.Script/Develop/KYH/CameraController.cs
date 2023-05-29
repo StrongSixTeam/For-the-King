@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 
     //플레이어 변경 시 카메라 초기 값
     public Vector3 targetPos;
-    public Vector3 defaultPos = new Vector3(0, 7f, -8f);
+    public Vector3 defaultPos;
 
     private bool isCameraPosChange = false;
     private bool isMove = false;
@@ -30,10 +30,11 @@ public class CameraController : MonoBehaviour
     }
     private void Start()
     {
+        defaultPos = new Vector3(0, 7f, -9f);
         moveSpeed = 10f;
         zoomSpeed = 10f;
-        zoomMax = 8f;
-        zoomMin = 4f;
+        zoomMax = 11f;
+        zoomMin = 5f;
     }
     private void Update()
     {

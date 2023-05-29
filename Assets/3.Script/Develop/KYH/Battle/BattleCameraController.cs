@@ -13,15 +13,20 @@ public class BattleCameraController : MonoBehaviour
     [SerializeField] private Vector3 targetPos;
     [SerializeField] private Vector3 lookPos;
 
-    [SerializeField] private BattleOrderManager battleOrderManager;
     [SerializeField] private BattleManager battleManager;
-
-    [SerializeField] Animator UIAni;
 
     private void Start()
     {
-        targetPosP = new Vector3(-109, 3.5f, -17.8f);
-        targetPosE = new Vector3(-96, 4.3f, -21.9f);
+        if (gameObject.CompareTag("BattleCamera"))
+        {
+            targetPosP = new Vector3(-109, 3.5f, -17.8f);
+            targetPosE = new Vector3(-96, 4.3f, -21.9f);
+        }
+        if (gameObject.CompareTag("CaveCamera"))
+        {
+            targetPosP = new Vector3(-206.5f, 8.6f, -49.1f);
+            targetPosE = new Vector3(-198.4f, 5.9f, -47.5f);
+        }
     }
     public void PlayerTurnCamera()
     {
@@ -44,7 +49,7 @@ public class BattleCameraController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
-        battleManager.RookAt();
+        //battleManager.RookAt();
         //È®·ü ui ÄÑ±â
         yield break;
     }
