@@ -33,6 +33,7 @@ public class CaveMapPooling : MonoBehaviour
             yield return null;
         }
         transform.localPosition = targetPos;
+
         if (transform.localPosition.z > col.size.z * 3)
         {
             transform.localPosition = new Vector3(0, 0, -col.size.z);
