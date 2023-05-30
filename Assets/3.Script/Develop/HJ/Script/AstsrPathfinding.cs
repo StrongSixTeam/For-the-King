@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AstsrPathfinding : MonoBehaviour
 {
+    public bool isy = false;
 
     HexMapCreator hexMapCreator = new HexMapCreator();
 
@@ -68,7 +69,7 @@ public class AstsrPathfinding : MonoBehaviour
         {
             MouseInput();
 
-            if (endNode != saveTargetNode)
+            if (endNode != saveTargetNode && endNode != null)
             {
                 saveTargetNode = endNode;
 
@@ -83,9 +84,8 @@ public class AstsrPathfinding : MonoBehaviour
                 }
             }
 
-            if (ismovingTurn)
+            if (!isy)
             {
-
                 Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
 
                 if (endNode != saveTargetNode)
@@ -98,8 +98,10 @@ public class AstsrPathfinding : MonoBehaviour
                         }
                     }
                 }
+            }
 
-
+            if (ismovingTurn)
+            {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
                     if (!endNode.ispass)
@@ -118,7 +120,19 @@ public class AstsrPathfinding : MonoBehaviour
                             showMoveCount[i].SetActive(false);
                         }
                     }
-                    ismovingTurn = false;
+
+                    if (canMoveCount - (finalNodeList.Count - 1) > 0)
+                    {
+                        Debug.Log(canMoveCount + "칸 이동할수있는데 " + (finalNodeList.Count - 1) + "이동 | 남은수 : " + (canMoveCount - (finalNodeList.Count - 1)));
+                        canMoveCount -= (finalNodeList.Count - 1);
+                    }
+                    else
+                    {
+                        Debug.Log("전부 소비! 턴 종료");
+                        ismovingTurn = false;
+                    }
+                    isy = true;
+
                 }
             }
 
@@ -133,6 +147,8 @@ public class AstsrPathfinding : MonoBehaviour
                     WhoseTurn = PlayerPrefs.GetInt("PlayerCnt") - 1;
                 }
             }
+
+
         }
 
     }
@@ -147,7 +163,7 @@ public class AstsrPathfinding : MonoBehaviour
         {
             //Debug.Log(hit.transform.gameObject.GetComponent<HexMember>().index);
             endNode = hit.transform.gameObject.GetComponent<HexMember>();
-            Debug.Log(endNode.H);
+            //Debug.Log(endNode.H);
         }
     }
 
@@ -219,7 +235,6 @@ public class AstsrPathfinding : MonoBehaviour
                     targetNode = targetNode.parentNode;
                 }
 
-
                 if (finalNodeList.Count > canMoveCount)
                 {
                     ShowHexCursorRad();
@@ -250,6 +265,7 @@ public class AstsrPathfinding : MonoBehaviour
 
     }
 
+    int[] directionOrder = new int[6] { 1, 4, 3, 2, 5, 0 };
     private void OpenListAdd(HexMember currentNode)
     {
 
@@ -257,15 +273,15 @@ public class AstsrPathfinding : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             //벽이 아니거나 closeList에 없다면 openList에 추가
-            if (currentNode.neighbors[i].ispass &&
-                !closeList.Contains(currentNode.neighbors[i]))
+            if (currentNode.neighbors[directionOrder[i]].ispass &&
+                !closeList.Contains(currentNode.neighbors[directionOrder[i]]))
             {
-                currentNode.neighbors[i].G = currentNode.G + 1;
-                GetH(currentNode, i);
+                currentNode.neighbors[directionOrder[i]].G = currentNode.G + 1;
+                GetH(currentNode, directionOrder[i]);
 
-                currentNode.neighbors[i].parentNode = currentNode;
+                currentNode.neighbors[directionOrder[i]].parentNode = currentNode;
 
-                openList.Add(currentNode.neighbors[i]);
+                openList.Add(currentNode.neighbors[directionOrder[i]]);
             }
         }
     }
@@ -300,47 +316,84 @@ public class AstsrPathfinding : MonoBehaviour
         int cost = 0;
 
         int loopNum = 0;
-        while (endNode.xNum != xNum || endNode.zNum != zNum)
+        while (endNode.xNum != xNum || endNode.zNum != zNum) //2가 대각선아래 한번만 갔음!!!!!! 왼쪽으로 한번 더 가야하는데!!!
         {
+
             //왼쪽
-            if(endNode.xNum < xNum)
+            if (endNode.xNum < xNum)
             {
                 if (endNode.zNum > zNum)
                 {
-                    //왼쪽대각선위
+                    //endNode의 왼쪽대각선위
                     cost++;
-                    xNum--;
-                    zNum++;
+                    if (zNum % 2 == 1) //z가 홀수
+                    {
+                        zNum++;
+                    }
+                    else
+                    {
+                        xNum--;
+                        zNum++;
+                    }
                 }
                 else if (endNode.zNum < zNum)
                 {
-                    //왼쪽대각선 아래
+                    //endNode의 왼쪽대각선 아래
+                    cost++;
+                    if (zNum % 2 == 1) //z가 홀수
+                    {
+                        zNum--;
+                    }
+                    else
+                    {
+                        xNum--;
+                        zNum--;
+                    }
+                }
+                else
+                {
+                    //endNode의 왼쪽
                     cost++;
                     xNum--;
-                    zNum--;
                 }
-                //왼쪽
-                cost++;
-                xNum--;
+                
             }
             else
             {
                 if (endNode.zNum > zNum)
                 {
-                    //오른쪽대각선위
+                    //endNode의 오른쪽대각선위
                     cost++;
-                    zNum++;
+                    if (zNum % 2 == 1) //z가 홀수
+                    {
+                        xNum++;
+                        zNum++;
+                    }
+                    else
+                    {
+                        zNum++;
+                    }
                 }
                 else if (endNode.zNum < zNum)
                 {
-                    //오른쪽대각선 아래
+                    //endNode의 오른쪽대각선 아래
                     cost++;
-                    zNum--;
+                    if (zNum % 2 == 1) //z가 홀수
+                    {
+                        xNum++;
+                        zNum--;
+                    }
+                    else
+                    {
+                        zNum--;
+                    }
                 }
-                //오른쪽
-                cost++;
-                xNum++;
-
+                else
+                {
+                    //endNode의 오른쪽
+                    cost++;
+                    xNum++;
+                }
             }
 
             if (loopNum++ > 1000)
@@ -348,7 +401,7 @@ public class AstsrPathfinding : MonoBehaviour
                 throw new System.Exception("Astar H 계산 오류");
             }
         }
-        
+
         currentNode.neighbors[i].H = cost;
 
     }
