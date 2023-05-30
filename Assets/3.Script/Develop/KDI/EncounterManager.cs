@@ -11,11 +11,12 @@ public class EncounterManager : MonoBehaviour
     public Text txtContext;
 
     [SerializeField] private Transform parent;
-    [SerializeField] private EncounterContent[] encounter;
+    public EncounterContent[] encounter;
 
     [SerializeField] private GameObject[] btns;
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject successCalc;
+    public int number;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class EncounterManager : MonoBehaviour
     }
     public void ActiveEncounter(int n)
     {
-
+        number = n;
         txtName.text = encounter[n].Name;
         txtContext.text = encounter[n].Content;
 
@@ -41,7 +42,7 @@ public class EncounterManager : MonoBehaviour
             SlotController.instance.maxSlotCount = encounter[n].slotCount;
             SlotController.instance.type = StringToType(encounter[n].slotType);
             SlotController.instance.limit = encounter[n].limit;
-            SlotController.instance.percent = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().awareness; //이거 ecounter type이랑 같은거 찾는 메소드 써서 바꾸기
+            SlotController.instance.percent = FindTypePercent(encounter[n].slotType);
             slot.GetComponent<CloneSlot>().Initialized();
             slot.SetActive(true);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
@@ -51,6 +52,11 @@ public class EncounterManager : MonoBehaviour
         else if (encounter[n].type == EncounterContent.Type.enemy)
         {
             ActiveBtn(2);
+            SlotController.instance.fixCount = 0;
+            SlotController.instance.maxSlotCount = encounter[n].enemyCount;
+            SlotController.instance.type = SlotController.Type.empty;
+            slot.GetComponent<CloneSlot>().Initialized();
+            slot.SetActive(true);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
         }
@@ -74,6 +80,11 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        if (btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus > 0)
+        {
+            GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus += btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus;
+            btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus = 0;
+        }
     }
 
     private void ActiveBtn(int n)
@@ -116,7 +127,7 @@ public class EncounterManager : MonoBehaviour
         }
         else
         {
-            return SlotController.Type.move;
+            return SlotController.Type.empty;
         }
     }
 
@@ -128,6 +139,76 @@ public class EncounterManager : MonoBehaviour
     public void TryConnect()
     {
         slot.GetComponent<CloneSlot>().Try();
+    }
 
+    private int FindTypePercent(string some)
+    {
+        if (some.Equals("move"))
+        {
+            return GameManager.instance.MainPlayer.GetComponent<PlayerStat>().speed;
+        }
+        else if (some.Equals("attackBlackSmith"))
+        {
+            return GameManager.instance.MainPlayer.GetComponent<PlayerStat>().strength;
+        }
+        else if (some.Equals("attackHunter"))
+        {
+            return GameManager.instance.MainPlayer.GetComponent<PlayerStat>().awareness;
+        }
+        else if (some.Equals("attackScholar"))
+        {
+            return GameManager.instance.MainPlayer.GetComponent<PlayerStat>().intelligence;
+        }
+        else
+        {
+            return GameManager.instance.MainPlayer.GetComponent<PlayerStat>().speed;
+        }
+    }
+
+    public void BattleBtn()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        MultiCamera.instance.MakeCloud();
+    }
+
+    public void EnemyRunBtn(int n)
+    {
+        slot.SetActive(true);
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.maxSlotCount = encounter[n].slotCount;
+        SlotController.instance.type = SlotController.Type.move;
+        SlotController.instance.limit = SlotController.instance.maxSlotCount;
+        SlotController.instance.percent = FindTypePercent("move");
+        slot.GetComponent<CloneSlot>().Initialized();
+        slot.SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+        parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
+        successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
+    }
+
+    public void EnemyFightBtn(int n)
+    {
+        ActiveBtn(2);
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.maxSlotCount = encounter[n].enemyCount;
+        SlotController.instance.type = SlotController.Type.empty;
+        slot.GetComponent<CloneSlot>().Initialized();
+        slot.SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+        parent.GetChild(2).gameObject.SetActive(false);
+    }
+
+    public void EnemyExitBtn(int n)
+    {
+        ActiveBtn(2);
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.maxSlotCount = encounter[n].enemyCount;
+        SlotController.instance.type = SlotController.Type.empty;
+        slot.GetComponent<CloneSlot>().Initialized();
+        slot.SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+        parent.GetChild(2).gameObject.SetActive(false);
     }
 }

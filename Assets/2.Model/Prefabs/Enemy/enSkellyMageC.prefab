@@ -1305,6 +1305,7 @@ GameObject:
   - component: {fileID: 7094766556787801301}
   - component: {fileID: 6541223531711131643}
   - component: {fileID: 1844825436410668089}
+  - component: {fileID: 9222794784045383732}
   m_Layer: 0
   m_Name: enSkellyMageC
   m_TagString: Untagged
@@ -1392,10 +1393,31 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.004
+  m_Radius: 0.005
   m_Height: 0.025
   m_Direction: 1
   m_Center: {x: 0, y: 0.012, z: 0.001}
+--- !u!114 &9222794784045383732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6541223531711131642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 00b6d9d587ceb4b4f9af0646d539d85d, type: 2}
+  monsterName: 
+  maxHp: 0
+  nowHp: 0
+  atk: 0
+  def: 0
+  speed: 0
+  Lv: 0
+  portrait: {fileID: 0}
 --- !u!1 &6648316239255128180
 GameObject:
   m_ObjectHideFlags: 0

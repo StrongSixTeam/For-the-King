@@ -37,12 +37,28 @@ public class QuestManager : MonoBehaviour
     public string questName;
     private int MaxTurn = 11;
 
+    [Header("구름")]
+    [SerializeField] MapObjectCreator mapObjectCreator;
+    [SerializeField] CloudBox cloudBox;
+    int questIndexNum = 0;
+
     private CameraController cameraController;
 
     private void Awake()
     {
         cameraController = FindObjectOfType<CameraController>();
+        StartCoroutine(LateFindObjectCo());
     }
+
+    IEnumerator LateFindObjectCo()
+    {
+        yield return null;
+        yield return null;
+        yield return null;
+        mapObjectCreator = FindObjectOfType<MapObjectCreator>();
+        cloudBox = FindObjectOfType<CloudBox>();
+    }
+
     private void Update()
     {
         if (!questPopUpUI.activeSelf && questTurn != 0 && questTurn != 2 && questTurn != 5 && questTurn != 8 && questTurn != 11)
@@ -104,6 +120,9 @@ public class QuestManager : MonoBehaviour
         {
             cameraController.targetPos = GameObject.FindGameObjectWithTag(questText[num].questPos).transform.position + cameraController.defaultPos;
             StartCoroutine(cameraController.CameraSoftMove());
+            //구름 비활성화
+            questIndexNum++;
+            cloudBox.CloudActiveFalse(mapObjectCreator.objectIndex[questTurn]);
         }
     }
     private void QuestSet(string questName)
