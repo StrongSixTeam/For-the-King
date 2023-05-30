@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 7368795549875176148}
   - component: {fileID: 8302972077244735456}
   - component: {fileID: 3783465697444167902}
+  - component: {fileID: 6058332393898510826}
   m_Layer: 0
   m_Name: cultist2B
   m_TagString: Untagged
@@ -768,10 +769,31 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.007
+  m_Radius: 0.008
   m_Height: 0.025
   m_Direction: 1
   m_Center: {x: 0.0012979362, y: 0.011, z: 0.00013257214}
+--- !u!114 &6058332393898510826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3168336127549183344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: b38f29cb5a5260c4e916225fa56ace70, type: 2}
+  monsterName: 
+  maxHp: 0
+  nowHp: 0
+  atk: 0
+  def: 0
+  speed: 0
+  Lv: 0
+  portrait: {fileID: 0}
 --- !u!1 &3305169984047437618
 GameObject:
   m_ObjectHideFlags: 0

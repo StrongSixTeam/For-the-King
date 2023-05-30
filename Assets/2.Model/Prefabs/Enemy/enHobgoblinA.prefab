@@ -1365,6 +1365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3728724712578885233}
   - component: {fileID: 4079339541251456380}
+  - component: {fileID: 1329089137798067925}
   m_Layer: 0
   m_Name: enHobGoblinA
   m_TagString: Untagged
@@ -1476,6 +1477,27 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0014535584, y: 0.00063153845, z: -0.000016007107}
     m_Extent: {x: 0.0121614635, y: 0.004378612, z: 0.012436036}
   m_DirtyAABB: 0
+--- !u!114 &1329089137798067925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7370209922926162119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: b56b324e962cc8148965b357f59910d1, type: 2}
+  monsterName: 
+  maxHp: 0
+  nowHp: 0
+  atk: 0
+  def: 0
+  speed: 0
+  Lv: 0
+  portrait: {fileID: 0}
 --- !u!1 &7729265993274897626
 GameObject:
   m_ObjectHideFlags: 0

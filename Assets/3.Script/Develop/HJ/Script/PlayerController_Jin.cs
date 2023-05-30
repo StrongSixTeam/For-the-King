@@ -10,6 +10,7 @@ public class PlayerController_Jin : MonoBehaviour
     private MapObjectCreator map;
     private QuestManager quest;
     private Animator animator;
+    private CloudBox cloudBox;
 
     public bool isRun;
 
@@ -20,7 +21,8 @@ public class PlayerController_Jin : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.transform.GetChild(1).gameObject.SetActive(false);
         animator = GetComponent<Animator>();
-        
+        cloudBox = FindObjectOfType<CloudBox>();
+        cloudBox.CloudActiveFalse(myHexNum);
     }
 
 
@@ -113,32 +115,32 @@ public class PlayerController_Jin : MonoBehaviour
         else if (map.randomObjectIndex[0] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(12);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[1] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(13);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[2] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(14);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[3] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(15);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[4] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(16);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[5] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(17);
-            return false;
+            return true;
         }
         else 
         {
@@ -170,6 +172,7 @@ public class PlayerController_Jin : MonoBehaviour
             }
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             myHexNum = nowtTargetNodes[i].index;
+            cloudBox.CloudActiveFalse(myHexNum);
 
             i++;
             if (myHexNum != origin)
@@ -208,6 +211,7 @@ public class PlayerController_Jin : MonoBehaviour
             if(hits[i].transform.GetComponent<HexMember>() != null)
             {
                 myHexNum = hits[i].transform.GetComponent<HexMember>().index;
+                cloudBox.CloudActiveFalse(myHexNum);
                 return;
             }
         }

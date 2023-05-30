@@ -10,6 +10,9 @@ public class CloneSlot : MonoBehaviour
     public Sprite[] attackBlackSmith; //공격 UI 이미지 - 대장장이
     public Sprite[] attackHunter; //공격 UI 이미지 - 사냥꾼
     public Sprite[] attackScholar; //공격 UI 이미지 - 학자
+    public Sprite empty; //빈 이미지
+    public bool isShowText = true;
+
     public void Initialized()
     {
         isSuccess = false;
@@ -21,6 +24,7 @@ public class CloneSlot : MonoBehaviour
             {
                 transform.GetChild(i).GetChild(j).gameObject.SetActive(false); //모든 오브젝트 끄기
             }
+            transform.GetChild(i).gameObject.SetActive(false);
         }
 
         transform.GetChild(6).gameObject.SetActive(false); //텍스트 끄기
@@ -30,15 +34,33 @@ public class CloneSlot : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(true); //전체 슬롯창 개수 맞춰서 키기
             if (SlotController.instance.type == SlotController.Type.move)
             {
-                for (int j = 0; j < 3; j++)
+                if (i < SlotController.instance.fixCount) //집중력 사용했으면
                 {
-                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = move[j]; //이미지 이동 이미지로 바꾸기
-                    if (j == 0)
+                    for (int j = 0; j < 3; j++) //show focus
                     {
-                        transform.GetChild(i).GetChild(0).gameObject.SetActive(true); //기본 이동 이미지 보여주기
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = move[j];
+                        if (j == 1)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
                     }
                 }
-                transform.GetChild(6).gameObject.SetActive(true); //글씨 보여주기
+                else
+                {
+                    for (int j = 0; j < 3; j++) //show pre
+                    {
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = move[j];
+                        if (j == 0)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
+                    }
+                }
+
+                if (isShowText)
+                {
+                    transform.GetChild(6).gameObject.SetActive(true); //글씨 보여주기
+                }
             }
             else if (SlotController.instance.type == SlotController.Type.attackScholar)
             {
@@ -67,23 +89,63 @@ public class CloneSlot : MonoBehaviour
             }
             else if (SlotController.instance.type == SlotController.Type.attackHunter)
             {
-                for (int j = 0; j < 3; j++)
+                if (i < SlotController.instance.fixCount) //집중력 사용했으면
                 {
-                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackHunter[j];
-                    if (j == 0)
+                    for (int j = 0; j < 3; j++) //show focus
                     {
-                        transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackHunter[j];
+                        if (j == 1)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < 3; j++) //show pre
+                    {
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackHunter[j];
+                        if (j == 0)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
                     }
                 }
             }
             else if (SlotController.instance.type == SlotController.Type.attackBlackSmith)
             {
-                for (int j = 0; j < 3; j++)
+                if (i < SlotController.instance.fixCount) //집중력 사용했으면
                 {
-                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackBlackSmith[j];
-                    if (j == 0)
+                    for (int j = 0; j < 3; j++) //show focus
                     {
-                        transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackBlackSmith[j];
+                        if (j == 1)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < 3; j++) //show pre
+                    {
+                        transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackBlackSmith[j];
+                        if (j == 0)
+                        {
+                            transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+            else if (SlotController.instance.type == SlotController.Type.empty)
+            {
+                transform.GetChild(6).gameObject.SetActive(false); //텍스트 끄기
+                for (int j = 0; j < 3; j++) //show focus
+                {
+                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = empty;
+                    if (j == 1)
+                    {
+                        transform.GetChild(i).GetChild(j).gameObject.SetActive(true);
                     }
                 }
             }
