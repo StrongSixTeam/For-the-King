@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject MainPlayer;
     public int nextTurn = 0;
 
+    [SerializeField] private Image[] portraits;
+
     private QuestManager questManager;
     private PlayerController_Jin playerController;
 

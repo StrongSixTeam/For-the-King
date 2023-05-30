@@ -17,13 +17,6 @@ public class CaveMapPooling : MonoBehaviour
     {
         speed = 10;
     }
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            StartCoroutine(MapMove_co());
-        }
-    }
     IEnumerator MapMove_co()
     {
         targetPos = transform.localPosition + new Vector3(0, 0, col.size.z);
