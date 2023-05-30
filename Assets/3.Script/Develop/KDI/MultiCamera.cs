@@ -4,65 +4,89 @@ using UnityEngine;
 
 public class MultiCamera : MonoBehaviour
 {
+    public static MultiCamera instance = null;
+
     public Animator loadingAnim;
     public Animator loadingAnim2;
     public Camera[] cameras;
-    int currentCam = 0;
+    public bool check = false;
+
+    [SerializeField] private GameObject[] clouds;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Start()
+    {
+        cameras[0].enabled = true;
+        cameras[1].enabled = false;
+        for (int i = 0; i < clouds.Length; i++)
+        {
+            clouds[i].SetActive(false);
+        }
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            loadingAnim.SetTrigger("cloud");
-            loadingAnim2.SetTrigger("cloud");
-            Invoke("CloudOn", 0.7f);
-            Invoke("CloudOff", 1.5f);
-        }
+        //if (Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    loadingAnim.SetTrigger("cloud");
+        //    loadingAnim2.SetTrigger("cloud");
+        //    Invoke("CloudOn", 0.7f);
+        //    Invoke("CloudOff", 1.5f);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            loadingAnim.SetTrigger("cloud");
-            loadingAnim2.SetTrigger("cloud");
-            Invoke("CloudOn2", 0.7f);
-            Invoke("CloudOff", 1.5f);
-        }
+        //if (Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    loadingAnim.SetTrigger("cloud");
+        //    loadingAnim2.SetTrigger("cloud");
+        //    Invoke("CloudOn2", 0.7f);
+        //    Invoke("CloudOff", 1.5f);
+        //}
 
     }
 
-    private void ChangeCam(int n)
+    public void ChangeCam()
     {
-        if (n == 0)
+        if (check)
         {
-            cameras[1].enabled = false;
             cameras[0].enabled = true;
+            cameras[1].enabled = false;
+            check = false;
         }
         else
         {
-            cameras[1].enabled = true;
             cameras[0].enabled = false;
+            cameras[1].enabled = true;
+            check = true;
         }
     }
 
-    private void CloudOn()
+    public void MakeCloud()
     {
-        currentCam = 1;
-        ChangeCam(1);
+        for (int i = 0; i < clouds.Length; i++)
+        {
+            clouds[i].SetActive(true);
+        }
+        ActiveTrigger();
+        Invoke("ChangeCam", 1.5f);
+        Invoke("ActiveTrigger", 2f);
+        Invoke("DontShow",3f);
+
+    }
+    private void ActiveTrigger()
+    {
+        loadingAnim.SetTrigger("cloud");
+        loadingAnim2.SetTrigger("cloud");
     }
 
-    private void CloudOn2()
+    private void DontShow()
     {
-        currentCam = 0;
-        ChangeCam(0);
-    }
-
-    private void CloudOff()
-    {
-        loadingAnim.SetTrigger("off");
-        loadingAnim2.SetTrigger("off");
-    }
-
-    public void poi()
-    {
-
+        for (int i = 0; i < clouds.Length; i++)
+        {
+            clouds[i].SetActive(false);
+        }
     }
 }
