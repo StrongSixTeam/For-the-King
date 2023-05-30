@@ -147,6 +147,7 @@ public class AstsrPathfinding : MonoBehaviour
         {
             //Debug.Log(hit.transform.gameObject.GetComponent<HexMember>().index);
             endNode = hit.transform.gameObject.GetComponent<HexMember>();
+            Debug.Log(endNode.H);
         }
     }
 
@@ -269,24 +270,86 @@ public class AstsrPathfinding : MonoBehaviour
         }
     }
 
+
     private void GetH(HexMember currentNode, int i)
     {
 
-        int dx = endNode.xNum - currentNode.neighbors[i].xNum; //타겟과 이웃노드의 x거리
-        int dy = endNode.zNum - currentNode.neighbors[i].zNum; //타겟과 이웃노드의 z거리
-        int x = Mathf.Abs(dx);
-        int y = Mathf.Abs(dy);
+        //int dx = endNode.xNum - currentNode.neighbors[i].xNum; //타겟과 이웃노드의 x거리
+        //int dy = endNode.zNum - currentNode.neighbors[i].zNum; //타겟과 이웃노드의 z거리
+        //int x = Mathf.Abs(dx);
+        //int y = Mathf.Abs(dy);
 
-        if ((dx < 0) ^ ((currentNode.neighbors[i].zNum & 1) == 1))
-        {
-            x = Mathf.Max(0, x - (y + 1) / 2);
-        }
-        else
-        {
-            x = Mathf.Max(0, x - (y) / 2);
-        }
+        //if ((dx < 0) ^ ((currentNode.neighbors[i].zNum & 1) == 1))
+        //{
+        //    x = Mathf.Max(0, x - (y + 1) / 2);
+        //}
+        //else
+        //{
+        //    x = Mathf.Max(0, x - (y) / 2);
+        //}
 
-        currentNode.neighbors[i].H = x + y;
+        //currentNode.neighbors[i].H = x + y;
+
+
+
+        //currentNode.neighbors[i]에서 endNode까지의 거리
+
+        int xNum = currentNode.neighbors[i].xNum;
+        int zNum = currentNode.neighbors[i].zNum;
+
+        int cost = 0;
+
+        int loopNum = 0;
+        while (endNode.xNum != xNum || endNode.zNum != zNum)
+        {
+            //왼쪽
+            if(endNode.xNum < xNum)
+            {
+                if (endNode.zNum > zNum)
+                {
+                    //왼쪽대각선위
+                    cost++;
+                    xNum--;
+                    zNum++;
+                }
+                else if (endNode.zNum < zNum)
+                {
+                    //왼쪽대각선 아래
+                    cost++;
+                    xNum--;
+                    zNum--;
+                }
+                //왼쪽
+                cost++;
+                xNum--;
+            }
+            else
+            {
+                if (endNode.zNum > zNum)
+                {
+                    //오른쪽대각선위
+                    cost++;
+                    zNum++;
+                }
+                else if (endNode.zNum < zNum)
+                {
+                    //오른쪽대각선 아래
+                    cost++;
+                    zNum--;
+                }
+                //오른쪽
+                cost++;
+                xNum++;
+
+            }
+
+            if (loopNum++ > 1000)
+            {
+                throw new System.Exception("Astar H 계산 오류");
+            }
+        }
+        
+        currentNode.neighbors[i].H = cost;
 
     }
 
