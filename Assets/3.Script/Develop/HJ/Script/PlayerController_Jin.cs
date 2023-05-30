@@ -12,6 +12,8 @@ public class PlayerController_Jin : MonoBehaviour
     private Animator animator;
     private CloudBox cloudBox;
 
+    private AstsrPathfinding A;
+
     public bool isRun;
 
     private void Start()
@@ -23,6 +25,7 @@ public class PlayerController_Jin : MonoBehaviour
         animator = GetComponent<Animator>();
         cloudBox = FindObjectOfType<CloudBox>();
         cloudBox.CloudActiveFalse(myHexNum);
+        A = FindObjectOfType<AstsrPathfinding>();
     }
 
 
@@ -152,7 +155,7 @@ public class PlayerController_Jin : MonoBehaviour
     {
         List<HexMember> nowtTargetNodes = new List<HexMember>();
         nowtTargetNodes = targetNodes;
-        for (int i = 0; i < nowtTargetNodes.Count;)
+        for (int i = 0; i < nowtTargetNodes.Count; i++)
         {
             int origin = myHexNum;
             //Rotation(i);
@@ -172,8 +175,9 @@ public class PlayerController_Jin : MonoBehaviour
             }
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             myHexNum = nowtTargetNodes[i].index;
+            cloudBox.CloudActiveFalse(myHexNum);
 
-            i++;
+            //i++;
             if (myHexNum != origin)
             {
                 if (CheckObject()) //현재 오브젝트에 도달하면
@@ -197,6 +201,7 @@ public class PlayerController_Jin : MonoBehaviour
         nowtTargetNodes.Clear();
         targetNodes.Clear();
         animator.SetBool("MapRun", false);
+        A.isy = false; //움직임이 끝날때 다시 찾음
         yield break;
     }
 

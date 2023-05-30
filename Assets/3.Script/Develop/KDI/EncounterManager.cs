@@ -9,6 +9,7 @@ public class EncounterManager : MonoBehaviour
 
     public Text txtName;
     public Text txtContext;
+    public Text txtExtraContext;
 
     [SerializeField] private Transform parent;
     public EncounterContent[] encounter;
@@ -28,6 +29,14 @@ public class EncounterManager : MonoBehaviour
         number = n;
         txtName.text = encounter[n].Name;
         txtContext.text = encounter[n].Content;
+        if (encounter[n].extraContent != null)
+        {
+            txtExtraContext.text = encounter[n].extraContent;
+        }
+        else
+        {
+            txtExtraContext.text = "";
+        }
 
         if (encounter[n].type == EncounterContent.Type.town) 
         {
@@ -68,8 +77,7 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.sanctum)
         {//집중력과 체력 모두 회복
-            ActiveBtn(1);
-            //ActiveBtn(4)
+            ActiveBtn(4);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
         }
@@ -210,5 +218,54 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(true);
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(false);
+    }
+
+    public void SanctumPrayBtn()
+    {
+        if (number == 9)
+        {
+            SanctumFocusBtn();
+            encounter[number].isCleared = true;
+        }
+        else if (number == 10)
+        {
+            SanctumLifeBtn();
+            encounter[number].isCleared = true;
+        }
+        else if (number == 11)
+        {
+            SanctumIntelBtn();
+            encounter[number].isCleared = true;
+        }
+    }
+
+    public void SanctumFocusBtn()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus += 2;
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
+    }
+    public void SanctumLifeBtn()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp += 10;
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
+    }
+    public void SanctumIntelBtn()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
     }
 }
