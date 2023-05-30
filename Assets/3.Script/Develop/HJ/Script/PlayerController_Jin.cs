@@ -172,6 +172,7 @@ public class PlayerController_Jin : MonoBehaviour
             }
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             myHexNum = nowtTargetNodes[i].index;
+            cloudBox.CloudActiveFalse(myHexNum);
 
             i++;
             if (myHexNum != origin)
