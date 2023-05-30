@@ -62,6 +62,7 @@ public class PlayerUI : MonoBehaviour
     {
         for (int i = 0; i < playerStat.maxFocus; i++)
         {
+            focus.transform.GetChild(i).gameObject.SetActive(true);
             if (i < playerStat.nowFocus)
             {
                 focus.transform.GetChild(i).GetComponent<Image>().sprite = focusSprites[0];

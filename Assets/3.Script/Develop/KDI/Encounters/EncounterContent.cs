@@ -7,6 +7,7 @@ public class EncounterContent : ScriptableObject
 {
     public string Name;
     public string Content;
+    public string extraContent;
     public enum Type
     {
         town,
