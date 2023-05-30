@@ -10,7 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5bfb1b379276674e919c7b67ba75480, type: 3}
-  m_Name: EnemyStatusMonster02
+  m_Name: enSkellySoldier
   m_EditorClassIdentifier: 
-  maxHp: 80
-  Atk: 10
+  monsterName: Bone Soldier
+  atk: 10
+  def: 6
+  maxHp: 30
+  nowHp: 30
+  speed: 55
+  Lv: 1
+  UIImage: {fileID: 0}
