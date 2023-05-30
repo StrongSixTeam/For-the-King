@@ -265,25 +265,47 @@ public class AstsrPathfinding : MonoBehaviour
 
     }
 
-    int[] directionOrder = new int[6] { 1, 4, 3, 2, 5, 0 };
+    int[] directionOrderLift = new int[6] { 4, 5, 3, 1, 0, 2 };
+    int[] directionOrderRight = new int[6] { 1, 0, 2, 4, 5, 3 };
     private void OpenListAdd(HexMember currentNode)
     {
-
-        //6개의 이웃 중에서
-        for (int i = 0; i < 6; i++)
+        if(currentNode.xNum > endNode.xNum) //목적지가 왼쪽이라면
         {
-            //벽이 아니거나 closeList에 없다면 openList에 추가
-            if (currentNode.neighbors[directionOrder[i]].ispass &&
-                !closeList.Contains(currentNode.neighbors[directionOrder[i]]))
+            //6개의 이웃 중에서
+            for (int i = 0; i < 6; i++)
             {
-                currentNode.neighbors[directionOrder[i]].G = currentNode.G + 1;
-                GetH(currentNode, directionOrder[i]);
+                //벽이 아니거나 closeList에 없다면 openList에 추가
+                if (currentNode.neighbors[directionOrderLift[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[directionOrderLift[i]]))
+                {
+                    currentNode.neighbors[directionOrderLift[i]].G = currentNode.G + 1;
+                    GetH(currentNode, directionOrderLift[i]);
 
-                currentNode.neighbors[directionOrder[i]].parentNode = currentNode;
+                    currentNode.neighbors[directionOrderLift[i]].parentNode = currentNode;
 
-                openList.Add(currentNode.neighbors[directionOrder[i]]);
+                    openList.Add(currentNode.neighbors[directionOrderLift[i]]);
+                }
             }
         }
+        else
+        {
+            //6개의 이웃 중에서
+            for (int i = 0; i < 6; i++)
+            {
+                //벽이 아니거나 closeList에 없다면 openList에 추가
+                if (currentNode.neighbors[directionOrderRight[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[directionOrderRight[i]]))
+                {
+                    currentNode.neighbors[directionOrderRight[i]].G = currentNode.G + 1;
+                    GetH(currentNode, directionOrderRight[i]);
+
+                    currentNode.neighbors[directionOrderRight[i]].parentNode = currentNode;
+
+                    openList.Add(currentNode.neighbors[directionOrderRight[i]]);
+                }
+            }
+        }
+        
     }
 
 
@@ -316,11 +338,11 @@ public class AstsrPathfinding : MonoBehaviour
         int cost = 0;
 
         int loopNum = 0;
-        while (endNode.xNum != xNum || endNode.zNum != zNum) //2가 대각선아래 한번만 갔음!!!!!! 왼쪽으로 한번 더 가야하는데!!!
+        while (endNode.xNum != xNum || endNode.zNum != zNum)
         {
 
             //왼쪽
-            if (endNode.xNum < xNum)
+            if (endNode.xNum <= xNum)
             {
                 if (endNode.zNum > zNum)
                 {
