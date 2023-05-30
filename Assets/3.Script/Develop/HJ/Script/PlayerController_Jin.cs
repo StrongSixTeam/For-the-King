@@ -113,32 +113,32 @@ public class PlayerController_Jin : MonoBehaviour
         else if (map.randomObjectIndex[0] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(12);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[1] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(13);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[2] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(14);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[3] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(15);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[4] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(16);
-            return false;
+            return true;
         }
         else if (map.randomObjectIndex[5] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(17);
-            return false;
+            return true;
         }
         else 
         {

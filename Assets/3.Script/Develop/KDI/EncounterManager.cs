@@ -128,6 +128,13 @@ public class EncounterManager : MonoBehaviour
     public void TryConnect()
     {
         slot.GetComponent<CloneSlot>().Try();
+    }
 
+    public void BattleBtn()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        MultiCamera.instance.MakeCloud();
     }
 }
