@@ -10,6 +10,7 @@ public class PlayerController_Jin : MonoBehaviour
     private MapObjectCreator map;
     private QuestManager quest;
     private Animator animator;
+    private CloudBox cloudBox;
 
     public bool isRun;
 
@@ -20,7 +21,8 @@ public class PlayerController_Jin : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.transform.GetChild(1).gameObject.SetActive(false);
         animator = GetComponent<Animator>();
-        
+        cloudBox = FindObjectOfType<CloudBox>();
+        cloudBox.CloudActiveFalse(myHexNum);
     }
 
 
@@ -208,6 +210,7 @@ public class PlayerController_Jin : MonoBehaviour
             if(hits[i].transform.GetComponent<HexMember>() != null)
             {
                 myHexNum = hits[i].transform.GetComponent<HexMember>().index;
+                cloudBox.CloudActiveFalse(myHexNum);
                 return;
             }
         }

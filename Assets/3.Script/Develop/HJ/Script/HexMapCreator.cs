@@ -65,6 +65,7 @@ public class HexMapCreator : MonoBehaviour
     public LowPolyWater lowPolyWater;
     public HexMember lowPolyWataer;
 
+    [SerializeField] CloudBox cloudBoxObj;
 
     private void Start()
     {
@@ -90,7 +91,7 @@ public class HexMapCreator : MonoBehaviour
         //땅 영역 지정
         SetGround();
 
-        //맵 오브젝트 크리에이터 생성
+        //맵 오브젝트 크리에이터 생성 & 구름 생성
         StartCoroutine(StartMapObjectCreate_co());
     }
 
@@ -201,6 +202,7 @@ public class HexMapCreator : MonoBehaviour
     {
         yield return null; //hexMembers[]가 채워지고 다음 프레임에 실행
 
+        Instantiate(cloudBoxObj);
         Instantiate(mapObjectCreatorObj);
         
         yield break;
