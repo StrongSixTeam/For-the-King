@@ -6,7 +6,17 @@ using UnityEngine;
 
 public class EnemyStatus : ScriptableObject
 {
-    public float maxHp = 100f;
-  
-    public int Atk = 2;
+   
+    public string monsterName = "Normal";
+    public float atk = 10f;
+    public float def = 10f;
+    public float maxHp = 60f;
+    public float nowHp = 60f;
+   
+    //속도 
+    public int speed = 50;
+    
+    public int Lv = 1;
+    public Sprite UIImage; //초상화 이미지
+   
 }

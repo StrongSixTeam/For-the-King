@@ -10,7 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5bfb1b379276674e919c7b67ba75480, type: 3}
-  m_Name: EnemyStatusMonster01
+  m_Name: enBeastWizard
   m_EditorClassIdentifier: 
-  maxHp: 90
-  Atk: 5
+  monsterName: Beastman Wizard
+  atk: 12
+  def: 8
+  maxHp: 30
+  nowHp: 30
+  speed: 30
+  Lv: 1
+  UIImage: {fileID: 0}
