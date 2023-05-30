@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MouseOverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MouseOverEvent_Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public void OnPointerEnter(PointerEventData data)
     {
-        OverInvenItem();
+        if(transform.GetComponent<Button>().interactable == true)
+        {
+            OverInvenItem();
+        }
     }
 
     public void OnPointerExit(PointerEventData data)
@@ -19,7 +22,7 @@ public class MouseOverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OverInvenItem()
     {
         InventoryController1.instance.itemName = "";
-        string[] itemNameArr = transform.GetChild(0).GetChild(2).GetComponent<Text>().text.Split(' ');
+        string[] itemNameArr = transform.GetChild(1).GetComponent<Text>().text.Split(' ');
         for (int i = 0; i < itemNameArr.Length - 1; i++)
         {
             InventoryController1.instance.itemName += itemNameArr[i];
