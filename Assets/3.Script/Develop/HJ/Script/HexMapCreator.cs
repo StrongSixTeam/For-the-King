@@ -62,13 +62,12 @@ public class HexMapCreator : MonoBehaviour
 
     [SerializeField] GameObject mapObjectCreatorObj;
 
-    //MapSaveData[] mapSaveData;
-    string path;
+    public LowPolyWater lowPolyWater;
+    public HexMember lowPolyWataer;
 
 
     private void Start()
     {
-        path = Path.Combine(Application.dataPath + "MapSaveData.json");
         mapSize = height * width;
 
         gridCanvas = GetComponentInChildren<Canvas>();
@@ -90,49 +89,6 @@ public class HexMapCreator : MonoBehaviour
 
         //땅 영역 지정
         SetGround();
-        //Debug.Log(path);
-        //if (File.Exists(path))
-        //{
-        //    //맵 정보 불러오기
-        //    string jsonData = File.ReadAllText(path);
-        //    mapSaveData = JsonUtility.FromJson<MapSaveData[]>(jsonData);
-
-        //    for (int i = 0; i > mapSize; i++)
-        //    {
-        //        if (mapSaveData[i].mapType != 0)
-        //        {
-        //            ChangeMaterial(i, mapSaveData[i].mapType);
-        //        }
-        //    }
-
-        //}
-        //else
-        //{
-        //    //땅 영역 지정
-        //    SetGround();
-
-
-        //    mapSaveData = new MapSaveData[forestNodeCount + plainsNodeCount];
-        //    int indexCount = 0;
-
-        //    //맵 정보를 저장
-        //    for (int i = 0; i < mapSize; i++)
-        //    {
-        //        if (hexMembers[i].mapType != 0)
-        //        {
-        //            mapSaveData[indexCount] = new MapSaveData
-        //            {
-        //                index = i,
-        //                mapType = hexMembers[i].mapType
-        //            };
-        //            indexCount++;
-        //        }
-        //    }
-
-        //    string jsonData = JsonUtility.ToJson(mapSaveData);
-        //    Debug.Log(jsonData);
-        //    //File.WriteAllText(path, jsonData);
-        //}
 
         //맵 오브젝트 크리에이터 생성
         StartCoroutine(StartMapObjectCreate_co());
@@ -235,6 +191,9 @@ public class HexMapCreator : MonoBehaviour
             PlainsNode();
         }
 
+
+        //바다 영역에 LowPolyWater 스크립트를 부여한다
+        AddLowPolyWater();
     }
 
 
@@ -313,6 +272,17 @@ public class HexMapCreator : MonoBehaviour
         }
     }
 
+    void AddLowPolyWater()
+    {
+        for(int i=0; i<hexMembers.Length; i++)
+        {
+            if (hexMembers[i].mapType.Equals(0))
+            {
+                hexMembers[i].gameObject.AddComponent<LowPolyWater>();
+            }
+        }
+    }
+
     //매개변수로 전달받는 index의 Material를 바꾼다
     private void ChangeMaterial(int i, int materialsNumber)
     {
@@ -335,6 +305,9 @@ public class HexMapCreator : MonoBehaviour
             hexMembers[i].SetMapType(materialsNumber);
         }
     }
+
+
+
 
     //private void CreateGrid(int x, int z, int i)
     //{
