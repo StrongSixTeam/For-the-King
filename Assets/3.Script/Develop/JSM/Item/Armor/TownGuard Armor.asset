@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c04768251523a64438d2f9607097d16e, type: 3}
-  m_Name: Necklace
+  m_Name: TownGuard Armor
   m_EditorClassIdentifier: 
-  itemName: "\uBAA9\uAC78\uC774"
-  itemImage: {fileID: 21300000, guid: 3e1ef9c057c7fa2488bac623bf783a9e, type: 3}
+  itemName: "\uD0C0\uC6B4\uAC00\uB4DC\uAC11\uC637"
+  itemImage: {fileID: 21300000, guid: 892d3e47132d51b49b6399cf2db6b9df, type: 3}
+  itemDetailImage: {fileID: 21300000, guid: 21fe1d5e9cfc9544f8a66e30b745dc7e, type: 3}
   itemType: 2
-  itemPrefab: {fileID: 919132149155446097, guid: 21c7e9ca7fd802344b8bb4729f0b963a, type: 3}
+  itemPrefab: {fileID: 0}
   itemCount: 1
-  equipType: 4
-  additionalHP: 3
+  detail_1: "+7 \uBC29\uC5B4\uB825\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  detail_2: 
+  equipType: 2
+  additionalHP: 0
   atk: 0
-  def: 5
+  def: 7
   strength: 0
   intelligence: 0
   awareness: 0
