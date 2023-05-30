@@ -40,7 +40,13 @@ public class SuccessCalc : MonoBehaviour
         }
         //SlotController.instance.percent = percent;
         //maxSlot = maxSlot - testFix;
-
+        if (maxSlot != 4)
+        {
+            for (int i = 4; i > maxSlot; i--)
+            {
+                resultNumbers[i].SetActive(false);
+            }
+        }
         for (int i = maxSlot; i >= 0; i--)
         {
             float successPercent = percent * (float)0.01;

@@ -31,7 +31,8 @@ public class SlotController : MonoBehaviour
         move,
         attackBlackSmith,
         attackHunter,
-        attackScholar
+        attackScholar,
+        empty
     }
     public Type type;
 
