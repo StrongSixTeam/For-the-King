@@ -20,12 +20,8 @@ public class ItemInputTest1 : MonoBehaviour
     {
         int num = Random.Range(0, EatItem.Length);
 
-        InventoryController1.instance.ItemStack(EatItem[num]);
-        quick.QuickSlotShow();
-        if (InventoryController1.instance.itemlistCnt < InventoryController1.instance.itemList.Count)
-        {
-            InventoryController1.instance.itemlistCnt++;
-        }
-        InventoryController1.instance.InventoryShow();
+        InventoryController1.instance.ItemStack(EatItem[num], (int)InventoryController1.instance.playerNum);
+        quick.QuickSlotShow((int)InventoryController1.instance.playerNum);
+        InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
     }
 }
