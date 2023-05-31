@@ -68,6 +68,7 @@ public class MultiCamera : MonoBehaviour
     private void OffCloud()
     {
         loadingAnim.SetTrigger("active");
+        FindObjectOfType<BattleLoader>().FieldBattle();
         Invoke("SetActiveFalse", 1f);
 
     }
