@@ -191,12 +191,10 @@ public class CloneSlot : MonoBehaviour
         if (SlotController.instance.limit <= SlotController.instance.success)
         {
             //성공 처리
-            Debug.Log("확률 성공");
             StartCoroutine(GodSuccessWait_co());
         }
         else
         {
-            Debug.Log("확률 실패");
             isSuccess = false;
             Invoke("OffAll", 1f); //끄기
             //실패 페널티 처리
@@ -213,6 +211,6 @@ public class CloneSlot : MonoBehaviour
 
     private void OffAll()
     {
-        FindObjectOfType<EncounterManager>().ExitButton();
+        FindObjectOfType<EncounterManager>().DisableButton();
     }
 }
