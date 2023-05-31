@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AstsrPathfinding : MonoBehaviour
 {
-    public bool isPathfinding = false;
+    public bool isy = false;
 
     HexMapCreator hexMapCreator = new HexMapCreator();
 
@@ -84,7 +84,7 @@ public class AstsrPathfinding : MonoBehaviour
                 }
             }
 
-            if (isPathfinding && endNode != null)
+            if (!isy)
             {
                 Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
 
@@ -104,7 +104,7 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
-                    if (!endNode.ispass || endNode == null)
+                    if (!endNode.ispass)
                     {
                         return;
                     }
@@ -129,10 +129,9 @@ public class AstsrPathfinding : MonoBehaviour
                     else
                     {
                         Debug.Log("전부 소비! 턴 종료");
-                        canMoveCount -= (finalNodeList.Count - 1);
                         ismovingTurn = false;
                     }
-                    isPathfinding = false;
+                    isy = true;
 
                 }
             }
@@ -140,7 +139,6 @@ public class AstsrPathfinding : MonoBehaviour
             if (SlotController.instance.success + SlotController.instance.fail == SlotController.instance.maxSlotCount && GameManager.instance.isTrunChange)
             {
                 GameManager.instance.isTrunChange = false;
-                isPathfinding = true;
                 ismovingTurn = true;
                 canMoveCount = SlotController.instance.success;
                 WhoseTurn = GameManager.instance.nextTurn - 1;
@@ -152,25 +150,7 @@ public class AstsrPathfinding : MonoBehaviour
 
 
         }
-        else
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                if (showMoveCount[i].activeSelf)
-                {
-                    showMoveCount[i].SetActive(false);
-                }
-            }
-        }
-    }
 
-    public void SetisPathfinding()
-    {
-        //플레이어가 움직임을 끝내고 호출
-        if (canMoveCount > 0)
-        {
-            isPathfinding = true;
-        }
     }
 
 
@@ -289,52 +269,41 @@ public class AstsrPathfinding : MonoBehaviour
     int[] directionOrderRight = new int[6] { 1, 0, 2, 4, 5, 3 };
     private void OpenListAdd(HexMember currentNode)
     {
-        try
+        if(currentNode.xNum > endNode.xNum) //목적지가 왼쪽이라면
         {
-            if (currentNode.xNum > endNode.xNum) //목적지가 왼쪽이라면
+            //6개의 이웃 중에서
+            for (int i = 0; i < 6; i++)
             {
-                //6개의 이웃 중에서
-                for (int i = 0; i < 6; i++)
+                //벽이 아니거나 closeList에 없다면 openList에 추가
+                if (currentNode.neighbors[directionOrderLift[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[directionOrderLift[i]]))
                 {
-                    //벽이 아니거나 closeList에 없다면 openList에 추가
-                    if (currentNode.neighbors[directionOrderLift[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[directionOrderLift[i]]))
-                    {
-                        currentNode.neighbors[directionOrderLift[i]].G = currentNode.G + 1;
-                        GetH(currentNode, directionOrderLift[i]);
+                    currentNode.neighbors[directionOrderLift[i]].G = currentNode.G + 1;
+                    GetH(currentNode, directionOrderLift[i]);
 
-                        currentNode.neighbors[directionOrderLift[i]].parentNode = currentNode;
+                    currentNode.neighbors[directionOrderLift[i]].parentNode = currentNode;
 
-                        openList.Add(currentNode.neighbors[directionOrderLift[i]]);
-                    }
-                }
-            }
-            else
-            {
-                //6개의 이웃 중에서
-                for (int i = 0; i < 6; i++)
-                {
-                    //벽이 아니거나 closeList에 없다면 openList에 추가
-                    if (currentNode.neighbors[directionOrderRight[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[directionOrderRight[i]]))
-                    {
-                        currentNode.neighbors[directionOrderRight[i]].G = currentNode.G + 1;
-                        GetH(currentNode, directionOrderRight[i]);
-
-                        currentNode.neighbors[directionOrderRight[i]].parentNode = currentNode;
-
-                        openList.Add(currentNode.neighbors[directionOrderRight[i]]);
-                    }
+                    openList.Add(currentNode.neighbors[directionOrderLift[i]]);
                 }
             }
         }
-        catch (System.Exception ex)
+        else
         {
-            Debug.Log(ex);
-            Debug.Log(currentNode);
-            Debug.Log(endNode);
-            Debug.Log(openList);
-            Debug.Log(closeList);
+            //6개의 이웃 중에서
+            for (int i = 0; i < 6; i++)
+            {
+                //벽이 아니거나 closeList에 없다면 openList에 추가
+                if (currentNode.neighbors[directionOrderRight[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[directionOrderRight[i]]))
+                {
+                    currentNode.neighbors[directionOrderRight[i]].G = currentNode.G + 1;
+                    GetH(currentNode, directionOrderRight[i]);
+
+                    currentNode.neighbors[directionOrderRight[i]].parentNode = currentNode;
+
+                    openList.Add(currentNode.neighbors[directionOrderRight[i]]);
+                }
+            }
         }
         
     }

@@ -12,7 +12,7 @@ public class PlayerController_Jin : MonoBehaviour
     private Animator animator;
     private CloudBox cloudBox;
 
-    private AstsrPathfinding astsrPathfinding;
+    private AstsrPathfinding A;
 
     public bool isRun;
 
@@ -25,7 +25,7 @@ public class PlayerController_Jin : MonoBehaviour
         animator = GetComponent<Animator>();
         cloudBox = FindObjectOfType<CloudBox>();
         cloudBox.CloudActiveFalse(myHexNum);
-        astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+        A = FindObjectOfType<AstsrPathfinding>();
     }
 
 
@@ -201,7 +201,7 @@ public class PlayerController_Jin : MonoBehaviour
         nowtTargetNodes.Clear();
         targetNodes.Clear();
         animator.SetBool("MapRun", false);
-        astsrPathfinding.SetisPathfinding(); //움직임이 끝날때 다시 찾음
+        A.isy = false; //움직임이 끝날때 다시 찾음
         yield break;
     }
 
