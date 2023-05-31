@@ -96,6 +96,13 @@ public class EncounterManager : MonoBehaviour
         }
     }
 
+    public void DisableButton()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+    }
+
     public void ExitButton()
     {
         slot.SetActive(false);
