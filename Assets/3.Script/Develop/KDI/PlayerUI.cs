@@ -9,19 +9,34 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private PlayerStat playerStat;
 
-    [SerializeField] private Text name;
-    [SerializeField] private Text strength;
-    [SerializeField] private Text intelligence;
-    [SerializeField] private Text awareness;
-    [SerializeField] private Text speed;
+    [Header("Text")]
+    [SerializeField] private Text nameText;
+    [SerializeField] private Text strengthText;
+    [SerializeField] private Text intelligenceText;
+    [SerializeField] private Text awarenessText;
+    [SerializeField] private Text speedText;
+    [SerializeField] private Text hpText;
+    [SerializeField] private Text hpText2;
+    [SerializeField] private Text expText;
+    [SerializeField] private Text coinText;
+    [SerializeField] private Text levelText;
+    [SerializeField] private Text atkText;
+    [SerializeField] private Text defText;
 
+    [Header("Slider")]
     [SerializeField] private Slider hpSlider;
     [SerializeField] private Slider expSlider;
-    [SerializeField] private Text hpText;
-    [SerializeField] private Text expText;
+
     public Image portrait;
     [SerializeField] private GameObject focus;
     [SerializeField] private Sprite[] focusSprites;
+    [SerializeField] private GameObject sanctum;
+
+    public enum Sanctum
+    {
+        none, focus, life, wisdom
+    }
+    public Sanctum whichSanctum;
 
     private bool playerStatSet = false;
     private void Update()
@@ -33,31 +48,40 @@ public class PlayerUI : MonoBehaviour
                 playerStat = GameManager.instance.Players[order].GetComponent<PlayerStat>();
                 playerStatSet = true;
                 portrait.sprite = playerStat.portrait; 
-                name.text = playerStat.name;
+                nameText.text = playerStat.name;
                 for (int i = 0; i < playerStat.maxFocus; i++) 
                 {
                     focus.transform.GetChild(i).gameObject.SetActive(true);
                 }
+                whichSanctum = Sanctum.none;
             }
             else //계속 업데이트 되어야 하는 부분
             {
-                strength.text = playerStat.strength.ToString();
-                intelligence.text = playerStat.intelligence.ToString();
-                awareness.text = playerStat.awareness.ToString();
-                speed.text = playerStat.speed.ToString();
+                strengthText.text = playerStat.strength.ToString();
+                intelligenceText.text = playerStat.intelligence.ToString();
+                awarenessText.text = playerStat.awareness.ToString();
+                speedText.text = playerStat.speed.ToString();
+                levelText.text = playerStat.Lv.ToString();
+                atkText.text = playerStat.atk.ToString();
+                defText.text = playerStat.def.ToString();
+
+                hpText.text = playerStat.nowHp + " / " + playerStat.maxHp;
+                hpText2.text = playerStat.nowHp.ToString();
+                expText.text = playerStat.nowExp + " / " + playerStat.maxExp;
+                coinText.text = playerStat.coins.ToString();
 
                 hpSlider.maxValue = playerStat.maxHp;
                 hpSlider.value = playerStat.nowHp;
 
                 expSlider.maxValue = playerStat.maxExp;
                 expSlider.value = playerStat.nowExp;
-
-                hpText.text = playerStat.nowHp + " / " + playerStat.maxHp;
-                expText.text = playerStat.nowExp + " / " + playerStat.maxExp;
+                
                 SetFocus();
+                SetSanctum();
             }
         }
     }
+
     private void SetFocus()
     {
         for (int i = 0; i < playerStat.maxFocus; i++)
@@ -70,6 +94,59 @@ public class PlayerUI : MonoBehaviour
             else //빈 이미지로 변경
             {
                 focus.transform.GetChild(i).GetComponent<Image>().sprite = focusSprites[1];
+            }
+        }
+    }
+
+    private void SetSanctum()
+    {
+        if (whichSanctum == Sanctum.none)
+        {
+            for (int i =0; i < sanctum.transform.childCount; i++)
+            {
+                sanctum.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        else if (whichSanctum == Sanctum.life)
+        {
+            for (int i = 0; i < sanctum.transform.childCount; i++)
+            {
+                if (i != 0)
+                {
+                    sanctum.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                else
+                {
+                    sanctum.transform.GetChild(i).gameObject.SetActive(true);
+                }
+            }
+        }
+        else if (whichSanctum == Sanctum.focus)
+        {
+            for (int i = 0; i < sanctum.transform.childCount; i++)
+            {
+                if (i != 1)
+                {
+                    sanctum.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                else
+                {
+                    sanctum.transform.GetChild(i).gameObject.SetActive(true);
+                }
+            }
+        }
+        else if (whichSanctum == Sanctum.wisdom)
+        {
+            for (int i = 0; i < sanctum.transform.childCount; i++)
+            {
+                if (i != 2)
+                {
+                    sanctum.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                else
+                {
+                    sanctum.transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
         }
     }
