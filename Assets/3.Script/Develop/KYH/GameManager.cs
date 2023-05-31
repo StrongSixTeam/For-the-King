@@ -18,20 +18,19 @@ public class GameManager : MonoBehaviour
     public GameObject MainPlayer;
     public int nextTurn = 0;
 
-    [SerializeField] private Image[] portraits;
-
     private QuestManager questManager;
     private PlayerController_Jin playerController;
 
     private CameraController cameraController;
     private MoveSlot moveSlot;
+    private TimeBarScrolling[] timeBarScrolling;
 
     public bool isQuestFinish = false;
     public bool isSettingDone = false;
     public bool isTrunChange = false;
     public bool isBlock = false;
 
-    public bool isBattle = false;
+    private bool isFisrtTurn = true;
 
     public Button turnChageBtn;
 
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour
         questManager = FindObjectOfType<QuestManager>();
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
+        timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
     }
     public void Setting()
     {
@@ -80,6 +80,16 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
+        if (nextTurn == 0 && !isFisrtTurn)
+        {
+            for (int i = 0; i < timeBarScrolling.Length; i++)
+            {
+                timeBarScrolling[i].TimeFlow();
+            }
+        }
+
+        isFisrtTurn = false;
+
         isTrunChange = true;
 
         MainPlayer = Players[nextTurn];
