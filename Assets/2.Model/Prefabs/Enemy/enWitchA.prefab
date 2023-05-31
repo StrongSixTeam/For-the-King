@@ -562,7 +562,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2486234759858362773}
   - component: {fileID: 5926798077613489619}
-  - component: {fileID: 853229350837891166}
   m_Layer: 0
   m_Name: enWitchA
   m_TagString: Enemy
@@ -601,27 +600,6 @@ CapsuleCollider:
   m_Height: 0.026
   m_Direction: 1
   m_Center: {x: 0, y: 0.012, z: 0}
---- !u!114 &853229350837891166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3675015340740892206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 3e051720c966a234a975350857f33c9c, type: 2}
-  monsterName: 
-  maxHp: 0
-  nowHp: 0
-  atk: 0
-  def: 0
-  speed: 0
-  Lv: 0
-  portrait: {fileID: 0}
 --- !u!1 &3704550131376779131
 GameObject:
   m_ObjectHideFlags: 0
