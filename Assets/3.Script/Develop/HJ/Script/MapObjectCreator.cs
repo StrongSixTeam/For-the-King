@@ -684,19 +684,10 @@ public class MapObjectCreator : MonoBehaviour
 
             case false:
                 //낮에 소환된 몬스터가 있다면 지우자
-                for (int i = 0; i < morningFMonsterBox.Length; i++)
+                while (activeMonster.Count > 0)
                 {
-                    if (morningFMonsterBox[i].activeSelf)
-                    {
-                        morningFMonsterBox[i].SetActive(false);
-                    }
-                }
-                for (int i = 0; i < morningPMonsterBox.Length; i++)
-                {
-                    if (morningPMonsterBox[i].activeSelf)
-                    {
-                        morningPMonsterBox[i].SetActive(false);
-                    }
+                    Destroy(activeMonster[0]);
+                    activeMonster.RemoveAt(0);
                 }
                 randomMonsterName.Clear();
                 randomMonsterIndex.Clear();
@@ -705,7 +696,7 @@ public class MapObjectCreator : MonoBehaviour
 
                 for (int i = 0; i < 7; i++) //전역
                 {
-                    int randomNum = Random.Range(0, 4);
+                    int randomNum = Random.Range(0, 5);
                     if (randomNum != 3)
                     {
                         int area = Random.Range(0, 2);
