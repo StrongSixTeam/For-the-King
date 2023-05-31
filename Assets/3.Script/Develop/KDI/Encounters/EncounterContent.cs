@@ -18,13 +18,15 @@ public class EncounterContent : ScriptableObject
     }
     public Type type;
 
-
     public int limit; //성공 기준
 
     public bool isCleared = false; //클리어 여부
 
     public string slotType;
     public int slotCount;
+
+    public Sprite preview; //도착할 시 뜨는 UI 이미지
+
     [Header("Enemy 관련")]
     public int enemyCount; //적이 몇마리인지
     public int runCount; //몰래 지나가기 카운트

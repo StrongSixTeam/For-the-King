@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AstsrPathfinding : MonoBehaviour
 {
-    public bool isy = false;
+    public bool isPathfinding = false;
 
     HexMapCreator hexMapCreator = new HexMapCreator();
 
@@ -84,7 +84,7 @@ public class AstsrPathfinding : MonoBehaviour
                 }
             }
 
-            if (!isy)
+            if (isPathfinding && endNode != null)
             {
                 Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
 
@@ -104,7 +104,7 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
-                    if (!endNode.ispass)
+                    if (!endNode.ispass || endNode == null || hexCursor[0].activeSelf)
                     {
                         return;
                     }
@@ -129,9 +129,10 @@ public class AstsrPathfinding : MonoBehaviour
                     else
                     {
                         Debug.Log("전부 소비! 턴 종료");
+                        canMoveCount -= (finalNodeList.Count - 1);
                         ismovingTurn = false;
                     }
-                    isy = true;
+                    isPathfinding = false;
 
                 }
             }
@@ -139,8 +140,10 @@ public class AstsrPathfinding : MonoBehaviour
             if (SlotController.instance.success + SlotController.instance.fail == SlotController.instance.maxSlotCount && GameManager.instance.isTrunChange)
             {
                 GameManager.instance.isTrunChange = false;
+                isPathfinding = true;
                 ismovingTurn = true;
                 canMoveCount = SlotController.instance.success;
+                canMoveCount = 5;
                 WhoseTurn = GameManager.instance.nextTurn - 1;
                 if (WhoseTurn < 0)
                 {
@@ -150,9 +153,30 @@ public class AstsrPathfinding : MonoBehaviour
 
 
         }
-
+        else
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (showMoveCount[i].activeSelf)
+                {
+                    showMoveCount[i].SetActive(false);
+                }
+            }
+        }
     }
 
+    public void SetisPathfinding()
+    {
+        //플레이어가 움직임을 끝내고 호출
+        if (canMoveCount > 0)
+        {
+            isPathfinding = true;
+        }
+    }
+    public void SetcanMoveCount(int plus)
+    {
+        canMoveCount += plus;
+    }
 
     //타겟노드 설정
     private void MouseInput()
@@ -228,11 +252,32 @@ public class AstsrPathfinding : MonoBehaviour
             //목적지에 도착했나요?
             if (currentNode == endNode)
             {
+                int loopNumber=0;
                 HexMember targetNode = endNode;
                 while (targetNode != startNode)
                 {
-                    finalNodeList.Add(targetNode);
-                    targetNode = targetNode.parentNode;
+                    bool check = false;
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (targetNode.neighbors[i] == targetNode.parentNode.parentNode)
+                        {
+                            finalNodeList.Add(targetNode);
+                            targetNode = targetNode.parentNode.parentNode;
+                            check = true;
+                            break;
+                        }
+                    }
+
+                    if (!check)
+                    {
+                        finalNodeList.Add(targetNode);
+                        targetNode = targetNode.parentNode;
+                    }
+
+                    if (loopNumber++ > 1000)
+                    {
+                        throw new System.Exception("finalNodeList 에러");
+                    }
                 }
 
                 if (finalNodeList.Count > canMoveCount)
@@ -242,7 +287,7 @@ public class AstsrPathfinding : MonoBehaviour
                     ListReset();
                     return;
                 }
-
+                
                 finalNodeList.Add(startNode);
                 finalNodeList.Reverse();
 
@@ -265,51 +310,255 @@ public class AstsrPathfinding : MonoBehaviour
 
     }
 
-    int[] directionOrderLift = new int[6] { 4, 5, 3, 1, 0, 2 };
-    int[] directionOrderRight = new int[6] { 1, 0, 2, 4, 5, 3 };
+    int[] dirLeftTop = new int[6] { 5, 4, 3, 1, 2, 0 };
+    int[] dirLeft = new int[6] { 4, 5, 3, 1, 2, 0 };
+    int[] dirLeftBottom = new int[6] { 3, 4, 5, 1, 2, 0 };
+    int[] dirRightTop = new int[6] { 0, 1, 2, 4, 5, 3 };
+    int[] dirRight = new int[6] { 1, 0, 2, 4, 5, 3 };
+    int[] dirRightBottom = new int[6] { 2, 1, 0, 4, 5, 3 };
     private void OpenListAdd(HexMember currentNode)
     {
-        if(currentNode.xNum > endNode.xNum) //목적지가 왼쪽이라면
+        try
         {
-            //6개의 이웃 중에서
-            for (int i = 0; i < 6; i++)
+            if (currentNode.zNum % 2 == 1) //홀
             {
-                //벽이 아니거나 closeList에 없다면 openList에 추가
-                if (currentNode.neighbors[directionOrderLift[i]].ispass &&
-                    !closeList.Contains(currentNode.neighbors[directionOrderLift[i]]))
+                //왼쪽 대각선 위
+                if (endNode.zNum > currentNode.zNum && endNode.xNum <= currentNode.xNum)
                 {
-                    currentNode.neighbors[directionOrderLift[i]].G = currentNode.G + 1;
-                    GetH(currentNode, directionOrderLift[i]);
+                    for(int i=0; i<6; i++)
+                    {
+                        //벽이 아니거나 closeList에 없다면 openList에 추가
+                        if (currentNode.neighbors[dirLeftTop[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeftTop[i]]))
+                        {
+                            currentNode.neighbors[dirLeftTop[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeftTop[i]);
 
-                    currentNode.neighbors[directionOrderLift[i]].parentNode = currentNode;
+                            currentNode.neighbors[dirLeftTop[i]].parentNode = currentNode;
 
-                    openList.Add(currentNode.neighbors[directionOrderLift[i]]);
+                            openList.Add(currentNode.neighbors[dirLeftTop[i]]);
+                        }
+                    }
                 }
+
+                //왼쪽 대각선 아래
+                else if (endNode.zNum < currentNode.zNum && endNode.xNum <= currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeftBottom[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeftBottom[i]]))
+                        {
+                            currentNode.neighbors[dirLeftBottom[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeftBottom[i]);
+
+                            currentNode.neighbors[dirLeftBottom[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeftBottom[i]]);
+                        }
+                    }
+                }
+
+                //왼쪽
+                else if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeft[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                        {
+                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeft[i]);
+
+                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeft[i]]);
+                        }
+                    }
+                }
+
+                //오른쪽 대각선 위
+                else if (endNode.zNum > currentNode.zNum && endNode.xNum >= currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirRightTop[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRightTop[i]]))
+                        {
+                            currentNode.neighbors[dirRightTop[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRightTop[i]);
+
+                            currentNode.neighbors[dirRightTop[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirRightTop[i]]);
+                        }
+                    }
+                }
+
+                //오른쪽 대각선 아래
+                else if (endNode.zNum < currentNode.zNum && endNode.xNum > currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirRightBottom[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRightBottom[i]]))
+                        {
+                            currentNode.neighbors[dirRightBottom[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRightBottom[i]);
+
+                            currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirRightBottom[i]]);
+                        }
+                    }
+                }
+
+                //오른쪽
+                else
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirRight[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
+                        {
+                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRight[i]);
+
+                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirRight[i]]);
+                        }
+                    }
+                }
+                
+            }
+            else //짝
+            {
+                //왼쪽 대각선 위
+                if (endNode.zNum > currentNode.zNum && endNode.xNum < currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeftTop[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeftTop[i]]))
+                        {
+                            currentNode.neighbors[dirLeftTop[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeftTop[i]);
+
+                            currentNode.neighbors[dirLeftTop[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeftTop[i]]);
+                        }
+                    }
+                }
+
+                //왼쪽 대각선 아래
+                else if (endNode.zNum < currentNode.zNum && endNode.xNum < currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeftBottom[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeftBottom[i]]))
+                        {
+                            currentNode.neighbors[dirLeftBottom[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeftBottom[i]);
+
+                            currentNode.neighbors[dirLeftBottom[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeftBottom[i]]);
+                        }
+                    }
+                }
+
+                //왼쪽
+                else if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeft[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                        {
+                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeft[i]);
+
+                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeft[i]]);
+                        }
+                    }
+                }
+
+                //오른쪽 대각선 위
+                else if (endNode.zNum > currentNode.zNum && endNode.xNum >= currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirRightTop[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRightTop[i]]))
+                        {
+                            currentNode.neighbors[dirRightTop[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRightTop[i]);
+
+                            currentNode.neighbors[dirRightTop[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirRightTop[i]]);
+                        }
+                    }
+                }
+
+                //오른쪽 대각선 아래
+                else if (endNode.zNum < currentNode.zNum && endNode.xNum >= currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirRightBottom[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRightBottom[i]]))
+                        {
+                            currentNode.neighbors[dirRightBottom[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRightBottom[i]);
+
+                            currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirRightBottom[i]]);
+                        }
+                    }
+                }
+
+                //오른쪽
+                else
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirRight[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
+                        {
+                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRight[i]);
+
+                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirRight[i]]);
+                        }
+                    }
+                }
+
             }
         }
-        else
+        catch (System.Exception ex)
         {
-            //6개의 이웃 중에서
-            for (int i = 0; i < 6; i++)
-            {
-                //벽이 아니거나 closeList에 없다면 openList에 추가
-                if (currentNode.neighbors[directionOrderRight[i]].ispass &&
-                    !closeList.Contains(currentNode.neighbors[directionOrderRight[i]]))
-                {
-                    currentNode.neighbors[directionOrderRight[i]].G = currentNode.G + 1;
-                    GetH(currentNode, directionOrderRight[i]);
-
-                    currentNode.neighbors[directionOrderRight[i]].parentNode = currentNode;
-
-                    openList.Add(currentNode.neighbors[directionOrderRight[i]]);
-                }
-            }
+            Debug.Log(ex);
+            Debug.Log(currentNode);
+            Debug.Log(endNode);
+            Debug.Log(openList);
+            Debug.Log(closeList);
         }
-        
+
     }
 
+    int xNum;
+    int zNum;
 
-    private void GetH(HexMember currentNode, int i)
+    private void GetH(HexMember currentNode, int indexNum)
     {
 
         //int dx = endNode.xNum - currentNode.neighbors[i].xNum; //타겟과 이웃노드의 x거리
@@ -332,8 +581,8 @@ public class AstsrPathfinding : MonoBehaviour
 
         //currentNode.neighbors[i]에서 endNode까지의 거리
 
-        int xNum = currentNode.neighbors[i].xNum;
-        int zNum = currentNode.neighbors[i].zNum;
+        xNum = currentNode.neighbors[indexNum].xNum;
+        zNum = currentNode.neighbors[indexNum].zNum;
 
         int cost = 0;
 
@@ -347,29 +596,31 @@ public class AstsrPathfinding : MonoBehaviour
                 if (endNode.zNum > zNum)
                 {
                     //endNode의 왼쪽대각선위
-                    cost++;
                     if (zNum % 2 == 1) //z가 홀수
                     {
                         zNum++;
+                        cost++;
                     }
                     else
                     {
                         xNum--;
                         zNum++;
+                        cost++;
                     }
                 }
                 else if (endNode.zNum < zNum)
                 {
-                    //endNode의 왼쪽대각선 아래
-                    cost++;
+                    //endNode의 왼쪽대각선 아래\
                     if (zNum % 2 == 1) //z가 홀수
                     {
                         zNum--;
+                        cost++;
                     }
                     else
                     {
                         xNum--;
                         zNum--;
+                        cost++;
                     }
                 }
                 else
@@ -378,36 +629,38 @@ public class AstsrPathfinding : MonoBehaviour
                     cost++;
                     xNum--;
                 }
-                
+
             }
             else
             {
                 if (endNode.zNum > zNum)
                 {
                     //endNode의 오른쪽대각선위
-                    cost++;
                     if (zNum % 2 == 1) //z가 홀수
                     {
                         xNum++;
                         zNum++;
+                        cost++;
                     }
                     else
                     {
                         zNum++;
+                        cost++;
                     }
                 }
                 else if (endNode.zNum < zNum)
                 {
                     //endNode의 오른쪽대각선 아래
-                    cost++;
                     if (zNum % 2 == 1) //z가 홀수
                     {
                         xNum++;
                         zNum--;
+                        cost++;
                     }
                     else
                     {
                         zNum--;
+                        cost++;
                     }
                 }
                 else
@@ -424,7 +677,7 @@ public class AstsrPathfinding : MonoBehaviour
             }
         }
 
-        currentNode.neighbors[i].H = cost;
+        currentNode.neighbors[indexNum].H = cost;
 
     }
 
