@@ -32,11 +32,6 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Sprite[] focusSprites;
     [SerializeField] private GameObject sanctum;
 
-    public enum Sanctum
-    {
-        none, focus, life, wisdom
-    }
-    public Sanctum whichSanctum;
 
     private bool playerStatSet = false;
     private void Update()
@@ -53,7 +48,6 @@ public class PlayerUI : MonoBehaviour
                 {
                     focus.transform.GetChild(i).gameObject.SetActive(true);
                 }
-                whichSanctum = Sanctum.none;
             }
             else //계속 업데이트 되어야 하는 부분
             {
@@ -100,14 +94,14 @@ public class PlayerUI : MonoBehaviour
 
     private void SetSanctum()
     {
-        if (whichSanctum == Sanctum.none)
+        if (playerStat.whichSanctum == PlayerStat.Sanctum.none)
         {
             for (int i =0; i < sanctum.transform.childCount; i++)
             {
                 sanctum.transform.GetChild(i).gameObject.SetActive(false);
             }
         }
-        else if (whichSanctum == Sanctum.life)
+        else if (playerStat.whichSanctum == PlayerStat.Sanctum.life)
         {
             for (int i = 0; i < sanctum.transform.childCount; i++)
             {
@@ -121,7 +115,7 @@ public class PlayerUI : MonoBehaviour
                 }
             }
         }
-        else if (whichSanctum == Sanctum.focus)
+        else if (playerStat.whichSanctum == PlayerStat.Sanctum.focus)
         {
             for (int i = 0; i < sanctum.transform.childCount; i++)
             {
@@ -135,7 +129,7 @@ public class PlayerUI : MonoBehaviour
                 }
             }
         }
-        else if (whichSanctum == Sanctum.wisdom)
+        else if (playerStat.whichSanctum == PlayerStat.Sanctum.wisdom)
         {
             for (int i = 0; i < sanctum.transform.childCount; i++)
             {

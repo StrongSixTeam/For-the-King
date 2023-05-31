@@ -79,10 +79,17 @@ public class EncounterManager : MonoBehaviour
             parent.GetChild(2).gameObject.SetActive(false);
         }
         else if (encounter[n].type == EncounterContent.Type.sanctum)
-        {//집중력과 체력 모두 회복
-            ActiveBtn(4);
-            parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
-            parent.GetChild(2).gameObject.SetActive(false);
+        {//성소 만나면
+            if (!encounter[n].isCleared)
+            { //남들이 거치지 않은 성소라면
+                ActiveBtn(4);
+                parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+                parent.GetChild(2).gameObject.SetActive(false);
+            }
+            else
+            {
+                //남들이 거친 성소라면 이미 사용된 성소라는 UI 띄우기
+            }
         }
     }
 
@@ -229,16 +236,19 @@ public class EncounterManager : MonoBehaviour
         {
             SanctumFocusBtn();
             encounter[number].isCleared = true;
+            GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.focus;
         }
         else if (number == 10)
         {
             SanctumLifeBtn();
             encounter[number].isCleared = true;
+            GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.life;
         }
         else if (number == 11)
         {
             SanctumIntelBtn();
             encounter[number].isCleared = true;
+            GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.wisdom;
         }
     }
 
