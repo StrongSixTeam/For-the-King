@@ -32,6 +32,10 @@ public class PlayerController_Jin : MonoBehaviour
     //Astar 스크립트에서 호출
     public void StartMove(List<HexMember> finalNodeList)
     {
+        if (finalNodeList.Count<=0)
+        {
+            return;
+        }
         if(finalNodeList[finalNodeList.Count-1].index == myHexNum)
         {
             animator.SetBool("MapRun", false);
@@ -177,18 +181,22 @@ public class PlayerController_Jin : MonoBehaviour
             myHexNum = nowtTargetNodes[i].index;
             cloudBox.CloudActiveFalse(myHexNum);
 
-            //i++;
+
             if (myHexNum != origin)
             {
                 if (CheckObject()) //현재 오브젝트에 도달하면
                 {
+                    //못이동한만큼 canMoveCount에 더해주자
+                    astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count) - i);
+                    Debug.Log((nowtTargetNodes.Count - 1) - i + "만큼 추가");
+
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
                     targetNodes.Clear();
                     animator.SetBool("MapRun", false);
-                    yield break;
+                    break;
                 }
                 else //낫띵이라면
                 {

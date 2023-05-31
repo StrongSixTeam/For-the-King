@@ -104,7 +104,7 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
-                    if (!endNode.ispass || endNode == null)
+                    if (!endNode.ispass || endNode == null || hexCursor[0].activeSelf)
                     {
                         return;
                     }
@@ -143,6 +143,7 @@ public class AstsrPathfinding : MonoBehaviour
                 isPathfinding = true;
                 ismovingTurn = true;
                 canMoveCount = SlotController.instance.success;
+                canMoveCount = 5;
                 WhoseTurn = GameManager.instance.nextTurn - 1;
                 if (WhoseTurn < 0)
                 {
@@ -172,7 +173,10 @@ public class AstsrPathfinding : MonoBehaviour
             isPathfinding = true;
         }
     }
-
+    public void SetcanMoveCount(int plus)
+    {
+        canMoveCount += plus;
+    }
 
     //타겟노드 설정
     private void MouseInput()
@@ -253,13 +257,12 @@ public class AstsrPathfinding : MonoBehaviour
                 while (targetNode != startNode)
                 {
                     bool check = false;
-                    for(int i=0; i<6; i++)
+                    for (int i = 0; i < 6; i++)
                     {
-                        if(targetNode.neighbors[i] == targetNode.parentNode.parentNode)
+                        if (targetNode.neighbors[i] == targetNode.parentNode.parentNode)
                         {
                             finalNodeList.Add(targetNode);
-                            finalNodeList.Add(targetNode.parentNode.parentNode);
-                            targetNode = targetNode.parentNode.parentNode.parentNode;
+                            targetNode = targetNode.parentNode.parentNode;
                             check = true;
                             break;
                         }
@@ -275,11 +278,6 @@ public class AstsrPathfinding : MonoBehaviour
                     {
                         throw new System.Exception("finalNodeList 에러");
                     }
-                }
-
-                for (int i = finalNodeList.Count-1; i >= 0; i--)
-                {
-                    Debug.Log(finalNodeList.Count-i + "번 |"+ finalNodeList[i].index);
                 }
 
                 if (finalNodeList.Count > canMoveCount)
