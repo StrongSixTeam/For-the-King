@@ -76,6 +76,7 @@ public class BattleLoader : MonoBehaviour
             Enemys.Add(Instantiate(Enemys[i], enemyPos, Quaternion.Euler(enemyAngle))); //에너미 수정 필요
         }
         Enemys.RemoveAt(0); //삭제
+
         if (Enemys.Count == 2)
         {
             Enemys[0].transform.position += moveTowards[0];
