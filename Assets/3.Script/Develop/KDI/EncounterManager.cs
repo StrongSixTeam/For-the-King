@@ -20,10 +20,13 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject preview;
     public int number;
 
+    private AstsrPathfinding astsrPathfinding;
+
     private void Awake()
     {
         instance = this;
         parent = transform.parent;
+        astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
     }
     public void ActiveEncounter(int n)
     {
@@ -189,6 +192,9 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         MultiCamera.instance.ToBattle();
+
+        astsrPathfinding.isPathfinding = false;
+        //전투 끝났을때 다시 true로 돌려줘야함
     }
 
     public void EnemyRunBtn(int n)

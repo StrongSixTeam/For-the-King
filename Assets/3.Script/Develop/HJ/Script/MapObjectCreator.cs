@@ -26,6 +26,10 @@ public class MapObjectCreator : MonoBehaviour
     //[순서]
     //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
 
+    [Header("몬스터 이름과 Index")]
+    public List<string> randomMonstername = new List<string>();
+    public List<int> randomMonsterIndex = new List<int>();
+
     private GameObject[] forestObj = new GameObject[5];
     private GameObject[] plainsObj = new GameObject[4];
     private GameObject[] sanctumObj = new GameObject[3];
@@ -359,7 +363,7 @@ public class MapObjectCreator : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            
+
             if (i.Equals(0))
             {
                 //수호의 숲에 생성
@@ -527,7 +531,7 @@ public class MapObjectCreator : MonoBehaviour
         ObstacleObj[7] = stonePlains03;
 
 
-        for(int i=0; i<forestNode.Length; i++)
+        for (int i = 0; i < forestNode.Length; i++)
         {
             if (!forestNode[i].doNotUse)
             {
@@ -541,7 +545,7 @@ public class MapObjectCreator : MonoBehaviour
                     forestNode[i].doNotUse = true;
                     forestNode[i].ispass = false;
                 }
-                
+
             }
         }
 
@@ -562,5 +566,117 @@ public class MapObjectCreator : MonoBehaviour
             }
         }
     }//전역:장애물
+
+    [SerializeField] GameObject morningMonster01;
+    [SerializeField] GameObject morningMonster02;
+    [SerializeField] GameObject morningMonster03;
+    [SerializeField] GameObject morningMonster04;
+    [SerializeField] GameObject morningMonster05;
+    [SerializeField] GameObject nightMonster01;
+    [SerializeField] GameObject nightMonster02;
+    [SerializeField] GameObject nightMonster03;
+    [SerializeField] GameObject nightMonster04;
+    [SerializeField] GameObject nightMonster05;
+    [SerializeField] GameObject nightMonster06;
+
+    private GameObject[] morningFMonsterBox = new GameObject[3];
+    private GameObject[] morningPMonsterBox = new GameObject[2];
+    private GameObject[] nightMonsterBox = new GameObject[6];
+
+    public void timeMonsterSpawn(bool isMorning)
+    {
+        switch (isMorning)
+        {
+            case true:
+                //밤에 소환된 몬스터가 있다면 지우자
+
+                //낮에 소환할 몬스터 중 랜덤으로 n개씩 스폰하자
+
+                for (int i = 0; i < 3; i++) //숲
+                {
+                    int randomNum = Random.Range(0, 4);
+                    if (randomNum != 3)
+                    {
+                        while (true)
+                        {
+                            random = Random.Range(0, forestNode.Length);
+                            if (!forestNode[random].doNotUse)
+                            {
+                                int randomMonsterNum = Random.Range(0, 4);
+                                GameObject moster = Instantiate(morningFMonsterBox[randomMonsterNum]);
+                                moster.transform.position = forestNode[random].transform.position;
+                                forestNode[random].doNotUse = true;
+
+                                //스폰한 몬스터 정보와 노드정보
+                                randomMonstername.Add("이름");
+                                randomMonsterIndex.Add(forestNode[random].index);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+                for (int i = 0; i < 2; i++) //평원
+                {
+                    int randomNum = Random.Range(0, 4);
+                    if (randomNum != 3)
+                    {
+                        while (true)
+                        {
+                            random = Random.Range(0, plainsNode.Length);
+                            if (!plainsNode[random].doNotUse)
+                            {
+                                int randomMonsterNum = Random.Range(0, 4);
+                                GameObject moster = Instantiate(morningPMonsterBox[randomMonsterNum]);
+                                moster.transform.position = plainsNode[random].transform.position;
+                                plainsNode[random].doNotUse = true;
+
+                                //스폰한 몬스터 정보와 노드정보
+                                randomMonstername.Add("이름");
+                                randomMonsterIndex.Add(forestNode[random].index);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+                break;
+
+            case false:
+                //낮에 소환된 몬스터가 있다면 지우자
+
+                //밤에 소환할 몬스터 중 랜덤으로 n개씩 스폰하자
+
+                for (int i = 0; i < 6; i++) //전역
+                {
+
+                    int randomNum = Random.Range(0, 4);
+                    if (randomNum != 3)
+                    {
+                        while (true)
+                        {
+                            random = Random.Range(0, plainsNode.Length);
+                            if (!plainsNode[random].doNotUse)
+                            {
+                                int randomMonsterNum = Random.Range(0, 4);
+                                GameObject moster = Instantiate(morningPMonsterBox[randomMonsterNum]);
+                                moster.transform.position = plainsNode[random].transform.position;
+                                plainsNode[random].doNotUse = true;
+
+                                //스폰한 몬스터 정보와 노드정보
+                                randomMonstername.Add("이름");
+                                randomMonsterIndex.Add(forestNode[random].index);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+                break;
+        }
+    }
 
 }

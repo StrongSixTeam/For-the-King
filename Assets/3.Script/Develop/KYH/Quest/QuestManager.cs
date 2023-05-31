@@ -40,7 +40,7 @@ public class QuestManager : MonoBehaviour
     [Header("구름")]
     [SerializeField] MapObjectCreator mapObjectCreator;
     [SerializeField] CloudBox cloudBox;
-    int questIndexNum = 0;
+    private int mapHexIndex=0;
 
     private CameraController cameraController;
 
@@ -121,8 +121,30 @@ public class QuestManager : MonoBehaviour
             cameraController.targetPos = GameObject.FindGameObjectWithTag(questText[num].questPos).transform.position + cameraController.defaultPos;
             StartCoroutine(cameraController.CameraSoftMove());
             //구름 비활성화
-            questIndexNum++;
-            cloudBox.CloudActiveFalse(mapObjectCreator.objectIndex[questTurn]);
+            switch (questTurn)
+            {
+                //1=우드스모크, 3=신의의식도구, 4=카오스우두머리, 7=눈부신광산, 8=패리드, 10=시체의지하실
+                case 1:
+                    mapHexIndex = 1;
+                    break;
+                case 3:
+                    mapHexIndex = 2;
+                    break;
+                case 4:
+                    mapHexIndex = 3;
+                    break;
+                case 7:
+                    mapHexIndex = 4;
+                    break;
+                case 8:
+                    mapHexIndex = 5;
+                    break;
+                case 10:
+                    mapHexIndex = 8;
+                    break;
+
+            }
+            cloudBox.CloudActiveFalse(mapObjectCreator.objectIndex[mapHexIndex]);
         }
     }
     private void QuestSet(string questName)

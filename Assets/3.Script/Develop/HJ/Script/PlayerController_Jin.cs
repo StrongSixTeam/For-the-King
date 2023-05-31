@@ -187,7 +187,7 @@ public class PlayerController_Jin : MonoBehaviour
                 if (CheckObject()) //현재 오브젝트에 도달하면
                 {
                     //못이동한만큼 canMoveCount에 더해주자
-                    astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count) - i);
+                    astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count-1) - i);
                     Debug.Log((nowtTargetNodes.Count - 1) - i + "만큼 추가");
 
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -196,7 +196,8 @@ public class PlayerController_Jin : MonoBehaviour
                     nowtTargetNodes.Clear();
                     targetNodes.Clear();
                     animator.SetBool("MapRun", false);
-                    break;
+                    astsrPathfinding.SetisPathfinding();
+                    yield break;
                 }
                 else //낫띵이라면
                 {
