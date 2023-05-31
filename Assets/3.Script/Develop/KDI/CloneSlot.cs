@@ -154,6 +154,7 @@ public class CloneSlot : MonoBehaviour
 
     public void Try()
     {
+        isSuccess = false;
         StartCoroutine(TryCo());
     }
     IEnumerator TryCo() //슬롯 보여주는 용
@@ -190,14 +191,24 @@ public class CloneSlot : MonoBehaviour
         if (SlotController.instance.limit <= SlotController.instance.success)
         {
             //성공 처리
-            isSuccess = true;
+            Debug.Log("확률 성공");
+            StartCoroutine(GodSuccessWait_co());
         }
         else
         {
+            Debug.Log("확률 실패");
             isSuccess = false;
+            Invoke("OffAll", 1f); //끄기
             //실패 페널티 처리
         }
-        Invoke("OffAll", 1f); //끄기
+    }
+
+    IEnumerator GodSuccessWait_co()
+    {
+        Debug.Log("코루틴 시작 전");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("코루틴 시작 후");
+        EncounterManager.instance.GodSuccess();
     }
 
     private void OffAll()
