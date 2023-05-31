@@ -5,6 +5,21 @@ using UnityEngine;
 public class TimeChecker : MonoBehaviour
 {
     [SerializeField] private bool Day;
+    [SerializeField] private MapObjectCreator mapObjectCreator;
+
+    private void Start()
+    {
+        StartCoroutine(SetMapObjectCreatorCo());
+    }
+
+    IEnumerator SetMapObjectCreatorCo()
+    {
+        yield return null;
+        yield return null;
+        yield return null;
+        mapObjectCreator = FindObjectOfType<MapObjectCreator>();
+        mapObjectCreator.timeMonsterSpawn(true);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,11 +29,13 @@ public class TimeChecker : MonoBehaviour
         {
             Debug.Log("지금은 밤이에요");
             Day = false;
+            mapObjectCreator.timeMonsterSpawn(Day);
         }
         if (collision.GetComponent<TimeBarScrolling>().isDay && !Day)
         {
             Debug.Log("지금은 낮이에요");
             Day = true;
+            mapObjectCreator.timeMonsterSpawn(Day);
         }
     }
 }
