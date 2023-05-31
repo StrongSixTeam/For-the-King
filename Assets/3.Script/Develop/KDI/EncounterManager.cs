@@ -17,6 +17,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject[] btns;
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject successCalc;
+    [SerializeField] private GameObject preview;
     public int number;
 
     private void Awake()
@@ -29,6 +30,8 @@ public class EncounterManager : MonoBehaviour
         number = n;
         txtName.text = encounter[n].Name;
         txtContext.text = encounter[n].Content;
+        preview.GetComponent<Image>().sprite = encounter[n].preview;
+
         if (encounter[n].extraContent != null)
         {
             txtExtraContext.text = encounter[n].extraContent;
@@ -178,7 +181,7 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-        MultiCamera.instance.MakeCloud();
+        MultiCamera.instance.ToBattle();
     }
 
     public void EnemyRunBtn(int n)
