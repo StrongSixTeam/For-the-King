@@ -157,9 +157,30 @@ public class EncounterManager : MonoBehaviour
         encounter[n].isCleared = true;
     }
 
+    public void MinusChaosBtn()
+    {
+        //게임매니저 카오스 접근해서 줄이기
+        btns[5].SetActive(false);
+    }
+
+    public void PlusLifeBtn() 
+    {
+        //게임매니저 생명 늘리기
+        btns[5].SetActive(false);
+    }
+
     public void TryConnect()
     {
         slot.GetComponent<CloneSlot>().Try();
+    }
+
+    public void GodSuccess()
+    {
+        slot.SetActive(false);
+        btns[1].SetActive(false);
+        btns[5].SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(false);
+        parent.GetChild(2).gameObject.SetActive(false);
     }
 
     private int FindTypePercent(string some)
@@ -184,6 +205,19 @@ public class EncounterManager : MonoBehaviour
         {
             return GameManager.instance.MainPlayer.GetComponent<PlayerStat>().speed;
         }
+    }
+
+    public void ToMain()
+    {
+        MultiCamera.instance.ToMain();
+    }
+
+    public void DungeonEnterBtn()
+    {
+        slot.SetActive(false);
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        MultiCamera.instance.ToCave();
     }
 
     public void BattleBtn()
@@ -278,7 +312,7 @@ public class EncounterManager : MonoBehaviour
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
     }
-    public void SanctumIntelBtn()
+    public void SanctumIntelBtn() //추가 경험치 25%
     {
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
