@@ -37,7 +37,12 @@ public class MultiCamera : MonoBehaviour
             }
             else
             {
-                if (n == 1)
+                if (n == 0)
+                {
+                    Dioramas[0].SetActive(false);
+                    Dioramas[1].SetActive(false);
+                }
+                else if (n == 1)
                 {
                     Dioramas[0].SetActive(true);
                     Dioramas[1].SetActive(false);
@@ -77,4 +82,45 @@ public class MultiCamera : MonoBehaviour
         loading[0].SetActive(false);
         loading[1].SetActive(false);
     }
+    public void ToCave()
+    {
+        loading[0].SetActive(true);
+        loading[1].SetActive(true);
+        loadingAnim.SetTrigger("active");
+        Invoke("Act2", 1f);
+    }
+
+    private void Act2()
+    {
+        ChangeCam(2);
+        Invoke("OffCloud2", 1f);
+    }
+
+    private void OffCloud2()
+    {
+        loadingAnim.SetTrigger("active");
+        Invoke("SetActiveFalse", 1f);
+    }
+
+
+
+    public void ToMain()
+    {
+        loading[0].SetActive(true);
+        loading[1].SetActive(true);
+        loadingAnim.SetTrigger("active");
+        Invoke("Act3", 1f);
+    }
+    private void Act3()
+    {
+        ChangeCam(0);
+        Invoke("OffCloud3", 1f);
+
+    }
+    private void OffCloud3()
+    {
+        loadingAnim.SetTrigger("active");
+        Invoke("SetActiveFalse", 1f);
+    }
+
 }
