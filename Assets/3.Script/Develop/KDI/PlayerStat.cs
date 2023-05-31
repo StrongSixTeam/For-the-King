@@ -17,8 +17,10 @@ public class PlayerStat : MonoBehaviour
     public int awareness;
     public int speed;
 
-    public int nowFocus; //집중력
-    public int maxFocus; //집중력
+    public int nowFocus; //현재 집중력
+    public int maxFocus; //최대 집중력
+
+    public int coins; //현재 가지고 있는 코인
 
     public float nowExp = 1;
     public float maxExp = 100;
@@ -39,5 +41,6 @@ public class PlayerStat : MonoBehaviour
         portrait = data.UIImage;
         maxFocus = data.focus;
         nowFocus = maxFocus;
+        coins = data.coins;
     }
 }
