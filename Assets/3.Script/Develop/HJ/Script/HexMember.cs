@@ -48,8 +48,8 @@ public class HexMember : MonoBehaviour
 	[ReadOnly] public HexMember[] neighbors = new HexMember[6];
 
 	public bool doNotUse = false; //본인 노드에 오브젝트 설치가 가능한지
-	public int eventType = 0; //1=오아튼, 2=우드스모크, 3=신의 의식도구, 4=카오스 우두머리, 5=눈부신광산,
-							  //6=패리드, 7=잊혀진저장고, 8=카젤리의시계, 9=시체의지하실
+
+	public string eventtype = ""; //테스트용-------------------------------------------
 
 	public void SetHexMemberData(int xNum, int zNum, int index)
     {

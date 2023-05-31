@@ -28,7 +28,7 @@ public class PlayerSpawner : MonoBehaviour
     private void Awake()
     {
         startIndex = FindObjectOfType<MapObjectCreator>().objectIndex[0];
-        startPos = FindObjectOfType<HexMapCreator>().hexMembers[startIndex].transform.position + new Vector3(0f, 0.5f, 0f);
+        startPos = FindObjectOfType<HexMapCreator>().hexMembers[startIndex].transform.position + new Vector3(0f, 0.1f, 0f);
 
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
         astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
