@@ -29,6 +29,7 @@ public class CharacterStatusSet : ScriptableObject
     public Sprite UIImage; //초상화 이미지
 
     public int focus = 6; //집중력
+    public int coins = 5; //초기 코인
     
     
 }

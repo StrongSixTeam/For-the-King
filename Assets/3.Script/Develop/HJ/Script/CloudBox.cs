@@ -43,7 +43,7 @@ public class CloudBox : MonoBehaviour
 
         for (int z=0; z<8; z++)
         {
-            for (int x=-4; x<4; x++)
+            for (int x=-4; x<5; x++)
             {
                 if (!closeIndex.Contains(hexIndex + x + zPlusNum))
                 {
