@@ -24,7 +24,7 @@ public class TimeBarScrolling : MonoBehaviour
         targetPos = Pos.localPosition + new Vector3(-80, 0, 0);
         while (Vector3.Distance(Pos.localPosition, targetPos) > 0.01f)
         {
-            Pos.localPosition = Vector3.MoveTowards(Pos.localPosition, targetPos, 2f);
+            Pos.localPosition = Vector3.MoveTowards(Pos.localPosition, targetPos, 0.8f);
             yield return null;
         }
         Pos.localPosition = targetPos;
