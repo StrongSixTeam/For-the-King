@@ -258,15 +258,17 @@ public class AstsrPathfinding : MonoBehaviour
                     bool check = false;
                     for (int i = 0; i < 6; i++)
                     {
-                        if (targetNode.neighbors[i] == targetNode.parentNode.parentNode)
+                        if (closeList.Contains(targetNode.parentNode.parentNode))
                         {
-                            finalNodeList.Add(targetNode);
-                            targetNode = targetNode.parentNode.parentNode;
-                            check = true;
-                            break;
+                            if (targetNode.neighbors[i] == targetNode.parentNode.parentNode)
+                            {
+                                finalNodeList.Add(targetNode);
+                                targetNode = targetNode.parentNode.parentNode;
+                                check = true;
+                                break;
+                            }
                         }
                     }
-
                     if (!check)
                     {
                         finalNodeList.Add(targetNode);
@@ -321,8 +323,26 @@ public class AstsrPathfinding : MonoBehaviour
         {
             if (currentNode.zNum % 2 == 1) //홀
             {
+                //왼쪽
+                if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeft[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                        {
+                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeft[i]);
+
+                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeft[i]]);
+                        }
+                    }
+                }
+
                 //왼쪽 대각선 위
-                if (endNode.zNum > currentNode.zNum && endNode.xNum <= currentNode.xNum)
+                else if (endNode.zNum > currentNode.zNum && endNode.xNum <= currentNode.xNum)
                 {
                     for(int i=0; i<6; i++)
                     {
@@ -358,20 +378,20 @@ public class AstsrPathfinding : MonoBehaviour
                     }
                 }
 
-                //왼쪽
-                else if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                //오른쪽
+                else if (endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        if (currentNode.neighbors[dirLeft[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                        if (currentNode.neighbors[dirRight[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
                         {
-                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeft[i]);
+                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRight[i]);
 
-                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
 
-                            openList.Add(currentNode.neighbors[dirLeft[i]]);
+                            openList.Add(currentNode.neighbors[dirRight[i]]);
                         }
                     }
                 }
@@ -411,30 +431,30 @@ public class AstsrPathfinding : MonoBehaviour
                         }
                     }
                 }
-
-                //오른쪽
-                else
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRight[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
-                        {
-                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRight[i]);
-
-                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRight[i]]);
-                        }
-                    }
-                }
                 
             }
             else //짝
             {
+                //왼쪽
+                if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (currentNode.neighbors[dirLeft[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                        {
+                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirLeft[i]);
+
+                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+
+                            openList.Add(currentNode.neighbors[dirLeft[i]]);
+                        }
+                    }
+                }
+                
                 //왼쪽 대각선 위
-                if (endNode.zNum > currentNode.zNum && endNode.xNum < currentNode.xNum)
+                else if (endNode.zNum > currentNode.zNum && endNode.xNum < currentNode.xNum)
                 {
                     for (int i = 0; i < 6; i++)
                     {
@@ -469,20 +489,20 @@ public class AstsrPathfinding : MonoBehaviour
                     }
                 }
 
-                //왼쪽
-                else if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                //오른쪽
+                else if(endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        if (currentNode.neighbors[dirLeft[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                        if (currentNode.neighbors[dirRight[i]].ispass &&
+                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
                         {
-                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeft[i]);
+                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
+                            GetH(currentNode, dirRight[i]);
 
-                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
 
-                            openList.Add(currentNode.neighbors[dirLeft[i]]);
+                            openList.Add(currentNode.neighbors[dirRight[i]]);
                         }
                     }
                 }
@@ -519,24 +539,6 @@ public class AstsrPathfinding : MonoBehaviour
                             currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
 
                             openList.Add(currentNode.neighbors[dirRightBottom[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽
-                else
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRight[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
-                        {
-                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRight[i]);
-
-                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRight[i]]);
                         }
                     }
                 }

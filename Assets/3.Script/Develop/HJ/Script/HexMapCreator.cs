@@ -177,8 +177,9 @@ public class HexMapCreator : MonoBehaviour
                 break;
             }
 
-            if (loopNum++ > 500)
+            if (loopNum++ > 1000)
             {
+                
                 throw new System.Exception("Infinite Loop : 1");
             }
         }

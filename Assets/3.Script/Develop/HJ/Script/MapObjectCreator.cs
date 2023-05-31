@@ -255,30 +255,40 @@ public class MapObjectCreator : MonoBehaviour
                     switch (i)
                     {
                         case 0: //오아튼 1
-                            forestNode[random].eventType = 1;
-                            forestNode[random].neighbors[5].eventType = 1;
+                            //forestNode[random].eventType = 1;
+                            //forestNode[random].neighbors[5].eventType = 1;
+                            //forestNode[random].neighbors[5].neighbors[0].eventType = 1;
+                            //forestNode[random].neighbors[5].neighbors[1].eventType = 1;
                             forestNode[random].neighbors[5].ispass = false;
-                            forestNode[random].neighbors[5].neighbors[0].eventType = 1;
+                            forestNode[random].neighbors[5].eventtype = "오아튼";
+                            forestNode[random].neighbors[5].ispass = false;
+                            forestNode[random].neighbors[5].eventtype = "오아튼";
                             forestNode[random].neighbors[5].neighbors[0].ispass = false;
-                            forestNode[random].neighbors[5].neighbors[1].eventType = 1;
+                            forestNode[random].neighbors[5].neighbors[0].eventtype = "오아튼";
                             forestNode[random].neighbors[5].neighbors[1].ispass = false;
+                            forestNode[random].neighbors[5].neighbors[1].eventtype = "오아튼";
                             break;
                         case 1: //우드스모크 2
-                            forestNode[random].eventType = 2;
-                            forestNode[random].neighbors[0].eventType = 2;
+                            //forestNode[random].eventType = 2;
+                            //forestNode[random].neighbors[0].eventType = 2;
+                            //forestNode[random].neighbors[5].eventType = 2;
+                            //forestNode[random].neighbors[5].neighbors[0].eventType = 2;
+                            //forestNode[random].neighbors[5].neighbors[5].eventType = 2;
+                            //forestNode[random].neighbors[0].neighbors[0].eventType = 2;
                             forestNode[random].neighbors[0].ispass = false;
-                            forestNode[random].neighbors[5].eventType = 2;
+                            forestNode[random].neighbors[0].eventtype = "우드스모크";
                             forestNode[random].neighbors[5].ispass = false;
-                            forestNode[random].neighbors[5].neighbors[0].eventType = 2;
+                            forestNode[random].neighbors[5].eventtype = "우드스모크";
                             forestNode[random].neighbors[5].neighbors[0].ispass = false;
-                            forestNode[random].neighbors[5].neighbors[5].eventType = 2;
+                            forestNode[random].neighbors[5].neighbors[0].eventtype = "우드스모크";
                             forestNode[random].neighbors[5].neighbors[5].ispass = false;
-                            forestNode[random].neighbors[0].neighbors[0].eventType = 2;
+                            forestNode[random].neighbors[5].neighbors[5].eventtype = "우드스모크";
                             forestNode[random].neighbors[0].neighbors[0].ispass = false;
+                            forestNode[random].neighbors[0].neighbors[0].eventtype = "우드스모크";
                             break;
 
                         case 3: //눈부신 광산 5
-                            forestNode[random].eventType = 5;
+                            //forestNode[random].eventType = 5;
                             break;
                     }
 
@@ -359,23 +369,26 @@ public class MapObjectCreator : MonoBehaviour
                     switch (i)
                     {
                         case 0: //패리드 6
-                            plainsNode[random].eventType = 6;
-                            plainsNode[random].neighbors[5].eventType = 6;
+                            //plainsNode[random].eventType = 6;
+                            //plainsNode[random].neighbors[5].eventType = 6;
+                            //plainsNode[random].neighbors[0].eventType = 6;
+                            plainsNode[random].neighbors[5].eventtype = "패리드";
                             plainsNode[random].neighbors[5].ispass = false;
-                            plainsNode[random].neighbors[0].eventType = 6;
+                            plainsNode[random].neighbors[0].eventtype = "패리드";
                             plainsNode[random].neighbors[0].ispass = false;
                             break;
                         case 1: //잊혀진저장고 7
-                            plainsNode[random].eventType = 7;
+                            //plainsNode[random].eventType = 7;
                             break;
 
                         case 2: //카젤리의 시계 8
-                            plainsNode[random].eventType = 8;
-                            plainsNode[random].neighbors[0].eventType = 8;
+                            //plainsNode[random].eventType = 8;
+                            //plainsNode[random].neighbors[0].eventType = 8;
+                            plainsNode[random].neighbors[0].eventtype = "카젤리의시계";
                             plainsNode[random].neighbors[0].ispass = false;
                             break;
                         case 3:
-                            plainsNode[random].eventType = 9;
+                            //plainsNode[random].eventType = 9;
                             break;
 
                     }
@@ -427,7 +440,7 @@ public class MapObjectCreator : MonoBehaviour
                         }
 
                         GameObject sanctum = Instantiate(sanctumObj[i]);
-                        sanctum.transform.position = forestNode[random].transform.position;
+                        sanctum.transform.position = forestNode[random].transform.position + new Vector3(0f, 0.1f, 0f);
                         sanctum.transform.SetParent(fixedObjectBox);
                         forestNode[random].doNotUse = true;
                         objectIndex.Add(forestNode[random].index);
@@ -458,7 +471,7 @@ public class MapObjectCreator : MonoBehaviour
                         }
 
                         GameObject sanctum = Instantiate(sanctumObj[i]);
-                        sanctum.transform.position = plainsNode[random].transform.position;
+                        sanctum.transform.position = plainsNode[random].transform.position + new Vector3(0f, 0.1f, 0f);
                         sanctum.transform.SetParent(fixedObjectBox);
                         plainsNode[random].doNotUse = true;
                         objectIndex.Add(plainsNode[random].index);
@@ -507,7 +520,7 @@ public class MapObjectCreator : MonoBehaviour
                         }
 
                         GameObject sanctum = Instantiate(randomObj[i]);
-                        sanctum.transform.position = forestNode[random].transform.position;
+                        sanctum.transform.position = forestNode[random].transform.position + new Vector3(0f, 0.1f, 0f); ;
                         sanctum.transform.SetParent(hideObjectBox);
                         forestNode[random].doNotUse = true;
                         randomObjectIndex.Add(forestNode[random].index);
@@ -539,7 +552,7 @@ public class MapObjectCreator : MonoBehaviour
                         }
 
                         GameObject sanctum = Instantiate(randomObj[i]);
-                        sanctum.transform.position = plainsNode[random].transform.position;
+                        sanctum.transform.position = plainsNode[random].transform.position + new Vector3(0f, 0.1f, 0f); ;
                         sanctum.transform.SetParent(hideObjectBox);
                         plainsNode[random].doNotUse = true;
                         randomObjectIndex.Add(plainsNode[random].index);
@@ -580,10 +593,11 @@ public class MapObjectCreator : MonoBehaviour
                 {
                     int objNum = Random.Range(0, 4);
                     GameObject obstacle = Instantiate(ObstacleObj[objNum]);
-                    obstacle.transform.position = forestNode[i].transform.position;
+                    obstacle.transform.position = forestNode[i].transform.position + new Vector3(0f, 0.1f, 0f);
                     obstacle.transform.SetParent(obstacleBox);
                     forestNode[i].doNotUse = true;
                     forestNode[i].ispass = false;
+                    forestNode[i].eventtype = obstacle.ToString();
                 }
 
             }
@@ -598,10 +612,19 @@ public class MapObjectCreator : MonoBehaviour
                 {
                     int objNum = Random.Range(4, 8);
                     GameObject obstacle = Instantiate(ObstacleObj[objNum]);
-                    obstacle.transform.position = plainsNode[i].transform.position;
+                    obstacle.transform.position = plainsNode[i].transform.position + new Vector3(0f, 0.1f, 0f);
+                    if (objNum != 4)
+                    {
+                        plainsNode[i].ispass = false;
+                    }
+                    else
+                    {
+                        obstacle.transform.position += new Vector3(0f, 0.5f, 0f);
+                    }
                     obstacle.transform.SetParent(obstacleBox);
                     plainsNode[i].doNotUse = true;
-                    plainsNode[i].ispass = false;
+                    
+                    plainsNode[i].eventtype = obstacle.ToString();
                 }
             }
         }
@@ -633,18 +656,18 @@ public class MapObjectCreator : MonoBehaviour
                     {
                         while (true)
                         {
-                            random = Random.Range(0, forestNode.Length);
-                            if (!forestNode[random].doNotUse)
+                            int randomNumber = Random.Range(0, forestNode.Length);
+                            if (!forestNode[randomNumber].doNotUse)
                             {
                                 int randomMonsterNum = Random.Range(0, 3);
                                 GameObject moster = Instantiate(morningFMonsterBox[randomMonsterNum]);
-                                moster.transform.position = forestNode[random].transform.position;
+                                moster.transform.position = forestNode[randomNumber].transform.position + new Vector3(0f, 0.1f, 0f);
                                 moster.SetActive(true);
-                                forestNode[random].doNotUse = true;
+                                forestNode[randomNumber].doNotUse = true;
 
                                 //스폰한 몬스터 정보와 노드정보
                                 randomMonsterName.Add(randomMonsterNum);
-                                randomMonsterIndex.Add(forestNode[random].index);
+                                randomMonsterIndex.Add(forestNode[randomNumber].index);
                                 activeMonster.Add(moster);
                                 break;
                             }
@@ -660,18 +683,18 @@ public class MapObjectCreator : MonoBehaviour
                     {
                         while (true)
                         {
-                            random = Random.Range(0, plainsNode.Length);
-                            if (!plainsNode[random].doNotUse)
+                            int randomNumber = Random.Range(0, plainsNode.Length);
+                            if (!plainsNode[randomNumber].doNotUse)
                             {
                                 int randomMonsterNum = Random.Range(0, 2);
                                 GameObject moster = Instantiate(morningPMonsterBox[randomMonsterNum]);
-                                moster.transform.position = plainsNode[random].transform.position;
+                                moster.transform.position = plainsNode[randomNumber].transform.position + new Vector3(0f, 0.1f, 0f);
                                 moster.SetActive(true);
-                                plainsNode[random].doNotUse = true;
+                                plainsNode[randomNumber].doNotUse = true;
 
                                 //스폰한 몬스터 정보와 노드정보
                                 randomMonsterName.Add(randomMonsterNum+3);
-                                randomMonsterIndex.Add(plainsNode[random].index);
+                                randomMonsterIndex.Add(plainsNode[randomNumber].index);
                                 activeMonster.Add(moster);
                                 break;
                             }
@@ -705,17 +728,17 @@ public class MapObjectCreator : MonoBehaviour
                             case 0://숲
                                 while (true)
                                 {
-                                    random = Random.Range(0, forestNode.Length);
-                                    if (!forestNode[random].doNotUse)
+                                    int randomNumber = Random.Range(0, forestNode.Length);
+                                    if (!forestNode[randomNumber].doNotUse)
                                     {
                                         int randomMonsterNum = Random.Range(0, 6);
                                         GameObject moster = Instantiate(nightMonsterBox[randomMonsterNum]);
-                                        moster.transform.position = forestNode[random].transform.position;
+                                        moster.transform.position = forestNode[randomNumber].transform.position + new Vector3(0f, 0.1f, 0f);
                                         moster.SetActive(true);
-                                        forestNode[random].doNotUse = true;
+                                        forestNode[randomNumber].doNotUse = true;
 
                                         randomMonsterName.Add(randomMonsterNum+5);
-                                        randomMonsterIndex.Add(forestNode[random].index);
+                                        randomMonsterIndex.Add(forestNode[randomNumber].index);
                                         activeMonster.Add(moster);
                                         break;
                                     }
@@ -725,17 +748,17 @@ public class MapObjectCreator : MonoBehaviour
                             case 1://평원
                                 while (true)
                                 {
-                                    random = Random.Range(0, plainsNode.Length);
-                                    if (!plainsNode[random].doNotUse)
+                                    int randomNumber = Random.Range(0, plainsNode.Length);
+                                    if (!plainsNode[randomNumber].doNotUse)
                                     {
                                         int randomMonsterNum = Random.Range(0, 6);
                                         GameObject moster = Instantiate(nightMonsterBox[randomMonsterNum]);
-                                        moster.transform.position = plainsNode[random].transform.position;
+                                        moster.transform.position = plainsNode[randomNumber].transform.position + new Vector3(0f, 0.1f, 0f);
                                         moster.SetActive(true);
-                                        plainsNode[random].doNotUse = true;
+                                        plainsNode[randomNumber].doNotUse = true;
 
                                         randomMonsterName.Add(randomMonsterNum+5);
-                                        randomMonsterIndex.Add(plainsNode[random].index);
+                                        randomMonsterIndex.Add(plainsNode[randomNumber].index);
                                         activeMonster.Add(moster);
                                         break;
                                     }

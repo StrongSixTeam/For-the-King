@@ -28,7 +28,7 @@ public class CloudBox : MonoBehaviour
         clouds[1] = cloud02;
         clouds[2] = cloud03;
         cloudBox = new GameObject[hexMapCreator.hexMembers.Length];
-
+        
         for (int i=0; i<hexMapCreator.hexMembers.Length; i++)
         {
             cloudBox[i] = Instantiate(clouds[Random.Range(0, 3)]);
