@@ -7,7 +7,7 @@ public class MovingUI : MonoBehaviour
 {
     public int order;
 
-    private Vector3 move = new Vector3(0, 2.55f, 0);
+    private Vector3 move = new Vector3(0, 3f, 0);
     public Transform Player;
     [SerializeField] Camera cam;
     [SerializeField] private Text txtMoving;

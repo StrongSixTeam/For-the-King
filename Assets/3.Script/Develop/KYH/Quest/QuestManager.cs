@@ -55,6 +55,9 @@ public class QuestManager : MonoBehaviour
         yield return null;
         yield return null;
         yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
         mapObjectCreator = FindObjectOfType<MapObjectCreator>();
         cloudBox = FindObjectOfType<CloudBox>();
     }
@@ -129,24 +132,31 @@ public class QuestManager : MonoBehaviour
                     break;
                 case 3:
                     mapHexIndex = 2;
+                    mapObjectCreator.ShowObject(0);
+                    //bool값 true로 바꾸기 -> 충돌 가능
                     break;
                 case 4:
                     mapHexIndex = 3;
+                    mapObjectCreator.ShowObject(1);
                     break;
                 case 7:
                     mapHexIndex = 4;
+                    mapObjectCreator.ShowObject(2);
                     break;
                 case 8:
                     mapHexIndex = 5;
                     break;
                 case 10:
                     mapHexIndex = 8;
+                    mapObjectCreator.ShowObject(3);
                     break;
 
             }
+            //퀘스트 오브젝트를 활성화하고 구름을 치워주자
             cloudBox.CloudActiveFalse(mapObjectCreator.objectIndex[mapHexIndex]);
         }
     }
+
     private void QuestSet(string questName)
     {
         for (int i = 0; i < clearQuestText.Length; i++)
