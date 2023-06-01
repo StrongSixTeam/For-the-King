@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
 
     public Button turnChageBtn;
     [SerializeField] GameObject[] movingUIs;
+    [SerializeField] GameObject[] portraitUIs;
 
 
     private void Start()
@@ -56,6 +57,8 @@ public class GameManager : MonoBehaviour
             playerSpawner.movingUIs[i].Player = Players[i].transform;
             movingUIs[i] = playerSpawner.movingUIs[i].gameObject;
             movingUIs[i].transform.GetChild(0).gameObject.SetActive(false);
+            portraitUIs[i].GetComponent<PortraitUI>().Player = Players[i].transform;
+            portraitUIs[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
         questManager.PopUp(questManager.questTurn);
@@ -148,5 +151,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ActivePortrait()
+    {
+        portraitUIs[nextTurn].transform.GetChild(0).gameObject.SetActive(true);
+    }
+    public void DeactivePortrait()
+    {
+        portraitUIs[nextTurn].transform.GetChild(0).gameObject.SetActive(false);
+    }
 }
 
