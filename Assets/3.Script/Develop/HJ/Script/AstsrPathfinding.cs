@@ -19,10 +19,11 @@ public class AstsrPathfinding : MonoBehaviour
     [SerializeField] GameObject[] moveNumberPrefabs = new GameObject[10];
     GameObject[] showMoveCount = new GameObject[10];
     Transform MoveCountBox;
+    Transform redHexBoxTransform;
 
     [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 
     public int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
-    [SerializeField] int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
+    public int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
     //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정
     [SerializeField] PlayerController_Jin[] playerController;
@@ -40,6 +41,7 @@ public class AstsrPathfinding : MonoBehaviour
     {
         hexMapCreator = FindObjectOfType<HexMapCreator>();
         MoveCountBox = transform.GetChild(0);
+        redHexBoxTransform = transform.GetChild(1);
 
         for (int i = 0; i < 10; i++)
         {
@@ -55,10 +57,11 @@ public class AstsrPathfinding : MonoBehaviour
         hexCursor[0].transform.parent = gridCanvas;
         hexCursor[1].transform.parent = gridCanvas;
 
-        for(int i=0; i<20; i++)
+        for (int i = 0; i < 20; i++)
         {
             GameObject temp = Instantiate(redHex);
             redHexBox[i] = temp;
+            redHexBox[i].transform.SetParent(redHexBoxTransform);
             temp.SetActive(false);
         }
 
@@ -76,16 +79,27 @@ public class AstsrPathfinding : MonoBehaviour
         playerObject[index] = playerObj;
     }
 
-    public List<GameObject> GetPlayerHexNums(GameObject calledPlayer)
+    public List<GameObject> GetPlayerHexNums(PlayerController_Jin calledPlayer, int myHexNum)
     {
         List<GameObject> players = new List<GameObject>();
-        for(int i=0; i< playerObject.Length; i++)
+        for (int i = 0; i < playerController.Length; i++)
         {
-            players.Add(playerObject[i]);
+            //호출한 본인을 제외한 플레이어
+            if (playerController[i] != calledPlayer)
+            {
+                //myHexNum의 범위 안에 있는지 확인
+                for (int e = 0; e < 6; e++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (hexMapCreator.hexMembers[myHexNum].neighbors[e].neighbors[j].index == playerController[i].myHexNum && !players.Contains(playerController[i].gameObject))
+                        {
+                            players.Add(playerController[i].gameObject);
+                        }
+                    }
+                }
+            }
         }
-
-        //호출한 본인을 제외한 게임오브젝트을 리턴
-        players.Remove(calledPlayer);
 
         return players;
     }
@@ -207,13 +221,25 @@ public class AstsrPathfinding : MonoBehaviour
     //타겟노드 설정
     private void MouseInput()
     {
-        Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(inputRay, out hit))
+        //Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit hit;
+        //if (Physics.RaycastAll(inputRay, out hit))
+        //{
+        //    //Debug.Log(hit.transform.gameObject.GetComponent<HexMember>().index);
+        //    endNode = hit.transform.gameObject.GetComponent<HexMember>();
+        //    //Debug.Log(endNode.H);
+        //}
+
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 100f);
+
+        for (int i = 0; i < hits.Length; i++)
         {
-            //Debug.Log(hit.transform.gameObject.GetComponent<HexMember>().index);
-            endNode = hit.transform.gameObject.GetComponent<HexMember>();
-            //Debug.Log(endNode.H);
+            if (hits[i].transform.GetComponent<HexMember>() != null)
+            {
+                endNode = hits[i].transform.GetComponent<HexMember>();
+                return;
+            }
         }
     }
 
@@ -278,7 +304,7 @@ public class AstsrPathfinding : MonoBehaviour
             //목적지에 도착했나요?
             if (currentNode == endNode)
             {
-                int loopNumber=0;
+                int loopNumber = 0;
                 HexMember targetNode = endNode;
                 while (targetNode != startNode)
                 {
@@ -315,7 +341,7 @@ public class AstsrPathfinding : MonoBehaviour
                     ListReset();
                     return;
                 }
-                
+
                 finalNodeList.Add(startNode);
                 finalNodeList.Reverse();
 
@@ -371,7 +397,7 @@ public class AstsrPathfinding : MonoBehaviour
                 //왼쪽 대각선 위
                 else if (endNode.zNum > currentNode.zNum && endNode.xNum <= currentNode.xNum)
                 {
-                    for(int i=0; i<6; i++)
+                    for (int i = 0; i < 6; i++)
                     {
                         //벽이 아니거나 closeList에 없다면 openList에 추가
                         if (currentNode.neighbors[dirLeftTop[i]].ispass &&
@@ -458,7 +484,7 @@ public class AstsrPathfinding : MonoBehaviour
                         }
                     }
                 }
-                
+
             }
             else //짝
             {
@@ -479,7 +505,7 @@ public class AstsrPathfinding : MonoBehaviour
                         }
                     }
                 }
-                
+
                 //왼쪽 대각선 위
                 else if (endNode.zNum > currentNode.zNum && endNode.xNum < currentNode.xNum)
                 {
@@ -517,7 +543,7 @@ public class AstsrPathfinding : MonoBehaviour
                 }
 
                 //오른쪽
-                else if(endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
+                else if (endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
                 {
                     for (int i = 0; i < 6; i++)
                     {
@@ -724,14 +750,14 @@ public class AstsrPathfinding : MonoBehaviour
     public void ShowRedHex(int centerIndex)
     {
         List<int> close = new List<int>();
-        for(int i=0; i<6; i++)
+        for (int i = 0; i < 6; i++)
         {
-            for(int j=0; j<6; j++)
+            for (int j = 0; j < 6; j++)
             {
                 if (hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].ispass &&
                     !close.Contains(hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index))
                 {
-                    for(int e=0; e<20; e++)
+                    for (int e = 0; e < 20; e++)
                     {
                         if (!redHexBox[e].activeSelf)
                         {
@@ -748,7 +774,7 @@ public class AstsrPathfinding : MonoBehaviour
 
     public void ShowRedHexStop()
     {
-        for(int i=0; i<20; i++)
+        for (int i = 0; i < 20; i++)
         {
             if (redHexBox[i].activeSelf)
             {

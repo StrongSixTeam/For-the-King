@@ -624,7 +624,7 @@ public class MapObjectCreator : MonoBehaviour
         {
             if (!forestNode[i].doNotUse)
             {
-                int randomCreate = Random.Range(0, 3);
+                int randomCreate = Random.Range(0, 4);
                 if (randomCreate.Equals(1))
                 {
                     int objNum = Random.Range(0, 4);
@@ -643,7 +643,7 @@ public class MapObjectCreator : MonoBehaviour
         {
             if (!plainsNode[i].doNotUse)
             {
-                int randomCreate = Random.Range(0, 3);
+                int randomCreate = Random.Range(0, 4);
                 if (randomCreate.Equals(1))
                 {
                     int objNum = Random.Range(4, 8);
