@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public Button turnChageBtn;
     [SerializeField] GameObject[] movingUIs;
     [SerializeField] GameObject[] portraitUIs;
+    private EncounterManager encounterManager;
 
 
     private void Start()
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
-        
+        encounterManager = FindObjectOfType<EncounterManager>();
     }
     public void Setting()
     {
@@ -58,6 +59,10 @@ public class GameManager : MonoBehaviour
             movingUIs[i] = playerSpawner.movingUIs[i].gameObject;
             movingUIs[i].transform.GetChild(0).gameObject.SetActive(false);
             portraitUIs[i].GetComponent<PortraitUI>().Player = Players[i].transform;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
             portraitUIs[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
@@ -79,9 +84,17 @@ public class GameManager : MonoBehaviour
             }
             else if (!questManager.isQuest && !playerController.isRun)
             {
-                isBlock = false;
+                if (encounterManager.isEncounterUI)
+                { //Encounter UI가 떠있으면 바닥 누르는게 안되게
+                    isBlock = true;
+                }
+                else
+                {
+                    isBlock = false;
+                }
                 turnChageBtn.interactable = true;
             }
+
             if (!questManager.isQuest && !isQuestFinish && Players.Length > 0)
             {
                 isQuestFinish = true;
@@ -98,6 +111,11 @@ public class GameManager : MonoBehaviour
             {
                 timeBarScrolling[i].TimeFlow();
             }
+        }
+
+        if (encounterManager.isEncounterUI) //Encounter UI가 떠있는 상태로 턴 종료하면
+        {
+            encounterManager.DisableButton();
         }
 
         ActiveMovingUI(nextTurn);
@@ -153,11 +171,37 @@ public class GameManager : MonoBehaviour
 
     public void ActivePortrait()
     {
-        portraitUIs[nextTurn].transform.GetChild(0).gameObject.SetActive(true);
+        int nowTurn = 0;
+        if (PlayerPrefs.GetInt("PlayerCnt") == 1)
+        {
+            nowTurn = 0;
+        }
+        else
+        {
+            nowTurn = nextTurn - 1;
+            if (nowTurn < 0)
+            {
+                nowTurn = 1;
+            }
+        }
+        portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(true);
     }
     public void DeactivePortrait()
     {
-        portraitUIs[nextTurn].transform.GetChild(0).gameObject.SetActive(false);
+        int nowTurn = 0;
+        if (PlayerPrefs.GetInt("PlayerCnt") == 1)
+        {
+            nowTurn = 0;
+        }
+        else
+        {
+            nowTurn = nextTurn - 1;
+            if (nowTurn < 0)
+            {
+                nowTurn = 1;
+            }
+        }
+        portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(false);
     }
 }
 
