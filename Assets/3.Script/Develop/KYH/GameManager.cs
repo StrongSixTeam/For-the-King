@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             portraitUIs[i].GetComponent<PortraitUI>().Player = Players[i].transform;
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 2; i > PlayerPrefs.GetInt("PlayerCnt")-1; i--)
         {
             portraitUIs[i].transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
             nowTurn = nextTurn - 1;
             if (nowTurn < 0)
             {
-                nowTurn = 1;
+                nowTurn = PlayerPrefs.GetInt("PlayerCnt") -1;
             }
         }
         portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(true);
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
             nowTurn = nextTurn - 1;
             if (nowTurn < 0)
             {
-                nowTurn = 1;
+                nowTurn = PlayerPrefs.GetInt("PlayerCnt") - 1;
             }
         }
         portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(false);
