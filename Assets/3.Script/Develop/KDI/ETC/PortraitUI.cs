@@ -7,7 +7,7 @@ public class PortraitUI : MonoBehaviour
 {
     public int order;
 
-    private Vector3 move = new Vector3(0, 1f, 0);
+    public Vector3 move = new Vector3(0, 1f, 0);
     public Transform Player;
     [SerializeField] Camera cam;
     [SerializeField] Image portrait;
