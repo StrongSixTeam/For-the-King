@@ -23,8 +23,9 @@ public class InventoryController1 : MonoBehaviour
     //public List<Text> InvenTxt = new List<Text>();
 
     public PlayerNum playerNum;                     // 플레이어 번호
-    public List<Item> itemList = new List<Item>(); //획득한 아이템 정보를 담는 리스트
+    //public List<Item> itemList = new List<Item>(); //획득한 아이템 정보를 담는 리스트
     public List<List<Item>> playerInventory = new List<List<Item>>(); // 플레이어 별 인벤토리
+    public List<List<int>> itemCount = new List<List<int>>();
     public List<Item[]> playerEquip = new List<Item[]>();
 
     private GameObject item;
@@ -36,6 +37,11 @@ public class InventoryController1 : MonoBehaviour
     [SerializeField] private List<Item> categoryScroll = new List<Item>();
     [SerializeField] private List<Item> categoryHerb = new List<Item>();
     [SerializeField] private List<Item> categoryETC = new List<Item>();
+    [SerializeField] private List<int> categoryWeaponCnt = new List<int>();
+    [SerializeField] private List<int> categoryArmorCnt = new List<int>();
+    [SerializeField] private List<int> categoryScrollCnt = new List<int>();
+    [SerializeField] private List<int> categoryHerbCnt = new List<int>();
+    [SerializeField] private List<int> categoryETCCnt = new List<int>();
 
     public Sprite deactImage;
     public Sprite actImage;
@@ -52,7 +58,7 @@ public class InventoryController1 : MonoBehaviour
     [SerializeField] Button[] equipBtn;
 
     [Header("퀵슬롯")]
-    [SerializeField] QuickSlotController1 quickSlot;
+    [SerializeField] QuickSlotController1[] quickSlot;
 
     [Header("전체 아이템 담은 배열")]
     public ItemInputTest1 allItemArr;
@@ -73,6 +79,7 @@ public class InventoryController1 : MonoBehaviour
         {
             playerInventory.Add(new List<Item>());
             playerEquip.Add(new Item[5]);
+            itemCount.Add(new List<int>());
         }
     }
 
@@ -99,18 +106,25 @@ public class InventoryController1 : MonoBehaviour
         int i = playerInventory[playerNum].IndexOf(Item);
         if (i != -1)
         {
-            playerInventory[playerNum][i].itemCount++;
-            if (playerInventory[playerNum][i].itemCount < 1)
+            itemCount[playerNum][i]++;
+            //Debug.Log(playerInventory[playerNum][i] + ": " + itemCount[playerNum][i]);
+            /*if (itemCount[playerNum][i] < 1)
             {
                 Debug.Log("여긴 걸리면 안 돼.");
                 playerInventory[playerNum].RemoveAt(i);
-            }
+                itemCount[playerNum].RemoveAt(i);
+            }*/
         }
         else
         {
-            Debug.Log("여긴 걸려야 해.");
             playerInventory[playerNum].Add(Item);
+            itemCount[playerNum].Add(1);
             PoolItemListStack(Item);
+            //Debug.Log(Item + ": 1개겠지 뭐");
+        }
+        for (int j = 0; j < itemCount[playerNum].Count; j++)
+        {
+            Debug.Log("itemCount의 " + j + "번째 인덱스의 값: " + itemCount[playerNum][j]);
         }
         
     }
@@ -165,7 +179,7 @@ public class InventoryController1 : MonoBehaviour
 
     public void PoolItemListStack(Item putitem)         // 오브젝트 풀링 함수
     {
-
+        if (poolItemQueue.Count < 1) return;
         GameObject newitem = poolItemQueue.Dequeue();
         //Debug.Log(this.transform.childCount);
         newitem.transform.SetParent(this.transform);
@@ -231,7 +245,7 @@ public class InventoryController1 : MonoBehaviour
             }
             transform.GetChild(i).GetChild(0).tag = playerInventory[playernum][i].itemType.ToString();
             transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().sprite = playerInventory[playernum][i].itemImage;
-            transform.GetChild(i).GetChild(0).GetChild(1).GetComponent<Text>().text = playerInventory[playernum][i].itemName + " " + playerInventory[playernum][i].itemCount.ToString();
+            transform.GetChild(i).GetChild(0).GetChild(1).GetComponent<Text>().text = playerInventory[playernum][i].itemName + " " + itemCount[playernum][i].ToString();
             transform.GetChild(i).gameObject.SetActive(true);
             transform.GetChild(i).localPosition = ListPos;
 
@@ -241,7 +255,7 @@ public class InventoryController1 : MonoBehaviour
 
     public void InventoryReset()
     {
-        if(transform.childCount > playerInventory[(int)playerNum].Count)
+        /*if(transform.childCount > playerInventory[(int)playerNum].Count)
         {
             for (int i = 0; i < playerInventory[(int)playerNum].Count; i++)
             {
@@ -254,8 +268,12 @@ public class InventoryController1 : MonoBehaviour
             {
                 transform.GetChild(i).gameObject.SetActive(false);
             }
-        }
+        }*/
         //transform.GetChild(transform.childCount - 1).gameObject.SetActive(true);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     private void ResetCategory()
@@ -277,23 +295,23 @@ public class InventoryController1 : MonoBehaviour
         switch (type)
         {
             case ItemType.무기:
-                CategoryActive(categoryWeapon);
+                CategoryActive(categoryWeapon, categoryWeaponCnt);
                 break;
 
             case ItemType.방어구:
-                CategoryActive(categoryArmor);
+                CategoryActive(categoryArmor, categoryArmorCnt);
                 break;
 
             case ItemType.스크롤:
-                CategoryActive(categoryScroll);
+                CategoryActive(categoryScroll, categoryScrollCnt);
                 break;
 
             case ItemType.허브:
-                CategoryActive(categoryHerb);
+                CategoryActive(categoryHerb, categoryHerbCnt);
                 break;
 
             case ItemType.기타:
-                CategoryActive(categoryETC);
+                CategoryActive(categoryETC, categoryETCCnt);
                 break;
 
             case ItemType.ALL:
@@ -305,30 +323,35 @@ public class InventoryController1 : MonoBehaviour
 
     private void SetCategory()
     {
-        for (int i = 0; i < itemList.Count; i++)
+        for (int i = 0; i < playerInventory[(int)playerNum].Count; i++)
         {
-            switch (itemList[i].itemType)
+            switch (playerInventory[(int)playerNum][i].itemType)
             {
                 case ItemType.무기:
-                    categoryWeapon.Add(itemList[i]);
+                    categoryWeapon.Add(playerInventory[(int)playerNum][i]);
+                    categoryWeaponCnt.Add(itemCount[(int)playerNum][i]);
                     break;
                 case ItemType.방어구:
-                    categoryArmor.Add(itemList[i]);
+                    categoryArmor.Add(playerInventory[(int)playerNum][i]);
+                    categoryArmorCnt.Add(itemCount[(int)playerNum][i]);
                     break;
                 case ItemType.스크롤:
-                    categoryScroll.Add(itemList[i]);
+                    categoryScroll.Add(playerInventory[(int)playerNum][i]);
+                    categoryScrollCnt.Add(itemCount[(int)playerNum][i]);
                     break;
                 case ItemType.허브:
-                    categoryHerb.Add(itemList[i]);
+                    categoryHerb.Add(playerInventory[(int)playerNum][i]);
+                    categoryHerbCnt.Add(itemCount[(int)playerNum][i]);
                     break;
                 case ItemType.기타:
-                    categoryETC.Add(itemList[i]);
+                    categoryETC.Add(playerInventory[(int)playerNum][i]);
+                    categoryETCCnt.Add(itemCount[(int)playerNum][i]);
                     break;
             }
         }
     }
 
-    private void CategoryActive(List<Item> category)
+    private void CategoryActive(List<Item> category, List<int> categoryCnt)
     {
         if (category.Count < 1)
         {
@@ -348,7 +371,7 @@ public class InventoryController1 : MonoBehaviour
         for (int i = 0; i < category.Count; i++)
         {
             transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().sprite = category[i].itemImage;
-            transform.GetChild(i).GetChild(0).GetChild(1).GetComponent<Text>().text = category[i].itemName + " " + category[i].itemCount.ToString();
+            transform.GetChild(i).GetChild(0).GetChild(1).GetComponent<Text>().text = category[i].itemName + " " + categoryCnt[i].ToString();
             transform.GetChild(i).gameObject.SetActive(true);
         }
     }
@@ -409,7 +432,7 @@ public class InventoryController1 : MonoBehaviour
         ItemListUse();
         QuitItemSelectUI();
         InventoryShow((int)playerNum);
-        quickSlot.QuickSlotShow((int)playerNum);
+        quickSlot[(int)playerNum].QuickSlotShow((int)playerNum);
     }
 
     private void ItemListUse()
@@ -421,65 +444,65 @@ public class InventoryController1 : MonoBehaviour
                 switch (playerInventory[(int)playerNum][i].itemType)
                 {
                     case ItemType.허브:
-                        if(playerInventory[(int)playerNum][i].itemCount == 1)
+                        if(itemCount[(int)playerNum][i] == 1)
                         {
                             //Destroy();
                             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
                             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-                            quickSlot.quickSlot.Remove(playerInventory[(int)playerNum][i]);
+                            quickSlot[(int)playerNum].quickSlot[(int)playerNum].Remove(playerInventory[(int)playerNum][i]);
                             playerInventory[(int)playerNum].RemoveAt(i);
-                            for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
+                            for (int a = 0; a < quickSlot[(int)playerNum].itemSlotImg.Length; a++)
                             {
-                                quickSlot.itemSlotImg[a].sprite = quickSlot.blank;
-                                quickSlot.itemCntTxt[a].text = 0.ToString();
+                                quickSlot[(int)playerNum].itemSlotImg[a].sprite = quickSlot[(int)playerNum].blank;
+                                quickSlot[(int)playerNum].itemCntTxt[a].text = 0.ToString();
                             }
                         }
 
                         else
                         {
-                            playerInventory[(int)playerNum][i].itemCount--;
+                            itemCount[(int)playerNum][i]--;
                         }
                         break;
 
                     case ItemType.스크롤:
-                        if (itemList[i].itemCount == 1)
+                        if (itemCount[(int)playerNum][i] == 1)
                         {
                             //Destroy(transform.GetChild(transform.childCount - 1).gameObject);
                             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
                             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-                            quickSlot.quickSlot.Remove(playerInventory[(int)playerNum][i]);
+                            quickSlot[(int)playerNum].quickSlot[(int)playerNum].Remove(playerInventory[(int)playerNum][i]);
                             playerInventory[(int)playerNum].RemoveAt(i);
-                            for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
+                            for (int a = 0; a < quickSlot[(int)playerNum].itemSlotImg.Length; a++)
                             {
-                                quickSlot.itemSlotImg[a].sprite = quickSlot.blank;
-                                quickSlot.itemCntTxt[a].text = 0.ToString();
+                                quickSlot[(int)playerNum].itemSlotImg[a].sprite = quickSlot[(int)playerNum].blank;
+                                quickSlot[(int)playerNum].itemCntTxt[a].text = 0.ToString();
                             }
                         }
 
                         else
                         {
-                            playerInventory[(int)playerNum][i].itemCount--;
+                            itemCount[(int)playerNum][i]--;
                         }
                         break;
 
                     case ItemType.기타:
-                        if (itemList[i].itemCount == 1)
+                        if (itemCount[(int)playerNum][i] == 1)
                         {
                             //Destroy(transform.GetChild(transform.childCount - 1).gameObject);
                             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
                             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-                            quickSlot.quickSlot.Remove(itemList[i]);
-                            itemList.RemoveAt(i);
-                            for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
+                            quickSlot[(int)playerNum].quickSlot[(int)playerNum].Remove(playerInventory[(int)playerNum][i]);
+                            playerInventory[(int)playerNum].RemoveAt(i);
+                            for (int a = 0; a < quickSlot[(int)playerNum].itemSlotImg.Length; a++)
                             {
-                                quickSlot.itemSlotImg[a].sprite = quickSlot.blank;
-                                quickSlot.itemCntTxt[a].text = 0.ToString();
+                                quickSlot[(int)playerNum].itemSlotImg[a].sprite = quickSlot[(int)playerNum].blank;
+                                quickSlot[(int)playerNum].itemCntTxt[a].text = 0.ToString();
                             }
                         }
 
                         else
                         {
-                            itemList[i].itemCount--;
+                            itemCount[(int)playerNum][i]--;
                         }
                         break;
                 }
@@ -491,21 +514,21 @@ public class InventoryController1 : MonoBehaviour
     {
         Weapon weapon;
         Armor armor;
-        for (int i = 0; i < itemList.Count; i++)
+        for (int i = 0; i < playerInventory[(int)playerNum].Count; i++)
         {
             //Debug.Log(i.ToString() + "번째 루프");
             //Debug.Log(itemList[i].itemName.Equals(ItemName));
 
-            if (itemList[i].itemName.Equals(ItemName))
+            if (playerInventory[(int)playerNum][i].itemName.Equals(ItemName))
             {
-                switch (itemList[i].itemType)
+                switch (playerInventory[(int)playerNum][i].itemType)
                 {
                     case ItemType.무기:
-                        weapon = itemList[i] as Weapon;
+                        weapon = playerInventory[(int)playerNum][i] as Weapon;
                         UpdateEquip(weapon, i);
                         break;
                     case ItemType.방어구:
-                        armor = itemList[i] as Armor;
+                        armor = playerInventory[(int)playerNum][i] as Armor;
                         switch (armor.equipType)
                         {
                             case EquipType.헬멧:
@@ -536,43 +559,42 @@ public class InventoryController1 : MonoBehaviour
 
     private void UpdateEquip(Weapon weapon, int i)
     {
-        itemList[i].itemCount--;
-        if (itemList[i].itemCount < 1)
+        itemCount[(int)playerNum][i]--;
+        if (itemCount[(int)playerNum][i] < 1)
         {
             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-            itemList[i].itemCount = 1;
-            itemList.RemoveAt(i);
+            playerInventory[(int)playerNum].RemoveAt(i);
             ListPos.y += 25f;
             // Debug.Log("무기 1개 남은 거 장착 후 " + ListPos.y);
         }
 
-        if (equipArr[0] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
+        if (playerEquip[(int)playerNum][0] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
         {
-            equipArr[0] = weapon;
+            playerEquip[(int)playerNum][0] = weapon;
             equipItemName[0].text = equipArr[0].itemName;
             equipBtn[0].interactable = true;
             
         }
 
-        else if (equipArr[0].itemName.Equals(weapon.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
+        else if (playerEquip[(int)playerNum][0].itemName.Equals(weapon.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
         {
             return;
         }
 
         else                                // 해당 장비창에 이미 착용된 장비가 있는 경우
         {
-            int x = itemList.IndexOf(equipArr[0]); // 착용 중인 장비가 인벤토리에 있는지 확인하기 위한 인덱스 번호 할당
+            int x = playerInventory[(int)playerNum].IndexOf(playerEquip[(int)playerNum][0]); // 착용 중인 장비가 인벤토리에 있는지 확인하기 위한 인덱스 번호 할당
             if (x == -1)                           // 착용 중인 장비가 인벤토리에 없다면
             {
-                ItemStack(equipArr[0], (int)playerNum);
-                equipArr[0] = weapon;
+                ItemStack(playerEquip[(int)playerNum][0], (int)playerNum);
+                playerEquip[(int)playerNum][0] = weapon;
                 equipItemName[0].text = equipArr[0].itemName;
             }
             else
             {                                       // 착용 중이던 장비가 인벤토리에 있다면
-                itemList[x].itemCount++;
-                equipArr[0] = weapon;
+                itemCount[(int)playerNum][x]++;
+                playerEquip[(int)playerNum][0] = weapon;
                 equipItemName[0].text = equipArr[0].itemName;
             }
         }
@@ -580,44 +602,65 @@ public class InventoryController1 : MonoBehaviour
 
     private void UpdateEquip(Armor armor, int i, int arrNum)
     {
-        itemList[i].itemCount--;
-        if (itemList[i].itemCount < 1)
+        itemCount[(int)playerNum][i]--;
+        if (itemCount[(int)playerNum][i] < 1)
         {
             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-            itemList[i].itemCount = 1;
-            itemList.RemoveAt(i);
+            playerInventory[(int)playerNum].RemoveAt(i);
             ListPos.y += 25f;
             //Debug.Log("무기 1개 남은 거 장착 후 " + ListPos.y);
         }
-        if (equipArr[arrNum] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
+        if (playerEquip[(int)playerNum][arrNum] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
         {
-            equipArr[arrNum] = armor;
-            equipItemName[arrNum].text = equipArr[arrNum].itemName;
-            equipBtn[arrNum].interactable = true;
-            
+            playerEquip[(int)playerNum][arrNum] = armor;
         }
 
-        else if (equipArr[arrNum].itemName.Equals(armor.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
+        else if (playerEquip[(int)playerNum][arrNum].itemName.Equals(armor.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
         {
             return;
         }
 
         else                                // 해당 장비창에 이미 착용된 장비가 있는 경우
         {
-            int x = itemList.IndexOf(equipArr[arrNum]); // 착용 중인 장비가 인벤토리에 있는지 확인하기 위한 인덱스 번호 할당
+            int x = playerInventory[(int)playerNum].IndexOf(playerEquip[(int)playerNum][arrNum]); // 착용 중인 장비가 인벤토리에 있는지 확인하기 위한 인덱스 번호 할당
             if (x == -1)                           // 착용 중인 장비가 인벤토리에 없다면
             {
-                ItemStack(equipArr[arrNum], (int)playerNum);
-                equipArr[arrNum] = armor;
+                ItemStack(playerEquip[(int)playerNum][arrNum], (int)playerNum);
+                playerEquip[(int)playerNum][arrNum] = armor;
                 equipItemName[arrNum].text = equipArr[arrNum].itemName;
             }
             else
             {                                           // 착용 중인 장비가 인벤토리에 있다면
-                itemList[x].itemCount++;
-                equipArr[arrNum] = armor;
+                itemCount[(int)playerNum][i]++;
+                playerEquip[(int)playerNum][arrNum] = armor;
                 equipItemName[arrNum].text = equipArr[arrNum].itemName;
             }
+        }
+    }
+
+    public void ShowEquip() // 여기 고쳐야 함 (230601)
+    {
+        ResetEquip();
+        for (int i = 0; i < playerEquip[(int)playerNum].Length; i++)
+        {
+            if(playerEquip[(int)playerNum][i] == null)
+            {
+                equipItemName[i].text = playerEquip[(int)playerNum][i].itemName;
+                equipBtn[i].interactable = true;
+            }
+            else
+            {
+                equipItemName[i].text = playerEquip[(int)playerNum][i].itemName;
+            }
+        }
+    }
+
+    private void ResetEquip()
+    {
+        for(int i = 0; i < equipItemName.Length; i++)
+        {
+            equipItemName[i].text = "";
         }
     }
 
@@ -691,7 +734,7 @@ public class InventoryController1 : MonoBehaviour
 
         else
         {
-            playerInventory[(int)playerNum][i].itemCount++;
+            itemCount[(int)playerNum][i]++;
             equipArr[index] = null;
         }
     }
