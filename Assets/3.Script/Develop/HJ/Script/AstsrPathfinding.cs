@@ -32,6 +32,8 @@ public class AstsrPathfinding : MonoBehaviour
     [SerializeField] GameObject hexCursorGreenPrefab;
     GameObject[] hexCursor = new GameObject[2];
 
+    [SerializeField] GameObject redHex;
+    GameObject[] redHexBox = new GameObject[20];
 
     int loopCount = 0;
     private void Start()
@@ -52,6 +54,14 @@ public class AstsrPathfinding : MonoBehaviour
         hexCursor[1] = Instantiate(hexCursorGreenPrefab);
         hexCursor[0].transform.parent = gridCanvas;
         hexCursor[1].transform.parent = gridCanvas;
+
+        for(int i=0; i<20; i++)
+        {
+            GameObject temp = Instantiate(redHex);
+            redHexBox[i] = temp;
+            temp.SetActive(false);
+        }
+
     }
 
     public void SetPlayerCount(int playerCount)
@@ -707,6 +717,42 @@ public class AstsrPathfinding : MonoBehaviour
             if (!showMoveCount[i].activeSelf)
             {
                 showMoveCount[i].SetActive(true);
+            }
+        }
+    }
+
+    public void ShowRedHex(int centerIndex)
+    {
+        List<int> close = new List<int>();
+        for(int i=0; i<6; i++)
+        {
+            for(int j=0; j<6; j++)
+            {
+                if (hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].ispass &&
+                    !close.Contains(hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index))
+                {
+                    for(int e=0; e<20; e++)
+                    {
+                        if (!redHexBox[e].activeSelf)
+                        {
+                            redHexBox[e].SetActive(true);
+                            redHexBox[e].transform.position = hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].transform.position + new Vector3(0f, 0.2f, 0f); ;
+                            close.Add(hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void ShowRedHexStop()
+    {
+        for(int i=0; i<20; i++)
+        {
+            if (redHexBox[i].activeSelf)
+            {
+                redHexBox[i].SetActive(false);
             }
         }
     }

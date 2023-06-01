@@ -153,6 +153,14 @@ public class PlayerController_Jin : MonoBehaviour
         }
         else
         {
+            for (int i = 0; i < map.randomMonsterIndex.Count; i++)
+            {
+                if (map.randomMonsterIndex[i] == myHexNum)
+                {
+                    EncounterManager.instance.ActiveEnemies(map.randomMonsterName[i]);
+                    return true;
+                }
+            }
             return false;
         }
     }
@@ -255,6 +263,7 @@ public class PlayerController_Jin : MonoBehaviour
         }
 
         //숨겨진 오브젝트, 랜덤몬스터오브젝트, 플레이어오브젝트를 리턴
+        astsrPathfinding.ShowRedHex(myHexNum);
         return aroundObj;
     }
 
