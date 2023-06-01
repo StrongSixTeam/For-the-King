@@ -192,7 +192,7 @@ public class PlayerController_Jin : MonoBehaviour
                 {
                     //못이동한만큼 canMoveCount에 더해주자
                     astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
-
+                    GameManager.instance.ActivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     CheckMyHexNum();
@@ -204,6 +204,7 @@ public class PlayerController_Jin : MonoBehaviour
                 }
                 else //낫띵이라면
                 {
+                    GameManager.instance.DeactivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 }
