@@ -7,7 +7,6 @@ public class BattleManager : MonoBehaviour
 {
     //배틀에서 사용되는 함수 모두 관리
     //순서에 맞는 무기의 확률 띄우기
-    //
     //순서 결정하는 스크립트 참조하기
 
     private BattleOrderManager battleOrderManager;
@@ -22,6 +21,8 @@ public class BattleManager : MonoBehaviour
 
     public int attackDamage = 0;
 
+    public GameObject BattleUI;
+
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
@@ -31,6 +32,8 @@ public class BattleManager : MonoBehaviour
     {
         if (isPlayer)
         {
+            BattleUI.SetActive(true);
+
             Ray ray = battlecam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -60,6 +63,7 @@ public class BattleManager : MonoBehaviour
             int rnd = Random.Range(0, battleLoader.Players.Count);
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Players[rnd].transform);
             target = battleLoader.Players[rnd];
+            DefaultAttack();
         }
     }
     public void DefaultAttack()
@@ -77,7 +81,9 @@ public class BattleManager : MonoBehaviour
             attackDamage = (int)e.atk /* *성공확률 */; //모두 성공 시 치명타 
         }
 
-        GameObject bullet =  Instantiate(bulletPrefs, new Vector3(battleOrderManager.Order[battleOrderManager.turn].transform.position.x, 1, battleOrderManager.Order[battleOrderManager.turn].transform.position.z), Quaternion.identity);
-        bullet.transform.SetParent((battleOrderManager.Order[battleOrderManager.turn].transform));
+        GameObject bullet =  Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, Quaternion.identity);
+        bullet.transform.position += new Vector3(0, 1, 0);
+
+        BattleUI.SetActive(false);
     }
 }
