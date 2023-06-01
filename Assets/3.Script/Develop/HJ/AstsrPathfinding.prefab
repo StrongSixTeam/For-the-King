@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b41e82f1f682940988d50eaaa35951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPathfinding: 0
   moveNumberPrefabs:
   - {fileID: 2463648814991669515, guid: 2b751036ee040a74db10ddd1e09a9b89, type: 3}
   - {fileID: 3452392170152543431, guid: af5a23ffe916ce94d9d47fa0f8603ad9, type: 3}
@@ -61,6 +62,7 @@ MonoBehaviour:
   playerController: []
   hexCursorRadPrefab: {fileID: 1255007016372025428, guid: 78467165180c5c34d849c80dfb6b7ee0, type: 3}
   hexCursorGreenPrefab: {fileID: 7433441201628838836, guid: d5d3efc9af35d7c46ad8d1e203453b70, type: 3}
+  redHex: {fileID: 9184141113893825029, guid: c717cf052d12322479b003f162c50b9c, type: 3}
 --- !u!1 &2039425492647993897
 GameObject:
   m_ObjectHideFlags: 0
