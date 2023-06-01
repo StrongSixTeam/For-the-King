@@ -55,6 +55,9 @@ public class QuestManager : MonoBehaviour
         yield return null;
         yield return null;
         yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
         mapObjectCreator = FindObjectOfType<MapObjectCreator>();
         cloudBox = FindObjectOfType<CloudBox>();
     }
