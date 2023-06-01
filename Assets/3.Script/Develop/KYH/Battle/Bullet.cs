@@ -8,11 +8,13 @@ public class Bullet : MonoBehaviour
 
     BattleManager battleManager;
     BattleOrderManager battleOrderManager;
+    BattleLoader battleLoader;
 
     private void Awake()
     {
         battleManager = FindObjectOfType<BattleManager>();
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
+        battleLoader = FindObjectOfType<BattleLoader>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,12 +26,31 @@ public class Bullet : MonoBehaviour
 
             if (other.GetComponent<PlayerStat>() != null)
             {
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
-                Debug.Log(0);
+                for (int i = 0; i < GameManager.instance.Players.Length; i++)
+                {
+                    if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
+                    {
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+
+                        float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
+
+                        if (currnetHP < 0)
+                        {
+                            GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
+                        }
+                    }
+                }
             }
             else
             {
                 other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
+                float currnetHP = other.GetComponent<EnemyStat>().nowHp;
+
+                if (currnetHP < 0)
+                {
+                    other.GetComponent<EnemyStat>().nowHp = 0;
+                    //에너미 리스트 관리 추가 
+                }
             }
             Invoke("BulletDestroy", 3f);
         }
