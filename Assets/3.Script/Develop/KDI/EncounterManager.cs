@@ -13,6 +13,7 @@ public class EncounterManager : MonoBehaviour
 
     [SerializeField] private Transform parent;
     public EncounterContent[] encounter;
+    public EncounterContent[] enemies;
 
     [SerializeField] private GameObject[] btns;
     [SerializeField] private GameObject slot;
@@ -41,6 +42,21 @@ public class EncounterManager : MonoBehaviour
             isEncounterUI = false;
         }
     }
+    public void ActiveEnemies(int n)
+    {
+        txtName.text = enemies[n].Name;
+        txtContext.text = enemies[n].Content;
+        preview.GetComponent<Image>().sprite = enemies[n].preview;
+        ActiveBtn(2);
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.maxSlotCount = enemies[n].enemyCount;
+        SlotController.instance.type = SlotController.Type.empty;
+        slot.GetComponent<CloneSlot>().Initialized();
+        slot.SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+        parent.GetChild(2).gameObject.SetActive(false);
+    }
+
     public void ActiveEncounter(int n)
     {
         number = n;
