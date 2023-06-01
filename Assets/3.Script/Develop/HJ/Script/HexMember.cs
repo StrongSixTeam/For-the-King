@@ -72,6 +72,15 @@ public class HexMember : MonoBehaviour
 
 			isGround = true;
 			ispass = true;
+        }
+        else
+        {
+			Vector3 position = transform.localPosition;
+			position.y = -0.5f;
+			transform.localPosition = position;
+
+			isGround = false;
+			ispass = false;
 		}
 	}
 
