@@ -1564,6 +1564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3554670798678900804}
   - component: {fileID: 1755588037117406483}
+  - component: {fileID: 6211357435790801169}
   m_Layer: 0
   m_Name: enCultist_temp
   m_TagString: Enemy
@@ -1600,7 +1601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 0}
+  enemyStatus: {fileID: 11400000, guid: 9efde2d55bb0fd54e92cc77801f5bdee, type: 2}
   monsterName: 
   maxHp: 0
   nowHp: 0
@@ -1609,6 +1610,20 @@ MonoBehaviour:
   speed: 0
   Lv: 0
   portrait: {fileID: 0}
+--- !u!136 &6211357435790801169
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6918695849260143600}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.005
+  m_Height: 0.028
+  m_Direction: 1
+  m_Center: {x: -0.00000007171184, y: 0.012, z: 0.001}
 --- !u!1 &6947748153499990828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,7 +1792,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4910702738902909619}
   - component: {fileID: 4327893798852918750}
-  - component: {fileID: 1278478183828490941}
   m_Layer: 0
   m_Name: cultist2
   m_TagString: Untagged
@@ -1888,20 +1902,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0027655913, y: 0.0009964649, z: 0.00000007171184}
     m_Extent: {x: 0.013232213, y: 0.0044637187, z: 0.01220479}
   m_DirtyAABB: 0
---- !u!136 &1278478183828490941
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867049622171171348}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.005
-  m_Height: 0.028
-  m_Direction: 1
-  m_Center: {x: -0.00000007171184, y: 0.012, z: 0.001}
 --- !u!1 &7907633674380884875
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,11 +45,11 @@ public class BattleCameraController : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPos) > 0.01)
         {
             transform.LookAt(lookPos);
-            battleManager.RookAt(); //오류나면 여기
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, 0.05f);
+            transform.position = Vector3.Lerp(transform.position, targetPos, 0.05f);
             yield return null;
         }
         transform.position = targetPos;
+        battleManager.RookAt(); //오류나면 여기
         //확률 ui 켜기
         yield break;
     }

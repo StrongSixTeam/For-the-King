@@ -38,14 +38,15 @@ public class PlayerController_Jin : MonoBehaviour
         }
         if(finalNodeList[finalNodeList.Count-1].index == myHexNum)
         {
-            animator.SetBool("MapRun", false);
+            isRun = false;
             return;
         }
         targetNodes = finalNodeList;
 
-
         StartCoroutine(MoveTargetNode());
-        animator.SetBool("MapRun", true);
+        isRun = true;
+
+        animator.SetBool("MapRun", isRun);
     }
 
     private bool CheckObject()
@@ -209,6 +210,7 @@ public class PlayerController_Jin : MonoBehaviour
         CheckMyHexNum();
         nowtTargetNodes.Clear();
         targetNodes.Clear();
+        isRun = false;
         animator.SetBool("MapRun", false);
         astsrPathfinding.SetisPathfinding(); //움직임이 끝날때 다시 찾음
         yield break;
