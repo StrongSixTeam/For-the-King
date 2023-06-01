@@ -91,6 +91,7 @@ public class SlotController : MonoBehaviour
     IEnumerator MakeMove() //슬롯 보여주는 용(only)
     {
         isSlot = true;
+        GameManager.instance.isBlock = true;
         int a = fixCount;
         for (int i = 0; i < maxSlotCount; i++)
         {
@@ -121,6 +122,7 @@ public class SlotController : MonoBehaviour
         transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
         fixCount = a;
         Invoke("SlotOff", 2f);
+        GameManager.instance.isBlock = false;
         isSlot = false;
     }
 
