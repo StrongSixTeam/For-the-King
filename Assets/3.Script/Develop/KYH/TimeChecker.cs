@@ -17,6 +17,8 @@ public class TimeChecker : MonoBehaviour
         yield return null;
         yield return null;
         yield return null;
+        yield return null;
+        yield return null;
         mapObjectCreator = FindObjectOfType<MapObjectCreator>();
         mapObjectCreator.timeMonsterSpawn(true);
     }

@@ -21,7 +21,7 @@ public class AstsrPathfinding : MonoBehaviour
     Transform MoveCountBox;
 
     [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 
-    [SerializeField] int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
+    public int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
     [SerializeField] int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
     //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정

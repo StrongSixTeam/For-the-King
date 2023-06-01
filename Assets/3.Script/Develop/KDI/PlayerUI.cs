@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-   public int order;
+    public int order;
 
     [SerializeField] private PlayerStat playerStat;
 

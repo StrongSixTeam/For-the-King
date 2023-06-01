@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private QuestManager questManager;
     private PlayerController_Jin playerController;
+    private PlayerSpawner playerSpawner;
 
     private CameraController cameraController;
     private MoveSlot moveSlot;
@@ -33,6 +34,8 @@ public class GameManager : MonoBehaviour
     private bool isFisrtTurn = true;
 
     public Button turnChageBtn;
+    [SerializeField] GameObject[] movingUIs;
+
 
     private void Start()
     {
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
+        
     }
     public void Setting()
     {
@@ -48,6 +52,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
         {
             Players[i] = GameObject.FindGameObjectsWithTag("Player")[i];
+            playerSpawner = FindObjectOfType<PlayerSpawner>();
+            playerSpawner.movingUIs[i].Player = Players[i].transform;
+            movingUIs[i] = playerSpawner.movingUIs[i].gameObject;
+            movingUIs[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
         questManager.PopUp(questManager.questTurn);
@@ -80,6 +88,7 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
+        
         if (nextTurn == 0 && !isFisrtTurn)
         {
             for (int i = 0; i < timeBarScrolling.Length; i++)
@@ -87,6 +96,8 @@ public class GameManager : MonoBehaviour
                 timeBarScrolling[i].TimeFlow();
             }
         }
+
+        ActiveMovingUI(nextTurn);
 
         isFisrtTurn = false;
 
@@ -108,4 +119,34 @@ public class GameManager : MonoBehaviour
             nextTurn = 0;
         }
     }
+
+
+    private void ActiveMovingUI(int n)
+    {
+        movingUIs[0].GetComponent<MovingUI>().ResetText();
+
+        StartCoroutine(test(n));
+    }
+
+    IEnumerator test(int n)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (i != n)
+            {
+                movingUIs[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+        yield return new WaitForSeconds(2.05f);
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == n)
+            {
+                movingUIs[i].transform.GetChild(0).gameObject.SetActive(true);
+
+            }
+        }
+    }
+
 }
+

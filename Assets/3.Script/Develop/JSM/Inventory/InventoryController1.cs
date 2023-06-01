@@ -22,7 +22,7 @@ public class InventoryController1 : MonoBehaviour
     //public List<Image> InvenImg = new List<Image>();
     //public List<Text> InvenTxt = new List<Text>();
 
-    public PlayerNum playerNum;
+    public PlayerNum playerNum;                     // 플레이어 번호
     public List<Item> itemList = new List<Item>(); //획득한 아이템 정보를 담는 리스트
     public List<List<Item>> playerInventory = new List<List<Item>>(); // 플레이어 별 인벤토리
     public List<Item[]> playerEquip = new List<Item[]>();
@@ -207,6 +207,7 @@ public class InventoryController1 : MonoBehaviour
 
     public void InventoryShow(int playernum)          // 플레이어 별로 분할된 인벤토리 보여주기
     {
+        InventoryReset();
         if (playerInventory[playernum].Count < 1) return;
 
         ListPos = topListPos;
@@ -240,9 +241,9 @@ public class InventoryController1 : MonoBehaviour
 
     public void InventoryReset()
     {
-        if(transform.childCount > itemList.Count)
+        if(transform.childCount > playerInventory[(int)playerNum].Count)
         {
-            for (int i = 0; i < itemList.Count; i++)
+            for (int i = 0; i < playerInventory[(int)playerNum].Count; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -400,7 +401,6 @@ public class InventoryController1 : MonoBehaviour
         //Debug.Log(itemName);
         Equip(itemName);
         QuitItemSelectUI();
-        InventoryReset();
         InventoryShow((int)playerNum);
     }
 
@@ -408,7 +408,6 @@ public class InventoryController1 : MonoBehaviour
     {
         ItemListUse();
         QuitItemSelectUI();
-        InventoryReset();
         InventoryShow((int)playerNum);
         quickSlot.QuickSlotShow((int)playerNum);
     }
@@ -424,7 +423,9 @@ public class InventoryController1 : MonoBehaviour
                     case ItemType.허브:
                         if(playerInventory[(int)playerNum][i].itemCount == 1)
                         {
-                            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            //Destroy();
+                            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+                            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
                             quickSlot.quickSlot.Remove(playerInventory[(int)playerNum][i]);
                             playerInventory[(int)playerNum].RemoveAt(i);
                             for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
@@ -443,7 +444,9 @@ public class InventoryController1 : MonoBehaviour
                     case ItemType.스크롤:
                         if (itemList[i].itemCount == 1)
                         {
-                            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            //Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+                            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
                             quickSlot.quickSlot.Remove(playerInventory[(int)playerNum][i]);
                             playerInventory[(int)playerNum].RemoveAt(i);
                             for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
@@ -462,7 +465,9 @@ public class InventoryController1 : MonoBehaviour
                     case ItemType.기타:
                         if (itemList[i].itemCount == 1)
                         {
-                            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            //Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+                            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+                            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
                             quickSlot.quickSlot.Remove(itemList[i]);
                             itemList.RemoveAt(i);
                             for (int a = 0; a < quickSlot.itemSlotImg.Length; a++)
@@ -534,7 +539,8 @@ public class InventoryController1 : MonoBehaviour
         itemList[i].itemCount--;
         if (itemList[i].itemCount < 1)
         {
-            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
             itemList[i].itemCount = 1;
             itemList.RemoveAt(i);
             ListPos.y += 25f;
@@ -577,7 +583,8 @@ public class InventoryController1 : MonoBehaviour
         itemList[i].itemCount--;
         if (itemList[i].itemCount < 1)
         {
-            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
+            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
             itemList[i].itemCount = 1;
             itemList.RemoveAt(i);
             ListPos.y += 25f;
@@ -629,7 +636,6 @@ public class InventoryController1 : MonoBehaviour
     {
         SetUnequipUI();
         QuitItemUnequipUI();
-        InventoryReset();
         InventoryShow((int)playerNum);
     }
 
