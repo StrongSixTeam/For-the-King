@@ -768,7 +768,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5955792518892058916}
   - component: {fileID: 5955792518892058917}
-  - component: {fileID: 3484743389208256345}
   m_Layer: 0
   m_Name: Character_Female_Druid
   m_TagString: Untagged
@@ -891,20 +890,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 85.17671, z: -4.837639}
     m_Extent: {x: 102.12041, y: 97.93498, z: 26.829222}
   m_DirtyAABB: 0
---- !u!136 &3484743389208256345
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5955792518892058915}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 35
-  m_Height: 195.86996
-  m_Direction: 1
-  m_Center: {x: 0, y: 85.17671, z: -2}
 --- !u!1 &5955792518911922419
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2614,7 @@ GameObject:
   - component: {fileID: 5955792520372026447}
   - component: {fileID: 5955792520372026446}
   - component: {fileID: 6247568096224774441}
+  - component: {fileID: 8283302892814109564}
   m_Layer: 0
   m_Name: Scholar_female1
   m_TagString: Player
@@ -2686,6 +2672,20 @@ MonoBehaviour:
   myHexNum: 1350
   targetNodes: []
   isRun: 0
+--- !u!136 &8283302892814109564
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955792520372026445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 2.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5955792520374514006
 GameObject:
   m_ObjectHideFlags: 0

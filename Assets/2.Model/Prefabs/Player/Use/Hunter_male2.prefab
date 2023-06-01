@@ -1816,6 +1816,7 @@ GameObject:
   - component: {fileID: 6863465548444644644}
   - component: {fileID: 6863465548444644647}
   - component: {fileID: -1551987158632940654}
+  - component: {fileID: 8241433950642944303}
   m_Layer: 0
   m_Name: Hunter_male2
   m_TagString: Player
@@ -1873,6 +1874,20 @@ MonoBehaviour:
   myHexNum: 1350
   targetNodes: []
   isRun: 0
+--- !u!136 &8241433950642944303
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6863465548444644646}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 2.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6863465548464208842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,7 +2114,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6863465548675724501}
   - component: {fileID: 6863465548675724490}
-  - component: {fileID: 8569754988281982096}
   m_Layer: 0
   m_Name: Character_Male_Peasant_01
   m_TagString: Untagged
@@ -2222,20 +2236,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 85.93463, z: -7.749631}
     m_Extent: {x: 102.455925, y: 96.043976, z: 26.803024}
   m_DirtyAABB: 0
---- !u!136 &8569754988281982096
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863465548675724500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 35
-  m_Height: 192.08795
-  m_Direction: 1
-  m_Center: {x: 0, y: 85.93462, z: -3}
 --- !u!1 &6863465548689895527
 GameObject:
   m_ObjectHideFlags: 0
