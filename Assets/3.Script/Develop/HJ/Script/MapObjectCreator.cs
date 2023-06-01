@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class MapObjectCreator : MonoBehaviour
 {
+
     HexMapCreator hexMapCreator;
     [SerializeField] GameObject playerSpawner;
+    bool isReSet = false;
 
     Transform fixedObjectBox;
     Transform hideObjectBox;
@@ -159,11 +161,18 @@ public class MapObjectCreator : MonoBehaviour
         //수호의 숲 Forest
         ForestMapObject();
 
+        if (isReSet)
+        {
+            return;
+        }
 
         //황금평원 Plains
         PlainsMapObject();
 
-
+        if (isReSet)
+        {
+            return;
+        }
 
         //맵 생성이 완료되었으니 플레이어스포너를 생성해주자
         StartCoroutine(PlayerSpawner_co());
@@ -229,6 +238,10 @@ public class MapObjectCreator : MonoBehaviour
 
                     if (loopNum++ > 5000)
                     {
+                        //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                        isReSet = true;
+                        hexMapCreator.ResetMap();
+                        return;
                         throw new System.Exception("아 설마 숲");
                     }
 
@@ -341,6 +354,10 @@ public class MapObjectCreator : MonoBehaviour
 
                     if (loopNum++ > 5000)
                     {
+                        //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                        isReSet = true;
+                        hexMapCreator.ResetMap();
+                        return;
                         throw new System.Exception("아 설마 평원");
                     }
 
@@ -404,6 +421,7 @@ public class MapObjectCreator : MonoBehaviour
             }
             closeList.Clear();
         }
+        //Reload(); //------------------------------------------------------------------------------
     }//황금평원:고정오브젝트
 
 
