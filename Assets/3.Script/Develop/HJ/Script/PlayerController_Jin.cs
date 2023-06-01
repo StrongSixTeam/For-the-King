@@ -192,8 +192,7 @@ public class PlayerController_Jin : MonoBehaviour
                 {
                     //못이동한만큼 canMoveCount에 더해주자
                     astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
-                    Debug.Log((nowtTargetNodes.Count - 1) - i + "만큼 추가");
-
+                    GameManager.instance.ActivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     CheckMyHexNum();
@@ -205,6 +204,7 @@ public class PlayerController_Jin : MonoBehaviour
                 }
                 else //낫띵이라면
                 {
+                    GameManager.instance.DeactivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 }
@@ -233,9 +233,30 @@ public class PlayerController_Jin : MonoBehaviour
                 return;
             }
         }
-
+        
     }
 
+
+    //플레이어 주위의 오브젝트를 리스트로 반환받을수있음
+    public List<GameObject> CheckAroundObject()
+    {
+        List<GameObject> aroundObj = new List<GameObject>();
+
+        aroundObj = map.CheckAround(myHexNum);
+
+        //주변에 플레이어가 누가있나요
+        List<GameObject> temp = new List<GameObject>();
+        temp = astsrPathfinding.GetPlayerHexNums(gameObject);
+
+        while (temp.Count>0)
+        {
+            aroundObj.Add(temp[0]);
+            temp.RemoveAt(0);
+        }
+
+        //숨겨진 오브젝트, 랜덤몬스터오브젝트, 플레이어오브젝트를 리턴
+        return aroundObj;
+    }
 
 
     ////플레이어의 이동을 멈추고 싶을 때 호출

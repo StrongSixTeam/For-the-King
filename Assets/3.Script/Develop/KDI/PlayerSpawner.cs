@@ -117,7 +117,7 @@ public class PlayerSpawner : MonoBehaviour
             TopbarPortraits[2 - (PlayerPrefs.GetInt("PlayerCnt") - 1) + i].sprite = player.GetComponent<PlayerStat>().portrait;
 
             player.GetComponent<PlayerController_Jin>().myHexNum = startIndex;
-            astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>());
+            astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>(), player);
         }
         GameManager.instance.Setting();
     }
