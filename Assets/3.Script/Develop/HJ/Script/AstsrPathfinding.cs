@@ -21,11 +21,12 @@ public class AstsrPathfinding : MonoBehaviour
     Transform MoveCountBox;
 
     [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 
-    [SerializeField] int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
+    public int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
     [SerializeField] int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
     //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정
     [SerializeField] PlayerController_Jin[] playerController;
+    GameObject[] playerObject;
 
     [SerializeField] GameObject hexCursorRadPrefab;
     [SerializeField] GameObject hexCursorGreenPrefab;
@@ -56,11 +57,27 @@ public class AstsrPathfinding : MonoBehaviour
     public void SetPlayerCount(int playerCount)
     {
         playerController = new PlayerController_Jin[playerCount];
+        playerObject = new GameObject[playerCount];
     }
 
-    public void SetPlayer(int index, PlayerController_Jin player)
+    public void SetPlayer(int index, PlayerController_Jin player, GameObject playerObj)
     {
         playerController[index] = player;
+        playerObject[index] = playerObj;
+    }
+
+    public List<GameObject> GetPlayerHexNums(GameObject calledPlayer)
+    {
+        List<GameObject> players = new List<GameObject>();
+        for(int i=0; i< playerObject.Length; i++)
+        {
+            players.Add(playerObject[i]);
+        }
+
+        //호출한 본인을 제외한 게임오브젝트을 리턴
+        players.Remove(calledPlayer);
+
+        return players;
     }
 
     void Update()

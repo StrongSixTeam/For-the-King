@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class MapObjectCreator : MonoBehaviour
 {
+
     HexMapCreator hexMapCreator;
     [SerializeField] GameObject playerSpawner;
+    bool isReSet = false;
 
     Transform fixedObjectBox;
     Transform hideObjectBox;
@@ -34,6 +36,7 @@ public class MapObjectCreator : MonoBehaviour
 
 
     //생성된 몬스터 GameObject를 관리하기위한 리스트
+    private List<GameObject> activerandomObject = new List<GameObject>();
     private List<GameObject> activeMonster = new List<GameObject>(); //randomMonsterName와 randomMonsterIndex의 대상과 일치함
 
     //_____________________________
@@ -159,11 +162,18 @@ public class MapObjectCreator : MonoBehaviour
         //수호의 숲 Forest
         ForestMapObject();
 
+        if (isReSet)
+        {
+            return;
+        }
 
         //황금평원 Plains
         PlainsMapObject();
 
-
+        if (isReSet)
+        {
+            return;
+        }
 
         //맵 생성이 완료되었으니 플레이어스포너를 생성해주자
         StartCoroutine(PlayerSpawner_co());
@@ -229,6 +239,10 @@ public class MapObjectCreator : MonoBehaviour
 
                     if (loopNum++ > 5000)
                     {
+                        //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                        isReSet = true;
+                        hexMapCreator.ResetMap();
+                        return;
                         throw new System.Exception("아 설마 숲");
                     }
 
@@ -341,6 +355,10 @@ public class MapObjectCreator : MonoBehaviour
 
                     if (loopNum++ > 5000)
                     {
+                        //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                        isReSet = true;
+                        hexMapCreator.ResetMap();
+                        return;
                         throw new System.Exception("아 설마 평원");
                     }
 
@@ -404,6 +422,7 @@ public class MapObjectCreator : MonoBehaviour
             }
             closeList.Clear();
         }
+        //Reload(); //------------------------------------------------------------------------------
     }//황금평원:고정오브젝트
 
 
@@ -519,11 +538,12 @@ public class MapObjectCreator : MonoBehaviour
                             continue;
                         }
 
-                        GameObject sanctum = Instantiate(randomObj[i]);
-                        sanctum.transform.position = forestNode[random].transform.position + new Vector3(0f, 0.1f, 0f); ;
-                        sanctum.transform.SetParent(hideObjectBox);
+                        GameObject randomobj = Instantiate(randomObj[i]);
+                        randomobj.transform.position = forestNode[random].transform.position + new Vector3(0f, 0.1f, 0f); ;
+                        randomobj.transform.SetParent(hideObjectBox);
                         forestNode[random].doNotUse = true;
                         randomObjectIndex.Add(forestNode[random].index);
+                        activerandomObject.Add(randomobj);
                         randomObj[i].SetActive(false);
                         break;
                     }
@@ -551,11 +571,12 @@ public class MapObjectCreator : MonoBehaviour
                             continue;
                         }
 
-                        GameObject sanctum = Instantiate(randomObj[i]);
-                        sanctum.transform.position = plainsNode[random].transform.position + new Vector3(0f, 0.1f, 0f); ;
-                        sanctum.transform.SetParent(hideObjectBox);
+                        GameObject randomobj = Instantiate(randomObj[i]);
+                        randomobj.transform.position = plainsNode[random].transform.position + new Vector3(0f, 0.1f, 0f); ;
+                        randomobj.transform.SetParent(hideObjectBox);
                         plainsNode[random].doNotUse = true;
                         randomObjectIndex.Add(plainsNode[random].index);
+                        activerandomObject.Add(randomobj);
                         randomObj[i].SetActive(false);
                         break;
                     }
@@ -770,6 +791,59 @@ public class MapObjectCreator : MonoBehaviour
 
                 break;
         }
+    }
+
+
+    //[Header("몬스터 이름과 Index")]
+    //public List<int> randomMonsterName = new List<int>();
+    //public List<int> randomMonsterIndex = new List<int>();
+    ////[이름] randomMonsterName의 숫자가 뜻하는 몬스터명
+    ////수인전사=0, 수인흑마법사, 노파, 거대바위, 홉고블린, 해골병사=5, 페어리, 바다의노파, 어린마녀, 해골환술사, 유령=10
+
+
+    ////생성된 몬스터 GameObject를 관리하기위한 리스트
+    //private List<GameObject> activeMonster = new List<GameObject>(); //randomMonsterName와 randomMonsterIndex의 대상과 일치함
+
+
+    public List<GameObject> CheckAround(int centerIndex)
+    {
+        List<GameObject> box = new List<GameObject>();
+        List<int> closeIndex = new List<int>();
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                //주변에 숨겨진 오브젝트가 있나요
+                for(int e=0; e< randomObjectIndex.Count; e++)
+                {
+                    if(hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index == randomObjectIndex[e])
+                    {
+                        //주변에 randomObjectIndex[e]가 있음
+                        if (!closeIndex.Contains(randomObjectIndex[e]))
+                        {
+                            closeIndex.Add(randomObjectIndex[e]);
+                            box.Add(activerandomObject[e]);
+                        }
+                    }
+                }
+
+                //주변에 어떤 몬스터가 있나요
+                for (int e = 0; e < randomMonsterIndex.Count; e++)
+                {
+                    if (hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index == randomMonsterIndex[e])
+                    {
+                        //주변에 randomObjectIndex[e]가 있음
+                        if (!closeIndex.Contains(randomMonsterIndex[e]))
+                        {
+                            closeIndex.Add(randomObjectIndex[e]);
+                            box.Add(activeMonster[e]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return box;
     }
 
 }

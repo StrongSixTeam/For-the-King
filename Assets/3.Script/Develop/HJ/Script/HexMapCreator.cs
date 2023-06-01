@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+
 
 //육각형의 가로 세로
 public class HexSixe
@@ -19,6 +18,7 @@ public class HexSixe
 
 public class HexMapCreator : MonoBehaviour
 {
+
     HexSixe hexSixe = new HexSixe();
 
     //아래 사이즈의 육각형 맵을 만들자
@@ -61,17 +61,21 @@ public class HexMapCreator : MonoBehaviour
     bool plainsStartDir;
 
     [SerializeField] GameObject mapObjectCreatorObj;
+    GameObject mapObjectCreatorObjsave = null;
 
     public LowPolyWater lowPolyWater;
     public HexMember lowPolyWataer;
 
-    [SerializeField] CloudBox cloudBoxObj;
+    [SerializeField] GameObject cloudBoxObj;
+    GameObject cloudBoxObjsave = null;
 
+    bool isReload = false;
+    int reloadCount = 0;
     private void Start()
     {
         mapSize = height * width;
 
-        gridCanvas = GetComponentInChildren<Canvas>();
+        //gridCanvas = GetComponentInChildren<Canvas>();
 
         //지정한 개수만큼 생성
         hexMembers = new HexMember[mapSize];
@@ -87,6 +91,61 @@ public class HexMapCreator : MonoBehaviour
             }
         }
 
+
+        //땅 영역 지정
+        SetGround();
+
+        if (isReload)
+        {
+            isReload = false;
+            return;
+        }
+
+        //맵 오브젝트 크리에이터 생성 & 구름 생성
+        StartCoroutine(StartMapObjectCreate_co());
+    }
+
+    //맵을 다시 만든다
+    public void ResetMap()
+    {
+        Debug.Log("맵 다시 로드");
+        reloadCount++;
+        if (reloadCount > 6)
+        {
+            return;
+        }
+
+        if (cloudBoxObjsave != null)
+        {
+            Destroy(cloudBoxObjsave);
+            Destroy(mapObjectCreatorObjsave);
+            cloudBoxObjsave = null;
+            mapObjectCreatorObjsave = null;
+        }
+
+        centerIndex = 1350;
+        extendSize = 50;
+        isLoop = true;
+        forestNodeCount = 0;
+        plainsNodeCount = 0;
+
+
+        for(int i=0; i<mapSize; i++)
+        {
+            if (hexMembers[i].mapType != 0)
+            {
+                hexMembers[i].SetMapType(0);
+                hexMembers[i].doNotUse = false;
+                Renderer renderer = hexMembers[i].gameObject.GetComponent<Renderer>();
+                renderer.material = materials[0];
+            }
+        }
+
+        if (isReload)
+        {
+            isReload = false;
+            return;
+        }
 
         //땅 영역 지정
         SetGround();
@@ -141,14 +200,28 @@ public class HexMapCreator : MonoBehaviour
     {
         //포레스트
         ForestNode();
+        int loopNum = 0;
         while (forestNodeCount < 230)
         {
             ForestNode();
+            if (isReload)
+            {
+                return;
+            }
+            if (loopNum++ > 1000)
+            {
+                //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                //노드를 지우고 정보도 리셋
+                ResetMap();
+                isReload = true;
+                return;
+                throw new System.Exception("숲이작아");
+            }
         }
 
 
         //황금평원 시작점 찾기
-        int loopNum = 0;
+        loopNum = 0;
         if (hexMembers[centerIndex].xNum >= 30)
         {
             plainsStartDir = true;
@@ -179,7 +252,10 @@ public class HexMapCreator : MonoBehaviour
 
             if (loopNum++ > 1000)
             {
-                
+                //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                ResetMap();
+                isReload = true;
+                return;
                 throw new System.Exception("Infinite Loop : 1");
             }
         }
@@ -187,10 +263,22 @@ public class HexMapCreator : MonoBehaviour
 
 
         //황금평원
+        loopNum = 0;
         PlainsNode();
-        while (plainsNodeCount < 200)
+        while (plainsNodeCount < 180)
         {
             PlainsNode();
+            if (isReload)
+            {
+                return;
+            }
+            if (loopNum++ > 1000)
+            {
+                ResetMap();
+                isReload = true;
+                return;
+                throw new System.Exception("평원이작아");
+            }
         }
 
 
@@ -203,9 +291,9 @@ public class HexMapCreator : MonoBehaviour
     {
         yield return null; //hexMembers[]가 채워지고 다음 프레임에 실행
 
-        Instantiate(cloudBoxObj);
-        Instantiate(mapObjectCreatorObj);
-        
+        cloudBoxObjsave = Instantiate(cloudBoxObj);
+        mapObjectCreatorObjsave = Instantiate(mapObjectCreatorObj);
+
         yield break;
     }
 
@@ -219,6 +307,7 @@ public class HexMapCreator : MonoBehaviour
                 ChangeMaterial(hexMembers[centerIndex].neighbors[d].index, 1);
             }
 
+            int loopNum = 0;
             while (isLoop)
             {
                 randomNum = Random.Range(0, 6);
@@ -228,6 +317,15 @@ public class HexMapCreator : MonoBehaviour
                     hexMembers[centerIndex].neighbors[randomNum].zNum < 39)
                 {
                     isLoop = false;
+                }
+
+                if (loopNum++ > 1000)
+                {
+                    //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                    ResetMap();
+                    isReload = true;
+                    return;
+                    throw new System.Exception("Infinite Loop : 2");
                 }
             }
 
@@ -262,12 +360,15 @@ public class HexMapCreator : MonoBehaviour
                     }
                 }
 
-                if (loopNum++ > 500)
+                if (loopNum++ > 1000)
                 {
+                    //UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //-------------------------------------------------------------------
+                    ResetMap();
+                    isReload = true;
+                    return;
                     throw new System.Exception("Infinite Loop : 2");
                 }
             }
-
 
             isLoop = true;
 
@@ -277,7 +378,7 @@ public class HexMapCreator : MonoBehaviour
 
     void AddLowPolyWater()
     {
-        for(int i=0; i<hexMembers.Length; i++)
+        for (int i = 0; i < hexMembers.Length; i++)
         {
             if (hexMembers[i].mapType.Equals(0))
             {

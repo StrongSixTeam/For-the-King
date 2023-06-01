@@ -32,11 +32,11 @@ public class PlayerController_Jin : MonoBehaviour
     //Astar 스크립트에서 호출
     public void StartMove(List<HexMember> finalNodeList)
     {
-        if (finalNodeList.Count<=0)
+        if (finalNodeList.Count <= 0)
         {
             return;
         }
-        if(finalNodeList[finalNodeList.Count-1].index == myHexNum)
+        if (finalNodeList[finalNodeList.Count - 1].index == myHexNum)
         {
             isRun = false;
             return;
@@ -51,6 +51,7 @@ public class PlayerController_Jin : MonoBehaviour
 
     private bool CheckObject()
     {
+        isRun = false;
         if (map.objectIndex[0] == myHexNum) //오아튼
         {
             EncounterManager.instance.ActiveEncounter(0);
@@ -150,7 +151,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(17);
             return true;
         }
-        else 
+        else
         {
             return false;
         }
@@ -178,6 +179,8 @@ public class PlayerController_Jin : MonoBehaviour
 
                 yield return null;
             }
+            
+
             transform.position = nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0);
             myHexNum = nowtTargetNodes[i].index;
             cloudBox.CloudActiveFalse(myHexNum);
@@ -188,9 +191,8 @@ public class PlayerController_Jin : MonoBehaviour
                 if (CheckObject()) //현재 오브젝트에 도달하면
                 {
                     //못이동한만큼 canMoveCount에 더해주자
-                    astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count-1) - i);
-                    Debug.Log((nowtTargetNodes.Count - 1) - i + "만큼 추가");
-
+                    astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
+                    GameManager.instance.ActivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     CheckMyHexNum();
@@ -202,6 +204,7 @@ public class PlayerController_Jin : MonoBehaviour
                 }
                 else //낫띵이라면
                 {
+                    GameManager.instance.DeactivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 }
@@ -221,42 +224,63 @@ public class PlayerController_Jin : MonoBehaviour
         RaycastHit[] hits;
         hits = Physics.RaycastAll(transform.position, -transform.up, 10f);
 
-        for(int i=0; i<hits.Length; i++)
+        for (int i = 0; i < hits.Length; i++)
         {
-            if(hits[i].transform.GetComponent<HexMember>() != null)
+            if (hits[i].transform.GetComponent<HexMember>() != null)
             {
                 myHexNum = hits[i].transform.GetComponent<HexMember>().index;
                 cloudBox.CloudActiveFalse(myHexNum);
                 return;
             }
         }
-
+        
     }
 
 
-
-    //플레이어의 이동을 멈추고 싶을 때 호출
-    public void StopMove(int stopIndex)
+    //플레이어 주위의 오브젝트를 리스트로 반환받을수있음
+    public List<GameObject> CheckAroundObject()
     {
-        StopAllCoroutines();
-        for(int i=0; i<targetNodes.Count; i++)
+        List<GameObject> aroundObj = new List<GameObject>();
+
+        aroundObj = map.CheckAround(myHexNum);
+
+        //주변에 플레이어가 누가있나요
+        List<GameObject> temp = new List<GameObject>();
+        temp = astsrPathfinding.GetPlayerHexNums(gameObject);
+
+        while (temp.Count>0)
         {
-            if(targetNodes[i].index == stopIndex)
-            {
-                animator.SetBool("MapRun", false);
-
-                while (targetNodes[targetNodes.Count-1].index != stopIndex)
-                {
-                    targetNodes.RemoveAt(targetNodes.Count-1);
-                }
-
-                //타겟노드를 재설정하고 마저 이동한다
-                StartCoroutine(MoveTargetNode());
-                return;
-            }
+            aroundObj.Add(temp[0]);
+            temp.RemoveAt(0);
         }
 
-    } 
+        //숨겨진 오브젝트, 랜덤몬스터오브젝트, 플레이어오브젝트를 리턴
+        return aroundObj;
+    }
+
+
+    ////플레이어의 이동을 멈추고 싶을 때 호출
+    //public void StopMove(int stopIndex)
+    //{
+    //    StopAllCoroutines();
+    //    for (int i = 0; i < targetNodes.Count; i++)
+    //    {
+    //        if (targetNodes[i].index == stopIndex)
+    //        {
+    //            animator.SetBool("MapRun", false);
+
+    //            while (targetNodes[targetNodes.Count - 1].index != stopIndex)
+    //            {
+    //                targetNodes.RemoveAt(targetNodes.Count - 1);
+    //            }
+
+    //            //타겟노드를 재설정하고 마저 이동한다
+    //            StartCoroutine(MoveTargetNode());
+    //            return;
+    //        }
+    //    }
+
+    //}
 
     private void Rotation(int index)
     {

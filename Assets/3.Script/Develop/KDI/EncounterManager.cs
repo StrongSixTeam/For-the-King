@@ -19,6 +19,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject successCalc;
     [SerializeField] private GameObject preview;
     public int number;
+    public bool isEncounterUI = false;
 
     private AstsrPathfinding astsrPathfinding;
 
@@ -27,6 +28,18 @@ public class EncounterManager : MonoBehaviour
         instance = this;
         parent = transform.parent;
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+    }
+
+    private void Update()
+    {
+        if (parent.GetChild(1).gameObject.activeSelf)
+        {
+            isEncounterUI = true;
+        }
+        else
+        {
+            isEncounterUI = false;
+        }
     }
     public void ActiveEncounter(int n)
     {

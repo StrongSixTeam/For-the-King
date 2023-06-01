@@ -18,6 +18,8 @@ public class PlayerSpawner : MonoBehaviour
     [Header("플레이어 UI")]
     [SerializeField] private PlayerUI[] playerUI;
     private PlayerUI[] playerUIs;
+    private MovingUI[] movingUI;
+    public MovingUI[] movingUIs;
 
     [Header("탑바 Portrait")]
     [SerializeField] private Image[] TopbarPortraits;
@@ -36,6 +38,9 @@ public class PlayerSpawner : MonoBehaviour
         playerUI = FindObjectsOfType<PlayerUI>();
         playerUIs = FindObjectsOfType<PlayerUI>();
 
+        movingUI = FindObjectsOfType<MovingUI>();
+        movingUIs = FindObjectsOfType<MovingUI>();
+
         TopbarPortraits = new Image[3];
 
         for (int i = 0; i < 3; i++)
@@ -51,6 +56,19 @@ public class PlayerSpawner : MonoBehaviour
             else if (playerUI[i].order == 2)
             {
                 playerUIs[2] = playerUI[i];
+            }
+
+            if (movingUI[i].order == 0)
+            {
+                movingUIs[0] = movingUI[i];
+            }
+            else if (movingUI[i].order == 1)
+            {
+                movingUIs[1] = movingUI[i];
+            }
+            else if (movingUI[i].order == 2)
+            {
+                movingUIs[2] = movingUI[i];
             }
         }
         playerUIs[0].gameObject.SetActive(false);
@@ -71,6 +89,7 @@ public class PlayerSpawner : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++) //플레이 하는 캐릭터 수만큼 모델 반복 생성
         {
             playerUIs[i].gameObject.SetActive(true); //해당 UI도 켜주기
+            movingUIs[i].gameObject.SetActive(true); //해당 UI도 켜주기
             TopbarPortraits[2 - i].transform.parent.gameObject.SetActive(true);
 
             GameObject player;
@@ -98,7 +117,7 @@ public class PlayerSpawner : MonoBehaviour
             TopbarPortraits[2 - (PlayerPrefs.GetInt("PlayerCnt") - 1) + i].sprite = player.GetComponent<PlayerStat>().portrait;
 
             player.GetComponent<PlayerController_Jin>().myHexNum = startIndex;
-            astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>());
+            astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>(), player);
         }
         GameManager.instance.Setting();
     }

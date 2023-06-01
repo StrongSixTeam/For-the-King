@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private QuestManager questManager;
     private PlayerController_Jin playerController;
+    private PlayerSpawner playerSpawner;
 
     private CameraController cameraController;
     private MoveSlot moveSlot;
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviour
     private bool isFisrtTurn = true;
 
     public Button turnChageBtn;
+    [SerializeField] GameObject[] movingUIs;
+    [SerializeField] GameObject[] portraitUIs;
+    private EncounterManager encounterManager;
+
 
     private void Start()
     {
@@ -40,6 +45,7 @@ public class GameManager : MonoBehaviour
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
+        encounterManager = FindObjectOfType<EncounterManager>();
     }
     public void Setting()
     {
@@ -48,6 +54,16 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
         {
             Players[i] = GameObject.FindGameObjectsWithTag("Player")[i];
+            playerSpawner = FindObjectOfType<PlayerSpawner>();
+            playerSpawner.movingUIs[i].Player = Players[i].transform;
+            movingUIs[i] = playerSpawner.movingUIs[i].gameObject;
+            movingUIs[i].transform.GetChild(0).gameObject.SetActive(false);
+            portraitUIs[i].GetComponent<PortraitUI>().Player = Players[i].transform;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            portraitUIs[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
         questManager.PopUp(questManager.questTurn);
@@ -68,9 +84,17 @@ public class GameManager : MonoBehaviour
             }
             else if (!questManager.isQuest && !playerController.isRun)
             {
-                isBlock = false;
+                if (encounterManager.isEncounterUI)
+                { //Encounter UI가 떠있으면 바닥 누르는게 안되게
+                    isBlock = true;
+                }
+                else
+                {
+                    isBlock = false;
+                }
                 turnChageBtn.interactable = true;
             }
+
             if (!questManager.isQuest && !isQuestFinish && Players.Length > 0)
             {
                 isQuestFinish = true;
@@ -80,6 +104,7 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
+        
         if (nextTurn == 0 && !isFisrtTurn)
         {
             for (int i = 0; i < timeBarScrolling.Length; i++)
@@ -87,6 +112,13 @@ public class GameManager : MonoBehaviour
                 timeBarScrolling[i].TimeFlow();
             }
         }
+
+        if (encounterManager.isEncounterUI) //Encounter UI가 떠있는 상태로 턴 종료하면
+        {
+            encounterManager.DisableButton();
+        }
+
+        ActiveMovingUI(nextTurn);
 
         isFisrtTurn = false;
 
@@ -108,4 +140,68 @@ public class GameManager : MonoBehaviour
             nextTurn = 0;
         }
     }
+
+
+    private void ActiveMovingUI(int n)
+    {
+        movingUIs[0].GetComponent<MovingUI>().ResetText();
+
+        StartCoroutine(test(n));
+    }
+
+    IEnumerator test(int n)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (i != n)
+            {
+                movingUIs[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+        yield return new WaitForSeconds(2.05f);
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == n)
+            {
+                movingUIs[i].transform.GetChild(0).gameObject.SetActive(true);
+
+            }
+        }
+    }
+
+    public void ActivePortrait()
+    {
+        int nowTurn = 0;
+        if (PlayerPrefs.GetInt("PlayerCnt") == 1)
+        {
+            nowTurn = 0;
+        }
+        else
+        {
+            nowTurn = nextTurn - 1;
+            if (nowTurn < 0)
+            {
+                nowTurn = 1;
+            }
+        }
+        portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(true);
+    }
+    public void DeactivePortrait()
+    {
+        int nowTurn = 0;
+        if (PlayerPrefs.GetInt("PlayerCnt") == 1)
+        {
+            nowTurn = 0;
+        }
+        else
+        {
+            nowTurn = nextTurn - 1;
+            if (nowTurn < 0)
+            {
+                nowTurn = 1;
+            }
+        }
+        portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(false);
+    }
 }
+
