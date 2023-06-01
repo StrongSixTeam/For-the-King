@@ -9,7 +9,7 @@ public class PortraitController : MonoBehaviour
     //두 명일때는 앞번호 친구를 new Vector3(-0.5f, 1f, 0) 뒤친구를 new Vector3(0.5f, 1f, 0)
     //세 명일때는 (0, 1.5f, 0) (-0.5f, 1f, 0) (0.5f, 1f, 0)으로
 
-    int count = PlayerPrefs.GetInt("PlayerCnt");
+    int count;
     [SerializeField] int samePosition = 0;
     int index1 = 0;
     int index2 = 0;
@@ -19,6 +19,7 @@ public class PortraitController : MonoBehaviour
     {
         if (GameManager.instance.isSettingDone)
         {
+            count = PlayerPrefs.GetInt("PlayerCnt");
             CheckPositions();
         }
     }
