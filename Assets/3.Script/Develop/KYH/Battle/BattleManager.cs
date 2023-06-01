@@ -62,13 +62,22 @@ public class BattleManager : MonoBehaviour
             target = battleLoader.Players[rnd];
         }
     }
-    public void Attack()
+    public void DefaultAttack()
     {
         isPlayer = false;
 
-        //공격력 계산 : 스킬 최대 공격력 * 성공확률, 성공확률이 최대일 경우 치명타 확률 +
-        //플레이어가 장착한 무기에 접근해서 공격력 가져오기
+        //공격 애니메이션 넣기
 
-        Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, battleOrderManager.Order[battleOrderManager.turn].transform.rotation);
+        if (battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out PlayerStat p))
+        {
+            attackDamage = (int)p.atk /* *성공확률 */; //모두 성공 시 치명타
+        }
+        else if(battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out EnemyStat e))
+        {
+            attackDamage = (int)e.atk /* *성공확률 */; //모두 성공 시 치명타 
+        }
+
+        GameObject bullet =  Instantiate(bulletPrefs, new Vector3(battleOrderManager.Order[battleOrderManager.turn].transform.position.x, 1, battleOrderManager.Order[battleOrderManager.turn].transform.position.z), Quaternion.identity);
+        bullet.transform.SetParent((battleOrderManager.Order[battleOrderManager.turn].transform));
     }
 }

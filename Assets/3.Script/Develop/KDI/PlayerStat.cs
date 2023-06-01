@@ -27,6 +27,8 @@ public class PlayerStat : MonoBehaviour
     public int Lv = 1;
     public Sprite portrait;
 
+    public Weapon weapon;
+
     public enum Sanctum
     {
         none, focus, life, wisdom
@@ -36,7 +38,7 @@ public class PlayerStat : MonoBehaviour
     public void SetStat(CharacterStatusSet data)
     {
         className = data.className;
-        atk = data.atk;
+        atk = data.atk + data.weapon.adDmg + data.weapon.apDmg;
         def = data.def;
         maxHp = data.maxHp;
         nowHp = data.nowHp;
@@ -48,6 +50,7 @@ public class PlayerStat : MonoBehaviour
         maxFocus = data.focus;
         nowFocus = maxFocus;
         coins = data.coins;
+        weapon = data.weapon;
         whichSanctum = Sanctum.none;
     }
 }

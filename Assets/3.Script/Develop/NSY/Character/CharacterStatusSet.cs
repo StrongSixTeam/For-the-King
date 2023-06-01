@@ -30,6 +30,7 @@ public class CharacterStatusSet : ScriptableObject
 
     public int focus = 6; //집중력
     public int coins = 5; //초기 코인
-    
+
+    public Weapon weapon;
     
 }
