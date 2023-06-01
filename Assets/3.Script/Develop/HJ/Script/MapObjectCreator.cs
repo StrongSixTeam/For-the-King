@@ -32,7 +32,7 @@ public class MapObjectCreator : MonoBehaviour
     public List<int> randomMonsterName = new List<int>();
     public List<int> randomMonsterIndex = new List<int>();
     //[이름] randomMonsterName의 숫자가 뜻하는 몬스터명
-    //수인전사=0, 수인흑마법사, 노파, 거대바위, 홉고블린, 해골병사=5, 페어리, 바다의노파, 어린마녀, 해골환술사, 유령=10
+    //늑대=0, 매, 노파, 거대바위, 홉고블린, 해골병사=5, 페어리, 바다의노파, 드래곤, 해골환술사, 거미=10
 
 
     //생성된 몬스터 GameObject를 관리하기위한 리스트
@@ -87,21 +87,22 @@ public class MapObjectCreator : MonoBehaviour
 
 
     [Header("몬스터")]
-    [SerializeField] GameObject morningMonster01; //수인전사 enBeastmen_01
-    [SerializeField] GameObject morningMonster02; //수인흑마법사 enBeastmen_04
+    [SerializeField] GameObject morningMonster01; //수인전사 enBeastmen_01 (교체->) 늑대 enArmoredWolf
+    [SerializeField] GameObject morningMonster02; //수인흑마법사 enBeastmen_04 (교체->) 매 enHawk
     [SerializeField] GameObject morningMonster03; //노파  enForestHag
     [SerializeField] GameObject morningMonster04; //거대바위 enCragHulk
     [SerializeField] GameObject morningMonster05; //홉고블린 enHobgoblinA 1
     [SerializeField] GameObject nightMonster01; //해골병사 enSkellySoldier
     [SerializeField] GameObject nightMonster02; //페어리 enFairy
     [SerializeField] GameObject nightMonster03; //바다의노파 enHagB
-    [SerializeField] GameObject nightMonster04; //어린마녀  enWitchA
+    [SerializeField] GameObject nightMonster04; //어린마녀  enWitchA (교체->) 드래곤 enDragon
     [SerializeField] GameObject nightMonster05; //해골환술사 enSkellyMageC
-    [SerializeField] GameObject nightMonster06; //유령 enGhostA
+    [SerializeField] GameObject nightMonster06; //유령 enGhostA (교체->) 거미 enSpiderB
+    [SerializeField] GameObject nightMonster07; //코카트리스 enCockatriceA_minion
 
     private GameObject[] morningFMonsterBox = new GameObject[3];
     private GameObject[] morningPMonsterBox = new GameObject[2];
-    private GameObject[] nightMonsterBox = new GameObject[6];
+    private GameObject[] nightMonsterBox = new GameObject[7];
 
 
     List<int> closeList = new List<int>();
@@ -148,6 +149,7 @@ public class MapObjectCreator : MonoBehaviour
         nightMonsterBox[3] = nightMonster04;
         nightMonsterBox[4] = nightMonster05;
         nightMonsterBox[5] = nightMonster06;
+        nightMonsterBox[6] = nightMonster07;
 
 
         //위에서 각 지역별 노드 정보를 받아왔으니, 이제 오브젝트를 세워볼까
@@ -765,7 +767,7 @@ public class MapObjectCreator : MonoBehaviour
                                     int randomNumber = Random.Range(0, forestNode.Length);
                                     if (!forestNode[randomNumber].doNotUse)
                                     {
-                                        int randomMonsterNum = Random.Range(0, 6);
+                                        int randomMonsterNum = Random.Range(0, 7);
                                         GameObject moster = Instantiate(nightMonsterBox[randomMonsterNum]);
                                         moster.transform.position = forestNode[randomNumber].transform.position + new Vector3(0f, 0.1f, 0f);
                                         moster.SetActive(true);
@@ -785,7 +787,7 @@ public class MapObjectCreator : MonoBehaviour
                                     int randomNumber = Random.Range(0, plainsNode.Length);
                                     if (!plainsNode[randomNumber].doNotUse)
                                     {
-                                        int randomMonsterNum = Random.Range(0, 6);
+                                        int randomMonsterNum = Random.Range(0, 7);
                                         GameObject moster = Instantiate(nightMonsterBox[randomMonsterNum]);
                                         moster.transform.position = plainsNode[randomNumber].transform.position + new Vector3(0f, 0.1f, 0f);
                                         moster.SetActive(true);
