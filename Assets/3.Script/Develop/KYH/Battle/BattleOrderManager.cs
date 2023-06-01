@@ -40,7 +40,7 @@ public class BattleOrderManager : MonoBehaviour
         {
             if (battleLoader.Players.Count - 1 < i)
             {
-                //order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
+                order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
                 Order.Add(battleLoader.Enemys[j]);
 
                 j++;
@@ -85,7 +85,7 @@ public class BattleOrderManager : MonoBehaviour
             }
             else
             {
-                //portrait[i-turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
+                portrait[i-turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
                 background[i- turn].sprite = EBground;
             }
         }

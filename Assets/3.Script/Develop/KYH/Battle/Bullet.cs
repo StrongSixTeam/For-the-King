@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private int speed = 10;
+    private int speed = 5;
 
     BattleManager battleManager;
 
@@ -15,12 +15,19 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.transform.name);
-        if(other.gameObject == battleManager.target)
+        if (other.gameObject == battleManager.target)
         {
             //공격력 만큼 피 달게 하기
             Debug.Log("맞았다!!!");
-            Debug.Log(battleManager.attackDamage);
+
+            if (other.GetComponent<PlayerStat>() != null)
+            {
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+            }
+            else
+            {
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
+            }
             Destroy(gameObject);
         }
     }
