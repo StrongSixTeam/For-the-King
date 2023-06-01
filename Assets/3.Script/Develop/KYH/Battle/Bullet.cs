@@ -7,10 +7,12 @@ public class Bullet : MonoBehaviour
     private int speed = 5;
 
     BattleManager battleManager;
+    BattleOrderManager battleOrderManager;
 
     private void Awake()
     {
         battleManager = FindObjectOfType<BattleManager>();
+        battleOrderManager = FindObjectOfType<BattleOrderManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,16 +25,23 @@ public class Bullet : MonoBehaviour
             if (other.GetComponent<PlayerStat>() != null)
             {
                 other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                Debug.Log(0);
             }
             else
             {
                 other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
             }
-            Destroy(gameObject);
+            Invoke("BulletDestroy", 3f);
         }
     }
     private void Update()
     {
-        transform.localPosition += Vector3.forward * speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, battleManager.target.transform.position + new Vector3(0, 1, 0), speed * Time.deltaTime);
+    }
+    private void BulletDestroy()
+    {
+        Destroy(gameObject);
+
+        battleOrderManager.TurnChange();
     }
 }
