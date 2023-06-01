@@ -16,6 +16,8 @@ public class PlayerController_Jin : MonoBehaviour
 
     public bool isRun;
 
+    public HexMember saveWay;
+
     private void Start()
     {
         map = FindObjectOfType<MapObjectCreator>();
@@ -203,6 +205,7 @@ public class PlayerController_Jin : MonoBehaviour
                     GameManager.instance.ActivePortrait();
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    saveWay = nowtTargetNodes[i-1]; 
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
                     targetNodes.Clear();
@@ -254,7 +257,7 @@ public class PlayerController_Jin : MonoBehaviour
 
         //주변에 플레이어가 누가있나요
         List<GameObject> temp = new List<GameObject>();
-        temp = astsrPathfinding.GetPlayerHexNums(gameObject);
+        temp = astsrPathfinding.GetPlayerHexNums(this, myHexNum);
 
         while (temp.Count>0)
         {
