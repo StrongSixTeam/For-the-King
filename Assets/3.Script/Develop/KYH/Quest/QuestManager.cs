@@ -133,6 +133,7 @@ public class QuestManager : MonoBehaviour
                 case 3:
                     mapHexIndex = 2;
                     mapObjectCreator.ShowObject(0);
+                    //bool값 true로 바꾸기 -> 충돌 가능
                     break;
                 case 4:
                     mapHexIndex = 3;

@@ -153,6 +153,14 @@ public class PlayerController_Jin : MonoBehaviour
         }
         else
         {
+            for (int i = 0; i < map.randomMonsterIndex.Count; i++)
+            {
+                if (map.randomMonsterIndex[i] == myHexNum)
+                {
+                    EncounterManager.instance.ActiveEnemies(map.randomMonsterName[i]);
+                    return true;
+                }
+            }
             return false;
         }
     }
