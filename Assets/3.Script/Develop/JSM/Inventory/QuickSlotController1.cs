@@ -80,7 +80,6 @@ public class QuickSlotController1 : MonoBehaviour
             }
         }
         QuickSlotShow((int)InventoryController1.instance.playerNum);
-        InventoryController1.instance.InventoryReset();
         InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
     }
 }
