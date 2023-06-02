@@ -8,6 +8,10 @@ public class BattleManager : MonoBehaviour
     private BattleOrderManager battleOrderManager;
     [SerializeField] private BattleLoader battleLoader;
     BattleCameraController battleCameraController;
+    ItemInputTest1 itemInput;
+
+    [SerializeField] GameObject WinBattleBanner;
+    [SerializeField] GameObject LoseBattleBanner;
 
     Camera battlecam;
     [SerializeField] Camera MainCam;
@@ -17,6 +21,7 @@ public class BattleManager : MonoBehaviour
     public GameObject target;
     private bool isPlayer = false;
     public bool isEnd = false;
+    private bool isPass = false;
 
     public int attackDamage = 0;
 
@@ -26,12 +31,15 @@ public class BattleManager : MonoBehaviour
 
     private Camera CurrnetCam;
 
+    private int ItemTurn = 0;
+
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
         battleCameraController = FindObjectOfType<BattleCameraController>();
         battlecam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
         CurrnetCam = FindObjectOfType<Camera>();
+        itemInput = FindObjectOfType<ItemInputTest1>();
     }
     private void Update()
     {
@@ -55,7 +63,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if(battleLoader.Players.Count == 0 && !isEnd)
+        if (battleLoader.Players.Count == 0 && !isEnd)
         {
 
 
@@ -64,12 +72,14 @@ public class BattleManager : MonoBehaviour
         {
             StartCoroutine(battleCameraController.PlayerWinCam_co());
 
+            WinBattleBanner.SetActive(true);
+
             for (int i = 0; i < battleLoader.Players.Count; i++)
             {
                 Text txt = Instantiate(Get, CurrnetCam.WorldToScreenPoint(battleLoader.Players[i].transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
                 Debug.Log(txt.text);
                 txt.transform.SetParent(GameObject.Find("Canvas").transform);
-                txt.text = "+" + battleLoader.totalExp;
+                txt.text = "+" + battleLoader.totalExp + "Exp";
 
                 for (int j = 0; j < GameManager.instance.Players.Length; j++)
                 {
@@ -78,6 +88,13 @@ public class BattleManager : MonoBehaviour
                         GameManager.instance.Players[j].GetComponent<PlayerStat>().nowExp += battleLoader.totalExp;
                     }
                 }
+
+                if (ItemTurn > battleLoader.Players.Count - 1)
+                {
+                    ItemTurn = 0;
+                }
+
+                battleLoader.currentItemInputUI[ItemTurn].SetActive(true);
             }
         }
     }
@@ -107,27 +124,61 @@ public class BattleManager : MonoBehaviour
         {
             attackDamage = (int)p.atk /* *성공확률 */; //모두 성공 시 치명타
         }
-        else if(battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out EnemyStat e))
+        else if (battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out EnemyStat e))
         {
             attackDamage = (int)e.atk /* *성공확률 */; //모두 성공 시 치명타 
         }
 
-        GameObject bullet =  Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, Quaternion.identity);
         bullet.transform.position += new Vector3(0, 1, 0);
 
         BattleUI.SetActive(false);
     }
-    private void OnDisable()
+    public void Pass()
     {
-        isPlayer = false;
-        isEnd = false;
+        battleLoader.currentItemInputUI[ItemTurn].SetActive(false);
+
+        ItemTurn++;
+
+        if (ItemTurn > battleLoader.Players.Count - 1)
+        {
+            ItemTurn = 0;
+        }
+
+        battleLoader.currentItemInputUI[ItemTurn].SetActive(true);
+    }
+    public void ItemGet()
+    {
+        InventoryController1.instance.playerNum = PlayerNum.Player0;
+        
+        itemInput.Get(battleLoader.items[0]);
+        battleLoader.items.RemoveAt(0);
+
+        if (battleLoader.items.Count > 0)
+        {
+            Pass();
+        }
+        else
+        {
+            battleLoader.currentItemInputUI[ItemTurn].SetActive(false);
+            Invoke("BattleEnd", 2f);
+        }
     }
 
     public void BattleEnd()
     {
         battleLoader.gameObject.SetActive(false);
         battlecam.gameObject.SetActive(false);
+        WinBattleBanner.SetActive(false);
+        LoseBattleBanner.SetActive(false);
         MainCam.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        isPlayer = false;
+        isEnd = false;
+    }
+
 }
