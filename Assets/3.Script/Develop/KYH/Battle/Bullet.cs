@@ -65,6 +65,8 @@ public class Bullet : MonoBehaviour
                         if(other.gameObject == battleLoader.Enemys[i])
                         {
                             battleLoader.Enemys.RemoveAt(i);
+                            Destroy(battleLoader.EnemyStats[i].gameObject);
+                            battleLoader.EnemyStats.RemoveAt(i);
                             battleOrderManager.SetOrder();
                             break;
                         }
