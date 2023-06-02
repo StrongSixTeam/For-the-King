@@ -32,7 +32,7 @@ public class MapObjectCreator : MonoBehaviour
     public List<int> randomMonsterName = new List<int>();
     public List<int> randomMonsterIndex = new List<int>();
     //[이름] randomMonsterName의 숫자가 뜻하는 몬스터명
-    //늑대=0, 매, 노파, 거대바위, 홉고블린, 해골병사=5, 페어리, 바다의노파, 드래곤, 해골환술사, 거미=10
+    //늑대=0, 매, 노파, 거대바위, 홉고블린, 해골병사=5, 페어리, 바다의노파, 드래곤, 박쥐, 거미=10
 
 
     //생성된 몬스터 GameObject를 관리하기위한 리스트
@@ -97,7 +97,7 @@ public class MapObjectCreator : MonoBehaviour
     [SerializeField] GameObject nightMonster02; //페어리 enFairy
     [SerializeField] GameObject nightMonster03; //바다의노파 enHagB
     [SerializeField] GameObject nightMonster04; //드래곤 enDragon
-    [SerializeField] GameObject nightMonster05; //해골환술사 enSkellyMageC
+    [SerializeField] GameObject nightMonster05; //박쥐 enBat
     [SerializeField] GameObject nightMonster06; //거미 enSpiderB
     [SerializeField] GameObject nightMonster07; //코카트리스 enCockatriceA_minion
 
