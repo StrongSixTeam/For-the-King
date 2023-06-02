@@ -40,6 +40,7 @@ public class AstsrPathfinding : MonoBehaviour
     [SerializeField] Texture2D cursotImage;
     [SerializeField] Texture2D cursotImageClick;
 
+    bool cursorSwitch = false;
     int loopCount = 0;
     private void Start()
     {
@@ -169,12 +170,12 @@ public class AstsrPathfinding : MonoBehaviour
 
                     if (canMoveCount - (finalNodeList.Count - 1) > 0)
                     {
-                        Debug.Log(canMoveCount + "칸 이동할수있는데 " + (finalNodeList.Count - 1) + "이동 | 남은수 : " + (canMoveCount - (finalNodeList.Count - 1)));
+                        //Debug.Log(canMoveCount + "칸 이동할수있는데 " + (finalNodeList.Count - 1) + "이동 | 남은수 : " + (canMoveCount - (finalNodeList.Count - 1)));
                         canMoveCount -= (finalNodeList.Count - 1);
                     }
                     else
                     {
-                        Debug.Log("전부 소비! 턴 종료");
+                        //Debug.Log("전부 소비! 턴 종료");
                         canMoveCount -= (finalNodeList.Count - 1);
                         ismovingTurn = false;
                     }
@@ -210,18 +211,17 @@ public class AstsrPathfinding : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            StartCoroutine(CursorClickCo());
-        }
-    }
 
-    IEnumerator CursorClickCo()
-    {
-        Cursor.SetCursor(cursotImageClick, Vector2.zero, CursorMode.ForceSoftware);
-        yield return new WaitForSeconds(0.2f);
-        Cursor.SetCursor(cursotImage, Vector2.zero, CursorMode.ForceSoftware);
-        yield break;
+        if (Input.GetMouseButtonDown(0) && !cursorSwitch)
+        {
+            Cursor.SetCursor(cursotImageClick, Vector2.zero, CursorMode.ForceSoftware);
+            cursorSwitch = true;
+        }
+        else if (!Input.GetMouseButton(0) && cursorSwitch)
+        {
+            Cursor.SetCursor(cursotImage, Vector2.zero, CursorMode.ForceSoftware);
+            cursorSwitch = false;
+        }
     }
 
     public void SetisPathfinding()
@@ -392,239 +392,228 @@ public class AstsrPathfinding : MonoBehaviour
     int[] dirRightBottom = new int[6] { 2, 1, 0, 4, 5, 3 };
     private void OpenListAdd(HexMember currentNode)
     {
-        try
+        if (currentNode.zNum % 2 == 1) //홀
         {
-            if (currentNode.zNum % 2 == 1) //홀
+            //왼쪽
+            if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
             {
-                //왼쪽
-                if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                for (int i = 0; i < 6; i++)
                 {
-                    for (int i = 0; i < 6; i++)
+                    if (currentNode.neighbors[dirLeft[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
                     {
-                        if (currentNode.neighbors[dirLeft[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
-                        {
-                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeft[i]);
+                        currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirLeft[i]);
 
-                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+                        currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
 
-                            openList.Add(currentNode.neighbors[dirLeft[i]]);
-                        }
+                        openList.Add(currentNode.neighbors[dirLeft[i]]);
                     }
                 }
-
-                //왼쪽 대각선 위
-                else if (endNode.zNum > currentNode.zNum && endNode.xNum <= currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        //벽이 아니거나 closeList에 없다면 openList에 추가
-                        if (currentNode.neighbors[dirLeftTop[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeftTop[i]]))
-                        {
-                            currentNode.neighbors[dirLeftTop[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeftTop[i]);
-
-                            currentNode.neighbors[dirLeftTop[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirLeftTop[i]]);
-                        }
-                    }
-                }
-
-                //왼쪽 대각선 아래
-                else if (endNode.zNum < currentNode.zNum && endNode.xNum <= currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirLeftBottom[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeftBottom[i]]))
-                        {
-                            currentNode.neighbors[dirLeftBottom[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeftBottom[i]);
-
-                            currentNode.neighbors[dirLeftBottom[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirLeftBottom[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽
-                else if (endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRight[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
-                        {
-                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRight[i]);
-
-                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRight[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽 대각선 위
-                else if (endNode.zNum > currentNode.zNum && endNode.xNum >= currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRightTop[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRightTop[i]]))
-                        {
-                            currentNode.neighbors[dirRightTop[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRightTop[i]);
-
-                            currentNode.neighbors[dirRightTop[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRightTop[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽 대각선 아래
-                else if (endNode.zNum < currentNode.zNum && endNode.xNum > currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRightBottom[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRightBottom[i]]))
-                        {
-                            currentNode.neighbors[dirRightBottom[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRightBottom[i]);
-
-                            currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRightBottom[i]]);
-                        }
-                    }
-                }
-
             }
-            else //짝
+
+            //왼쪽 대각선 위
+            else if (endNode.zNum > currentNode.zNum && endNode.xNum <= currentNode.xNum)
             {
-                //왼쪽
-                if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+                for (int i = 0; i < 6; i++)
                 {
-                    for (int i = 0; i < 6; i++)
+                    //벽이 아니거나 closeList에 없다면 openList에 추가
+                    if (currentNode.neighbors[dirLeftTop[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirLeftTop[i]]))
                     {
-                        if (currentNode.neighbors[dirLeft[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
-                        {
-                            currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeft[i]);
+                        currentNode.neighbors[dirLeftTop[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirLeftTop[i]);
 
-                            currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+                        currentNode.neighbors[dirLeftTop[i]].parentNode = currentNode;
 
-                            openList.Add(currentNode.neighbors[dirLeft[i]]);
-                        }
+                        openList.Add(currentNode.neighbors[dirLeftTop[i]]);
                     }
                 }
-
-                //왼쪽 대각선 위
-                else if (endNode.zNum > currentNode.zNum && endNode.xNum < currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirLeftTop[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeftTop[i]]))
-                        {
-                            currentNode.neighbors[dirLeftTop[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeftTop[i]);
-
-                            currentNode.neighbors[dirLeftTop[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirLeftTop[i]]);
-                        }
-                    }
-                }
-
-                //왼쪽 대각선 아래
-                else if (endNode.zNum < currentNode.zNum && endNode.xNum < currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirLeftBottom[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirLeftBottom[i]]))
-                        {
-                            currentNode.neighbors[dirLeftBottom[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirLeftBottom[i]);
-
-                            currentNode.neighbors[dirLeftBottom[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirLeftBottom[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽
-                else if (endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRight[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRight[i]]))
-                        {
-                            currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRight[i]);
-
-                            currentNode.neighbors[dirRight[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRight[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽 대각선 위
-                else if (endNode.zNum > currentNode.zNum && endNode.xNum >= currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRightTop[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRightTop[i]]))
-                        {
-                            currentNode.neighbors[dirRightTop[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRightTop[i]);
-
-                            currentNode.neighbors[dirRightTop[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRightTop[i]]);
-                        }
-                    }
-                }
-
-                //오른쪽 대각선 아래
-                else if (endNode.zNum < currentNode.zNum && endNode.xNum >= currentNode.xNum)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (currentNode.neighbors[dirRightBottom[i]].ispass &&
-                        !closeList.Contains(currentNode.neighbors[dirRightBottom[i]]))
-                        {
-                            currentNode.neighbors[dirRightBottom[i]].G = currentNode.G + 1;
-                            GetH(currentNode, dirRightBottom[i]);
-
-                            currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
-
-                            openList.Add(currentNode.neighbors[dirRightBottom[i]]);
-                        }
-                    }
-                }
-
             }
+
+            //왼쪽 대각선 아래
+            else if (endNode.zNum < currentNode.zNum && endNode.xNum <= currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirLeftBottom[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirLeftBottom[i]]))
+                    {
+                        currentNode.neighbors[dirLeftBottom[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirLeftBottom[i]);
+
+                        currentNode.neighbors[dirLeftBottom[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirLeftBottom[i]]);
+                    }
+                }
+            }
+
+            //오른쪽
+            else if (endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirRight[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirRight[i]]))
+                    {
+                        currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirRight[i]);
+
+                        currentNode.neighbors[dirRight[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirRight[i]]);
+                    }
+                }
+            }
+
+            //오른쪽 대각선 위
+            else if (endNode.zNum > currentNode.zNum && endNode.xNum >= currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirRightTop[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirRightTop[i]]))
+                    {
+                        currentNode.neighbors[dirRightTop[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirRightTop[i]);
+
+                        currentNode.neighbors[dirRightTop[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirRightTop[i]]);
+                    }
+                }
+            }
+
+            //오른쪽 대각선 아래
+            else if (endNode.zNum < currentNode.zNum && endNode.xNum > currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirRightBottom[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirRightBottom[i]]))
+                    {
+                        currentNode.neighbors[dirRightBottom[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirRightBottom[i]);
+
+                        currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirRightBottom[i]]);
+                    }
+                }
+            }
+
         }
-        catch (System.Exception ex)
+        else //짝
         {
-            Debug.Log(ex);
-            Debug.Log(currentNode);
-            Debug.Log(endNode);
-            Debug.Log(openList);
-            Debug.Log(closeList);
+            //왼쪽
+            if (endNode.zNum == currentNode.zNum && endNode.xNum < currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirLeft[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirLeft[i]]))
+                    {
+                        currentNode.neighbors[dirLeft[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirLeft[i]);
+
+                        currentNode.neighbors[dirLeft[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirLeft[i]]);
+                    }
+                }
+            }
+
+            //왼쪽 대각선 위
+            else if (endNode.zNum > currentNode.zNum && endNode.xNum < currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirLeftTop[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirLeftTop[i]]))
+                    {
+                        currentNode.neighbors[dirLeftTop[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirLeftTop[i]);
+
+                        currentNode.neighbors[dirLeftTop[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirLeftTop[i]]);
+                    }
+                }
+            }
+
+            //왼쪽 대각선 아래
+            else if (endNode.zNum < currentNode.zNum && endNode.xNum < currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirLeftBottom[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirLeftBottom[i]]))
+                    {
+                        currentNode.neighbors[dirLeftBottom[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirLeftBottom[i]);
+
+                        currentNode.neighbors[dirLeftBottom[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirLeftBottom[i]]);
+                    }
+                }
+            }
+
+            //오른쪽
+            else if (endNode.zNum == currentNode.zNum && endNode.xNum > currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirRight[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirRight[i]]))
+                    {
+                        currentNode.neighbors[dirRight[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirRight[i]);
+
+                        currentNode.neighbors[dirRight[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirRight[i]]);
+                    }
+                }
+            }
+
+            //오른쪽 대각선 위
+            else if (endNode.zNum > currentNode.zNum && endNode.xNum >= currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirRightTop[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirRightTop[i]]))
+                    {
+                        currentNode.neighbors[dirRightTop[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirRightTop[i]);
+
+                        currentNode.neighbors[dirRightTop[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirRightTop[i]]);
+                    }
+                }
+            }
+
+            //오른쪽 대각선 아래
+            else if (endNode.zNum < currentNode.zNum && endNode.xNum >= currentNode.xNum)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (currentNode.neighbors[dirRightBottom[i]].ispass &&
+                    !closeList.Contains(currentNode.neighbors[dirRightBottom[i]]))
+                    {
+                        currentNode.neighbors[dirRightBottom[i]].G = currentNode.G + 1;
+                        GetH(currentNode, dirRightBottom[i]);
+
+                        currentNode.neighbors[dirRightBottom[i]].parentNode = currentNode;
+
+                        openList.Add(currentNode.neighbors[dirRightBottom[i]]);
+                    }
+                }
+            }
+
         }
 
     }
