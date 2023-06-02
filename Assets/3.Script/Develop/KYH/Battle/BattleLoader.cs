@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class BattleLoader : MonoBehaviour
 {
-    public GameObject enemy; // 테스트용
-    
     public List<GameObject> Players;
     public List<GameObject> Enemys;
     public List<GameObject> EnemyStats;
@@ -26,8 +24,15 @@ public class BattleLoader : MonoBehaviour
 
     private PlayerController_Jin playerController;
 
-    public List<GameObject> gg = new List<GameObject>();
+    public List<GameObject> Encounter = new List<GameObject>();
 
+    private void Start()
+    {
+        playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
+
+        Encounter = playerController.CheckAroundObject();
+        Encounter.Add(GameManager.instance.MainPlayer);
+    }
     public void FieldBattle()
     {
         playerPos = new Vector3(-103.5f, 0, -11f);
@@ -40,11 +45,6 @@ public class BattleLoader : MonoBehaviour
         moveTowards[1] = Vector3.back;
 
         PrefsInstantiate();
-    }
-    private void Start()
-    {
-        playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
-        gg = playerController.CheckAroundObject();
     }
     public void CaveBattle()
     {
@@ -62,10 +62,21 @@ public class BattleLoader : MonoBehaviour
 
     private void PrefsInstantiate() //전투 돌입 시 실행할 함수
     {
-        //플레이어 소환
-        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        for (int i = 0; i < Encounter.Count; i++)
         {
-            Players.Add(Instantiate(GameManager.instance.Players[i], playerPos, Quaternion.Euler(playerAngle)));
+            if (Encounter[i].GetComponent<PlayerStat>() != null)
+            {
+                Players.Add(Instantiate(Encounter[i], playerPos, Quaternion.Euler(playerAngle)));
+            }
+            else
+            {
+                Enemys.Add(Instantiate(Encounter[i], enemyPos, Quaternion.Euler(enemyAngle)));
+
+                EnemyStats.Add(Instantiate(EnemyStatPrefs));
+                EnemyStats[i].transform.SetParent(GameObject.Find("Canvas").transform);
+                EnemyStats[i].transform.localPosition = new Vector2(0, 400);
+                EnemyStats[i].GetComponent<EnemyUI>().enemyStat = Enemys[i].GetComponent<EnemyStat>();
+            }
         }
 
         for (int i = 0; i < Players.Count; i++)
@@ -74,25 +85,18 @@ public class BattleLoader : MonoBehaviour
             Players[i].transform.GetChild(0).gameObject.SetActive(true);
             Players[i].transform.GetChild(1).gameObject.SetActive(true);
         }
-        if (GameManager.instance.Players.Length == 2)
+
+        if (Players.Count == 2)
         {
             Players[0].transform.position += moveTowards[0];
             Players[1].transform.position += moveTowards[1];
         }
-        if (GameManager.instance.Players.Length == 3)
+        if (Players.Count == 3)
         {
             Players[0].transform.position += moveTowards[0] * 2;
             Players[2].transform.position += moveTowards[1] * 2;
         }
-        //적 소환
-        for (int i = 0; i < 3; i++) //에너미 수정 필요 > enemys.count 받아야함
-        {
-            Enemys.Add(Instantiate(enemy, enemyPos, Quaternion.Euler(enemyAngle))); //에너미 수정 필요
-            EnemyStats.Add(Instantiate(EnemyStatPrefs));
-            EnemyStats[i].transform.SetParent(GameObject.Find("Canvas").transform);
-            EnemyStats[i].transform.localPosition = new Vector2(0, 400);
-            EnemyStats[i].GetComponent<EnemyUI>().enemyStat = Enemys[i].GetComponent<EnemyStat>();
-        }
+
 
         if (Enemys.Count == 2)
         {
@@ -121,7 +125,7 @@ public class BattleLoader : MonoBehaviour
     }
     private void PrefsDestroy()
     {
-        for(int i = 0; i<Players.Count; i++)
+        for (int i = 0; i < Players.Count; i++)
         {
             Destroy(Players[i]);
             Destroy(Enemys[i]);

@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
 
     private bool isCameraPosChange = false;
     private bool isMove = false;
+    private bool isPlayer = true;
 
     private float zoomMax;
     private float zoomMin;
@@ -23,6 +24,7 @@ public class CameraController : MonoBehaviour
     private float zoomSpeed;
 
     private QuestManager questManager;
+    private PlayerController_Jin player;
 
     private void Awake()
     {
@@ -30,11 +32,11 @@ public class CameraController : MonoBehaviour
     }
     private void Start()
     {
-        defaultPos = new Vector3(0, 7f, -9f);
+        defaultPos = new Vector3(0, 10f, -9f);
         moveSpeed = 10f;
         zoomSpeed = 10f;
-        zoomMax = 11f;
-        zoomMin = 5f;
+        zoomMax = 15f;
+        zoomMin = 7f;
     }
     private void Update()
     {
@@ -94,7 +96,9 @@ public class CameraController : MonoBehaviour
     public void PlayerChange()
     {
         targetPos = GameManager.instance.MainPlayer.transform.position + defaultPos;
+        isPlayer = true;
         StartCoroutine(CameraSoftMove());
+        
     }
     public IEnumerator CameraSoftMove() //부드러운 카메라 무빙
     {
@@ -104,13 +108,23 @@ public class CameraController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, targetPos, 0.02f);
             yield return null;
+
+            if (GameManager.instance.MainPlayer.transform.position + defaultPos != targetPos && isPlayer)
+            {
+                break;
+            }
         }
-        transform.position = targetPos;
+        if (GameManager.instance.MainPlayer.transform.position + defaultPos == targetPos)
+        {
+            transform.position = targetPos;
+        }
         if (!questManager.isQuest)
         {
             isCameraPosChange = false;
             isMove = false;
         }
+
+        isPlayer = false;
         yield break;
     }
 

@@ -53,7 +53,6 @@ public class PlayerController_Jin : MonoBehaviour
 
     private bool CheckObject()
     {
-        isRun = false;
         if (map.objectIndex[0] == myHexNum) //ø¿æ∆∆∞
         {
             EncounterManager.instance.ActiveEncounter(0);
@@ -211,6 +210,7 @@ public class PlayerController_Jin : MonoBehaviour
                     targetNodes.Clear();
                     animator.SetBool("MapRun", false);
                     astsrPathfinding.SetisPathfinding();
+                    isRun = false;
                     yield break;
                 }
                 else //≥¥∂Ú¿Ã∂Û∏È

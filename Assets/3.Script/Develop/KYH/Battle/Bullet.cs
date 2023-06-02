@@ -47,6 +47,13 @@ public class Bullet : MonoBehaviour
                         if (currnetHP < 0)
                         {
                             GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
+
+                            if(other.gameObject == battleLoader.Players[i])
+                            {
+                                battleLoader.Players.RemoveAt(i);
+                                battleOrderManager.SetOrder();
+                                break;
+                            }
                         }
                     }
                 }

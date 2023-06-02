@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject[] portraitUIs;
     private EncounterManager encounterManager;
 
+    private string MainPlayerName;
+    public GameObject SpeedSlot;
+    [SerializeField] Text Name;
 
     private void Start()
     {
@@ -111,7 +114,8 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
-        
+        MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
+
         if (nextTurn == 0 && !isFisrtTurn)
         {
             for (int i = 0; i < timeBarScrolling.Length; i++)
@@ -139,6 +143,9 @@ public class GameManager : MonoBehaviour
         moveSlot.player = MainPlayer.GetComponent<PlayerStat>();
         moveSlot.SetMove();
 
+        Name.text = MainPlayerName + "¿« ≈œ";
+
+        SpeedSlot.SetActive(true);
         SlotController.instance.OnClick();
 
         nextTurn++;
