@@ -198,7 +198,10 @@ public class MapObjectCreator : MonoBehaviour
     IEnumerator PlayerSpawner_co()
     {
         yield return null;
-        Instantiate(playerSpawner);
+        if(FindObjectOfType<PlayerSpawner>() == null)
+        {
+            Instantiate(playerSpawner);
+        }
         yield break;
     }
 

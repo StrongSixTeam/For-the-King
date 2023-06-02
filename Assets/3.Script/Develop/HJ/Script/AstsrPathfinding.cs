@@ -145,7 +145,7 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
-                    if (endNode == null || !endNode.ispass || hexCursor[0].activeSelf)
+                    if (endNode == null || !endNode.ispass || hexCursor[0].activeSelf || endNode.index == playerController[WhoseTurn].myHexNum)
                     {
                         return;
                     }

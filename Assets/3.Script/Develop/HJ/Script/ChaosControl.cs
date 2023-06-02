@@ -72,6 +72,11 @@ public class ChaosControl : MonoBehaviour
     
     public void RemoveChaos(bool isMax)
     {
+        if(FIFO.Count <= 0)
+        {
+            return;
+        }
+
         switch (isMax)
         {
             case true:
