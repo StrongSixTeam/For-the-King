@@ -27,9 +27,6 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject == battleManager.target)
         {
-            //공격력 만큼 피 달게 하기
-            Debug.Log("맞았다!!!");
-
             Text txt = Instantiate(Damage, CurrnetCam.WorldToScreenPoint(other.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
             txt.transform.SetParent(GameObject.Find("Canvas").transform);
             txt.text = "-" + battleManager.attackDamage;
@@ -44,7 +41,7 @@ public class Bullet : MonoBehaviour
 
                         float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
 
-                        if (currnetHP < 0)
+                        if (currnetHP <= 0)
                         {
                             GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
 
@@ -63,7 +60,7 @@ public class Bullet : MonoBehaviour
                 other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
-                if (currnetHP < 0)
+                if (currnetHP <= 0)
                 {
                     other.GetComponent<EnemyStat>().nowHp = 0;
 
@@ -80,7 +77,6 @@ public class Bullet : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("턴바꿈");
             Invoke("BulletDestroy", 3f);
         }
     }
