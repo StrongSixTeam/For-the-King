@@ -169,6 +169,12 @@ public class EncounterManager : MonoBehaviour
         List<HexMember> temp = new List<HexMember>();
         temp.Add(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().saveWay);
         GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().StartMove(temp);
+        
+        if (astsrPathfinding.canMoveCount > 0)
+        {
+            GameManager.instance.isBlock = false;
+            astsrPathfinding.ismovingTurn = true;
+        }
 
         if (btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus > 0)
         {

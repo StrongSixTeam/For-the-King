@@ -22,10 +22,8 @@ public class PlayerController_Jin : MonoBehaviour
     {
         map = FindObjectOfType<MapObjectCreator>();
         quest = FindObjectOfType<QuestManager>();
-        gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        gameObject.transform.GetChild(1).gameObject.SetActive(true);
-        gameObject.transform.GetChild(0).localScale = new Vector3(0f, 0f, 0f);
-        gameObject.transform.GetChild(1).localScale = new Vector3(0f, 0f, 0f);
+        gameObject.SetActive(true);
+        gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
         animator = GetComponent<Animator>();
         cloudBox = FindObjectOfType<CloudBox>();
         cloudBox.CloudActiveFalse(myHexNum);
@@ -252,35 +250,31 @@ public class PlayerController_Jin : MonoBehaviour
         switch (active)
         {
             case true: //나타남
-                if(gameObject.transform.GetChild(0).localScale == new Vector3(0.01f, 0.01f, 0.01f))
+                if(gameObject.transform.localScale == new Vector3(1f, 1f, 1f))
                 {
                     yield break;
                 }
                 for (int i = 0; i < 20; i++)
                 {
-                    float velue = (0.0005f * i);
-                    gameObject.transform.GetChild(0).localScale = new Vector3(velue, velue, velue);
-                    gameObject.transform.GetChild(1).localScale = new Vector3(velue, velue, velue);
+                    float velue = (0.05f * i);
+                    gameObject.transform.localScale = new Vector3(velue, velue, velue);
                     yield return new WaitForSeconds(0.01f);
                 }
-                gameObject.transform.GetChild(0).localScale = new Vector3(0.01f, 0.01f, 0.01f);
-                gameObject.transform.GetChild(1).localScale = new Vector3(0.01f, 0.01f, 0.01f);
+                gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
                 break;
 
             case false: //사라짐
-                if (gameObject.transform.GetChild(0).localScale != new Vector3(0.01f, 0.01f, 0.01f))
+                if (gameObject.transform.localScale != new Vector3(1f, 1f, 1f))
                 {
                     yield break;
                 }
                 for (int i = 20; i >= 0; i--)
                 {
-                    float velue = (0.0005f * i);
-                    gameObject.transform.GetChild(0).localScale = new Vector3(velue, velue, velue);
-                    gameObject.transform.GetChild(1).localScale = new Vector3(velue, velue, velue);
+                    float velue = (0.05f * i);
+                    gameObject.transform.localScale = new Vector3(velue, velue, velue);
                     yield return new WaitForSeconds(0.01f);
                 }
-                gameObject.transform.GetChild(0).localScale = new Vector3(0f, 0f, 0f);
-                gameObject.transform.GetChild(1).localScale = new Vector3(0f, 0f, 0f);
+                gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
                 break;
         }
     }
