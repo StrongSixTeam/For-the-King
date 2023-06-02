@@ -27,17 +27,11 @@ public class TimeChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("1시간 지났어요");
-        chaosController.CountChaosTurn();
-
-        if (collision.CompareTag("Chaos"))
-        {
-            Debug.Log("Max Chaos");
-            chaosController.RemoveChaos(true);
-        }
-
         if (collision.GetComponent<TimeBarScrolling>() != null)
         {
+            Debug.Log("1시간 지났어요");
+            chaosController.CountChaosTurn();
+
             if (!collision.GetComponent<TimeBarScrolling>().isDay && Day)
             {
                 Debug.Log("지금은 밤이에요");
@@ -51,7 +45,12 @@ public class TimeChecker : MonoBehaviour
                 mapObjectCreator.timeMonsterSpawn(Day);
             }
         }
-       
-        
+
+        if (collision.CompareTag("Chaos"))
+        {
+            Debug.Log("Max Chaos");
+            chaosController.RemoveChaos(true);
+        }
+
     }
 }
