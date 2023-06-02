@@ -191,22 +191,41 @@ public class CloneSlot : MonoBehaviour
         if (SlotController.instance.limit <= SlotController.instance.success)
         {
             //성공 처리
-            StartCoroutine(GodSuccessWait_co());
+            Debug.Log("성공");
+            if (EncounterManager.instance.enemyNumber > 0) //몬스터랑 만난 경우
+            {
+                Invoke("OffAll", 1f);
+            }
+            else if (EncounterManager.instance.number == 2) //신도 의식 도구
+            {
+                StartCoroutine(GodSuccessWait_co());
+            }
         }
         else
         {
             isSuccess = false;
+            if (EncounterManager.instance.enemyNumber > 0) //몬스터랑 만난 경우
+            {
+                StartCoroutine(BattleBtn_co());
+            }
+            else if (EncounterManager.instance.number == 2) //신도 의식 도구 실패시
+            {
+                //실패 페널티 처리
+            }
             Invoke("OffAll", 1f); //끄기
-            //실패 페널티 처리
         }
     }
 
     IEnumerator GodSuccessWait_co()
     {
-        Debug.Log("코루틴 시작 전");
         yield return new WaitForSeconds(1f);
-        Debug.Log("코루틴 시작 후");
         EncounterManager.instance.GodSuccess();
+    }
+
+    IEnumerator BattleBtn_co()
+    {
+        yield return new WaitForSeconds(0.5f);
+        EncounterManager.instance.BattleBtn();
     }
 
     private void OffAll()
