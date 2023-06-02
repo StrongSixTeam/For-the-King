@@ -266,8 +266,19 @@ public class EncounterManager : MonoBehaviour
         MultiCamera.instance.ToCave();
     }
 
-    public void BattleBtn()
+    public void BattleBtn() //배틀씬으로 이동
     {
+        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            movingUIs[i].gameObject.SetActive(false);
+        }
+        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            portraitUIs[i].gameObject.SetActive(false);
+        }
+
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
