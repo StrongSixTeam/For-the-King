@@ -14,6 +14,7 @@ public class EnemyStat : MonoBehaviour
 
     public int speed;
     public int Lv;
+    public int Exp;
     public Sprite portrait;
 
     private void Start()
@@ -31,7 +32,7 @@ public class EnemyStat : MonoBehaviour
         speed = enemyStatus.speed;
         Lv = enemyStatus.Lv;
         portrait = enemyStatus.UIImage;
-
+        Exp = enemyStatus.Exp;
 
     }
 

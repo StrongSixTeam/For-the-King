@@ -33,7 +33,7 @@ public class EnemyUI : MonoBehaviour
             {
                 isDefaultSet = true;
 
-                nameText.text = enemyStat.name;
+                nameText.text = enemyStat.monsterName;
                 levelText.text = "" + enemyStat.Lv;
                 hpSlider.maxValue = enemyStat.maxHp;
                 portrait.sprite = enemyStat.portrait;

@@ -17,6 +17,7 @@ public class EnemyStatus : ScriptableObject
     public int speed = 50;
     
     public int Lv = 1;
+    public int Exp = 10;
     public Sprite UIImage; //초상화 이미지
    
 }
