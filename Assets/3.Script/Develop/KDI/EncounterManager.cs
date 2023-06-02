@@ -59,6 +59,8 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(true);
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(false);
+
+        astsrPathfinding.ShowRedHex(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().myHexNum);
     }
 
     public void ActiveEncounter(int n)
@@ -152,6 +154,8 @@ public class EncounterManager : MonoBehaviour
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus += btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus;
             btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus = 0;
         }
+
+        astsrPathfinding.ShowRedHexStop();
     }
 
     private void ActiveBtn(int n)
@@ -218,6 +222,7 @@ public class EncounterManager : MonoBehaviour
     public void TryConnect()
     {
         slot.GetComponent<CloneSlot>().Try();
+        astsrPathfinding.ShowRedHexStop();
     }
 
     public void GodSuccess()
@@ -284,6 +289,7 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         MultiCamera.instance.ToBattle();
 
+        astsrPathfinding.ShowRedHexStop();
         GameManager.instance.isBlock = true;
         //전투 끝났을때 다시 true로 돌려줘야함
     }

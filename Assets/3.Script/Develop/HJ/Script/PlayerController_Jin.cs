@@ -266,7 +266,6 @@ public class PlayerController_Jin : MonoBehaviour
         }
 
         //숨겨진 오브젝트, 랜덤몬스터오브젝트, 플레이어오브젝트를 리턴
-        astsrPathfinding.ShowRedHex(myHexNum);
         return aroundObj;
     }
 

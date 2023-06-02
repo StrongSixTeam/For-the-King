@@ -91,9 +91,13 @@ public class GameManager : MonoBehaviour
                 { //Encounter UI가 떠있으면 바닥 누르는게 안되게
                     isBlock = true;
                 }
-                else
+                else if(Camera.main != null)
                 {
                     isBlock = false;
+                }
+                else if(Camera.main == null)
+                {
+                    isBlock = true;
                 }
                 turnChageBtn.interactable = true;
             }

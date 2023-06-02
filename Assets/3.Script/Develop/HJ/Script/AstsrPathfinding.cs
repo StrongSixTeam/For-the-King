@@ -230,6 +230,7 @@ public class AstsrPathfinding : MonoBehaviour
         //    //Debug.Log(endNode.H);
         //}
 
+
         RaycastHit[] hits;
         hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 100f);
 
