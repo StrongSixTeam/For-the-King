@@ -32,7 +32,7 @@ public class CloudBox : MonoBehaviour
         for (int i=0; i<hexMapCreator.hexMembers.Length; i++)
         {
             cloudBox[i] = Instantiate(clouds[Random.Range(0, 3)]);
-            cloudBox[i].transform.position = hexMapCreator.hexMembers[i].transform.position + new Vector3(0f, 2f, 0f);
+            cloudBox[i].transform.position = hexMapCreator.hexMembers[i].transform.position + new Vector3(0f, 3f, 0f);
             cloudBox[i].transform.SetParent(gameObject.transform);
         }
     }
