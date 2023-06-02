@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
@@ -8,11 +9,18 @@ public class Bullet : MonoBehaviour
 
     BattleManager battleManager;
     BattleOrderManager battleOrderManager;
+    BattleLoader battleLoader;
+
+    [SerializeField] GameObject Damage;
+
+    private Camera CurrnetCam;
 
     private void Awake()
     {
         battleManager = FindObjectOfType<BattleManager>();
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
+        battleLoader = FindObjectOfType<BattleLoader>();
+        CurrnetCam = FindObjectOfType<Camera>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,15 +30,50 @@ public class Bullet : MonoBehaviour
             //공격력 만큼 피 달게 하기
             Debug.Log("맞았다!!!");
 
+            Text txt = Instantiate(Damage, CurrnetCam.WorldToScreenPoint(other.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
+            txt.transform.SetParent(GameObject.Find("Canvas").transform);
+            txt.text = "-" + battleManager.attackDamage;
+
             if (other.GetComponent<PlayerStat>() != null)
             {
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
-                Debug.Log(0);
+                for (int i = 0; i < GameManager.instance.Players.Length; i++)
+                {
+                    if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
+                    {
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+
+                        float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
+
+                        if (currnetHP < 0)
+                        {
+                            GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
+                        }
+                    }
+                }
             }
             else
             {
                 other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
+                float currnetHP = other.GetComponent<EnemyStat>().nowHp;
+
+                if (currnetHP < 0)
+                {
+                    other.GetComponent<EnemyStat>().nowHp = 0;
+
+                    for (int i = 0; i < battleLoader.Enemys.Count; i++)
+                    {
+                        if(other.gameObject == battleLoader.Enemys[i])
+                        {
+                            battleLoader.Enemys.RemoveAt(i);
+                            Destroy(battleLoader.EnemyStats[i].gameObject);
+                            battleLoader.EnemyStats.RemoveAt(i);
+                            battleOrderManager.SetOrder();
+                            break;
+                        }
+                    }
+                }
             }
+            Debug.Log("턴바꿈");
             Invoke("BulletDestroy", 3f);
         }
     }

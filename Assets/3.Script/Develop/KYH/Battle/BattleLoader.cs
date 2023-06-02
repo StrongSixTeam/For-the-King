@@ -36,8 +36,8 @@ public class BattleLoader : MonoBehaviour
         playerAngle = new Vector3(0, 90, 0);
         enemyAngle = new Vector3(0, 270, 0);
 
-        moveTowards[0] = Vector3.back;
-        moveTowards[1] = Vector3.forward;
+        moveTowards[0] = Vector3.forward;
+        moveTowards[1] = Vector3.back;
 
         PrefsInstantiate();
     }
@@ -99,16 +99,16 @@ public class BattleLoader : MonoBehaviour
             Enemys[0].transform.position += moveTowards[0];
             Enemys[1].transform.position += moveTowards[1];
 
-            EnemyStats[0].transform.position += new Vector3(250, 0, 0);
-            EnemyStats[1].transform.position += new Vector3(-250, 0, 0);
+            EnemyStats[0].transform.position += new Vector3(-250, 0, 0);
+            EnemyStats[1].transform.position += new Vector3(250, 0, 0);
         }
         if (Enemys.Count == 3)
         {
             Enemys[0].transform.position += moveTowards[0] * 2;
             Enemys[2].transform.position += moveTowards[1] * 2;
 
-            EnemyStats[0].transform.position += new Vector3(500, 0, 0);
-            EnemyStats[2].transform.position += new Vector3(-500, 0, 0);
+            EnemyStats[0].transform.position += new Vector3(-500, 0, 0);
+            EnemyStats[2].transform.position += new Vector3(500, 0, 0);
         }
 
         battleUI.SetActive(true);
