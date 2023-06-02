@@ -24,6 +24,10 @@ public class BattleLoader : MonoBehaviour
 
     Vector3[] moveTowards = new Vector3[2];
 
+    private PlayerController_Jin playerController;
+
+    public List<GameObject> gg = new List<GameObject>();
+
     public void FieldBattle()
     {
         playerPos = new Vector3(-103.5f, 0, -11f);
@@ -36,6 +40,11 @@ public class BattleLoader : MonoBehaviour
         moveTowards[1] = Vector3.forward;
 
         PrefsInstantiate();
+    }
+    private void Start()
+    {
+        playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
+        gg = playerController.CheckAroundObject();
     }
     public void CaveBattle()
     {
