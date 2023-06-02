@@ -85,18 +85,18 @@ public class SuccessCalc : MonoBehaviour
         }
         for (int i = testFix-1; i >= 0; i--)
         {
-            if (i >= successLimit)
-            {
-                //resultNumbers[newIndex].SetActive(true);
-                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 성공";
-                //Debug.Log(i + " 0% 성공");
-            }
-            else
-            {
-                //resultNumbers[newIndex].SetActive(true);
-                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 실패";
-                //Debug.Log(i + " 0% 실패");
-            }
+            //if (i >= successLimit)
+            //{
+            //    //resultNumbers[newIndex].SetActive(true);
+            //    resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 성공";
+            //    //Debug.Log(i + " 0% 성공");
+            //}
+            //else
+            //{
+            //    //resultNumbers[newIndex].SetActive(true);
+            //    resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 실패";
+            //    //Debug.Log(i + " 0% 실패");
+            //}
         }
         //Debug.Log("=============");
     }
