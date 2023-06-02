@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -36,6 +37,9 @@ public class AstsrPathfinding : MonoBehaviour
     [SerializeField] GameObject redHex;
     GameObject[] redHexBox = new GameObject[20];
 
+    [SerializeField] Texture2D cursotImage;
+    [SerializeField] Texture2D cursotImageClick;
+
     int loopCount = 0;
     private void Start()
     {
@@ -65,6 +69,7 @@ public class AstsrPathfinding : MonoBehaviour
             temp.SetActive(false);
         }
 
+        Cursor.SetCursor(cursotImage, Vector2.zero, CursorMode.ForceSoftware);
     }
 
     public void SetPlayerCount(int playerCount)
@@ -195,6 +200,7 @@ public class AstsrPathfinding : MonoBehaviour
         }
         else
         {
+
             for (int i = 0; i < 10; i++)
             {
                 if (showMoveCount[i].activeSelf)
@@ -203,6 +209,19 @@ public class AstsrPathfinding : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(CursorClickCo());
+        }
+    }
+
+    IEnumerator CursorClickCo()
+    {
+        Cursor.SetCursor(cursotImageClick, Vector2.zero, CursorMode.ForceSoftware);
+        yield return new WaitForSeconds(0.2f);
+        Cursor.SetCursor(cursotImage, Vector2.zero, CursorMode.ForceSoftware);
+        yield break;
     }
 
     public void SetisPathfinding()
