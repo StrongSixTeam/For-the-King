@@ -17,9 +17,19 @@ public class EnemyRunBtn : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         n = EncounterManager.instance.number;
-        EncounterManager.instance.txtContext.text = EncounterManager.instance.encounter[n].Content;
-        slot.GetComponent<CloneSlot>().isShowText = false;
-        encounterManager.EnemyRunBtn(n);
+        int en = EncounterManager.instance.enemyNumber;
+        if (en > 0)
+        {
+            EncounterManager.instance.txtContext.text = EncounterManager.instance.enemies[en].Content;
+            slot.GetComponent<CloneSlot>().isShowText = false;
+            encounterManager.EnemyRunBtn(en);
+        }
+        else
+        {
+            EncounterManager.instance.txtContext.text = EncounterManager.instance.encounter[n].Content;
+            slot.GetComponent<CloneSlot>().isShowText = false;
+            encounterManager.EnemyRunBtn(n);
+        }
     }
 
 }
