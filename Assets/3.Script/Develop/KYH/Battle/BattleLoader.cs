@@ -26,6 +26,8 @@ public class BattleLoader : MonoBehaviour
 
     public List<GameObject> Encounter = new List<GameObject>();
 
+    public bool isIng = false;
+
     private void Start()
     {
         playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
@@ -121,6 +123,7 @@ public class BattleLoader : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log(0);
         PrefsDestroy();
     }
     private void PrefsDestroy()
@@ -134,5 +137,7 @@ public class BattleLoader : MonoBehaviour
         Players.Clear();
         Enemys.Clear();
         EnemyStats.Clear();
+        Encounter.Clear();
+        isIng = false;
     }
 }

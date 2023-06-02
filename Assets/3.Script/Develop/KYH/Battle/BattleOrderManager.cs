@@ -29,7 +29,7 @@ public class BattleOrderManager : MonoBehaviour
     private void Start()
     {
         SetOrder();
-        SetUI();
+        TurnChange();
     }
     public void SetOrder()
     {
@@ -92,7 +92,24 @@ public class BattleOrderManager : MonoBehaviour
                 background[i- turn].sprite = EBground;
             }
         }
-        //카메라 돌리기
+    }
+    public void TurnChange()
+    {
+        StartCoroutine(Ani_co());
+        SetUI();
+
+        if (!battleLoader.isIng)
+        {
+            Invoke("CameraChange", 2f);
+            battleLoader.isIng = true;
+        }
+        else
+        {
+            CameraChange();
+        }
+    }
+    private void CameraChange()
+    {
         if (Order[turn].GetComponent<PlayerStat>() != null)
         {
             battleCameraController.PlayerTurnCamera();
@@ -101,12 +118,6 @@ public class BattleOrderManager : MonoBehaviour
         {
             battleCameraController.EnemyTurnCamera();
         }
-    }
-    public void TurnChange()
-    {
-        StartCoroutine(Ani_co());
-        SetUI();
-
     }
     private IEnumerator Ani_co()
     {
