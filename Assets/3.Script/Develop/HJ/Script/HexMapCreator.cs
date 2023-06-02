@@ -33,7 +33,8 @@ public class HexMapCreator : MonoBehaviour
 
     [SerializeField] HexMember hexMember; //hexOverlayGeo01_0
     public HexMember[] hexMembers;
-
+    [SerializeField] GameObject groundBFobj;
+    [SerializeField] GameObject groundBPobj;
 
     //이동횟수를 표시할 캔버스
     private Canvas gridCanvas;
@@ -103,12 +104,16 @@ public class HexMapCreator : MonoBehaviour
 
         //맵 오브젝트 크리에이터 생성 & 구름 생성
         StartCoroutine(StartMapObjectCreate_co());
+
+        StartCoroutine(GroundBottomCo());
     }
 
     //맵을 다시 만든다
     public void ResetMap()
     {
         Debug.Log("맵 다시 로드");
+        StopAllCoroutines();
+
         reloadCount++;
         if (reloadCount > 6)
         {
@@ -152,6 +157,8 @@ public class HexMapCreator : MonoBehaviour
 
         //맵 오브젝트 크리에이터 생성 & 구름 생성
         StartCoroutine(StartMapObjectCreate_co());
+
+        StartCoroutine(GroundBottomCo());
     }
 
     private void CreateHex(int x, int z, int i)
@@ -411,6 +418,46 @@ public class HexMapCreator : MonoBehaviour
     }
 
 
+
+    private IEnumerator GroundBottomCo()
+    {
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+
+        for(int i=0; i<mapSize; i++)
+        {
+            for(int j=0; j<6; j++)
+            {
+                if(hexMembers[i].mapType == 1)
+                {
+                    if (hexMembers[i].neighbors[j].mapType == 0)
+                    {
+                        GameObject temp = Instantiate(groundBFobj);
+                        temp.transform.position = hexMembers[i].transform.position + new Vector3(0f, -1f, 0f);
+                        temp.transform.SetParent(gameObject.transform);
+                        break;
+                    }
+                }
+
+                else if (hexMembers[i].mapType == 2)
+                {
+                    if (hexMembers[i].neighbors[j].mapType == 0)
+                    {
+                        GameObject temp = Instantiate(groundBPobj);
+                        temp.transform.position = hexMembers[i].transform.position + new Vector3(0f, -1f, 0f);
+                        temp.transform.SetParent(gameObject.transform);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
 
     //private void CreateGrid(int x, int z, int i)

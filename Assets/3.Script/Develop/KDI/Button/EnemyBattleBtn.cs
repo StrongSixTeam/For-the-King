@@ -21,9 +21,21 @@ public class EnemyBattleBtn : MonoBehaviour, IPointerEnterHandler
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus += transform.parent.GetChild(1).GetComponent<RightClick>().usedFocus;
             transform.parent.GetChild(1).GetComponent<RightClick>().usedFocus = 0;
         }
+
         n = EncounterManager.instance.number;
-        EncounterManager.instance.txtContext.text = EncounterManager.instance.encounter[n].Content;
+        int en = EncounterManager.instance.enemyNumber;
+
+        if (en > 0)
+        {
+            Debug.Log(en);
+            EncounterManager.instance.txtContext.text = EncounterManager.instance.enemies[en].Content;
+            encounterManager.EnemyFightBtn(en);
+        }
+        else
+        {
+            EncounterManager.instance.txtContext.text = EncounterManager.instance.encounter[n].Content;
+            encounterManager.EnemyFightBtn(n);
+        }
         slot.GetComponent<CloneSlot>().isShowText = false;
-        encounterManager.EnemyFightBtn(n);
     }
 }
