@@ -25,7 +25,7 @@ public class EnemyBattleBtn : MonoBehaviour, IPointerEnterHandler
         n = EncounterManager.instance.number;
         int en = EncounterManager.instance.enemyNumber;
 
-        if (en > 0)
+        if (en >= 0)
         {
             EncounterManager.instance.txtContext.text = EncounterManager.instance.enemies[en].Content;
             encounterManager.EnemyFightBtn(en);
