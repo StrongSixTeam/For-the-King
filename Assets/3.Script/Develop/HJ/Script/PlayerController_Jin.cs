@@ -72,18 +72,18 @@ public class PlayerController_Jin : MonoBehaviour
             }
             return true;
         }
-        else if (map.objectIndex[2] == myHexNum) //신의의식도구
+        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed) //신의의식도구
         {
             EncounterManager.instance.ActiveEncounter(2);
             return true;
         }
-        else if (map.objectIndex[3] == myHexNum) //카오스 우두머리
+        else if (map.objectIndex[3] == myHexNum && EncounterManager.instance.encounter[3].isShowed) //카오스 우두머리
         {
             EncounterManager.instance.ActiveEncounter(3);
             //if (quest) quest 클리어 설정해주기 (추후에)
             return true;
         }
-        else if (map.objectIndex[4] == myHexNum) //눈부신 광산
+        else if (map.objectIndex[4] == myHexNum && EncounterManager.instance.encounter[4].isShowed) //눈부신 광산
         {
             EncounterManager.instance.ActiveEncounter(4);
             return true;
@@ -93,7 +93,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(5);
             return true;
         }
-        else if (map.objectIndex[6] == myHexNum) //잊혀진 저장고
+        else if (map.objectIndex[6] == myHexNum && EncounterManager.instance.encounter[5].isShowed) //잊혀진 저장고
         {
             EncounterManager.instance.ActiveEncounter(6);
             return true;
@@ -103,7 +103,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(7);
             return true;
         }
-        else if (map.objectIndex[8] == myHexNum) //시체의 지하실
+        else if (map.objectIndex[8] == myHexNum && EncounterManager.instance.encounter[7].isShowed) //시체의 지하실
         {
             EncounterManager.instance.ActiveEncounter(8);
             return true;
