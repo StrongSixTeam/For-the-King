@@ -23,6 +23,9 @@ public class BattleManager : MonoBehaviour
 
     public GameObject BattleUI;
 
+    public bool isLose = false;
+    public bool isWin = false;
+
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
@@ -48,6 +51,11 @@ public class BattleManager : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if(battleLoader.Players.Count == 0)
+        {
+
         }
     }
     public void RookAt()

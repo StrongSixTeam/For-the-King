@@ -65,6 +65,7 @@ public class SlotController : MonoBehaviour
                     }
                 }
                 transform.GetChild(6).gameObject.SetActive(true); //글씨 보여주기
+                transform.GetChild(6).GetChild(0).gameObject.SetActive(true); //글씨 보여주기
             }
             else if (type == Type.attackScholar)
             {
@@ -95,7 +96,7 @@ public class SlotController : MonoBehaviour
         int a = fixCount;
         for (int i = 0; i < maxSlotCount; i++)
         {
-            transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
+            //transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
             yield return new WaitForSeconds(0.4f);
             if (fixCount > 0)
             {
@@ -119,7 +120,7 @@ public class SlotController : MonoBehaviour
                 }
             }
         }
-        transform.GetChild(6).GetComponent<Text>().text = "이동 판정 : " + success;
+        transform.GetChild(6).GetComponentInChildren<Text>().text = "이동 판정:" + success;
         fixCount = a;
         Invoke("SlotOff", 2f);
         GameManager.instance.isBlock = false;
@@ -131,6 +132,10 @@ public class SlotController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
+        }
+        if (GameManager.instance.SpeedSlot.activeSelf)
+        {
+            GameManager.instance.SpeedSlot.SetActive(false);
         }
     }
 }
