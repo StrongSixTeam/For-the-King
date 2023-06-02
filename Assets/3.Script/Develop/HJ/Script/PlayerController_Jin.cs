@@ -71,12 +71,12 @@ public class PlayerController_Jin : MonoBehaviour
             }
             return true;
         }
-        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed) //신의의식도구
+        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed && !EncounterManager.instance.encounter[2].isCleared) //신의의식도구
         {
             EncounterManager.instance.ActiveEncounter(2);
             return true;
         }
-        else if (map.objectIndex[3] == myHexNum && EncounterManager.instance.encounter[3].isShowed) //카오스 우두머리
+        else if (map.objectIndex[3] == myHexNum && EncounterManager.instance.encounter[3].isShowed && !EncounterManager.instance.encounter[2].isCleared) //카오스 우두머리
         {
             EncounterManager.instance.ActiveEncounter(3);
             //if (quest) quest 클리어 설정해주기 (추후에)
@@ -266,7 +266,6 @@ public class PlayerController_Jin : MonoBehaviour
         }
 
         //숨겨진 오브젝트, 랜덤몬스터오브젝트, 플레이어오브젝트를 리턴
-        astsrPathfinding.ShowRedHex(myHexNum);
         return aroundObj;
     }
 

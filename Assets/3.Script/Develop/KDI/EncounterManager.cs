@@ -22,6 +22,7 @@ public class EncounterManager : MonoBehaviour
     public int number;
     public int enemyNumber;
     public bool isEncounterUI = false;
+    public bool outsideCheck = false;
 
     private AstsrPathfinding astsrPathfinding;
 
@@ -30,11 +31,23 @@ public class EncounterManager : MonoBehaviour
         instance = this;
         parent = transform.parent;
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+        encounter[2].isShowed = false;
+        encounter[3].isShowed = false;
+        encounter[4].isShowed = false;
+        encounter[8].isShowed = false;
+        for (int i = 0; i < encounter.Length; i++)
+        {
+            encounter[i].isCleared = false;
+        }
+        for (int i =0; i < enemies.Length; i++)
+        {
+            enemies[i].isCleared = false;
+        }
     }
 
     private void Update()
     {
-        if (parent.GetChild(1).gameObject.activeSelf)
+        if (parent.GetChild(1).gameObject.activeSelf || outsideCheck)
         {
             isEncounterUI = true;
         }
@@ -45,6 +58,7 @@ public class EncounterManager : MonoBehaviour
     }
     public void ActiveEnemies(int n)
     {
+        number = -1;
         enemyNumber = n;
         txtName.text = enemies[n].Name;
         txtContext.text = enemies[n].Content;
@@ -59,11 +73,13 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(true);
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(false);
+
+        astsrPathfinding.ShowRedHex(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().myHexNum);
     }
 
     public void ActiveEncounter(int n)
     {
-        enemyNumber = 0;
+        enemyNumber = -1;
         number = n;
         txtName.text = encounter[n].Name;
         txtContext.text = encounter[n].Content;
@@ -135,6 +151,7 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        astsrPathfinding.ismovingTurn = true;
     }
 
     public void ExitButton()
@@ -152,6 +169,8 @@ public class EncounterManager : MonoBehaviour
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus += btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus;
             btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus = 0;
         }
+
+        astsrPathfinding.ShowRedHexStop();
     }
 
     private void ActiveBtn(int n)
@@ -207,26 +226,35 @@ public class EncounterManager : MonoBehaviour
     {
         //게임매니저 카오스 접근해서 줄이기
         btns[5].SetActive(false);
+        GameManager.instance.isBlock = false;
+        FindObjectOfType<EncounterManager>().outsideCheck = false;
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
+        FindObjectOfType<ChaosControl>().RemoveChaos(false);
     }
 
     public void PlusLifeBtn() 
     {
         //게임매니저 생명 늘리기
         btns[5].SetActive(false);
+        FindObjectOfType<EncounterManager>().outsideCheck = false;
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
     }
 
     public void TryConnect()
     {
         slot.GetComponent<CloneSlot>().Try();
+        astsrPathfinding.ShowRedHexStop();
     }
 
     public void GodSuccess()
     {
+        FindObjectOfType<EncounterManager>().outsideCheck = true;
         slot.SetActive(false);
         btns[1].SetActive(false);
         btns[5].SetActive(true);
         parent.GetChild(1).gameObject.SetActive(false);
         parent.GetChild(2).gameObject.SetActive(false);
+        encounter[2].isCleared = true;
     }
 
     private int FindTypePercent(string some)
@@ -266,13 +294,25 @@ public class EncounterManager : MonoBehaviour
         MultiCamera.instance.ToCave();
     }
 
-    public void BattleBtn()
+    public void BattleBtn() //배틀씬으로 이동
     {
+        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            movingUIs[i].gameObject.SetActive(false);
+        }
+        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            portraitUIs[i].gameObject.SetActive(false);
+        }
+
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         MultiCamera.instance.ToBattle();
 
+        astsrPathfinding.ShowRedHexStop();
         GameManager.instance.isBlock = true;
         //전투 끝났을때 다시 true로 돌려줘야함
     }
@@ -281,7 +321,7 @@ public class EncounterManager : MonoBehaviour
     {
         slot.SetActive(true);
         SlotController.instance.fixCount = 0;
-        if (enemyNumber > 0)
+        if (enemyNumber >= 0)
         {
             SlotController.instance.maxSlotCount = enemies[n].slotCount;
         }
@@ -303,7 +343,7 @@ public class EncounterManager : MonoBehaviour
     {
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
-        if (enemyNumber > 0)
+        if (enemyNumber >= 0)
         {
             SlotController.instance.maxSlotCount = enemies[n].enemyCount;
         }
@@ -318,7 +358,7 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(2).gameObject.SetActive(false);
     }
 
-    public void EnemyExitBtn(int n)
+    public void EncounterEnemyExitBtn(int n)
     {
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
@@ -329,6 +369,19 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(false);
     }
+
+    public void EnemyExitBtn(int n)
+    {
+        ActiveBtn(2);
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.maxSlotCount = enemies[n].enemyCount;
+        SlotController.instance.type = SlotController.Type.empty;
+        slot.GetComponent<CloneSlot>().Initialized();
+        slot.SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+        parent.GetChild(2).gameObject.SetActive(false);
+    }
+
 
     public void SanctumPrayBtn()
     {

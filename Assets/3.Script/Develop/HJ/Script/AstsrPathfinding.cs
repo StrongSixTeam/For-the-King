@@ -21,7 +21,7 @@ public class AstsrPathfinding : MonoBehaviour
     Transform MoveCountBox;
     Transform redHexBoxTransform;
 
-    [SerializeField] bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 
+    public bool ismovingTurn = false; //이걸 true로 바꾸면 A*가 가동되도록 
     public int canMoveCount = 5; //플레이어의 이동가능횟수 조절 //이동할때는 slotcontroller에서 success int 값 받으면 되겠쥬? - 단이언니
     public int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
@@ -145,7 +145,7 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
-                    if (endNode == null || !endNode.ispass || hexCursor[0].activeSelf)
+                    if (endNode == null || !endNode.ispass || hexCursor[0].activeSelf || endNode.index == playerController[WhoseTurn].myHexNum)
                     {
                         return;
                     }
@@ -229,6 +229,7 @@ public class AstsrPathfinding : MonoBehaviour
         //    endNode = hit.transform.gameObject.GetComponent<HexMember>();
         //    //Debug.Log(endNode.H);
         //}
+
 
         RaycastHit[] hits;
         hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 100f);
