@@ -803,6 +803,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190631872}
   m_CullTransparentMesh: 1
+--- !u!1 &258436982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2484379881707281284, guid: d8439c37cb8a7c7419ac321a5c01a47b, type: 3}
+  m_PrefabInstance: {fileID: 161013660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &270023220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,6 +1406,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7851670d7a60cc7478ee0f4ddc43af72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLife: 5
+  currentLife: 5
   Players: []
   MainPlayer: {fileID: 0}
   nextTurn: 0
@@ -21234,6 +21241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PortraitAni: {fileID: 606042164266542385}
   TimeUIAni: {fileID: 8081851788620082732}
+  emptyLife: {fileID: 21300000, guid: b4d39e428c69cfc40bfc53e4d894149a, type: 3}
+  fullLife: {fileID: 21300000, guid: 6b481e78c04e7a140b71463df9303373, type: 3}
+  lifeUI: {fileID: 258436982}
 --- !u!224 &6909424464268964526
 RectTransform:
   m_ObjectHideFlags: 0
