@@ -313,6 +313,7 @@ public class MapObjectCreator : MonoBehaviour
                         case 2: //신도 의식도구
                             GameObject temp3 = Instantiate(forest003);
                             temp3.transform.position = forestNode[random].transform.position + new Vector3(0, 0.2f, 0);
+                            temp3.transform.SetParent(gameObject.transform);
                             break;
                     }
 
