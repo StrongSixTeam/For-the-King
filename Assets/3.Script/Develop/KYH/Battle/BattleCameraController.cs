@@ -50,7 +50,19 @@ public class BattleCameraController : MonoBehaviour
         }
         transform.position = targetPos;
         battleManager.RookAt(); //오류나면 여기
-        //확률 ui 켜기
+        yield break;
+    }
+    public IEnumerator PlayerWinCam_co()
+    {
+        battleManager.isEnd = true;
+
+        while (Vector3.Distance(transform.position, targetPosE) > 0.01)
+        {
+            transform.LookAt(lookPosE);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosE, 0.01f);
+            yield return null;
+        }
+        transform.position = targetPosE;
         yield break;
     }
 }

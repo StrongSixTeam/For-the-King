@@ -15,6 +15,8 @@ public class Bullet : MonoBehaviour
 
     private Camera CurrnetCam;
 
+    private bool isZero = false;
+
     private void Awake()
     {
         battleManager = FindObjectOfType<BattleManager>();
@@ -33,6 +35,8 @@ public class Bullet : MonoBehaviour
 
             if (other.GetComponent<PlayerStat>() != null)
             {
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+
                 for (int i = 0; i < GameManager.instance.Players.Length; i++)
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
@@ -44,37 +48,20 @@ public class Bullet : MonoBehaviour
                         if (currnetHP <= 0)
                         {
                             GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
-
-                            if(other.gameObject == battleLoader.Players[i])
-                            {
-                                battleLoader.Players.RemoveAt(i);
-                                battleOrderManager.SetOrder();
-                                break;
-                            }
+                            isZero = true;
                         }
                     }
                 }
             }
             else
             {
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 20f;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)
                 {
                     other.GetComponent<EnemyStat>().nowHp = 0;
-
-                    for (int i = 0; i < battleLoader.Enemys.Count; i++)
-                    {
-                        if(other.gameObject == battleLoader.Enemys[i])
-                        {
-                            battleLoader.Enemys.RemoveAt(i);
-                            Destroy(battleLoader.EnemyStats[i].gameObject);
-                            battleLoader.EnemyStats.RemoveAt(i);
-                            battleOrderManager.SetOrder();
-                            break;
-                        }
-                    }
+                    isZero = true;
                 }
             }
             Invoke("BulletDestroy", 3f);
@@ -86,8 +73,35 @@ public class Bullet : MonoBehaviour
     }
     private void BulletDestroy()
     {
-        Destroy(gameObject);
+        if (isZero)
+        {
+            for (int i = 0; i < battleLoader.Players.Count; i++)
+            {
+                if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp == 0)
+                {
+                    battleLoader.Players.RemoveAt(i);
+                }
+            }
 
-        battleOrderManager.TurnChange();
+            for (int i = 0; i < battleLoader.Enemys.Count; i++)
+            {
+                if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp == 0)
+                {
+                    battleLoader.Enemys.RemoveAt(i);
+                    Destroy(battleLoader.EnemyStats[i].gameObject);
+                    battleLoader.EnemyStats.RemoveAt(i);
+                }
+            }
+
+            isZero = false;
+        }
+
+        if (battleLoader.Enemys.Count > 0 && battleLoader.Players.Count > 0)
+        {
+            battleOrderManager.SetOrder();
+            battleOrderManager.TurnChange();
+        }
+
+        Destroy(gameObject);
     }
 }

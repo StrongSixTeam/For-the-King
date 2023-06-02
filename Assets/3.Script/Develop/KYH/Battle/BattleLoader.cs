@@ -26,6 +26,10 @@ public class BattleLoader : MonoBehaviour
 
     public List<GameObject> Encounter = new List<GameObject>();
 
+    public bool isIng = false;
+
+    public int totalExp = 0;
+
     private void Start()
     {
         playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
@@ -76,14 +80,16 @@ public class BattleLoader : MonoBehaviour
                 EnemyStats[i].transform.SetParent(GameObject.Find("Canvas").transform);
                 EnemyStats[i].transform.localPosition = new Vector2(0, 400);
                 EnemyStats[i].GetComponent<EnemyUI>().enemyStat = Enemys[i].GetComponent<EnemyStat>();
+
+                totalExp += Enemys[i].GetComponent<EnemyStat>().Exp;
             }
         }
 
         for (int i = 0; i < Players.Count; i++)
         {
             Players[i].GetComponent<PlayerController_Jin>().enabled = false;
-            Players[i].transform.GetChild(0).gameObject.SetActive(true);
-            Players[i].transform.GetChild(1).gameObject.SetActive(true);
+
+            Players[i].transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (Players.Count == 2)
@@ -118,7 +124,6 @@ public class BattleLoader : MonoBehaviour
         battleUI.SetActive(true);
         fieldUI.SetActive(false);
     }
-
     private void OnDisable()
     {
         PrefsDestroy();
@@ -134,5 +139,7 @@ public class BattleLoader : MonoBehaviour
         Players.Clear();
         Enemys.Clear();
         EnemyStats.Clear();
+        Encounter.Clear();
+        isIng = false;
     }
 }

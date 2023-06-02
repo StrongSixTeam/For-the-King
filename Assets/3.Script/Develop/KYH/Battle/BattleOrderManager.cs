@@ -29,28 +29,28 @@ public class BattleOrderManager : MonoBehaviour
     private void Start()
     {
         SetOrder();
-        SetUI();
+        TurnChange();
     }
     public void SetOrder()
     {
         GameObject temp = null;
 
-        order.Clear();
-        Order.Clear();
-
-        int j = 0;
-        for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
+        if (order.Count == 0)
         {
-            if (battleLoader.Players.Count - 1 < i)
+            int j = 0;
+            for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
             {
-                order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
-                Order.Add(battleLoader.Enemys[j]);
+                if (battleLoader.Players.Count - 1 < i)
+                {
+                    order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
+                    Order.Add(battleLoader.Enemys[j]);
 
-                j++;
-                continue;
+                    j++;
+                    continue;
+                }
+                order.Add(battleLoader.Players[i].GetComponent<PlayerStat>().speed);
+                Order.Add(battleLoader.Players[i]);
             }
-            order.Add(battleLoader.Players[i].GetComponent<PlayerStat>().speed);
-            Order.Add(battleLoader.Players[i]);
         }
 
         for (int i = 0; i < order.Count; i++)
@@ -68,8 +68,6 @@ public class BattleOrderManager : MonoBehaviour
     }
     private void SetUI()
     {
-        //단이가 초상화 심어주면 이미지 설정하기 구현
-        //적 스탯 구현 후 적 이미지 심기 설정
         turn++;
 
         if (Order.Count - 1 < turn)
@@ -83,16 +81,33 @@ public class BattleOrderManager : MonoBehaviour
 
             if (Order[j].GetComponent<PlayerStat>() != null)
             {
-                portrait[i-turn].sprite = Order[j].GetComponent<PlayerStat>().portrait;
-                background[i-turn].sprite = PBground;
+                portrait[i - turn].sprite = Order[j].GetComponent<PlayerStat>().portrait;
+                background[i - turn].sprite = PBground;
             }
             else
             {
-                portrait[i-turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
-                background[i- turn].sprite = EBground;
+                portrait[i - turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
+                background[i - turn].sprite = EBground;
             }
         }
-        //카메라 돌리기
+    }
+    public void TurnChange()
+    {
+        StartCoroutine(Ani_co());
+        SetUI();
+
+        if (!battleLoader.isIng)
+        {
+            Invoke("CameraChange", 2f);
+            battleLoader.isIng = true;
+        }
+        else
+        {
+            CameraChange();
+        }
+    }
+    private void CameraChange()
+    {
         if (Order[turn].GetComponent<PlayerStat>() != null)
         {
             battleCameraController.PlayerTurnCamera();
@@ -101,12 +116,6 @@ public class BattleOrderManager : MonoBehaviour
         {
             battleCameraController.EnemyTurnCamera();
         }
-    }
-    public void TurnChange()
-    {
-        StartCoroutine(Ani_co());
-        SetUI();
-
     }
     private IEnumerator Ani_co()
     {

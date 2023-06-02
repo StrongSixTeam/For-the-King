@@ -1,35 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngineInternal;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    //배틀에서 사용되는 함수 모두 관리
-    //순서에 맞는 무기의 확률 띄우기
-    //순서 결정하는 스크립트 참조하기
-
     private BattleOrderManager battleOrderManager;
     [SerializeField] private BattleLoader battleLoader;
+    BattleCameraController battleCameraController;
 
     Camera battlecam;
+    [SerializeField] Camera MainCam;
 
     [SerializeField] private GameObject bulletPrefs;
 
     public GameObject target;
     private bool isPlayer = false;
+    public bool isEnd = false;
 
     public int attackDamage = 0;
 
     public GameObject BattleUI;
 
-    public bool isLose = false;
-    public bool isWin = false;
+    [SerializeField] GameObject Get;
+
+    private Camera CurrnetCam;
 
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
+        battleCameraController = FindObjectOfType<BattleCameraController>();
         battlecam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
+        CurrnetCam = FindObjectOfType<Camera>();
     }
     private void Update()
     {
@@ -53,9 +55,30 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if(battleLoader.Players.Count == 0)
+        if(battleLoader.Players.Count == 0 && !isEnd)
         {
 
+
+        }
+        if (battleLoader.Enemys.Count == 0 && !isEnd)
+        {
+            StartCoroutine(battleCameraController.PlayerWinCam_co());
+
+            for (int i = 0; i < battleLoader.Players.Count; i++)
+            {
+                Text txt = Instantiate(Get, CurrnetCam.WorldToScreenPoint(battleLoader.Players[i].transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
+                Debug.Log(txt.text);
+                txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                txt.text = "+" + battleLoader.totalExp;
+
+                for (int j = 0; j < GameManager.instance.Players.Length; j++)
+                {
+                    if (battleLoader.Players[i].GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[j].GetComponent<PlayerStat>().name))
+                    {
+                        GameManager.instance.Players[j].GetComponent<PlayerStat>().nowExp += battleLoader.totalExp;
+                    }
+                }
+            }
         }
     }
     public void RookAt()
@@ -93,5 +116,18 @@ public class BattleManager : MonoBehaviour
         bullet.transform.position += new Vector3(0, 1, 0);
 
         BattleUI.SetActive(false);
+    }
+    private void OnDisable()
+    {
+        isPlayer = false;
+        isEnd = false;
+    }
+
+    public void BattleEnd()
+    {
+        battleLoader.gameObject.SetActive(false);
+        battlecam.gameObject.SetActive(false);
+        MainCam.gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
