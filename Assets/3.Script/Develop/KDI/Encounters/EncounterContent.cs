@@ -21,6 +21,7 @@ public class EncounterContent : ScriptableObject
     public int limit; //성공 기준
 
     public bool isCleared = false; //클리어 여부
+    public bool isShowed = true; //보이는 여부
 
     public string slotType;
     public int slotCount;
