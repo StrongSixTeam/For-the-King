@@ -172,6 +172,18 @@ public class PlayerController_Jin : MonoBehaviour
         nowtTargetNodes = targetNodes;
         for (int i = 0; i < nowtTargetNodes.Count; i++)
         {
+            for (int q = 0; q < 6; q++)
+            {
+                if ((i + 1) >= nowtTargetNodes.Count)
+                {
+                    break;
+                }
+                if (map.randomObjectIndex[q] == nowtTargetNodes[i + 1].index)
+                {
+                    map.ShowRandomObject(q);
+                }
+            }
+
             int origin = myHexNum;
             //Rotation(i);
 
