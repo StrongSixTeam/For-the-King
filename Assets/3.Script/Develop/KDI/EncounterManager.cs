@@ -53,6 +53,7 @@ public class EncounterManager : MonoBehaviour
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
         SlotController.instance.maxSlotCount = enemies[n].enemyCount;
+        SlotController.instance.limit = enemies[n].limit;
         SlotController.instance.type = SlotController.Type.empty;
         slot.GetComponent<CloneSlot>().Initialized();
         slot.SetActive(true);
@@ -272,7 +273,7 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         MultiCamera.instance.ToBattle();
 
-        astsrPathfinding.isPathfinding = false;
+        GameManager.instance.isBlock = true;
         //전투 끝났을때 다시 true로 돌려줘야함
     }
 
