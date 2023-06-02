@@ -30,6 +30,8 @@ public class BattleOrderManager : MonoBehaviour
     {
         SetOrder();
         TurnChange();
+
+        turn = 0;
     }
     public void SetOrder()
     {

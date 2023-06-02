@@ -29,10 +29,24 @@ public class BattleLoader : MonoBehaviour
     public bool isIng = false;
 
     public int totalExp = 0;
+    public int Gold = 0;
+
+    private ItemInputTest1 itemInput;
+    public List<Item> items = new List<Item>();
+
+    [SerializeField] GameObject[] ItemInputUI;
+    public List<GameObject> currentItemInputUI;
 
     private void Start()
     {
         playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
+        itemInput = FindObjectOfType<ItemInputTest1>();
+
+        int rand = Random.Range(1, 3);
+        for (int i = 0; i < rand; i++)
+        {
+            items.Add(itemInput.Stack());
+        }
 
         Encounter = playerController.CheckAroundObject();
         Encounter.Add(GameManager.instance.MainPlayer);
@@ -82,12 +96,15 @@ public class BattleLoader : MonoBehaviour
                 EnemyStats[i].GetComponent<EnemyUI>().enemyStat = Enemys[i].GetComponent<EnemyStat>();
 
                 totalExp += Enemys[i].GetComponent<EnemyStat>().Exp;
+                Gold += Random.Range(1, 6);
             }
         }
 
         for (int i = 0; i < Players.Count; i++)
         {
             Players[i].GetComponent<PlayerController_Jin>().enabled = false;
+
+            currentItemInputUI.Add(ItemInputUI[Players[i].GetComponent<PlayerStat>().order]);
 
             Players[i].transform.localScale = new Vector3(1, 1, 1);
         }
@@ -136,10 +153,16 @@ public class BattleLoader : MonoBehaviour
             Destroy(Enemys[i]);
             Destroy(EnemyStats[i]);
         }
+
+        totalExp = 0;
+        Gold = 0;
+
         Players.Clear();
         Enemys.Clear();
         EnemyStats.Clear();
         Encounter.Clear();
+        items.Clear();
+        currentItemInputUI.Clear();
         isIng = false;
     }
 }
