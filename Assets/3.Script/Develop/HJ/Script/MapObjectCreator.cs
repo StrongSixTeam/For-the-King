@@ -484,6 +484,7 @@ public class MapObjectCreator : MonoBehaviour
                         GameObject sanctum = Instantiate(sanctumObj[i]);
                         sanctum.transform.position = forestNode[random].transform.position + new Vector3(0f, 0.1f, 0f);
                         sanctum.transform.SetParent(fixedObjectBox);
+                        sanctumObj[i] = sanctum;
                         forestNode[random].doNotUse = true;
                         objectIndex.Add(forestNode[random].index);
                         break;
@@ -515,6 +516,7 @@ public class MapObjectCreator : MonoBehaviour
                         GameObject sanctum = Instantiate(sanctumObj[i]);
                         sanctum.transform.position = plainsNode[random].transform.position + new Vector3(0f, 0.1f, 0f);
                         sanctum.transform.SetParent(fixedObjectBox);
+                        sanctumObj[i] = sanctum;
                         plainsNode[random].doNotUse = true;
                         objectIndex.Add(plainsNode[random].index);
                         break;

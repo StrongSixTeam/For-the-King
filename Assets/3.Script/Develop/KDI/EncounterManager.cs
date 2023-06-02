@@ -248,6 +248,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
         FindObjectOfType<ChaosControl>().RemoveChaos(false);
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
     }
 
     public void PlusLifeBtn() 
@@ -256,6 +257,7 @@ public class EncounterManager : MonoBehaviour
         btns[5].SetActive(false);
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;   
     }
 
     public void TryConnect()
@@ -279,6 +281,7 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(1).gameObject.SetActive(false);
         parent.GetChild(2).gameObject.SetActive(false);
         encounter[2].isCleared = true;
+        FindObjectOfType<MapObjectCreator>().UseObject(0);
     }
 
     private int FindTypePercent(string some)
@@ -414,18 +417,21 @@ public class EncounterManager : MonoBehaviour
             SanctumFocusBtn();
             encounter[number].isCleared = true;
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.focus;
+            FindObjectOfType<MapObjectCreator>().UseObject(1);
         }
         else if (number == 10)
         {
             SanctumLifeBtn();
             encounter[number].isCleared = true;
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.life;
+            FindObjectOfType<MapObjectCreator>().UseObject(2);
         }
         else if (number == 11)
         {
             SanctumIntelBtn();
             encounter[number].isCleared = true;
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.wisdom;
+            FindObjectOfType<MapObjectCreator>().UseObject(3);
         }
     }
 
