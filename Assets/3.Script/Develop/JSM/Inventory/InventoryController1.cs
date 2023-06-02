@@ -22,11 +22,10 @@ public class InventoryController1 : MonoBehaviour
     //public List<Image> InvenImg = new List<Image>();
     //public List<Text> InvenTxt = new List<Text>();
 
+    [Header("플레이어 식별 번호")]
     public PlayerNum playerNum;                     // 플레이어 번호
-    //public List<Item> itemList = new List<Item>(); //획득한 아이템 정보를 담는 리스트
     public List<List<Item>> playerInventory = new List<List<Item>>(); // 플레이어 별 인벤토리
     public List<List<int>> itemCount = new List<List<int>>();
-    public List<Item[]> playerEquip = new List<Item[]>();
 
     private GameObject item;
     [SerializeField] private GameObject category;
@@ -50,9 +49,10 @@ public class InventoryController1 : MonoBehaviour
     public bool isUsed = false;
 
     [Header("인벤토리 장비창")]
-    public Item[] equipArr = new Item[5];
+    public List<Item[]> playerEquip = new List<Item[]>();
     public Text[] equipItemName = new Text[5];
     public string itemName = "";
+    public string overItemName = "";
 
     private EquipType equipType;
     [SerializeField] Button[] equipBtn;
@@ -108,12 +108,12 @@ public class InventoryController1 : MonoBehaviour
         {
             itemCount[playerNum][i]++;
             //Debug.Log(playerInventory[playerNum][i] + ": " + itemCount[playerNum][i]);
-            /*if (itemCount[playerNum][i] < 1)
+            if (itemCount[playerNum][i] < 1)
             {
                 Debug.Log("여긴 걸리면 안 돼.");
                 playerInventory[playerNum].RemoveAt(i);
                 itemCount[playerNum].RemoveAt(i);
-            }*/
+            }
         }
         else
         {
@@ -444,7 +444,7 @@ public class InventoryController1 : MonoBehaviour
                 switch (playerInventory[(int)playerNum][i].itemType)
                 {
                     case ItemType.허브:
-                        if(itemCount[(int)playerNum][i] == 1)
+                        if(itemCount[(int)playerNum][i] <= 1)
                         {
                             //Destroy();
                             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
@@ -465,7 +465,7 @@ public class InventoryController1 : MonoBehaviour
                         break;
 
                     case ItemType.스크롤:
-                        if (itemCount[(int)playerNum][i] == 1)
+                        if (itemCount[(int)playerNum][i] <= 1)
                         {
                             //Destroy(transform.GetChild(transform.childCount - 1).gameObject);
                             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
@@ -486,7 +486,7 @@ public class InventoryController1 : MonoBehaviour
                         break;
 
                     case ItemType.기타:
-                        if (itemCount[(int)playerNum][i] == 1)
+                        if (itemCount[(int)playerNum][i] <= 1)
                         {
                             //Destroy(transform.GetChild(transform.childCount - 1).gameObject);
                             transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
@@ -559,20 +559,10 @@ public class InventoryController1 : MonoBehaviour
 
     private void UpdateEquip(Weapon weapon, int i)
     {
-        itemCount[(int)playerNum][i]--;
-        if (itemCount[(int)playerNum][i] < 1)
-        {
-            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
-            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-            playerInventory[(int)playerNum].RemoveAt(i);
-            ListPos.y += 25f;
-            // Debug.Log("무기 1개 남은 거 장착 후 " + ListPos.y);
-        }
-
         if (playerEquip[(int)playerNum][0] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
         {
             playerEquip[(int)playerNum][0] = weapon;
-            equipItemName[0].text = equipArr[0].itemName;
+            equipItemName[0].text = weapon.itemName;
             equipBtn[0].interactable = true;
             
         }
@@ -589,31 +579,38 @@ public class InventoryController1 : MonoBehaviour
             {
                 ItemStack(playerEquip[(int)playerNum][0], (int)playerNum);
                 playerEquip[(int)playerNum][0] = weapon;
-                equipItemName[0].text = equipArr[0].itemName;
+                equipItemName[0].text = weapon.itemName;
             }
             else
             {                                       // 착용 중이던 장비가 인벤토리에 있다면
                 itemCount[(int)playerNum][x]++;
                 playerEquip[(int)playerNum][0] = weapon;
-                equipItemName[0].text = equipArr[0].itemName;
+                equipItemName[0].text = weapon.itemName;
             }
+        }
+
+        if (itemCount[(int)playerNum][i] <= 1)
+        {
+            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
+            playerInventory[(int)playerNum].RemoveAt(i);
+            itemCount[(int)playerNum].RemoveAt(i);
+            ListPos.y += 25f;
+            // Debug.Log("무기 1개 남은 거 장착 후 " + ListPos.y);
+        }
+        else
+        {
+            itemCount[(int)playerNum][i]--;
         }
     }
 
     private void UpdateEquip(Armor armor, int i, int arrNum)
     {
-        itemCount[(int)playerNum][i]--;
-        if (itemCount[(int)playerNum][i] < 1)
-        {
-            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
-            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
-            playerInventory[(int)playerNum].RemoveAt(i);
-            ListPos.y += 25f;
-            //Debug.Log("무기 1개 남은 거 장착 후 " + ListPos.y);
-        }
         if (playerEquip[(int)playerNum][arrNum] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
         {
             playerEquip[(int)playerNum][arrNum] = armor;
+            equipItemName[arrNum].text = armor.itemName;
+            equipBtn[arrNum].interactable = true;
         }
 
         else if (playerEquip[(int)playerNum][arrNum].itemName.Equals(armor.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
@@ -628,30 +625,44 @@ public class InventoryController1 : MonoBehaviour
             {
                 ItemStack(playerEquip[(int)playerNum][arrNum], (int)playerNum);
                 playerEquip[(int)playerNum][arrNum] = armor;
-                equipItemName[arrNum].text = equipArr[arrNum].itemName;
+                equipItemName[arrNum].text = armor.itemName;
             }
             else
             {                                           // 착용 중인 장비가 인벤토리에 있다면
-                itemCount[(int)playerNum][i]++;
+                itemCount[(int)playerNum][x]++;
                 playerEquip[(int)playerNum][arrNum] = armor;
-                equipItemName[arrNum].text = equipArr[arrNum].itemName;
+                equipItemName[arrNum].text = armor.itemName;
             }
+        }
+
+        if (itemCount[(int)playerNum][i] <= 1)
+        {
+            transform.GetChild(transform.childCount - 1).gameObject.SetActive(false);
+            poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
+            playerInventory[(int)playerNum].RemoveAt(i);
+            itemCount[(int)playerNum].RemoveAt(i);
+            ListPos.y += 25f;
+            //Debug.Log("무기 1개 남은 거 장착 후 " + ListPos.y);
+        }
+        else
+        {
+            itemCount[(int)playerNum][i]--;
         }
     }
 
-    public void ShowEquip() // 여기 고쳐야 함 (230601)
+    public void ShowEquip() 
     {
         ResetEquip();
         for (int i = 0; i < playerEquip[(int)playerNum].Length; i++)
         {
             if(playerEquip[(int)playerNum][i] == null)
             {
-                equipItemName[i].text = playerEquip[(int)playerNum][i].itemName;
-                equipBtn[i].interactable = true;
+                continue;
             }
             else
             {
                 equipItemName[i].text = playerEquip[(int)playerNum][i].itemName;
+                equipBtn[i].interactable = true;
             }
         }
     }
@@ -661,6 +672,7 @@ public class InventoryController1 : MonoBehaviour
         for(int i = 0; i < equipItemName.Length; i++)
         {
             equipItemName[i].text = "";
+            equipBtn[i].interactable = false;
         }
     }
 
@@ -725,17 +737,17 @@ public class InventoryController1 : MonoBehaviour
 
     private void FindInInventory(int index)
     {
-        int i = playerInventory[(int)playerNum].IndexOf(equipArr[index]);
+        int i = playerInventory[(int)playerNum].IndexOf(playerEquip[(int)playerNum][index]);
         if (i == -1)
         {
-            ItemStack(equipArr[index], (int)playerNum);
-            equipArr[index] = null;
+            ItemStack(playerEquip[(int)playerNum][index], (int)playerNum);
+            playerEquip[(int)playerNum][index] = null;
         }
 
         else
         {
             itemCount[(int)playerNum][i]++;
-            equipArr[index] = null;
+            playerEquip[(int)playerNum][index] = null;
         }
     }
 
@@ -743,7 +755,7 @@ public class InventoryController1 : MonoBehaviour
     {
         for (int i = 0; i < allItemArr.EatItem.Length; i++)
         {
-            if (allItemArr.EatItem[i].itemName.Equals(itemName))
+            if (allItemArr.EatItem[i].itemName.Equals(overItemName))
             {
                 detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = allItemArr.EatItem[i].itemDetailImage;
                 detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite = allItemArr.EatItem[i].itemImage;

@@ -21,17 +21,17 @@ public class MouseOverEvent_Equip : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OverInvenItem()
     {
-        InventoryController1.instance.itemName = "";
+        InventoryController1.instance.overItemName = "";
         string[] itemNameArr = transform.GetChild(1).GetComponent<Text>().text.Split(' ');
         for (int i = 0; i < itemNameArr.Length; i++)
         {
-            InventoryController1.instance.itemName += itemNameArr[i];
+            InventoryController1.instance.overItemName += itemNameArr[i];
             if (itemNameArr.Length != i + 1)
             {
-                InventoryController1.instance.itemName += " ";
+                InventoryController1.instance.overItemName += " ";
             }
         }
-        Debug.Log(InventoryController1.instance.itemName);
+        Debug.Log(InventoryController1.instance.overItemName);
         InventoryController1.instance.ShowDetailUI();
     }
 

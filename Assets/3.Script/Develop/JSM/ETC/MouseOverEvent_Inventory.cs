@@ -21,16 +21,16 @@ public class MouseOverEvent_Inventory : MonoBehaviour, IPointerEnterHandler, IPo
 
     public void OverInvenItem()
     {
-        InventoryController1.instance.itemName = "";
+        InventoryController1.instance.overItemName = "";
         string[] itemNameArr = transform.GetChild(1).GetComponent<Text>().text.Split(' ');
         for (int i = 0; i < itemNameArr.Length - 1; i++)
         {
-            InventoryController1.instance.itemName += itemNameArr[i];
+            InventoryController1.instance.overItemName += itemNameArr[i];
             if (itemNameArr.Length % 2 == 0)
             {
                 if (i % 2 == 1)
                 {
-                    InventoryController1.instance.itemName += " ";
+                    InventoryController1.instance.overItemName += " ";
                 }
             }
 
@@ -38,7 +38,7 @@ public class MouseOverEvent_Inventory : MonoBehaviour, IPointerEnterHandler, IPo
             {
                 if (i % 2 == 0)
                 {
-                    InventoryController1.instance.itemName += " ";
+                    InventoryController1.instance.overItemName += " ";
                 }
             }
         }
