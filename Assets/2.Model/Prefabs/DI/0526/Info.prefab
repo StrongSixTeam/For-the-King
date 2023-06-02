@@ -555,6 +555,7 @@ GameObject:
   - component: {fileID: 1507186544861402421}
   - component: {fileID: 5787363799792520869}
   - component: {fileID: 5795382203791228333}
+  - component: {fileID: 3475740079613232744}
   m_Layer: 5
   m_Name: btnPray
   m_TagString: Untagged
@@ -676,6 +677,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3475740079613232744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932065834774171080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 932065834774171080}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &1197285305810298394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,6 +1134,7 @@ GameObject:
   - component: {fileID: 4056567678575585803}
   - component: {fileID: 5595361484816319524}
   - component: {fileID: 1898949821081819647}
+  - component: {fileID: 8032532573925481727}
   m_Layer: 5
   m_Name: btnExit
   m_TagString: Untagged
@@ -1239,6 +1256,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8032532573925481727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671685255570014373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 1671685255570014373}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &2246489847881032518
 GameObject:
   m_ObjectHideFlags: 0
@@ -4786,6 +4818,7 @@ GameObject:
   - component: {fileID: 8408971816907924821}
   - component: {fileID: 8408971816907924820}
   - component: {fileID: 8023694577515646324}
+  - component: {fileID: 4528929304786716299}
   m_Layer: 5
   m_Name: btnTry
   m_TagString: Untagged
@@ -4920,6 +4953,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usedFocus: 0
+--- !u!114 &4528929304786716299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971816907924818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971816907924818}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817065277805
 GameObject:
   m_ObjectHideFlags: 0
@@ -5447,6 +5495,7 @@ GameObject:
   - component: {fileID: 8408971817311145920}
   - component: {fileID: 8472931459467788696}
   - component: {fileID: 8464645344851439057}
+  - component: {fileID: 920154585031391269}
   m_Layer: 5
   m_Name: btnPass
   m_TagString: Untagged
@@ -5558,7 +5607,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8408971818603310912}
         m_TargetAssemblyTypeName: EncounterManager, Assembly-CSharp
-        m_MethodName: ExitButton
+        m_MethodName: TryConnect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5595,6 +5644,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usedFocus: 0
+--- !u!114 &920154585031391269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817311145934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817311145934}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817311830570
 GameObject:
   m_ObjectHideFlags: 0
@@ -5607,6 +5671,7 @@ GameObject:
   - component: {fileID: 8408971817311830574}
   - component: {fileID: 8408971817311830573}
   - component: {fileID: 8408971817311830572}
+  - component: {fileID: 547856865310749637}
   m_Layer: 5
   m_Name: btnExit
   m_TagString: Untagged
@@ -5728,6 +5793,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &547856865310749637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817311830570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817311830570}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817313901050
 GameObject:
   m_ObjectHideFlags: 0
@@ -5741,6 +5821,7 @@ GameObject:
   - component: {fileID: 8408971817313901053}
   - component: {fileID: 8408971817313901052}
   - component: {fileID: 8138680816400936608}
+  - component: {fileID: 6500342610848852912}
   m_Layer: 5
   m_Name: btnExit
   m_TagString: Untagged
@@ -5876,6 +5957,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 5362873400039459879}
   n: 0
+--- !u!114 &6500342610848852912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817313901050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817313901050}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817339775172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5888,6 +5984,7 @@ GameObject:
   - component: {fileID: 8408971817339775192}
   - component: {fileID: 8408971817339775175}
   - component: {fileID: 8408971817339775174}
+  - component: {fileID: 8209895715491425423}
   m_Layer: 5
   m_Name: btnMarket
   m_TagString: Untagged
@@ -6009,6 +6106,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8209895715491425423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817339775172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817339775172}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817342107263
 GameObject:
   m_ObjectHideFlags: 0
@@ -6043,7 +6155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 13}
+  m_AnchoredPosition: {x: 0, y: 31}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8408971817443215930
@@ -6059,6 +6171,7 @@ GameObject:
   - component: {fileID: 8408971817443215933}
   - component: {fileID: 8408971817443215932}
   - component: {fileID: 966248919361627631}
+  - component: {fileID: 5406001124010810838}
   m_Layer: 5
   m_Name: btnFight
   m_TagString: Untagged
@@ -6194,6 +6307,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 5362873400039459879}
   n: 0
+--- !u!114 &5406001124010810838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817443215930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817443215930}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817474839142
 GameObject:
   m_ObjectHideFlags: 0
@@ -6206,6 +6334,7 @@ GameObject:
   - component: {fileID: 8408971817474839162}
   - component: {fileID: 8408971817474839161}
   - component: {fileID: 8408971817474839160}
+  - component: {fileID: 6906920261837870669}
   m_Layer: 5
   m_Name: btnFight
   m_TagString: Untagged
@@ -6327,6 +6456,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6906920261837870669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817474839142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817474839142}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817486906798
 GameObject:
   m_ObjectHideFlags: 0
@@ -7200,6 +7344,7 @@ GameObject:
   - component: {fileID: 8408971817914310973}
   - component: {fileID: 8408971817914310972}
   - component: {fileID: 8408971817914310971}
+  - component: {fileID: 8226662560467088673}
   m_Layer: 5
   m_Name: btnExit
   m_TagString: Untagged
@@ -7321,6 +7466,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8226662560467088673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971817914310969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971817914310969}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971817934393246
 GameObject:
   m_ObjectHideFlags: 0
@@ -8111,6 +8271,7 @@ GameObject:
   - component: {fileID: 8408971818354679629}
   - component: {fileID: 8408971818354679628}
   - component: {fileID: 8408971818354679627}
+  - component: {fileID: 4376883862202229446}
   m_Layer: 5
   m_Name: btnExit
   m_TagString: Untagged
@@ -8232,6 +8393,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4376883862202229446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971818354679625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971818354679625}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971818436573818
 GameObject:
   m_ObjectHideFlags: 0
@@ -8323,6 +8499,7 @@ GameObject:
   - component: {fileID: 8408971818595108772}
   - component: {fileID: 8408971818595108771}
   - component: {fileID: 8408971818595108770}
+  - component: {fileID: 4982060319746724368}
   m_Layer: 5
   m_Name: btnService
   m_TagString: Untagged
@@ -8444,6 +8621,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4982060319746724368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408971818595108768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9689830964549aa4e987054548aeb558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalBtn: {fileID: 8408971818595108768}
+  originalSprite: {fileID: 21300000, guid: 00c03f2bab287ec458d9bd9998a23142, type: 3}
+  colorChangeSprite: {fileID: 21300000, guid: cce1b72896724d64eaaeac41d979aa5b, type: 3}
 --- !u!1 &8408971818600856517
 GameObject:
   m_ObjectHideFlags: 0
