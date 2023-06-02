@@ -122,6 +122,12 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.enemy)
         {
+            FindObjectOfType<EnemyBattleBtn>().active = true;
+            FindObjectOfType<EnemyExitBtn>().active = true;
+            FindObjectOfType<EnemyRunBtn>().active = true;
+            btns[2].transform.GetChild(0).GetComponent<Button>().interactable = true;
+            btns[2].transform.GetChild(2).GetComponent<Button>().interactable = true;
+            btns[2].transform.GetChild(1).GetComponent<Button>().interactable = true;
             ActiveBtn(2);
             SlotController.instance.fixCount = 0;
             SlotController.instance.maxSlotCount = encounter[n].enemyCount;
@@ -255,6 +261,12 @@ public class EncounterManager : MonoBehaviour
     public void TryConnect()
     {
         slot.GetComponent<CloneSlot>().Try();
+        btns[2].transform.GetChild(0).GetComponent<Button>().interactable = false;
+        btns[2].transform.GetChild(2).GetComponent<Button>().interactable = false;
+        btns[2].transform.GetChild(1).GetComponent<Button>().interactable = false;
+        FindObjectOfType<EnemyBattleBtn>().active = false;
+        FindObjectOfType<EnemyExitBtn>().active = false;
+        FindObjectOfType<EnemyRunBtn>().active = false;
         astsrPathfinding.ShowRedHexStop();
     }
 
