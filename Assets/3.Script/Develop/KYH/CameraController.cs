@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
     {
         defaultPos = new Vector3(0, 10f, -9f);
         moveSpeed = 10f;
-        zoomSpeed = 10f;
+        zoomSpeed = 5f;
         zoomMax = 15f;
         zoomMin = 7f;
     }
