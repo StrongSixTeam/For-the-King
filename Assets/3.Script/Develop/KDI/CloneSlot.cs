@@ -12,6 +12,7 @@ public class CloneSlot : MonoBehaviour
     public Sprite[] attackScholar; //공격 UI 이미지 - 학자
     public Sprite empty; //빈 이미지
     public bool isShowText = true;
+    [SerializeField] private GameObject highlight;
 
     public void Initialized()
     {
@@ -188,11 +189,14 @@ public class CloneSlot : MonoBehaviour
         }
         SlotController.instance.fixCount = a;
         SlotController.instance.isSlot = false;
+        //그라데이션 켜기
+        highlight.SetActive(true);
+        highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).gameObject.SetActive(true);
+
         if (SlotController.instance.limit <= SlotController.instance.success)
         {
             //성공 처리
-            Debug.Log("성공");
-            if (EncounterManager.instance.enemyNumber > 0) //몬스터랑 만난 경우
+            if (EncounterManager.instance.enemyNumber >= 0) //몬스터랑 만난 경우
             {
                 Invoke("OffAll", 1f);
             }
@@ -200,11 +204,15 @@ public class CloneSlot : MonoBehaviour
             {
                 StartCoroutine(GodSuccessWait_co());
             }
+            //하이라이트 처리
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(true);
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(false);
         }
         else
         {
             isSuccess = false;
-            if (EncounterManager.instance.enemyNumber > 0) //몬스터랑 만난 경우
+            if (EncounterManager.instance.enemyNumber >= 0) //몬스터랑 만난 경우
             {
                 StartCoroutine(BattleBtn_co());
             }
@@ -213,6 +221,10 @@ public class CloneSlot : MonoBehaviour
                 //실패 페널티 처리
             }
             Invoke("OffAll", 1f); //끄기
+            //하이라이트 처리
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
         }
     }
 
@@ -224,12 +236,16 @@ public class CloneSlot : MonoBehaviour
 
     IEnumerator BattleBtn_co()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.9f);
         EncounterManager.instance.BattleBtn();
     }
 
     private void OffAll()
     {
+        highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
+        highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(false);
+        highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).gameObject.SetActive(false);
+        highlight.SetActive(false);
         FindObjectOfType<EncounterManager>().DisableButton();
     }
 }

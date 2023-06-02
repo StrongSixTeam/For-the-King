@@ -22,8 +22,8 @@ public class PlayerController_Jin : MonoBehaviour
     {
         map = FindObjectOfType<MapObjectCreator>();
         quest = FindObjectOfType<QuestManager>();
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        gameObject.transform.GetChild(1).gameObject.SetActive(false);
+        gameObject.SetActive(true);
+        gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
         animator = GetComponent<Animator>();
         cloudBox = FindObjectOfType<CloudBox>();
         cloudBox.CloudActiveFalse(myHexNum);
@@ -202,8 +202,7 @@ public class PlayerController_Jin : MonoBehaviour
                     //못이동한만큼 canMoveCount에 더해주자
                     astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
                     GameManager.instance.ActivePortrait();
-                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    StartCoroutine(SwitchScaleCo(false));
                     saveWay = nowtTargetNodes[i-1]; 
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
@@ -216,8 +215,7 @@ public class PlayerController_Jin : MonoBehaviour
                 else //낫띵이라면
                 {
                     GameManager.instance.DeactivePortrait();
-                    gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                    gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    StartCoroutine(SwitchScaleCo(true));
                 }
             }
         }
@@ -247,6 +245,39 @@ public class PlayerController_Jin : MonoBehaviour
         
     }
 
+    IEnumerator SwitchScaleCo(bool active)
+    {
+        switch (active)
+        {
+            case true: //나타남
+                if(gameObject.transform.localScale == new Vector3(1f, 1f, 1f))
+                {
+                    yield break;
+                }
+                for (int i = 0; i < 20; i++)
+                {
+                    float velue = (0.05f * i);
+                    gameObject.transform.localScale = new Vector3(velue, velue, velue);
+                    yield return new WaitForSeconds(0.01f);
+                }
+                gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+                break;
+
+            case false: //사라짐
+                if (gameObject.transform.localScale != new Vector3(1f, 1f, 1f))
+                {
+                    yield break;
+                }
+                for (int i = 20; i >= 0; i--)
+                {
+                    float velue = (0.05f * i);
+                    gameObject.transform.localScale = new Vector3(velue, velue, velue);
+                    yield return new WaitForSeconds(0.01f);
+                }
+                gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
+                break;
+        }
+    }
 
     //플레이어 주위의 오브젝트를 리스트로 반환받을수있음
     public List<GameObject> CheckAroundObject()

@@ -19,6 +19,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject successCalc;
     [SerializeField] private GameObject preview;
+    [SerializeField] private GameObject highlight;
     public int number;
     public int enemyNumber;
     public bool isEncounterUI = false;
@@ -43,6 +44,11 @@ public class EncounterManager : MonoBehaviour
         {
             enemies[i].isCleared = false;
         }
+        for (int i = 0; i < highlight.transform.childCount; i++)
+        {
+            highlight.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        highlight.SetActive(false);
     }
 
     private void Update()
@@ -163,6 +169,12 @@ public class EncounterManager : MonoBehaviour
         List<HexMember> temp = new List<HexMember>();
         temp.Add(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().saveWay);
         GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().StartMove(temp);
+        
+        if (astsrPathfinding.canMoveCount > 0)
+        {
+            GameManager.instance.isBlock = false;
+            astsrPathfinding.ismovingTurn = true;
+        }
 
         if (btns[1].transform.GetChild(1).GetComponent<RightClick>().usedFocus > 0)
         {
