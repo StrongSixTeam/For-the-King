@@ -22,9 +22,17 @@ public class EnemyExitBtn : MonoBehaviour, IPointerEnterHandler
             transform.parent.GetChild(1).GetComponent<RightClick>().usedFocus = 0;
         }
         n = EncounterManager.instance.number;
+        int en = EncounterManager.instance.enemyNumber;
         EncounterManager.instance.txtContext.text = "이전 블록으로 돌아갑니다";
+        if (en >= 0)
+        {
+            encounterManager.EnemyExitBtn(en);
+        }
+        else
+        {
+            encounterManager.EncounterEnemyExitBtn(n);
+        }
         slot.GetComponent<CloneSlot>().isShowText = false;
-        encounterManager.EnemyExitBtn(n);
     }
 
 }

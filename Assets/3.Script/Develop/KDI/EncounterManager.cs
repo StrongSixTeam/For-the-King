@@ -45,6 +45,7 @@ public class EncounterManager : MonoBehaviour
     }
     public void ActiveEnemies(int n)
     {
+        number = -1;
         enemyNumber = n;
         txtName.text = enemies[n].Name;
         txtContext.text = enemies[n].Content;
@@ -65,7 +66,7 @@ public class EncounterManager : MonoBehaviour
 
     public void ActiveEncounter(int n)
     {
-        enemyNumber = 0;
+        enemyNumber = -1;
         number = n;
         txtName.text = encounter[n].Name;
         txtContext.text = encounter[n].Content;
@@ -137,6 +138,7 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        astsrPathfinding.ismovingTurn = true;
     }
 
     public void ExitButton()
@@ -298,7 +300,7 @@ public class EncounterManager : MonoBehaviour
     {
         slot.SetActive(true);
         SlotController.instance.fixCount = 0;
-        if (enemyNumber > 0)
+        if (enemyNumber >= 0)
         {
             SlotController.instance.maxSlotCount = enemies[n].slotCount;
         }
@@ -335,7 +337,7 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(2).gameObject.SetActive(false);
     }
 
-    public void EnemyExitBtn(int n)
+    public void EncounterEnemyExitBtn(int n)
     {
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
@@ -346,6 +348,19 @@ public class EncounterManager : MonoBehaviour
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(false);
     }
+
+    public void EnemyExitBtn(int n)
+    {
+        ActiveBtn(2);
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.maxSlotCount = enemies[n].enemyCount;
+        SlotController.instance.type = SlotController.Type.empty;
+        slot.GetComponent<CloneSlot>().Initialized();
+        slot.SetActive(true);
+        parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+        parent.GetChild(2).gameObject.SetActive(false);
+    }
+
 
     public void SanctumPrayBtn()
     {
