@@ -225,6 +225,7 @@ public class CloneSlot : MonoBehaviour
             highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
             highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
             highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
+            FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
         }
     }
 
