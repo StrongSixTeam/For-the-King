@@ -40,49 +40,61 @@ public class SuccessCalc : MonoBehaviour
         }
         //SlotController.instance.percent = percent;
         //maxSlot = maxSlot - testFix;
+
+
         if (maxSlot != 4)
         {
-            for (int i = 4; i > maxSlot; i--)
+            for (int i = 0; i < 4 - maxSlot; i++)
             {
                 resultNumbers[i].SetActive(false);
             }
         }
+        int newIndex = 4;
+
         for (int i = maxSlot; i >= 0; i--)
         {
+            
             float successPercent = percent * (float)0.01;
             float failPercent = (100 - percent) * (float)0.01;
             float result = Mathf.Pow(failPercent, maxSlot - i) * Mathf.Pow(successPercent, maxSlot - (maxSlot - i)) * formula.Combination(maxSlot, i) * 100;
             result = Mathf.Round(result);
-            if (maxSlot == testFix) //슬롯 크기 == 집중력 사용 일때
-            {
-                result = 100;
-            }
 
             if (i >= successLimit)
             {
-                resultNumbers[i].SetActive(true);
-                resultNumbers[i].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 성공";
+                if (maxSlot == testFix) //슬롯 크기 == 집중력 사용 일때
+                {
+                    result = 100;
+                }
+                resultNumbers[newIndex].SetActive(true);
+                resultNumbers[newIndex].transform.GetChild(0).GetComponent<Text>().text = i.ToString();
+                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 성공";
                 //Debug.Log(i + testFix + " " + result + "% 성공");
             }
             else
             {
-                resultNumbers[i].SetActive(true);
-                resultNumbers[i].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 실패";
+                if (maxSlot == testFix) //슬롯 크기 == 집중력 사용 일때
+                {
+                    result = 0;
+                }
+                resultNumbers[newIndex].SetActive(true);
+                resultNumbers[newIndex].transform.GetChild(0).GetComponent<Text>().text = i.ToString();
+                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 실패";
                 //Debug.Log(i + testFix+ " " + result + "% 실패");
             }
+            newIndex--;
         }
         for (int i = testFix-1; i >= 0; i--)
         {
             if (i >= successLimit)
             {
-                resultNumbers[i].SetActive(true);
-                resultNumbers[i].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 성공";
+                //resultNumbers[newIndex].SetActive(true);
+                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 성공";
                 //Debug.Log(i + " 0% 성공");
             }
             else
             {
-                resultNumbers[i].SetActive(true);
-                resultNumbers[i].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 실패";
+                //resultNumbers[newIndex].SetActive(true);
+                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(0%) 실패";
                 //Debug.Log(i + " 0% 실패");
             }
         }

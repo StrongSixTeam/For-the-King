@@ -677,7 +677,7 @@ public class MapObjectCreator : MonoBehaviour
         }
     }//전역:장애물
 
-    
+
 
     public void timeMonsterSpawn(bool isMorning)
     {
@@ -685,7 +685,7 @@ public class MapObjectCreator : MonoBehaviour
         {
             case true:
                 //밤에 소환된 몬스터가 있다면 지우자
-                while (activeMonster.Count>0)
+                while (activeMonster.Count > 0)
                 {
                     Destroy(activeMonster[0]);
                     activeMonster.RemoveAt(0);
@@ -740,7 +740,7 @@ public class MapObjectCreator : MonoBehaviour
                                 plainsNode[randomNumber].doNotUse = true;
 
                                 //스폰한 몬스터 정보와 노드정보
-                                randomMonsterName.Add(randomMonsterNum+3);
+                                randomMonsterName.Add(randomMonsterNum + 3);
                                 randomMonsterIndex.Add(plainsNode[randomNumber].index);
                                 activeMonster.Add(moster);
                                 break;
@@ -784,7 +784,7 @@ public class MapObjectCreator : MonoBehaviour
                                         moster.SetActive(true);
                                         forestNode[randomNumber].doNotUse = true;
 
-                                        randomMonsterName.Add(randomMonsterNum+5);
+                                        randomMonsterName.Add(randomMonsterNum + 5);
                                         randomMonsterIndex.Add(forestNode[randomNumber].index);
                                         activeMonster.Add(moster);
                                         break;
@@ -804,7 +804,7 @@ public class MapObjectCreator : MonoBehaviour
                                         moster.SetActive(true);
                                         plainsNode[randomNumber].doNotUse = true;
 
-                                        randomMonsterName.Add(randomMonsterNum+5);
+                                        randomMonsterName.Add(randomMonsterNum + 5);
                                         randomMonsterIndex.Add(plainsNode[randomNumber].index);
                                         activeMonster.Add(moster);
                                         break;
@@ -832,7 +832,7 @@ public class MapObjectCreator : MonoBehaviour
             case 0:
                 forestObj[2].transform.GetChild(0).localScale = Vector3.zero;
                 forestObj[2].transform.GetChild(0).gameObject.SetActive(true);
-                for(int i=0; i<20; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     forestObj[2].transform.GetChild(0).localScale += new Vector3(1f, 1f, 1f);
                     yield return new WaitForSeconds(0.02f);
@@ -847,7 +847,7 @@ public class MapObjectCreator : MonoBehaviour
                 forestObj[3].transform.GetChild(1).gameObject.SetActive(true);
                 forestObj[3].transform.GetChild(2).gameObject.SetActive(true);
 
-                for(int i=0; i<20; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     forestObj[3].transform.GetChild(1).localScale += new Vector3(0.05f, 0.05f, 0.05f);
                     forestObj[3].transform.GetChild(2).localScale += new Vector3(0.05f, 0.05f, 0.05f);
@@ -901,25 +901,30 @@ public class MapObjectCreator : MonoBehaviour
     {
         List<GameObject> box = new List<GameObject>();
         List<int> closeIndex = new List<int>();
-        for (int i = 0; i < 6; i++)
+
+        for (int e = 0; e < randomMonsterIndex.Count; e++)
         {
-            for (int j = 0; j < 6; j++)
+            bool check = false;
+            //주변에 어떤 몬스터가 있나요
+            for (int i = 0; i < 6; i++)
             {
-                //주변에 어떤 몬스터가 있나요
-                for (int e = 0; e < randomMonsterIndex.Count; e++)
+                if (check)
                 {
-                    if (hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index == randomMonsterIndex[e])
+                    break;
+                }
+                for (int j = 0; j < 6; j++)
+                {
+                    if (randomMonsterIndex[e] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(randomMonsterIndex[e]))
                     {
-                        //주변에 randomObjectIndex[e]가 있음
-                        if (!closeIndex.Contains(randomMonsterIndex[e]))
-                        {
-                            closeIndex.Add(randomObjectIndex[e]);
-                            box.Add(activeMonster[e]);
-                        }
+                        closeIndex.Add(randomObjectIndex[e]);
+                        box.Add(activeMonster[e]);
+                        check = true;
+                        break;
                     }
                 }
             }
         }
+
 
         return box;
     }

@@ -27,7 +27,6 @@ public class EnemyBattleBtn : MonoBehaviour, IPointerEnterHandler
 
         if (en > 0)
         {
-            Debug.Log(en);
             EncounterManager.instance.txtContext.text = EncounterManager.instance.enemies[en].Content;
             encounterManager.EnemyFightBtn(en);
         }
