@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public int maxLife = 5; //생명 슬롯 창 개수
+    public int currentLife = 5; //현재 생명 개수
+
     public GameObject[] Players;
     public GameObject MainPlayer;
     public int nextTurn = 0;

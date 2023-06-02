@@ -45,7 +45,7 @@ public class MapObjectCreator : MonoBehaviour
     public GameObject[] plainsObj = new GameObject[4];
     private GameObject[] sanctumObj = new GameObject[3];
     private GameObject[] randomObj = new GameObject[6];
-    private GameObject[] ObstacleObj = new GameObject[8];
+    private GameObject[] ObstacleObj = new GameObject[9];
 
     [Header("고정 오브젝트")]
     [SerializeField] GameObject forest01; //오아튼(시작지점) (townForest1)
@@ -70,6 +70,7 @@ public class MapObjectCreator : MonoBehaviour
     [SerializeField] GameObject stoneForest01; //(Stone_2F)
     [SerializeField] GameObject stoneForest02; //(Stone_3F)
     [SerializeField] GameObject stoneForest03; //(Stone_4F)
+    [SerializeField] GameObject flower; //(Flowers)
 
     [SerializeField] GameObject grass; //(hexPlains01_grass)
     [SerializeField] GameObject stonePlains01; //(Stone_2P)
@@ -614,18 +615,19 @@ public class MapObjectCreator : MonoBehaviour
         ObstacleObj[1] = stoneForest01;
         ObstacleObj[2] = stoneForest02;
         ObstacleObj[3] = stoneForest03;
-        ObstacleObj[4] = grass;
-        ObstacleObj[5] = stonePlains01;
-        ObstacleObj[6] = stonePlains02;
-        ObstacleObj[7] = stonePlains03;
+        ObstacleObj[4] = flower;  //0~4
+        ObstacleObj[5] = grass;  //5~8
+        ObstacleObj[6] = stonePlains01;
+        ObstacleObj[7] = stonePlains02;
+        ObstacleObj[8] = stonePlains03;
 
 
         for (int i = 0; i < forestNode.Length; i++)
         {
             if (!forestNode[i].doNotUse)
             {
-                int randomCreate = Random.Range(0, 4);
-                if (randomCreate.Equals(1))
+                int randomCreate = Random.Range(0, 5);
+                if (randomCreate.Equals(0))
                 {
                     int objNum = Random.Range(0, 4);
                     GameObject obstacle = Instantiate(ObstacleObj[objNum]);
@@ -633,6 +635,15 @@ public class MapObjectCreator : MonoBehaviour
                     obstacle.transform.SetParent(obstacleBox);
                     forestNode[i].doNotUse = true;
                     forestNode[i].ispass = false;
+                }
+                else if (randomCreate.Equals(2))
+                {
+                    //꽃
+                    GameObject obstacle = Instantiate(ObstacleObj[4]);
+                    obstacle.transform.localScale = new Vector3(3f, 3f, 3f);
+                    obstacle.transform.position = forestNode[i].transform.position + new Vector3(0f, -0.5f, 0f);
+                    obstacle.transform.SetParent(obstacleBox);
+                    forestNode[i].doNotUse = true;
                     forestNode[i].eventtype = obstacle.ToString();
                 }
 
@@ -643,23 +654,23 @@ public class MapObjectCreator : MonoBehaviour
         {
             if (!plainsNode[i].doNotUse)
             {
-                int randomCreate = Random.Range(0, 4);
-                if (randomCreate.Equals(1))
+                int randomCreate = Random.Range(0, 5);
+                if (randomCreate.Equals(0))
                 {
-                    int objNum = Random.Range(4, 8);
+                    int objNum = Random.Range(6, 9);
                     GameObject obstacle = Instantiate(ObstacleObj[objNum]);
                     obstacle.transform.position = plainsNode[i].transform.position + new Vector3(0f, 0.1f, 0f);
-                    if (objNum != 4)
-                    {
-                        plainsNode[i].ispass = false;
-                    }
-                    else
-                    {
-                        obstacle.transform.position += new Vector3(0f, 0.5f, 0f);
-                    }
+                    plainsNode[i].ispass = false;
                     obstacle.transform.SetParent(obstacleBox);
                     plainsNode[i].doNotUse = true;
-                    
+                }
+                else if (randomCreate.Equals(2))
+                {
+                    //잔디
+                    GameObject obstacle = Instantiate(ObstacleObj[5]);
+                    obstacle.transform.position = plainsNode[i].transform.position + new Vector3(0f, 0.6f, 0f);
+                    obstacle.transform.SetParent(obstacleBox);
+                    plainsNode[i].doNotUse = true;
                     plainsNode[i].eventtype = obstacle.ToString();
                 }
             }

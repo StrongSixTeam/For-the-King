@@ -134,14 +134,17 @@ public class QuestManager : MonoBehaviour
                     mapHexIndex = 2;
                     mapObjectCreator.ShowObject(0);
                     //bool값 true로 바꾸기 -> 충돌 가능
+                    FindObjectOfType<EncounterManager>().encounter[2].isShowed = true;
                     break;
                 case 4:
                     mapHexIndex = 3;
                     mapObjectCreator.ShowObject(1);
+                    FindObjectOfType<EncounterManager>().encounter[3].isShowed = true;
                     break;
                 case 7:
                     mapHexIndex = 4;
                     mapObjectCreator.ShowObject(2);
+                    FindObjectOfType<EncounterManager>().encounter[4].isShowed = true;
                     break;
                 case 8:
                     mapHexIndex = 5;
@@ -149,6 +152,7 @@ public class QuestManager : MonoBehaviour
                 case 10:
                     mapHexIndex = 8;
                     mapObjectCreator.ShowObject(3);
+                    FindObjectOfType<EncounterManager>().encounter[8].isShowed = true;
                     break;
 
             }

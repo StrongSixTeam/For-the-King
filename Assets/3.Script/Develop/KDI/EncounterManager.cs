@@ -20,6 +20,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject successCalc;
     [SerializeField] private GameObject preview;
     public int number;
+    public int enemyNumber;
     public bool isEncounterUI = false;
 
     private AstsrPathfinding astsrPathfinding;
@@ -44,8 +45,10 @@ public class EncounterManager : MonoBehaviour
     }
     public void ActiveEnemies(int n)
     {
+        enemyNumber = n;
         txtName.text = enemies[n].Name;
         txtContext.text = enemies[n].Content;
+        txtExtraContext.text = enemies[n].extraContent;
         preview.GetComponent<Image>().sprite = enemies[n].preview;
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
@@ -59,6 +62,7 @@ public class EncounterManager : MonoBehaviour
 
     public void ActiveEncounter(int n)
     {
+        enemyNumber = 0;
         number = n;
         txtName.text = encounter[n].Name;
         txtContext.text = encounter[n].Content;
@@ -276,7 +280,14 @@ public class EncounterManager : MonoBehaviour
     {
         slot.SetActive(true);
         SlotController.instance.fixCount = 0;
-        SlotController.instance.maxSlotCount = encounter[n].slotCount;
+        if (enemyNumber > 0)
+        {
+            SlotController.instance.maxSlotCount = enemies[n].slotCount;
+        }
+        else
+        {
+            SlotController.instance.maxSlotCount = encounter[n].slotCount;
+        }
         SlotController.instance.type = SlotController.Type.move;
         SlotController.instance.limit = SlotController.instance.maxSlotCount;
         SlotController.instance.percent = FindTypePercent("move");
@@ -291,7 +302,14 @@ public class EncounterManager : MonoBehaviour
     {
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
-        SlotController.instance.maxSlotCount = encounter[n].enemyCount;
+        if (enemyNumber > 0)
+        {
+            SlotController.instance.maxSlotCount = enemies[n].enemyCount;
+        }
+        else
+        {
+            SlotController.instance.maxSlotCount = encounter[n].enemyCount;
+        }
         SlotController.instance.type = SlotController.Type.empty;
         slot.GetComponent<CloneSlot>().Initialized();
         slot.SetActive(true);
