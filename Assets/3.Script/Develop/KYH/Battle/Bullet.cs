@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,11 +11,16 @@ public class Bullet : MonoBehaviour
     BattleOrderManager battleOrderManager;
     BattleLoader battleLoader;
 
+    [SerializeField] GameObject Damage;
+
+    private Camera CurrnetCam;
+
     private void Awake()
     {
         battleManager = FindObjectOfType<BattleManager>();
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
         battleLoader = FindObjectOfType<BattleLoader>();
+        CurrnetCam = FindObjectOfType<Camera>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,6 +29,10 @@ public class Bullet : MonoBehaviour
         {
             //공격력 만큼 피 달게 하기
             Debug.Log("맞았다!!!");
+
+            Text txt = Instantiate(Damage, CurrnetCam.WorldToScreenPoint(other.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
+            txt.transform.SetParent(GameObject.Find("Canvas").transform);
+            txt.text = "-" + battleManager.attackDamage;
 
             if (other.GetComponent<PlayerStat>() != null)
             {
@@ -49,9 +59,19 @@ public class Bullet : MonoBehaviour
                 if (currnetHP < 0)
                 {
                     other.GetComponent<EnemyStat>().nowHp = 0;
-                    //에너미 리스트 관리 추가 
+
+                    for (int i = 0; i < battleLoader.Enemys.Count; i++)
+                    {
+                        if(other.gameObject == battleLoader.Enemys[i])
+                        {
+                            battleLoader.Enemys.RemoveAt(i);
+                            battleOrderManager.SetOrder();
+                            break;
+                        }
+                    }
                 }
             }
+            Debug.Log("턴바꿈");
             Invoke("BulletDestroy", 3f);
         }
     }

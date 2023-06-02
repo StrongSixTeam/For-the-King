@@ -31,9 +31,12 @@ public class BattleOrderManager : MonoBehaviour
         SetOrder();
         SetUI();
     }
-    private void SetOrder()
+    public void SetOrder()
     {
         GameObject temp = null;
+
+        order.Clear();
+        Order.Clear();
 
         int j = 0;
         for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
@@ -110,9 +113,5 @@ public class BattleOrderManager : MonoBehaviour
         UIAni.SetBool("TurnOn", true);
         yield return new WaitForSeconds(2f);
         UIAni.SetBool("TurnOn", false);
-    }
-    private void PlayerDie(int num)
-    {
-
     }
 }
