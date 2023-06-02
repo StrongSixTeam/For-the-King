@@ -51,6 +51,8 @@ public class MapObjectCreator : MonoBehaviour
     [SerializeField] GameObject forest01; //오아튼(시작지점) (townForest1)
     [SerializeField] GameObject forest02; //우드스모크 (townForest2)
     [SerializeField] GameObject forest03; //신의 의식도구 (sealMovingParts)
+    [SerializeField] GameObject forest003; //신의 의식도구 (sealBase_0)
+    [SerializeField] GameObject forest03Use; //신의 의식도구 (sealBase_0)
     [SerializeField] GameObject forest04; //카오스 우두머리 (enCultistA3)
     [SerializeField] GameObject forest05; //눈부신 광산 (dungeon05)
 
@@ -63,6 +65,7 @@ public class MapObjectCreator : MonoBehaviour
     [SerializeField] GameObject sanctumFocus;
     [SerializeField] GameObject sanctumLife;
     [SerializeField] GameObject sanctumWisdow;
+    [SerializeField] GameObject sanctumUse;
 
 
     [Header("장애물")]
@@ -307,8 +310,9 @@ public class MapObjectCreator : MonoBehaviour
                             forestNode[random].neighbors[0].neighbors[0].eventtype = "우드스모크";
                             break;
 
-                        case 3: //눈부신 광산 5
-                            //forestNode[random].eventType = 5;
+                        case 2: //신도 의식도구
+                            GameObject temp3 = Instantiate(forest003);
+                            temp3.transform.position = forestNode[random].transform.position + new Vector3(0, 0.2f, 0);
                             break;
                     }
 
@@ -932,5 +936,34 @@ public class MapObjectCreator : MonoBehaviour
         return box;
     }
 
+
+    //objType 0=신도의식도구, 1=집중성소, 2=생명성소, 3=지혜성소
+    public void UseObject(int objType)
+    {
+        switch (objType)
+        {
+            case 0://신의 의식도구 교체
+                GameObject temp00 = Instantiate(forest03Use);
+                temp00.transform.position = forestObj[2].transform.position;
+                Destroy(forestObj[2]);
+                break;
+
+            case 1:
+                GameObject temp01 = Instantiate(sanctumUse);
+                temp01.transform.position = sanctumObj[0].transform.position;
+                Destroy(sanctumObj[0]);
+                break;
+            case 2:
+                GameObject temp02 = Instantiate(sanctumUse);
+                temp02.transform.position = sanctumObj[1].transform.position;
+                Destroy(sanctumObj[1]);
+                break;
+            case 3:
+                GameObject temp03 = Instantiate(sanctumUse);
+                temp03.transform.position = sanctumObj[2].transform.position;
+                Destroy(sanctumObj[2]);
+                break;
+        }
+    }
 
 }
