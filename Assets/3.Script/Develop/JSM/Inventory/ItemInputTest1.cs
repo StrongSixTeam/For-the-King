@@ -8,19 +8,11 @@ public class ItemInputTest1 : MonoBehaviour
     public Item[] EatItem; //먹은 아이템
     public QuickSlotController1[] quick;
 
-    private void OnApplicationQuit()
-    {
-        for(int i = 0; i < EatItem.Length; i++)
-        {
-            EatItem[i].itemCount = 1;
-        }
-    }
-
     public void Eat() //버튼 이벤트, 먹는 아이템은 랜덤으로 결정
     {
-        int num = Random.Range(0, EatItem.Length);
+        Item item = EatItem[Random.Range(0, EatItem.Length)];
 
-        InventoryController1.instance.ItemStack(EatItem[num], (int)InventoryController1.instance.playerNum);
+        InventoryController1.instance.ItemStack(item, (int)InventoryController1.instance.playerNum);
         quick[(int)InventoryController1.instance.playerNum].QuickSlotShow((int)InventoryController1.instance.playerNum);
         InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
     }

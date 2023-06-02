@@ -29,7 +29,8 @@ public class InventoryBtn1 : MonoBehaviour
             {
                 InventoryController1.instance.playerNum = PlayerNum.Player2;
             }
-
+            InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
+            InventoryController1.instance.ShowEquip();
         }
         else
         {
