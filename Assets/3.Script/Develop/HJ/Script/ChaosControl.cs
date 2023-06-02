@@ -5,9 +5,11 @@ using UnityEngine;
 public class ChaosControl : MonoBehaviour
 {
     [SerializeField] Transform[] parentsBar = new Transform[15];
+    [SerializeField] Transform[] parentsChaos = new Transform[2];
     [SerializeField] GameObject[] chaosImageBox = new GameObject[4];
 
     int chaosTurn = 6; //카오스 생성 턴
+    int maxChaosCount = 0; //카오스가 끝까지 간 경우 ++
 
     public int endBarIndex;
 
@@ -21,6 +23,9 @@ public class ChaosControl : MonoBehaviour
         }
 
         endBarIndex = 14;
+        maxChaosCount = 0;
+
+        FIFO.Clear();
     }
 
     //1시간이 지날때마다
@@ -46,21 +51,53 @@ public class ChaosControl : MonoBehaviour
             {
                 if (!chaosImageBox[i].activeSelf)
                 {
-                    chaosImageBox[i].SetActive(true);
-                    chaosImageBox[i].transform.SetParent(parentsBar[endBarIndex]);
-                    chaosImageBox[i].transform.localPosition = new Vector3(0f, 0.1f, 0f);
-                    FIFO.Enqueue(i);
-                    chaosTurn = 2;
-                    return;
+                    StartCoroutine(CreateChaosCo(i));
+                    break;
                 }
             }
+
+            chaosTurn = 6;
         }
     }
-    
-    public void RemoveChaos()
+
+    IEnumerator CreateChaosCo(int i)
     {
-        //가장 왼쪽에 있는 카오스를 비활성화
-        chaosImageBox[FIFO.Dequeue()].SetActive(false);
+        yield return new WaitForSeconds(1f);
+        chaosImageBox[i].SetActive(true);
+        chaosImageBox[i].transform.SetParent(parentsBar[endBarIndex]);
+        chaosImageBox[i].transform.localPosition = new Vector3(0f, 0.1f, 0f);
+        FIFO.Enqueue(i);
+        yield break;
+    }
+    
+    public void RemoveChaos(bool isMax)
+    {
+        switch (isMax)
+        {
+            case true:
+                maxChaosCount++;
+
+                switch (maxChaosCount)
+                {
+                    case 1:
+                        GameObject temp1 = chaosImageBox[FIFO.Dequeue()];
+                        temp1.transform.SetParent(parentsChaos[0]);
+                        temp1.transform.localPosition = Vector3.zero;
+                        break;
+
+                    case 2:
+                        GameObject temp2 = chaosImageBox[FIFO.Dequeue()];
+                        temp2.transform.SetParent(parentsChaos[1]);
+                        temp2.transform.localPosition = Vector3.zero;
+                        Debug.Log("게임오버");
+                        break;
+                }
+                break;
+
+            case false: //카오스 제거
+                chaosImageBox[FIFO.Dequeue()].SetActive(false);
+                break;
+        }
     }
 
 }
