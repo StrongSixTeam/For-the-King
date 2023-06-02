@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
         moveSlot.player = MainPlayer.GetComponent<PlayerStat>();
         moveSlot.SetMove();
 
+        MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
         Name.text = MainPlayerName + "¿« ≈œ";
 
         SpeedSlot.SetActive(true);
