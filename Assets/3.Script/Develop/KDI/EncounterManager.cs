@@ -22,6 +22,7 @@ public class EncounterManager : MonoBehaviour
     public int number;
     public int enemyNumber;
     public bool isEncounterUI = false;
+    public bool outsideCheck = false;
 
     private AstsrPathfinding astsrPathfinding;
 
@@ -30,11 +31,23 @@ public class EncounterManager : MonoBehaviour
         instance = this;
         parent = transform.parent;
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+        encounter[2].isShowed = false;
+        encounter[3].isShowed = false;
+        encounter[4].isShowed = false;
+        encounter[8].isShowed = false;
+        for (int i = 0; i < encounter.Length; i++)
+        {
+            encounter[i].isCleared = false;
+        }
+        for (int i =0; i < enemies.Length; i++)
+        {
+            enemies[i].isCleared = false;
+        }
     }
 
     private void Update()
     {
-        if (parent.GetChild(1).gameObject.activeSelf)
+        if (parent.GetChild(1).gameObject.activeSelf || outsideCheck)
         {
             isEncounterUI = true;
         }
@@ -213,12 +226,18 @@ public class EncounterManager : MonoBehaviour
     {
         //게임매니저 카오스 접근해서 줄이기
         btns[5].SetActive(false);
+        GameManager.instance.isBlock = false;
+        FindObjectOfType<EncounterManager>().outsideCheck = false;
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
+        FindObjectOfType<ChaosControl>().RemoveChaos(false);
     }
 
     public void PlusLifeBtn() 
     {
         //게임매니저 생명 늘리기
         btns[5].SetActive(false);
+        FindObjectOfType<EncounterManager>().outsideCheck = false;
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
     }
 
     public void TryConnect()
@@ -229,11 +248,13 @@ public class EncounterManager : MonoBehaviour
 
     public void GodSuccess()
     {
+        FindObjectOfType<EncounterManager>().outsideCheck = true;
         slot.SetActive(false);
         btns[1].SetActive(false);
         btns[5].SetActive(true);
         parent.GetChild(1).gameObject.SetActive(false);
         parent.GetChild(2).gameObject.SetActive(false);
+        encounter[2].isCleared = true;
     }
 
     private int FindTypePercent(string some)
@@ -322,7 +343,7 @@ public class EncounterManager : MonoBehaviour
     {
         ActiveBtn(2);
         SlotController.instance.fixCount = 0;
-        if (enemyNumber > 0)
+        if (enemyNumber >= 0)
         {
             SlotController.instance.maxSlotCount = enemies[n].enemyCount;
         }
