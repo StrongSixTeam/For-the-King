@@ -36,7 +36,7 @@ public class MapObjectCreator : MonoBehaviour
 
 
     //생성된 몬스터 GameObject를 관리하기위한 리스트
-    private List<GameObject> activerandomObject = new List<GameObject>();
+    private List<GameObject> activerandomObject = new List<GameObject>(); //숨겨진 오브젝트
     private List<GameObject> activeMonster = new List<GameObject>(); //randomMonsterName와 randomMonsterIndex의 대상과 일치함
 
     //_____________________________
@@ -828,7 +828,7 @@ public class MapObjectCreator : MonoBehaviour
         }
     }
 
-
+    //퀘스트 오브젝트 보이게 하기
     public void ShowObject(int objNum)
     {
         StartCoroutine(ShowObjectCo(objNum));
@@ -894,6 +894,112 @@ public class MapObjectCreator : MonoBehaviour
                 yield break;
         }
     }
+
+
+
+
+
+    //숨겨진 오브젝트 보이게
+    public void ShowRandomObject(int objNum)
+    {
+        StartCoroutine(ShowRandomObjectCo(objNum));
+    }
+    IEnumerator ShowRandomObjectCo(int objNum)
+    {
+        switch (objNum)
+        {
+            case 0: //monster01
+                if (activerandomObject[0].activeSelf)
+                {
+                    yield break;
+                }
+                activerandomObject[0].SetActive(true);
+                activerandomObject[0].transform.localScale = Vector3.zero;
+                for (int i = 0; i < 20; i++)
+                {
+                    activerandomObject[0].transform.localScale += new Vector3(3.5f, 3.5f, 3.5f);
+                    yield return new WaitForSeconds(0.02f);
+                }
+                activerandomObject[0].transform.localScale = new Vector3(70f, 70f, 70f);
+                yield break;
+
+            case 1: //monster02
+                if (activerandomObject[1].activeSelf)
+                {
+                    yield break;
+                }
+                activerandomObject[1].SetActive(true);
+                activerandomObject[1].transform.localScale = Vector3.zero;
+                for (int i = 0; i < 20; i++)
+                {
+                    activerandomObject[1].transform.localScale += new Vector3(4f, 4f, 4f);
+                    yield return new WaitForSeconds(0.02f);
+                }
+                activerandomObject[1].transform.localScale = new Vector3(80f, 80f, 80f);
+                yield break;
+
+            case 2: //monster03 
+                if (activerandomObject[2].activeSelf)
+                {
+                    yield break;
+                }
+                activerandomObject[2].SetActive(true);
+                activerandomObject[2].transform.localScale = Vector3.zero;
+                for (int i = 0; i < 20; i++)
+                {
+                    activerandomObject[2].transform.localScale += new Vector3(3.25f, 3.25f, 3.25f);
+                    yield return new WaitForSeconds(0.02f);
+                }
+                activerandomObject[2].transform.localScale = new Vector3(65f, 65f, 65f);
+                yield break;
+
+            case 3: //monster04 
+                if (activerandomObject[3].activeSelf)
+                {
+                    yield break;
+                }
+                activerandomObject[3].SetActive(true);
+                activerandomObject[3].transform.localScale = Vector3.zero;
+                for (int i = 0; i < 20; i++)
+                {
+                    activerandomObject[3].transform.localScale += new Vector3(3f, 3f, 3f);
+                    yield return new WaitForSeconds(0.02f);
+                }
+                activerandomObject[3].transform.localScale = new Vector3(60f, 60f, 60f);
+                yield break;
+
+            case 4: //물음표 
+                if (activerandomObject[4].activeSelf)
+                {
+                    yield break;
+                }
+                activerandomObject[4].SetActive(true);
+                activerandomObject[4].transform.localScale = Vector3.zero;
+                for (int i = 0; i < 20; i++)
+                {
+                    activerandomObject[4].transform.localScale += new Vector3(5.5f, 5.5f, 5.5f);
+                    yield return new WaitForSeconds(0.02f);
+                }
+                activerandomObject[4].transform.localScale = new Vector3(110f, 110f, 110f);
+                yield break;
+
+            case 5: //느낌표
+                if (activerandomObject[5].activeSelf)
+                {
+                    yield break;
+                }
+                activerandomObject[5].SetActive(true);
+                activerandomObject[5].transform.localScale = Vector3.zero;
+                for (int i = 0; i < 20; i++)
+                {
+                    activerandomObject[5].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+                    yield return new WaitForSeconds(0.02f);
+                }
+                activerandomObject[5].transform.localScale = new Vector3(1f, 1f, 1f);
+                yield break;
+        }
+    }
+
 
     //[Header("몬스터 이름과 Index")]
     //public List<int> randomMonsterName = new List<int>();

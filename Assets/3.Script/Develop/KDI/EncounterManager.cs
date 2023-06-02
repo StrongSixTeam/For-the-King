@@ -122,9 +122,18 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.enemy)
         {
-            FindObjectOfType<EnemyBattleBtn>().active = true;
-            FindObjectOfType<EnemyExitBtn>().active = true;
-            FindObjectOfType<EnemyRunBtn>().active = true;
+            try
+            {
+                FindObjectOfType<EnemyBattleBtn>().active = true;
+                FindObjectOfType<EnemyExitBtn>().active = true;
+                FindObjectOfType<EnemyRunBtn>().active = true;
+
+            }
+            catch(System.Exception ex)
+            {
+                Debug.Log(ex);
+            }
+            
             btns[2].transform.GetChild(0).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(2).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(1).GetComponent<Button>().interactable = true;
