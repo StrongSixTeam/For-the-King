@@ -44,8 +44,6 @@ public class ChaosControl : MonoBehaviour
         chaosTurn--;
         if (chaosTurn < 0)
         {
-            Debug.Log("카오스 생성");
-
             //맨오른쪽에 있는 바에 상속시켜주자
             for(int i=0; i<6; i++)
             {
