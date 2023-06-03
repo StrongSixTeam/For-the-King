@@ -147,12 +147,10 @@ public class EncounterManager : MonoBehaviour
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
 
-            txtName.text = enemies[n].Name;
-            txtContext.text = enemies[n].Content;
-            txtExtraContext.text = enemies[n].extraContent;
-            preview.GetComponent<Image>().sprite = enemies[n].preview;
-
-            astsrPathfinding.ShowRedHex(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().myHexNum);
+            txtName.text = encounter[n].Name;
+            txtContext.text = encounter[n].Content;
+            txtExtraContext.text = encounter[n].extraContent;
+            preview.GetComponent<Image>().sprite = encounter[n].preview;
         }
         else if (encounter[n].type == EncounterContent.Type.dungeon)
         {
@@ -351,17 +349,7 @@ public class EncounterManager : MonoBehaviour
 
     public void BattleBtn() //배틀씬으로 이동
     {
-        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
-        for (int i = 0; i < movingUIs.Length; i++)
-        {
-            movingUIs[i].gameObject.SetActive(false);
-        }
-        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
-        for (int i = 0; i < movingUIs.Length; i++)
-        {
-            portraitUIs[i].gameObject.SetActive(false);
-        }
-
+        OffMovingUIs();
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
@@ -491,5 +479,33 @@ public class EncounterManager : MonoBehaviour
 
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
+    }
+
+    public void OffMovingUIs() //UI 끄기
+    {
+        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            movingUIs[i].gameObject.SetActive(false);
+        }
+        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            portraitUIs[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void OnMovingUIs() //UI 키기
+    {
+        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            movingUIs[i].gameObject.SetActive(true);
+        }
+        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
+        for (int i = 0; i < movingUIs.Length; i++)
+        {
+            portraitUIs[i].gameObject.SetActive(true);
+        }
     }
 }
