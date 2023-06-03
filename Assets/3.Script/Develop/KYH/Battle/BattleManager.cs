@@ -166,16 +166,10 @@ public class BattleManager : MonoBehaviour
         battleLoader.PrefsDestroy();
         battleOrderManager.End();
 
-        battleLoader.enabled = false;
-        battleLoader.enabled = true;
         battleLoader.gameObject.SetActive(false);
-
-        battleCameraController.enabled = false;
-        battleCameraController.enabled = true;
 
         WinBattleBanner.SetActive(false);
         LoseBattleBanner.SetActive(false);
-        gameObject.SetActive(false);
 
         isPlayer = false;
         isEnd = false;
