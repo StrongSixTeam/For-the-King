@@ -59,7 +59,7 @@ public class BattleOrderManager : MonoBehaviour
         {
             for (int l = i + 1; l < order.Count; l++)
             {
-                if (order[i] <= order[l])
+                if (order[i] < order[l])
                 {
                     temp = Order[i];
                     Order[i] = Order[l];
@@ -124,5 +124,11 @@ public class BattleOrderManager : MonoBehaviour
         UIAni.SetBool("TurnOn", true);
         yield return new WaitForSeconds(2f);
         UIAni.SetBool("TurnOn", false);
+    }
+    public void End()
+    {
+        order.Clear();
+        Order.Clear();
+        turn = 0;
     }
 }
