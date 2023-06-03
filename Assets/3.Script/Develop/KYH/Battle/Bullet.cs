@@ -92,6 +92,8 @@ public class Bullet : MonoBehaviour
                     battleLoader.EnemyStats.RemoveAt(i);
 
                     Destroy(battleLoader.Encounter[i].gameObject);
+                    EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                    GameManager.instance.DeactivePortrait();
                 }
             }
 

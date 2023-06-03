@@ -27,6 +27,9 @@ public class EncounterManager : MonoBehaviour
 
     private AstsrPathfinding astsrPathfinding;
 
+    MovingUI[] movingUIs;
+    PortraitUI[] portraitUIs;
+
     private void Awake()
     {
         instance = this;
@@ -483,12 +486,12 @@ public class EncounterManager : MonoBehaviour
 
     public void OffMovingUIs() //UI ²ô±â
     {
-        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
+        movingUIs = FindObjectsOfType<MovingUI>();
         for (int i = 0; i < movingUIs.Length; i++)
         {
             movingUIs[i].gameObject.SetActive(false);
         }
-        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
+        portraitUIs = FindObjectsOfType<PortraitUI>();
         for (int i = 0; i < movingUIs.Length; i++)
         {
             portraitUIs[i].gameObject.SetActive(false);
@@ -497,12 +500,10 @@ public class EncounterManager : MonoBehaviour
 
     public void OnMovingUIs() //UI Å°±â
     {
-        MovingUI[] movingUIs = FindObjectsOfType<MovingUI>();
         for (int i = 0; i < movingUIs.Length; i++)
         {
             movingUIs[i].gameObject.SetActive(true);
         }
-        PortraitUI[] portraitUIs = FindObjectsOfType<PortraitUI>();
         for (int i = 0; i < movingUIs.Length; i++)
         {
             portraitUIs[i].gameObject.SetActive(true);

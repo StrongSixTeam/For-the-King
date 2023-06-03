@@ -71,7 +71,7 @@ public class PlayerController_Jin : MonoBehaviour
             }
             return true;
         }
-        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed && !EncounterManager.instance.encounter[2].isCleared) //신의의식도구
+        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed && !EncounterManager.instance.encounter[2].isCleared) //신또의식도구
         {
             EncounterManager.instance.ActiveEncounter(2);
             return true;
@@ -79,7 +79,6 @@ public class PlayerController_Jin : MonoBehaviour
         else if (map.objectIndex[3] == myHexNum && EncounterManager.instance.encounter[3].isShowed && !EncounterManager.instance.encounter[2].isCleared) //카오스 우두머리
         {
             EncounterManager.instance.ActiveEncounter(3);
-            //if (quest) quest 클리어 설정해주기 (추후에)
             return true;
         }
         else if (map.objectIndex[4] == myHexNum && EncounterManager.instance.encounter[4].isShowed) //눈부신 광산
@@ -156,7 +155,7 @@ public class PlayerController_Jin : MonoBehaviour
         {
             for (int i = 0; i < map.randomMonsterIndex.Count; i++)
             {
-                if (map.randomMonsterIndex[i] == myHexNum)
+                if (map.randomMonsterIndex[i] == myHexNum && !EncounterManager.instance.enemies[map.randomMonsterName[i]].isCleared)
                 {
                     EncounterManager.instance.ActiveEnemies(map.randomMonsterName[i]);
                     return true;
@@ -238,6 +237,10 @@ public class PlayerController_Jin : MonoBehaviour
         animator.SetBool("MapRun", false);
         astsrPathfinding.SetisPathfinding(); //움직임이 끝날때 다시 찾음
         yield break;
+    }
+    public void BeOriginalScale()
+    {
+        gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
     private void CheckMyHexNum()
