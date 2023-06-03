@@ -26,7 +26,7 @@ public class BattleOrderManager : MonoBehaviour
         battleCameraController = FindObjectOfType<BattleCameraController>();
         TryGetComponent(out UIAni);
     }
-    private void Start()
+    private void OnEnable()
     {
         SetOrder();
         TurnChange();
