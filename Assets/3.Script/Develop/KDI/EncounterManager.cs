@@ -140,11 +140,19 @@ public class EncounterManager : MonoBehaviour
             ActiveBtn(2);
             SlotController.instance.fixCount = 0;
             SlotController.instance.maxSlotCount = encounter[n].enemyCount;
+            SlotController.instance.limit = encounter[n].limit;
             SlotController.instance.type = SlotController.Type.empty;
             slot.GetComponent<CloneSlot>().Initialized();
             slot.SetActive(true);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
+
+            txtName.text = enemies[n].Name;
+            txtContext.text = enemies[n].Content;
+            txtExtraContext.text = enemies[n].extraContent;
+            preview.GetComponent<Image>().sprite = enemies[n].preview;
+
+            astsrPathfinding.ShowRedHex(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().myHexNum);
         }
         else if (encounter[n].type == EncounterContent.Type.dungeon)
         {
@@ -251,13 +259,18 @@ public class EncounterManager : MonoBehaviour
 
     public void MinusChaosBtn()
     {
-        //게임매니저 카오스 접근해서 줄이기
         btns[5].SetActive(false);
         GameManager.instance.isBlock = false;
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
         FindObjectOfType<ChaosControl>().RemoveChaos(false);
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
+
+        if (FindObjectOfType<QuestManager>().questTurn == 5)
+        {
+            FindObjectOfType<QuestManager>().PopUp("God");
+            FindObjectOfType<QuestManager>().questTurn = 6;
+        }
     }
 
     public void PlusLifeBtn() 
@@ -266,7 +279,13 @@ public class EncounterManager : MonoBehaviour
         btns[5].SetActive(false);
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
-        FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;   
+        FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
+
+        if (FindObjectOfType<QuestManager>().questTurn == 5)
+        {
+            FindObjectOfType<QuestManager>().PopUp("God");
+            FindObjectOfType<QuestManager>().questTurn = 6;
+        }
     }
 
     public void TryConnect()
