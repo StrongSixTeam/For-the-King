@@ -37,22 +37,22 @@ public class BattleOrderManager : MonoBehaviour
     {
         GameObject temp = null;
 
-        if (order.Count == 0)
-        {
-            int j = 0;
-            for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
-            {
-                if (battleLoader.Players.Count - 1 < i)
-                {
-                    order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
-                    Order.Add(battleLoader.Enemys[j]);
+        order.Clear();
+        Order.Clear();
 
-                    j++;
-                    continue;
-                }
-                order.Add(battleLoader.Players[i].GetComponent<PlayerStat>().speed);
-                Order.Add(battleLoader.Players[i]);
+        int j = 0;
+        for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
+        {
+            if (battleLoader.Players.Count - 1 < i)
+            {
+                order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
+                Order.Add(battleLoader.Enemys[j]);
+
+                j++;
+                continue;
             }
+            order.Add(battleLoader.Players[i].GetComponent<PlayerStat>().speed);
+            Order.Add(battleLoader.Players[i]);
         }
 
         for (int i = 0; i < order.Count; i++)

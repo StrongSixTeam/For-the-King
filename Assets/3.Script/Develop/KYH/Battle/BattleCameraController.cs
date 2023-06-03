@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BattleCameraController : MonoBehaviour
@@ -16,23 +17,28 @@ public class BattleCameraController : MonoBehaviour
     [SerializeField] private BattleManager battleManager;
 
     private Vector3 defaultPos;
+    private Vector3 defaultAngle;
 
-    private void Start()
+    private void OnEnable()
     {
         if (gameObject.CompareTag("BattleCamera"))
         {
             targetPosP = new Vector3(-109, 3.5f, -17.8f);
             targetPosE = new Vector3(-96, 4.3f, -21.9f);
             defaultPos = new Vector3(-101.5f, 1.5f, -21.7f);
+            defaultAngle = new Vector3(1, 6, 0);
+            
         }
         if (gameObject.CompareTag("CaveCamera"))
         {
             targetPosP = new Vector3(-206.5f, 8.6f, -49.1f);
             targetPosE = new Vector3(-198.4f, 5.9f, -47.5f);
             defaultPos = new Vector3(-200, 1.2f, -47.5f);
+            defaultAngle = new Vector3(-3, 0, 0);
         }
 
         transform.position = defaultPos;
+        transform.eulerAngles = defaultAngle;
     }
     public void PlayerTurnCamera()
     {

@@ -79,6 +79,7 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp == 0)
                 {
+                    Destroy(battleLoader.Players[i]);
                     battleLoader.Players.RemoveAt(i);
                 }
             }
@@ -87,6 +88,7 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp == 0)
                 {
+                    Destroy(battleLoader.Enemys[i]);
                     battleLoader.Enemys.RemoveAt(i);
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);
