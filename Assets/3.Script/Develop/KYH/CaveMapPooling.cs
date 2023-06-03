@@ -17,6 +17,10 @@ public class CaveMapPooling : MonoBehaviour
     {
         speed = 10;
     }
+    public void CameraSet()
+    {
+        StartCoroutine(MapMove_co());
+    }
     IEnumerator MapMove_co()
     {
         targetPos = transform.localPosition + new Vector3(0, 0, col.size.z);
