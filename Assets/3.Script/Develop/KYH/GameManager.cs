@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     public GameObject SpeedSlot;
     [SerializeField] Text Name;
 
+    [SerializeField] BattleLoader battleLoader;
+
     private void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
@@ -83,16 +85,17 @@ public class GameManager : MonoBehaviour
     {
         if (playerController != null)
         {
-            if (questManager.isQuest || playerController.isRun || SlotController.instance.isSlot)
+            if (questManager.isQuest || playerController.isRun || SlotController.instance.isSlot || battleLoader.isBattle)
             {
                 isBlock = true;
                 turnChageBtn.interactable = false;
             }
-            else if (!questManager.isQuest && !playerController.isRun)
+            else if (!questManager.isQuest && !playerController.isRun && !battleLoader.isBattle)
             {
                 if (encounterManager.isEncounterUI)
                 { //Encounter UI가 떠있으면 바닥 누르는게 안되게
                     isBlock = true;
+                    turnChageBtn.interactable = true;
                 }
                 else if(Camera.main != null)
                 {

@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class BattleLoader : MonoBehaviour
 {
+    //전투에 돌입한 플레이어, 에너미 리스트
     public List<GameObject> Players;
     public List<GameObject> Enemys;
     public List<GameObject> EnemyStats;
 
     [SerializeField] GameObject EnemyStatPrefs;
 
+    //전투 시작 > 배틀은 키고 필드는 끔
     [SerializeField] GameObject battleUI;
     [SerializeField] GameObject fieldUI;
-
+    [SerializeField] GameObject QuestUI;
+    
+    //소환 위치 벡터값
     Vector3 playerPos;
     Vector3 enemyPos;
 
@@ -24,20 +28,25 @@ public class BattleLoader : MonoBehaviour
 
     private PlayerController_Jin playerController;
 
+    //전투에 돌입할 주변 플레이어, 적 리스트
     public List<GameObject> Encounter = new List<GameObject>();
 
     public bool isIng = false;
+    public bool isBattle = false;
 
+    //먹을 경험치, 골드
     public int totalExp = 0;
     public int Gold = 0;
 
+    //먹을 아이템 리스트
     private ItemInputTest1 itemInput;
     public List<Item> items = new List<Item>();
 
+    //아이템 먹기 UI 리스트
     [SerializeField] GameObject[] ItemInputUI;
     public List<GameObject> currentItemInputUI;
 
-    private void Start()
+    private void OnEnable()
     {
         playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
         itemInput = FindObjectOfType<ItemInputTest1>();
@@ -51,7 +60,7 @@ public class BattleLoader : MonoBehaviour
         Encounter = playerController.CheckAroundObject();
         Encounter.Add(GameManager.instance.MainPlayer);
     }
-    public void FieldBattle()
+    public void FieldBattle() //필드 배틀 초기값
     {
         playerPos = new Vector3(-103.5f, 0, -11f);
         enemyPos = new Vector3(-98, 0, -11f);
@@ -64,7 +73,7 @@ public class BattleLoader : MonoBehaviour
 
         PrefsInstantiate();
     }
-    public void CaveBattle()
+    public void CaveBattle() //동굴 배틀 초기값
     {
         playerPos = new Vector3(-199.7f, 0, -38);
         enemyPos = new Vector3(-199.7f, 0, -33);
@@ -140,16 +149,17 @@ public class BattleLoader : MonoBehaviour
 
         battleUI.SetActive(true);
         fieldUI.SetActive(false);
+        QuestUI.SetActive(false);
+        isBattle = true;
     }
-    private void OnDisable()
-    {
-        PrefsDestroy();
-    }
-    private void PrefsDestroy()
+    public void PrefsDestroy() //배틀 끝나면 불러오는 함수
     {
         for (int i = 0; i < Players.Count; i++)
         {
             Destroy(Players[i]);
+        }
+        for (int i = 0; i < Enemys.Count; i++)
+        {
             Destroy(Enemys[i]);
             Destroy(EnemyStats[i]);
         }
@@ -157,12 +167,17 @@ public class BattleLoader : MonoBehaviour
         totalExp = 0;
         Gold = 0;
 
+        battleUI.SetActive(false);
+        fieldUI.SetActive(true);
+        QuestUI.SetActive(true);
+        isBattle = false;
+
         Players.Clear();
         Enemys.Clear();
         EnemyStats.Clear();
         Encounter.Clear();
         items.Clear();
-        currentItemInputUI.Clear();
         isIng = false;
+        currentItemInputUI.Clear();
     }
 }
