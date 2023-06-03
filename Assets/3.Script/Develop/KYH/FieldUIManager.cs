@@ -11,13 +11,18 @@ public class FieldUIManager : MonoBehaviour
     [SerializeField] private Sprite fullLife;
     [SerializeField] private GameObject lifeUI;
 
-    private void Start()
-    {
-        PortraitAni.SetInteger("PlayerCnt", PlayerPrefs.GetInt("PlayerCnt"));
-    }
+    [SerializeField] private GameObject[] portrait;
+
+    [SerializeField] private BattleLoader battleLoader;
+
     private void Update()
     {
-        if (GameManager.instance.isQuestFinish && PlayerPrefs.GetInt("PlayerCnt") > 1)
+        if(GameManager.instance.Players.Length > 0)
+        {
+            PortraitAni.SetInteger("PlayerCnt", GameManager.instance.Players.Length);
+        }
+        
+        if (GameManager.instance.isQuestFinish)
         {
             if (GameManager.instance.nextTurn - 1 < 0)
             {
@@ -28,9 +33,15 @@ public class FieldUIManager : MonoBehaviour
                 PortraitAni.SetInteger("MainPlayer", GameManager.instance.nextTurn - 1);
             }
         }
-        else if(PlayerPrefs.GetInt("PlayerCnt") <= 1)
+        if (battleLoader.isBattle)
         {
-
+            for(int i = 0; i < portrait.Length; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    portrait[i].transform.GetChild(j).localScale = new Vector2(30, 30);
+                }
+            }
         }
 
         SetLifeUI();

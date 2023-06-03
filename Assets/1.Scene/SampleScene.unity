@@ -1642,6 +1642,7 @@ MonoBehaviour:
   - {fileID: 1579066559}
   SpeedSlot: {fileID: 1895252099}
   Name: {fileID: 134819592}
+  battleLoader: {fileID: 8962242860372419430}
 --- !u!4 &514105501
 Transform:
   m_ObjectHideFlags: 0
@@ -2930,6 +2931,7 @@ MonoBehaviour:
   - {fileID: 1407509032}
   - {fileID: 1312894150}
   - {fileID: 1328267569}
+  itemTurn: 0
 --- !u!4 &880652272
 Transform:
   m_ObjectHideFlags: 0
@@ -2942,7 +2944,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &901080076
 GameObject:
@@ -3434,7 +3436,7 @@ Transform:
   - {fileID: 1363983476}
   - {fileID: 1715339648}
   m_Father: {fileID: 5094440892220045925}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1076528590
 GameObject:
@@ -5213,9 +5215,7 @@ MonoBehaviour:
   - {fileID: 6522038470255310329}
   - {fileID: 5205587164788068599}
   currentCamera: 0
-  Dioramas:
-  - {fileID: 1387935280364515790}
-  - {fileID: 5214396533362951759}
+  Dioramas: {fileID: 8962242860372419432}
   loading:
   - {fileID: 1357105810}
   - {fileID: 965329380}
@@ -11300,7 +11300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1420673492468820555
 GameObject:
   m_ObjectHideFlags: 0
@@ -13133,7 +13133,7 @@ MonoBehaviour:
   battleLoader: {fileID: 8962242860372419430}
   WinBattleBanner: {fileID: 901080076}
   LoseBattleBanner: {fileID: 1241652839}
-  MainCam: {fileID: 0}
+  MainCam: {fileID: 963194227}
   bulletPrefs: {fileID: 1851063823908688456, guid: af267be4b3e29964591da37c79c36830, type: 3}
   target: {fileID: 0}
   isEnd: 0
@@ -16075,6 +16075,7 @@ MonoBehaviour:
   - {fileID: 1407509032}
   - {fileID: 1312894150}
   - {fileID: 1328267569}
+  itemTurn: 0
 --- !u!222 &2283094264094309660
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18930,63 +18931,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3417882621125697970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3417882621125697980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5f21859e2215934798efb7fe573ea41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Players: []
-  Enemys:
-  - {fileID: 209817593866981633, guid: f3da389845d85084c8489b73487b1d10, type: 3}
-  EnemyStats: []
-  EnemyStatPrefs: {fileID: 0}
-  battleUI: {fileID: 0}
-  fieldUI: {fileID: 0}
-  Encounter: []
-  isIng: 0
-  totalExp: 0
-  Gold: 0
-  items: []
-  ItemInputUI: []
-  currentItemInputUI: []
---- !u!4 &3417882621125697971
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3417882621125697980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5214396533362951752}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3417882621125697980
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3417882621125697971}
-  - component: {fileID: 3417882621125697970}
-  m_Layer: 0
-  m_Name: BattleLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!224 &3635599983621901233
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20223,10 +20167,9 @@ Transform:
   - {fileID: 522763502577512928}
   - {fileID: 3258747256404997387}
   - {fileID: 6872559079930369288}
-  - {fileID: 8962242860372419433}
   - {fileID: 1046555365}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5166839826017468887
 MeshFilter:
@@ -20546,13 +20489,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5214396533561269973}
-  - {fileID: 3417882621125697971}
   - {fileID: 7372675304601354019}
   - {fileID: 7372675304990354948}
   - {fileID: 7372675306197213554}
   - {fileID: 7372675304386594152}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &5214396533362951759
 GameObject:
@@ -20569,7 +20511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5214396533484056584
 Transform:
   m_ObjectHideFlags: 0
@@ -25691,6 +25633,8 @@ MonoBehaviour:
   emptyLife: {fileID: 21300000, guid: b4d39e428c69cfc40bfc53e4d894149a, type: 3}
   fullLife: {fileID: 21300000, guid: 6b481e78c04e7a140b71463df9303373, type: 3}
   lifeUI: {fileID: 258436982}
+  portrait: []
+  battleLoader: {fileID: 8962242860372419430}
 --- !u!224 &6909424464268964526
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26158,7 +26102,7 @@ Transform:
   - {fileID: 7372675304343619777}
   - {fileID: 7372675305484275882}
   m_Father: {fileID: 5214396533362951752}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7372675304386594153
 MonoBehaviour:
@@ -26563,7 +26507,7 @@ Transform:
   - {fileID: 5214396533179815298}
   - {fileID: 5214396534606315757}
   m_Father: {fileID: 5214396533362951752}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7372675304601354044
 MonoBehaviour:
@@ -27268,7 +27212,7 @@ Transform:
   - {fileID: 7372675304728560945}
   - {fileID: 7372675305795483317}
   m_Father: {fileID: 5214396533362951752}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7372675304990354949
 MonoBehaviour:
@@ -28354,7 +28298,7 @@ Transform:
   - {fileID: 7372675305637588550}
   - {fileID: 7372675305647625885}
   m_Father: {fileID: 5214396533362951752}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7372675306197213555
 MonoBehaviour:
@@ -32266,8 +32210,10 @@ MonoBehaviour:
   EnemyStatPrefs: {fileID: 8890947073056637484, guid: bdc828036c2fcf243b54f451ddfa8c5d, type: 3}
   battleUI: {fileID: 1713013736058947053}
   fieldUI: {fileID: 2232566127113896031}
+  QuestUI: {fileID: 1265687705268383421}
   Encounter: []
   isIng: 0
+  isBattle: 0
   totalExp: 0
   Gold: 0
   items: []
@@ -32292,7 +32238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8962242860372419433
 Transform:
   m_ObjectHideFlags: 0
@@ -32304,8 +32250,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5094440892220045925}
-  m_RootOrder: 4
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8962244193622223167
 MonoBehaviour:

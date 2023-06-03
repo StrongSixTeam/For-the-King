@@ -26,7 +26,7 @@ public class BattleOrderManager : MonoBehaviour
         battleCameraController = FindObjectOfType<BattleCameraController>();
         TryGetComponent(out UIAni);
     }
-    private void Start()
+    private void OnEnable()
     {
         SetOrder();
         TurnChange();
@@ -37,29 +37,29 @@ public class BattleOrderManager : MonoBehaviour
     {
         GameObject temp = null;
 
-        if (order.Count == 0)
-        {
-            int j = 0;
-            for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
-            {
-                if (battleLoader.Players.Count - 1 < i)
-                {
-                    order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
-                    Order.Add(battleLoader.Enemys[j]);
+        order.Clear();
+        Order.Clear();
 
-                    j++;
-                    continue;
-                }
-                order.Add(battleLoader.Players[i].GetComponent<PlayerStat>().speed);
-                Order.Add(battleLoader.Players[i]);
+        int j = 0;
+        for (int i = 0; i < battleLoader.Players.Count + battleLoader.Enemys.Count; i++)
+        {
+            if (battleLoader.Players.Count - 1 < i)
+            {
+                order.Add(battleLoader.Enemys[j].GetComponent<EnemyStat>().speed);
+                Order.Add(battleLoader.Enemys[j]);
+
+                j++;
+                continue;
             }
+            order.Add(battleLoader.Players[i].GetComponent<PlayerStat>().speed);
+            Order.Add(battleLoader.Players[i]);
         }
 
         for (int i = 0; i < order.Count; i++)
         {
             for (int l = i + 1; l < order.Count; l++)
             {
-                if (order[i] <= order[l])
+                if (order[i] < order[l])
                 {
                     temp = Order[i];
                     Order[i] = Order[l];
@@ -124,5 +124,11 @@ public class BattleOrderManager : MonoBehaviour
         UIAni.SetBool("TurnOn", true);
         yield return new WaitForSeconds(2f);
         UIAni.SetBool("TurnOn", false);
+    }
+    public void End()
+    {
+        order.Clear();
+        Order.Clear();
+        turn = 0;
     }
 }

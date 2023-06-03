@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)
@@ -79,6 +79,7 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp == 0)
                 {
+                    Destroy(battleLoader.Players[i]);
                     battleLoader.Players.RemoveAt(i);
                 }
             }
@@ -87,18 +88,24 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp == 0)
                 {
+                    Destroy(battleLoader.Enemys[i]);
                     battleLoader.Enemys.RemoveAt(i);
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);
+
+                    Destroy(battleLoader.Encounter[i].gameObject);
+                    EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                    GameManager.instance.DeactivePortrait();
                 }
             }
+
+            battleOrderManager.SetOrder();
 
             isZero = false;
         }
 
         if (battleLoader.Enemys.Count > 0 && battleLoader.Players.Count > 0)
         {
-            battleOrderManager.SetOrder();
             battleOrderManager.TurnChange();
         }
 

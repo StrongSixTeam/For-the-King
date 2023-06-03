@@ -9,7 +9,7 @@ public class MultiCamera : MonoBehaviour
     public Animator loadingAnim;
     public Camera[] cameras;
     public int currentCamera = 0;
-    public GameObject[] Dioramas;
+    public GameObject Dioramas;
 
     [SerializeField] private GameObject[] loading;
 
@@ -39,18 +39,15 @@ public class MultiCamera : MonoBehaviour
             {
                 if (n == 0)
                 {
-                    Dioramas[0].SetActive(false);
-                    Dioramas[1].SetActive(false);
+                    Dioramas.SetActive(false);
                 }
                 else if (n == 1)
                 {
-                    Dioramas[0].SetActive(true);
-                    Dioramas[1].SetActive(false);
+                    Dioramas.SetActive(true);
                 }
                 else if (n == 2)
                 {
-                    Dioramas[0].SetActive(false);
-                    Dioramas[1].SetActive(true);
+                    Dioramas.SetActive(true);
                 }
                 cameras[i].gameObject.SetActive(true);
             }
@@ -113,6 +110,7 @@ public class MultiCamera : MonoBehaviour
     }
     private void Act3()
     {
+        EncounterManager.instance.OnMovingUIs();
         ChangeCam(0);
         Invoke("OffCloud3", 1f);
 

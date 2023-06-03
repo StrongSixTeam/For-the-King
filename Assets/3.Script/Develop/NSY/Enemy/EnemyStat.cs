@@ -16,6 +16,7 @@ public class EnemyStat : MonoBehaviour
     public int Lv;
     public int Exp;
     public Sprite portrait;
+    public bool isDie = false;
 
     private void Start()
     {

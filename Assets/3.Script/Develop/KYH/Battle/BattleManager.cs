@@ -21,7 +21,6 @@ public class BattleManager : MonoBehaviour
     public GameObject target;
     private bool isPlayer = false;
     public bool isEnd = false;
-    private bool isPass = false;
 
     public int attackDamage = 0;
 
@@ -30,8 +29,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject Get;
 
     private Camera CurrnetCam;
-
-    private int ItemTurn = 0;
 
     private void Awake()
     {
@@ -77,7 +74,6 @@ public class BattleManager : MonoBehaviour
             for (int i = 0; i < battleLoader.Players.Count; i++)
             {
                 Text txt = Instantiate(Get, CurrnetCam.WorldToScreenPoint(battleLoader.Players[i].transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
-                Debug.Log(txt.text);
                 txt.transform.SetParent(GameObject.Find("Canvas").transform);
                 txt.text = "+" + battleLoader.totalExp + "Exp";
 
@@ -89,12 +85,12 @@ public class BattleManager : MonoBehaviour
                     }
                 }
 
-                if (ItemTurn > battleLoader.Players.Count - 1)
+                if (itemInput.itemTurn > battleLoader.Players.Count - 1)
                 {
-                    ItemTurn = 0;
+                    itemInput.itemTurn = 0;
                 }
 
-                battleLoader.currentItemInputUI[ItemTurn].SetActive(true);
+                battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(true);
             }
         }
     }
@@ -136,16 +132,16 @@ public class BattleManager : MonoBehaviour
     }
     public void Pass()
     {
-        battleLoader.currentItemInputUI[ItemTurn].SetActive(false);
+        battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(false);
 
-        ItemTurn++;
+        itemInput.itemTurn++;
 
-        if (ItemTurn > battleLoader.Players.Count - 1)
+        if (itemInput.itemTurn > battleLoader.Players.Count - 1)
         {
-            ItemTurn = 0;
+            itemInput.itemTurn = 0;
         }
 
-        battleLoader.currentItemInputUI[ItemTurn].SetActive(true);
+        battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(true);
     }
     public void ItemGet()
     {
@@ -160,25 +156,24 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            battleLoader.currentItemInputUI[ItemTurn].SetActive(false);
+            battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(false);
             Invoke("BattleEnd", 2f);
         }
     }
 
     public void BattleEnd()
     {
+        battleLoader.PrefsDestroy();
+        battleOrderManager.End();
+
         battleLoader.gameObject.SetActive(false);
-        battlecam.gameObject.SetActive(false);
+
         WinBattleBanner.SetActive(false);
         LoseBattleBanner.SetActive(false);
-        MainCam.gameObject.SetActive(true);
-        gameObject.SetActive(false);
-    }
 
-    private void OnDisable()
-    {
         isPlayer = false;
         isEnd = false;
-    }
 
+        FindObjectOfType<MultiCamera>().ToMain();
+    }
 }
