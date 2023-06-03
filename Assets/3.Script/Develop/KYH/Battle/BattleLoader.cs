@@ -16,7 +16,7 @@ public class BattleLoader : MonoBehaviour
     [SerializeField] GameObject battleUI;
     [SerializeField] GameObject fieldUI;
     [SerializeField] GameObject QuestUI;
-    
+
     //소환 위치 벡터값
     Vector3 playerPos;
     Vector3 enemyPos;
@@ -46,6 +46,9 @@ public class BattleLoader : MonoBehaviour
     [SerializeField] GameObject[] ItemInputUI;
     public List<GameObject> currentItemInputUI;
 
+    private int caveBattleTurn = 1;
+    private int scrollMap = 1;
+
     private void OnEnable()
     {
         playerController = GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>();
@@ -56,12 +59,12 @@ public class BattleLoader : MonoBehaviour
         {
             items.Add(itemInput.Stack());
         }
-
-        Encounter = playerController.CheckAroundObject();
-        Encounter.Add(GameManager.instance.MainPlayer);
     }
     public void FieldBattle() //필드 배틀 초기값
     {
+        Encounter = playerController.CheckAroundObject();
+        Encounter.Add(GameManager.instance.MainPlayer);
+
         playerPos = new Vector3(-103.5f, 0, -11f);
         enemyPos = new Vector3(-98, 0, -11f);
 
@@ -75,14 +78,50 @@ public class BattleLoader : MonoBehaviour
     }
     public void CaveBattle() //동굴 배틀 초기값
     {
-        playerPos = new Vector3(-199.7f, 0, -38);
-        enemyPos = new Vector3(-199.7f, 0, -33);
+        switch (caveBattleTurn)
+        {
+            case 1:
+                scrollMap = 1;
+                Encounter = GameObject.Find("CaveEnemy01").GetComponent<CaveBattleBox>().enemys01;
+                break;
+            case 2:
+                scrollMap = 2;
+                Encounter = GameObject.Find("CaveEnemy01").GetComponent<CaveBattleBox>().enemys02;
+                break;
+            case 3:
+                scrollMap = 1;
+                Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys01;
+                break;
+            case 4:
+                scrollMap = 2;
+                Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys02;
+                break;
+            case 5:
+                scrollMap = 3;
+                Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys03;
+                break;
+        }
+
+        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        {
+            Encounter.Add(GameManager.instance.Players[i]);
+        }
+
+        caveBattleTurn++; //조건 수정 (이겼을 떄만 증가하게)
+
+        playerPos = new Vector3(-200f, 0, -38);
+        enemyPos = new Vector3(0, 0, -1);
 
         playerAngle = new Vector3(0, 0, 0);
         enemyAngle = new Vector3(0, 180, 0);
 
         moveTowards[0] = Vector3.left;
         moveTowards[1] = Vector3.right;
+
+        for (int i = 0; i < FindObjectsOfType<CaveMapPooling>().Length; i++)
+        {
+            FindObjectsOfType<CaveMapPooling>()[i].CameraSet();
+        }
 
         PrefsInstantiate();
     }
@@ -107,15 +146,28 @@ public class BattleLoader : MonoBehaviour
                 totalExp += Enemys[i].GetComponent<EnemyStat>().Exp;
                 Gold += Random.Range(1, 6);
             }
+
+        }
+        if (enemyPos == new Vector3(0, 0, -1))
+        {
+            for (int i = 0; i < Enemys.Count; i++)
+            {
+                Enemys[i].transform.SetParent(GameObject.Find("CaveObj").transform.GetChild(scrollMap));
+                Enemys[i].transform.localPosition = enemyPos;
+            }
         }
 
         for (int i = 0; i < Players.Count; i++)
         {
+
             Players[i].GetComponent<PlayerController_Jin>().enabled = false;
+            Players[i].transform.localScale = new Vector3(1, 1, 1);
+            if(playerPos == new Vector3(-200f, 0, -38))
+            {
+                Players[i].SetActive(false);
+            }
 
             currentItemInputUI.Add(ItemInputUI[Players[i].GetComponent<PlayerStat>().order]);
-
-            Players[i].transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (Players.Count == 2)
@@ -151,6 +203,15 @@ public class BattleLoader : MonoBehaviour
         fieldUI.SetActive(false);
         QuestUI.SetActive(false);
         isBattle = true;
+
+        Invoke("PlayerSetActive", 7f);
+    }
+    private void PlayerSetActive()
+    {
+        for(int i = 0; i< Players.Count; i++)
+        {
+            Players[i].SetActive(true);
+        }
     }
     public void PrefsDestroy() //배틀 끝나면 불러오는 함수
     {
