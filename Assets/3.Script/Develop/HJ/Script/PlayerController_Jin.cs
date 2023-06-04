@@ -213,6 +213,7 @@ public class PlayerController_Jin : MonoBehaviour
             {
                 if (CheckObject()) //현재 오브젝트에 도달하면
                 {
+                    Debug.Log("here");
                     //못이동한만큼 canMoveCount에 더해주자
                     astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
                     GameManager.instance.ActivePortrait();
