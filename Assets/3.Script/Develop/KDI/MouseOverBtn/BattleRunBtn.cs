@@ -17,7 +17,7 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
         {
-            battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
+            FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
             battleFightBtn.GetComponent<RightClick>().usedFocus = 0;
             GetComponent<RightClick>().usedFocus = 0;
             SlotController.instance.fixCount = 0;

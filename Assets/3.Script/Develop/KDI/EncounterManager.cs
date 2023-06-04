@@ -221,20 +221,27 @@ public class EncounterManager : MonoBehaviour
 
     public void UseFocus()
     {
-        if (GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus >= 1)
+        if (SlotController.instance.hasLimit) //전투씬이 아니면
         {
-            if (SlotController.instance.hasLimit) //전투씬이 아니면
+            if (GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus >= 1)
             {
                 GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus -= 1;
                 SlotController.instance.fixCount += 1;
                 slot.GetComponent<CloneSlot>().Initialized();
                 successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
             }
-            else
+        }
+        else
+        {
+            if (FindObjectOfType<BattleManager>() != null)
             {
-                GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus -= 1;
-                SlotController.instance.fixCount += 1;
-                fightSlot.GetComponent<CloneSlot>().Initialized();
+                GameObject player = FindObjectOfType<BattleManager>().FindPlayer(FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn].GetComponent<PlayerStat>().order);
+                if (player.GetComponent<PlayerStat>().nowFocus >= 1)
+                {
+                    player.GetComponent<PlayerStat>().nowFocus -= 1;
+                    SlotController.instance.fixCount += 1;
+                    fightSlot.GetComponent<CloneSlot>().Initialized();
+                }
             }
         }
     }
