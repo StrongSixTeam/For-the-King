@@ -1064,6 +1064,22 @@ public class MapObjectCreator : MonoBehaviour
             }
         }
 
+
+        //주변에 카오스 우두머리가 있나요
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]))
+                {
+                    closeIndex.Add(objectIndex[3]);
+                    box.Add(forest04);
+                    break;
+                }
+            }
+        }
+
+
         return box;
     }
 
