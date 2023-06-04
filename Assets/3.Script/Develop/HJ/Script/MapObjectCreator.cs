@@ -1032,7 +1032,7 @@ public class MapObjectCreator : MonoBehaviour
                 {
                     if (randomMonsterIndex[e] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(randomMonsterIndex[e]))
                     {
-                        closeIndex.Add(randomObjectIndex[e]);
+                        closeIndex.Add(randomMonsterIndex[e]);
                         box.Add(activeMonster[e]);
                         check = true;
                         break;
@@ -1041,6 +1041,28 @@ public class MapObjectCreator : MonoBehaviour
             }
         }
 
+        for(int e=0; e< randomObjectIndex.Count-2; e++)
+        {
+            bool check = false;
+            //주변에 어떤 숨겨진 몬스터가 있나요
+            for (int i = 0; i < 6; i++)
+            {
+                if (check)
+                {
+                    break;
+                }
+                for (int j = 0; j < 6; j++)
+                {
+                    if (randomObjectIndex[e] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(randomObjectIndex[e]) && activerandomObject[e].gameObject)
+                    {
+                        closeIndex.Add(randomObjectIndex[e]);
+                        box.Add(activerandomObject[e]);
+                        check = true;
+                        break;
+                    }
+                }
+            }
+        }
 
         return box;
     }
