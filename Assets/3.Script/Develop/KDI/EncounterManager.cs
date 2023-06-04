@@ -155,6 +155,7 @@ public class EncounterManager : MonoBehaviour
             txtContext.text = encounter[n].Content;
             txtExtraContext.text = encounter[n].extraContent;
             preview.GetComponent<Image>().sprite = encounter[n].preview;
+            astsrPathfinding.ShowRedHex(GameManager.instance.Players[astsrPathfinding.WhoseTurn].GetComponent<PlayerController_Jin>().myHexNum);
         }
         else if (encounter[n].type == EncounterContent.Type.dungeon)
         {

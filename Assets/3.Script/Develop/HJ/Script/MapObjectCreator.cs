@@ -317,13 +317,13 @@ public class MapObjectCreator : MonoBehaviour
                             break;
                     }
 
-
                     objectIndex.Add(forestNode[random].index);
                     GameObject temp = Instantiate(forestObj[i]);
                     forestObj[i] = temp;
                     temp.SetActive(true);
                     temp.transform.position = forestNode[random].transform.position + new Vector3(0, 0.2f, 0);
                     temp.transform.SetParent(fixedObjectBox);
+
 
                     break;
                 }
@@ -948,10 +948,10 @@ public class MapObjectCreator : MonoBehaviour
                 activerandomObject[2].transform.localScale = Vector3.zero;
                 for (int i = 0; i < 20; i++)
                 {
-                    activerandomObject[2].transform.localScale += new Vector3(3.25f, 3.25f, 3.25f);
+                    activerandomObject[2].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
                     yield return new WaitForSeconds(0.02f);
                 }
-                activerandomObject[2].transform.localScale = new Vector3(65f, 65f, 65f);
+                activerandomObject[2].transform.localScale = new Vector3(1f, 1f, 1f);
                 yield break;
 
             case 3: //monster04 
@@ -1063,6 +1063,22 @@ public class MapObjectCreator : MonoBehaviour
                 }
             }
         }
+
+
+        //주변에 카오스 우두머리가 있나요
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[4].activeSelf)
+                {
+                    closeIndex.Add(objectIndex[3]);
+                    box.Add(forestObj[4]);
+                    break;
+                }
+            }
+        }
+
 
         return box;
     }

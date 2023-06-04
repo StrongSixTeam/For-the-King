@@ -18,9 +18,10 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private GameObject bulletPrefs;
     [SerializeField] private GameObject slotUI; //슬롯
+    [SerializeField] private GameObject enemySlotUI; //적쪽 슬롯
 
     public GameObject target;
-    private bool isPlayer = false;
+    public bool isPlayer = false;
     public bool isEnd = false;
 
     public int attackDamage = 0;
@@ -50,9 +51,15 @@ public class BattleManager : MonoBehaviour
     }
     private void Update()
     {
+        enemySlotUI.GetComponent<CloneSlot>().playerTurn = slotUI.GetComponent<CloneSlot>().playerTurn;
+        
         if (isPlayer)
         {
             BattleUI.SetActive(true);
+            for (int i = 0; i < enemySlotUI.transform.childCount; i++)
+            {
+                enemySlotUI.transform.GetChild(i).gameObject.SetActive(false);
+            }
 
             Ray ray = activeCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -114,27 +121,24 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
-    public void CalculateAtk()
-    {
-        float originalAtk = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk;
-        float resultAtk = originalAtk / battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot * SlotController.instance.success;
-        attackDamage = (int)resultAtk;
-    }
     public void RookAt()
     {
         if (battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out PlayerStat p))
         {
             isPlayer = true;
+            slotUI.GetComponent<CloneSlot>().playerTurn = true;
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Enemys[0].transform);
             target = battleLoader.Enemys[0];
             SlotController.instance.fixCount = 0;
         }
         else
         {
+            slotUI.GetComponent<CloneSlot>().playerTurn = false;
             int rnd = Random.Range(0, battleLoader.Players.Count);
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Players[rnd].transform);
             target = battleLoader.Players[rnd];
-            DefaultAttack();
+            //DefaultAttack();
+            EnemyAttack();
         }
     }
 
@@ -169,7 +173,27 @@ public class BattleManager : MonoBehaviour
             return SlotController.Type.empty;
         }
     }
-    public void PlayerAttack()
+
+    public SlotController.Type StringToType(string sentence)
+    {
+        if (sentence == "attackBlackSmith")
+        {
+            return SlotController.Type.attackBlackSmith;
+        }
+        else if (sentence == "attackHunter")
+        {
+            return SlotController.Type.attackHunter;
+        }
+        else if (sentence == "attackScholar")
+        {
+            return SlotController.Type.attackScholar;
+        }
+        else
+        {
+            return SlotController.Type.empty;
+        }
+    }
+    public void PlayerAttack() //플레이어 공격턴
     {
         isPlayer = false;
 
@@ -178,6 +202,21 @@ public class BattleManager : MonoBehaviour
         BattleUI.SetActive(false);
         //slot 작동
         slotUI.GetComponent<CloneSlot>().Try();
+    }
+    public void CalculateAtk()
+    {
+        float originalAtk = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk;
+        float resultAtk = originalAtk / battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot * SlotController.instance.success;
+        attackDamage = (int)resultAtk;
+    }
+
+
+    public void CalculateEnemyAtk()
+    {
+        float originalAtk = battleOrderManager.Order[battleOrderManager.turn].GetComponent<EnemyStat>().atk;
+        float resultAtk = originalAtk / battleOrderManager.Order[battleOrderManager.turn].GetComponent<EnemyStat>().maxSlot * SlotController.instance.success;
+        attackDamage = (int)resultAtk;
+        MakeBullet();
     }
 
     public void PlayerRun()
@@ -196,6 +235,24 @@ public class BattleManager : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, Quaternion.identity);
         bullet.transform.position += new Vector3(0, 1, 0);
+    }
+
+    public void EnemyAttack()
+    {
+        isPlayer = false;
+
+        //공격 애니메이션 넣기
+
+        BattleUI.SetActive(false);
+        slotUI.SetActive(false);
+
+        SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<EnemyStat>().maxSlot;
+        SlotController.instance.percent = (int)battleOrderManager.Order[battleOrderManager.turn].GetComponent<EnemyStat>().percent;
+        SlotController.instance.fixCount = 0;
+        SlotController.instance.type = StringToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<EnemyStat>().attackType);
+        enemySlotUI.GetComponent<CloneSlot>().Initialized();
+        //slot 작동
+        enemySlotUI.GetComponent<CloneSlot>().Try();
     }
 
     public void DefaultAttack()

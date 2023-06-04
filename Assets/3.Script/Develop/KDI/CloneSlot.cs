@@ -16,6 +16,7 @@ public class CloneSlot : MonoBehaviour
 
     public bool hasLimit = true;
     public bool runOut = false;
+    public bool playerTurn = true; 
     public void Initialized()
     {
         isSuccess = false;
@@ -248,10 +249,32 @@ public class CloneSlot : MonoBehaviour
             }
             else //공격씬에서 공격이라면
             {
-                FindObjectOfType<BattleManager>().CalculateAtk();
-                FindObjectOfType<BattleManager>().MakeBullet();
-                Invoke("slotsOff", 2f);
+                if (!playerTurn) //적 턴이라면
+                {
+                    FindObjectOfType<BattleManager>().CalculateEnemyAtk();
+                    Invoke("slotsOff", 2f);
+                    Invoke("turnChange", 2f);
+                }
+                else //플레이어 턴이라면
+                {
+                    FindObjectOfType<BattleManager>().CalculateAtk();
+                    FindObjectOfType<BattleManager>().MakeBullet();
+                    Invoke("turnChange", 2f);
+                    Invoke("slotsOff", 2f);
+                }
             }
+        }
+    }
+
+    private void turnChange()
+    {
+        if (playerTurn)
+        {
+            playerTurn = false;
+        }
+        else
+        {
+            playerTurn = true;
         }
     }
 

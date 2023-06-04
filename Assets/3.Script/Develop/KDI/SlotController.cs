@@ -79,6 +79,28 @@ public class SlotController : MonoBehaviour
                     }
                 }
             }
+            else if (type == Type.attackBlackSmith)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackBlackSmith[j];
+                    if (j == 0)
+                    {
+                        transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                    }
+                }
+            }
+            else if (type == Type.attackHunter)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    transform.GetChild(i).GetChild(j).GetComponent<Image>().sprite = attackHunter[j];
+                    if (j == 0)
+                    {
+                        transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                    }
+                }
+            }
         }
     }
 

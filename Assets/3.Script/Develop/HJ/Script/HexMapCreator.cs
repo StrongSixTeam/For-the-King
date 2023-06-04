@@ -108,9 +108,15 @@ public class HexMapCreator : MonoBehaviour
         StartCoroutine(GroundBottomCo());
     }
 
-    //맵을 다시 만든다
+    int resetCount = 0;
+    //맵을 다시 만든다 
     public void ResetMap()
     {
+        resetCount++;
+        if(resetCount > 2)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        }
         Debug.Log("맵 다시 로드");
         StopAllCoroutines();
 
@@ -385,13 +391,17 @@ public class HexMapCreator : MonoBehaviour
 
     void AddLowPolyWater()
     {
-        for (int i = 0; i < hexMembers.Length; i++)
-        {
-            if (hexMembers[i].mapType.Equals(0))
-            {
-                hexMembers[i].gameObject.AddComponent<LowPolyWater>();
-            }
-        }
+        //for (int i = 0; i < hexMembers.Length; i++)
+        //{
+        //    if (hexMembers[i].mapType.Equals(0))
+        //    {
+        //        hexMembers[i].gameObject.AddComponent<LowPolyWater>();
+        //        if (hexMembers[i].zNum % 2 == 0)
+        //        {
+        //            hexMembers[i].gameObject.GetComponent<LowPolyWater>().down = false;
+        //        }
+        //    }
+        //}
     }
 
     //매개변수로 전달받는 index의 Material를 바꾼다
