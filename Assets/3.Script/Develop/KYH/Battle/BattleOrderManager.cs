@@ -34,10 +34,6 @@ public class BattleOrderManager : MonoBehaviour
         SetOrder();
         TurnChange();
     }
-    private void Update()
-    {
-        //Debug.Log(turn);
-    }
     public void SetOrder()
     {
         GameObject temp = null;

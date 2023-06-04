@@ -20,6 +20,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject slotUI; //½½·Ô
     [SerializeField] private GameObject enemySlotUI; //ÀûÂÊ ½½·Ô
 
+    [SerializeField] private GameObject[] readyCheckUI;
+    [SerializeField] private GameObject readyChecker;
+
     public GameObject target;
     public bool isPlayer = false;
     public bool isEnd = false;
@@ -48,11 +51,13 @@ public class BattleManager : MonoBehaviour
 
         CurrnetCam = FindObjectOfType<Camera>();
         itemInput = FindObjectOfType<ItemInputTest1>();
+
+        isEnd = false;
     }
     private void Update()
     {
         enemySlotUI.GetComponent<CloneSlot>().playerTurn = slotUI.GetComponent<CloneSlot>().playerTurn;
-        
+
         if (isPlayer)
         {
             BattleUI.SetActive(true);
@@ -88,6 +93,8 @@ public class BattleManager : MonoBehaviour
 
             Invoke("BattleEnd", 5f);
 
+            isEnd = true;
+
         }
         if (battleLoader.Enemys.Count == 0 && !isEnd)
         {
@@ -119,6 +126,8 @@ public class BattleManager : MonoBehaviour
 
                 battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(true);
             }
+
+            isEnd = true;
         }
     }
     public void RookAt()
@@ -305,7 +314,6 @@ public class BattleManager : MonoBehaviour
             Invoke("BattleEnd", 2f);
         }
     }
-
     public void BattleEnd()
     {
         battleLoader.PrefsDestroy();
@@ -316,10 +324,35 @@ public class BattleManager : MonoBehaviour
         WinBattleBanner.SetActive(false);
         LoseBattleBanner.SetActive(false);
 
-        isPlayer = false;
-        isEnd = false;
+        EndCheck();
 
-        FindObjectOfType<MultiCamera>().ToMain();
-        GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+        isPlayer = false;
+
+        if (isEnd)
+        {
+            FindObjectOfType<MultiCamera>().ToMain();
+            GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+        }
+
+        gameObject.SetActive(false);
+    }
+    private void EndCheck()
+    {
+        if (battleLoader.caveBattleTurn == 1 || battleLoader.caveBattleTurn == 3 || battleLoader.caveBattleTurn == 4)
+        {
+            battleLoader.caveBattleTurn++;
+            isEnd = false;
+            readyChecker.SetActive(true);
+
+            for(int i = 0; i < battleLoader.Players.Count; i++)
+            {
+                readyCheckUI[i].SetActive(true);
+            }
+        }
+        if(battleLoader.caveBattleTurn == 2)
+        {
+            battleLoader.caveBattleTurn++;
+            isEnd = true;
+        }
     }
 }

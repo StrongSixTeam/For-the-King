@@ -47,7 +47,7 @@ public class BattleLoader : MonoBehaviour
     [SerializeField] GameObject[] ItemInputUI;
     public List<GameObject> currentItemInputUI;
 
-    private int caveBattleTurn = 1;
+    public int caveBattleTurn = 1;
     private int scrollMap = 1;
 
     private void OnEnable()
