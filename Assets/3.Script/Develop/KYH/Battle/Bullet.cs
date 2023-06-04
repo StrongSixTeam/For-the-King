@@ -49,6 +49,7 @@ public class Bullet : MonoBehaviour
                         {
                             GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
                             isZero = true;
+                            Debug.Log("플레이어 체력 0");
                         }
                     }
                 }
@@ -93,7 +94,11 @@ public class Bullet : MonoBehaviour
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);
 
-                    Destroy(battleLoader.Encounter[i].gameObject);
+                    if (CurrnetCam.name == "BattleCamera")
+                    {
+                        Destroy(battleLoader.Encounter[i].gameObject);
+                    }
+
                     EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
                     GameManager.instance.DeactivePortrait();
                 }
