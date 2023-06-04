@@ -17,10 +17,11 @@ public class CaveBattleBox : MonoBehaviour
     {
         stage.Add(enemys01);
         stage.Add(enemys02);
-        if(enemys03[0] != null)
+        if (enemys03.Count > 0)
         {
             stage.Add(enemys03);
         }
+
     }
 
 
