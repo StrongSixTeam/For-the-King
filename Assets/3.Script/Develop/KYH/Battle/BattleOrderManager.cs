@@ -23,11 +23,12 @@ public class BattleOrderManager : MonoBehaviour
     private void Awake()
     {
         battleLoader = FindObjectOfType<BattleLoader>();
-        battleCameraController = FindObjectOfType<BattleCameraController>();
         TryGetComponent(out UIAni);
     }
     private void OnEnable()
     {
+        battleCameraController = FindObjectOfType<BattleCameraController>();
+
         SetOrder();
         TurnChange();
 
@@ -100,7 +101,17 @@ public class BattleOrderManager : MonoBehaviour
 
         if (!battleLoader.isIng)
         {
-            Invoke("CameraChange", 2f);
+            if (battleCameraController.gameObject.name == "BattleCamera")
+            {
+                Invoke("CameraChange", 2f);
+                Debug.Log("배틀 카메라 상태");
+            }
+            else
+            {
+                Invoke("CameraChange", 5f);
+                Debug.Log("동굴 카메라 상태");
+            }
+
             battleLoader.isIng = true;
         }
         else

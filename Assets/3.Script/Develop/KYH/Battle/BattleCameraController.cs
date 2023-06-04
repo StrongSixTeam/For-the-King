@@ -77,4 +77,17 @@ public class BattleCameraController : MonoBehaviour
         transform.position = targetPosE;
         yield break;
     }
+    public IEnumerator EnemyWinCam_co()
+    {
+        battleManager.isEnd = true;
+
+        while (Vector3.Distance(transform.position, targetPosP) > 0.01)
+        {
+            transform.LookAt(targetPosP);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosP, 0.01f);
+            yield return null;
+        }
+        transform.position = targetPosP;
+        yield break;
+    }
 }

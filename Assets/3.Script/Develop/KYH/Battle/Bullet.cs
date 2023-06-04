@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)
@@ -77,7 +77,7 @@ public class Bullet : MonoBehaviour
         {
             for (int i = 0; i < battleLoader.Players.Count; i++)
             {
-                if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp == 0)
+                if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp <= 0)
                 {
                     Destroy(battleLoader.Players[i]);
                     battleLoader.Players.RemoveAt(i);
@@ -93,7 +93,11 @@ public class Bullet : MonoBehaviour
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);
 
-                    Destroy(battleLoader.Encounter[i].gameObject);
+                    if (CurrnetCam.name == "BattleCamera")
+                    {
+                        Destroy(battleLoader.Encounter[i].gameObject);
+                    }
+
                     EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
                     GameManager.instance.DeactivePortrait();
                 }

@@ -13,10 +13,11 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject WinBattleBanner;
     [SerializeField] GameObject LoseBattleBanner;
 
-    Camera battlecam;
+    Camera activeCam;
     [SerializeField] Camera MainCam;
 
     [SerializeField] private GameObject bulletPrefs;
+    [SerializeField] private GameObject slotUI; //슬롯
 
     public GameObject target;
     private bool isPlayer = false;
@@ -30,11 +31,20 @@ public class BattleManager : MonoBehaviour
 
     private Camera CurrnetCam;
 
-    private void Awake()
+    private void OnEnable()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
         battleCameraController = FindObjectOfType<BattleCameraController>();
-        battlecam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
+
+        if (GameObject.FindGameObjectWithTag("BattleCamera") != null)
+        {
+            activeCam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
+        }
+        else
+        {
+            activeCam = GameObject.FindGameObjectWithTag("CaveCamera").GetComponent<Camera>();
+        }
+
         CurrnetCam = FindObjectOfType<Camera>();
         itemInput = FindObjectOfType<ItemInputTest1>();
     }
@@ -44,7 +54,7 @@ public class BattleManager : MonoBehaviour
         {
             BattleUI.SetActive(true);
 
-            Ray ray = battlecam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = activeCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -62,12 +72,22 @@ public class BattleManager : MonoBehaviour
 
         if (battleLoader.Players.Count == 0 && !isEnd)
         {
+            if (battleCameraController.gameObject.name == "BattleCamera")
+            {
+                StartCoroutine(battleCameraController.EnemyWinCam_co());
+            }
 
+            LoseBattleBanner.SetActive(true);
+
+            Invoke("BattleEnd", 5f);
 
         }
         if (battleLoader.Enemys.Count == 0 && !isEnd)
         {
-            StartCoroutine(battleCameraController.PlayerWinCam_co());
+            if (battleCameraController.gameObject.name == "BattleCamera")
+            {
+                StartCoroutine(battleCameraController.PlayerWinCam_co());
+            }
 
             WinBattleBanner.SetActive(true);
 
@@ -94,6 +114,12 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    public void CalculateAtk()
+    {
+        float originalAtk = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk;
+        float resultAtk = originalAtk / battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot * SlotController.instance.success;
+        attackDamage = (int)resultAtk;
+    }
     public void RookAt()
     {
         if (battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out PlayerStat p))
@@ -101,6 +127,7 @@ public class BattleManager : MonoBehaviour
             isPlayer = true;
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Enemys[0].transform);
             target = battleLoader.Enemys[0];
+            SlotController.instance.fixCount = 0;
         }
         else
         {
@@ -110,6 +137,67 @@ public class BattleManager : MonoBehaviour
             DefaultAttack();
         }
     }
+
+    public GameObject FindPlayer(int x)
+    {
+        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        {
+            if (x == GameManager.instance.Players[i].GetComponent<PlayerStat>().order)
+            {
+                return GameManager.instance.Players[i];
+            }
+        }
+        return GameManager.instance.MainPlayer;
+    }
+
+    public SlotController.Type AttackTypeToType(Weapon weapon)
+    {
+        if (weapon.attackType.ToString() == "attackBlackSmith")
+        {
+            return SlotController.Type.attackBlackSmith;
+        }
+        else if (weapon.attackType.ToString() == "attackHunter")
+        {
+            return SlotController.Type.attackHunter;
+        }
+        else if (weapon.attackType.ToString() == "attackScholar")
+        {
+            return SlotController.Type.attackScholar;
+        }
+        else
+        {
+            return SlotController.Type.empty;
+        }
+    }
+    public void PlayerAttack()
+    {
+        isPlayer = false;
+
+        //공격 애니메이션 넣기
+
+        BattleUI.SetActive(false);
+        //slot 작동
+        slotUI.GetComponent<CloneSlot>().Try();
+    }
+
+    public void PlayerRun()
+    {
+        isPlayer = false;
+        BattleUI.SetActive(false);
+        slotUI.GetComponent<CloneSlot>().Try();
+        Invoke("TurnChange", 1f);
+    }
+    private void TurnChange()
+    {
+        battleOrderManager.TurnChange();
+    }
+
+    public void MakeBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, Quaternion.identity);
+        bullet.transform.position += new Vector3(0, 1, 0);
+    }
+
     public void DefaultAttack()
     {
         isPlayer = false;
@@ -146,7 +234,7 @@ public class BattleManager : MonoBehaviour
     public void ItemGet()
     {
         InventoryController1.instance.playerNum = PlayerNum.Player0;
-        
+
         itemInput.Get(battleLoader.items[0]);
         battleLoader.items.RemoveAt(0);
 
@@ -175,5 +263,6 @@ public class BattleManager : MonoBehaviour
         isEnd = false;
 
         FindObjectOfType<MultiCamera>().ToMain();
+        GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
     }
 }
