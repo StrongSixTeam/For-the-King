@@ -49,7 +49,6 @@ public class Bullet : MonoBehaviour
                         {
                             GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
                             isZero = true;
-                            Debug.Log("플레이어 체력 0");
                         }
                     }
                 }
@@ -78,7 +77,7 @@ public class Bullet : MonoBehaviour
         {
             for (int i = 0; i < battleLoader.Players.Count; i++)
             {
-                if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp == 0)
+                if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp <= 0)
                 {
                     Destroy(battleLoader.Players[i]);
                     battleLoader.Players.RemoveAt(i);
