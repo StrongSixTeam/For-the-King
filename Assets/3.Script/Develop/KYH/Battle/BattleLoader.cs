@@ -205,9 +205,10 @@ public class BattleLoader : MonoBehaviour
         fieldUI.SetActive(false);
         QuestUI.SetActive(false);
         isBattle = true;
+
         BattleOrderManager battleOrderManager = FindObjectOfType<BattleOrderManager>();
-        SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
-        SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
+        //SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
+        //SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
         SlotController.instance.hasLimit = false;
         Invoke("PlayerSetActive", 3f);
     }
