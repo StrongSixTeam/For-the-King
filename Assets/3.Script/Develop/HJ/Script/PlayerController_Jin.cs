@@ -78,7 +78,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(2);
             return true;
         }
-        else if (map.objectIndex[3] == myHexNum && EncounterManager.instance.encounter[3].isShowed && !EncounterManager.instance.encounter[2].isCleared) //카오스 우두머리
+        else if (map.objectIndex[3] == myHexNum && EncounterManager.instance.encounter[3].isShowed && !EncounterManager.instance.encounter[3].isCleared) //카오스 우두머리
         {
             EncounterManager.instance.ActiveEncounter(3);
             return true;
