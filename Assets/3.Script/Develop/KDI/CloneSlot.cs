@@ -250,7 +250,7 @@ public class CloneSlot : MonoBehaviour
             {
                 FindObjectOfType<BattleManager>().CalculateAtk();
                 FindObjectOfType<BattleManager>().MakeBullet();
-                Invoke("slotsOff", 3f);
+                Invoke("slotsOff", 2f);
             }
         }
     }
