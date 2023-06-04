@@ -13,7 +13,7 @@ public class BattleOrderManager : MonoBehaviour
 
     List<int> order = new List<int>();
     public List<GameObject> Order = new List<GameObject>();
-    public int turn = 0; //전투 스크립트에서 관리
+    public int turn = -1; //전투 스크립트에서 관리
 
     private BattleLoader battleLoader;
     private Animator UIAni;
@@ -29,10 +29,14 @@ public class BattleOrderManager : MonoBehaviour
     {
         battleCameraController = FindObjectOfType<BattleCameraController>();
 
+        turn = -1;
+
         SetOrder();
         TurnChange();
-
-        turn = 0;
+    }
+    private void Update()
+    {
+        Debug.Log(turn);
     }
     public void SetOrder()
     {
