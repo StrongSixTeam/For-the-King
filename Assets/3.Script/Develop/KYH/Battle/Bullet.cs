@@ -88,17 +88,16 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp == 0)
                 {
+                    FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
                     Destroy(battleLoader.Enemys[i]);
                     battleLoader.Enemys.RemoveAt(i);
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);
 
-                    if (CurrnetCam.name == "BattleCamera")
-                    {
-                        Destroy(battleLoader.Encounter[i].gameObject);
-                    }
-
+                    Destroy(battleLoader.Encounter[i].gameObject);
                     EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+
+                    //EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
                     GameManager.instance.DeactivePortrait();
                 }
             }

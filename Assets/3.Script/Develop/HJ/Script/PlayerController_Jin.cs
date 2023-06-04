@@ -18,6 +18,8 @@ public class PlayerController_Jin : MonoBehaviour
 
     public HexMember saveWay;
 
+    public int monsterIndex;
+
     private void Start()
     {
         map = FindObjectOfType<MapObjectCreator>();
@@ -155,8 +157,9 @@ public class PlayerController_Jin : MonoBehaviour
         {
             for (int i = 0; i < map.randomMonsterIndex.Count; i++)
             {
-                if (map.randomMonsterIndex[i] == myHexNum && !EncounterManager.instance.enemies[map.randomMonsterName[i]].isCleared)
+                if (map.randomMonsterIndex[i] == myHexNum)
                 {
+                    monsterIndex = i;
                     EncounterManager.instance.ActiveEnemies(map.randomMonsterName[i]);
                     return true;
                 }
