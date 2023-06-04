@@ -108,9 +108,15 @@ public class HexMapCreator : MonoBehaviour
         StartCoroutine(GroundBottomCo());
     }
 
-    //맵을 다시 만든다
+    int resetCount = 0;
+    //맵을 다시 만든다 
     public void ResetMap()
     {
+        resetCount++;
+        if(resetCount > 2)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        }
         Debug.Log("맵 다시 로드");
         StopAllCoroutines();
 

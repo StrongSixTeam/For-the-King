@@ -948,10 +948,10 @@ public class MapObjectCreator : MonoBehaviour
                 activerandomObject[2].transform.localScale = Vector3.zero;
                 for (int i = 0; i < 20; i++)
                 {
-                    activerandomObject[2].transform.localScale += new Vector3(3.25f, 3.25f, 3.25f);
+                    activerandomObject[2].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
                     yield return new WaitForSeconds(0.02f);
                 }
-                activerandomObject[2].transform.localScale = new Vector3(65f, 65f, 65f);
+                activerandomObject[2].transform.localScale = new Vector3(1f, 1f, 1f);
                 yield break;
 
             case 3: //monster04 
