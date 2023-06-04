@@ -7,9 +7,31 @@ public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 {
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject[] icons;
+    [SerializeField] private GameObject battleRunBtn;
+    [SerializeField] private GameObject battleFightBtn;
+    private BattleOrderManager battleOrderManager;
+
+    private void Awake()
+    {
+        battleOrderManager = FindObjectOfType<BattleOrderManager>();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
+        {
+            FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
+            battleFightBtn.GetComponent<RightClick>().usedFocus = 0;
+            GetComponent<RightClick>().usedFocus = 0;
+            SlotController.instance.fixCount = 0;
+        }
+        if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
+        {
+            FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleRunBtn.GetComponent<RightClick>().usedFocus;
+            battleRunBtn.GetComponent<RightClick>().usedFocus = 0;
+            GetComponent<RightClick>().usedFocus = 0;
+            SlotController.instance.fixCount = 0;
+        }
         slot.SetActive(false);
         icons[0].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[2].transform.localScale = new Vector3(1f, 1f, 1f);

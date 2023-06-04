@@ -132,6 +132,18 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public GameObject FindPlayer(int x)
+    {
+        for (int i =0; i < GameManager.instance.Players.Length; i++)
+        {
+            if (x == GameManager.instance.Players[i].GetComponent<PlayerStat>().order)
+            {
+                return GameManager.instance.Players[i];
+            }
+        }
+        return GameManager.instance.MainPlayer;
+    }
+
     public SlotController.Type AttackTypeToType(Weapon weapon)
     {
         if (weapon.attackType.ToString() == "attackBlackSmith")
