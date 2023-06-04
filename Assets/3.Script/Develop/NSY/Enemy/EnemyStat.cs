@@ -15,8 +15,11 @@ public class EnemyStat : MonoBehaviour
     public int speed;
     public int Lv;
     public int Exp;
+    public int maxSlot; //°ø°Ý ½½·Ô Ä­
     public Sprite portrait;
     public bool isDie = false;
+    public string attackType;
+    public float percent;
 
     private void Start()
     {
@@ -34,7 +37,9 @@ public class EnemyStat : MonoBehaviour
         Lv = enemyStatus.Lv;
         portrait = enemyStatus.UIImage;
         Exp = enemyStatus.Exp;
-
+        maxSlot = enemyStatus.maxSlot;
+        attackType = enemyStatus.AttackType;
+        percent = enemyStatus.percent;
     }
 
 }
