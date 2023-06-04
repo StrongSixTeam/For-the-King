@@ -1053,7 +1053,7 @@ public class MapObjectCreator : MonoBehaviour
                 }
                 for (int j = 0; j < 6; j++)
                 {
-                    if (randomObjectIndex[e] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(randomObjectIndex[e]) && activerandomObject[e].gameObject)
+                    if (randomObjectIndex[e] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(randomObjectIndex[e]) && activerandomObject[e].activeSelf)
                     {
                         closeIndex.Add(randomObjectIndex[e]);
                         box.Add(activerandomObject[e]);
@@ -1070,7 +1070,7 @@ public class MapObjectCreator : MonoBehaviour
         {
             for (int j = 0; j < 6; j++)
             {
-                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[4].activeSelf)
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[4].transform.GetChild(0).gameObject.activeSelf)
                 {
                     closeIndex.Add(objectIndex[3]);
                     box.Add(forestObj[4]);
