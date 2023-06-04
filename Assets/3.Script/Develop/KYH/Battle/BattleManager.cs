@@ -17,6 +17,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Camera MainCam;
 
     [SerializeField] private GameObject bulletPrefs;
+    [SerializeField] private GameObject slotUI; //슬롯
 
     public GameObject target;
     private bool isPlayer = false;
@@ -94,6 +95,12 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    public void CalculateAtk()
+    {
+        float originalAtk = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk;
+        float resultAtk = originalAtk / battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot * SlotController.instance.success;
+        attackDamage = (int)resultAtk;
+    }
     public void RookAt()
     {
         if (battleOrderManager.Order[battleOrderManager.turn].TryGetComponent(out PlayerStat p))
@@ -101,6 +108,7 @@ public class BattleManager : MonoBehaviour
             isPlayer = true;
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Enemys[0].transform);
             target = battleLoader.Enemys[0];
+            SlotController.instance.fixCount = 0;
         }
         else
         {
@@ -110,6 +118,55 @@ public class BattleManager : MonoBehaviour
             DefaultAttack();
         }
     }
+
+    public SlotController.Type AttackTypeToType(Weapon weapon)
+    {
+        if (weapon.attackType.ToString() == "attackBlackSmith")
+        {
+            return SlotController.Type.attackBlackSmith;
+        }
+        else if (weapon.attackType.ToString() == "attackHunter")
+        {
+            return SlotController.Type.attackHunter;
+        }
+        else if (weapon.attackType.ToString() == "attackScholar")
+        {
+            return SlotController.Type.attackScholar;
+        }
+        else
+        {
+            return SlotController.Type.empty;
+        }
+    }
+    public void PlayerAttack()
+    {
+        isPlayer = false;
+
+        //공격 애니메이션 넣기
+
+        BattleUI.SetActive(false);
+        //slot 작동
+        slotUI.GetComponent<CloneSlot>().Try();
+    }
+
+    public void PlayerRun()
+    {
+        isPlayer = false;
+        BattleUI.SetActive(false);
+        slotUI.GetComponent<CloneSlot>().Try();
+        Invoke("TurnChange", 1f);
+    }
+    private void TurnChange()
+    {
+        battleOrderManager.TurnChange();
+    }
+
+    public void MakeBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefs, battleOrderManager.Order[battleOrderManager.turn].transform.position, Quaternion.identity);
+        bullet.transform.position += new Vector3(0, 1, 0);
+    }
+
     public void DefaultAttack()
     {
         isPlayer = false;
@@ -175,5 +232,6 @@ public class BattleManager : MonoBehaviour
         isEnd = false;
 
         FindObjectOfType<MultiCamera>().ToMain();
+        GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
     }
 }
