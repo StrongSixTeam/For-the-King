@@ -155,6 +155,7 @@ public class BattleLoader : MonoBehaviour
             {
                 Enemys[i].transform.SetParent(GameObject.Find("CaveObj").transform.GetChild(scrollMap));
                 Enemys[i].transform.localPosition = enemyPos;
+                Enemys[i].SetActive(true);
             }
         }
 

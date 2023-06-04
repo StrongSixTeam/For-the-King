@@ -72,7 +72,10 @@ public class BattleManager : MonoBehaviour
 
         if (battleLoader.Players.Count == 0 && !isEnd)
         {
-            StartCoroutine(battleCameraController.EnemyWinCam_co());
+            if (battleCameraController.gameObject.name == "BattleCamera")
+            {
+                StartCoroutine(battleCameraController.EnemyWinCam_co());
+            }
 
             LoseBattleBanner.SetActive(true);
 
@@ -81,7 +84,10 @@ public class BattleManager : MonoBehaviour
         }
         if (battleLoader.Enemys.Count == 0 && !isEnd)
         {
-            StartCoroutine(battleCameraController.PlayerWinCam_co());
+            if (battleCameraController.gameObject.name == "BattleCamera")
+            {
+                StartCoroutine(battleCameraController.PlayerWinCam_co());
+            }
 
             WinBattleBanner.SetActive(true);
 
@@ -134,7 +140,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject FindPlayer(int x)
     {
-        for (int i =0; i < GameManager.instance.Players.Length; i++)
+        for (int i = 0; i < GameManager.instance.Players.Length; i++)
         {
             if (x == GameManager.instance.Players[i].GetComponent<PlayerStat>().order)
             {
