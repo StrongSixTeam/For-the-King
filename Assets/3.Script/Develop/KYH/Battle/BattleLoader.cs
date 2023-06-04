@@ -208,7 +208,7 @@ public class BattleLoader : MonoBehaviour
         SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
         SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
         SlotController.instance.hasLimit = false;
-        Invoke("PlayerSetActive", 7f);
+        Invoke("PlayerSetActive", 3f);
     }
     private void PlayerSetActive()
     {

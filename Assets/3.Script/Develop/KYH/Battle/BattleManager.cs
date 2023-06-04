@@ -13,7 +13,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject WinBattleBanner;
     [SerializeField] GameObject LoseBattleBanner;
 
-    Camera battlecam;
+    Camera activeCam;
     [SerializeField] Camera MainCam;
 
     [SerializeField] private GameObject bulletPrefs;
@@ -31,11 +31,20 @@ public class BattleManager : MonoBehaviour
 
     private Camera CurrnetCam;
 
-    private void Awake()
+    private void OnEnable()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
         battleCameraController = FindObjectOfType<BattleCameraController>();
-        battlecam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
+
+        if (GameObject.FindGameObjectWithTag("BattleCamera") != null)
+        {
+            activeCam = GameObject.FindGameObjectWithTag("BattleCamera").GetComponent<Camera>();
+        }
+        else
+        {
+            activeCam = GameObject.FindGameObjectWithTag("CaveCamera").GetComponent<Camera>();
+        }
+
         CurrnetCam = FindObjectOfType<Camera>();
         itemInput = FindObjectOfType<ItemInputTest1>();
     }
@@ -45,7 +54,7 @@ public class BattleManager : MonoBehaviour
         {
             BattleUI.SetActive(true);
 
-            Ray ray = battlecam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = activeCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -63,7 +72,11 @@ public class BattleManager : MonoBehaviour
 
         if (battleLoader.Players.Count == 0 && !isEnd)
         {
+            StartCoroutine(battleCameraController.EnemyWinCam_co());
 
+            LoseBattleBanner.SetActive(true);
+
+            Invoke("BattleEnd", 5f);
 
         }
         if (battleLoader.Enemys.Count == 0 && !isEnd)
@@ -215,7 +228,7 @@ public class BattleManager : MonoBehaviour
     public void ItemGet()
     {
         InventoryController1.instance.playerNum = PlayerNum.Player0;
-        
+
         itemInput.Get(battleLoader.items[0]);
         battleLoader.items.RemoveAt(0);
 
