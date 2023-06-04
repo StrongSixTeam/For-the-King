@@ -317,13 +317,13 @@ public class MapObjectCreator : MonoBehaviour
                             break;
                     }
 
-
                     objectIndex.Add(forestNode[random].index);
                     GameObject temp = Instantiate(forestObj[i]);
                     forestObj[i] = temp;
                     temp.SetActive(true);
                     temp.transform.position = forestNode[random].transform.position + new Vector3(0, 0.2f, 0);
                     temp.transform.SetParent(fixedObjectBox);
+
 
                     break;
                 }
@@ -1070,10 +1070,10 @@ public class MapObjectCreator : MonoBehaviour
         {
             for (int j = 0; j < 6; j++)
             {
-                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]))
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[4].activeSelf)
                 {
                     closeIndex.Add(objectIndex[3]);
-                    box.Add(forest04);
+                    box.Add(forestObj[4]);
                     break;
                 }
             }
