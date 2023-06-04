@@ -391,13 +391,17 @@ public class HexMapCreator : MonoBehaviour
 
     void AddLowPolyWater()
     {
-        for (int i = 0; i < hexMembers.Length; i++)
-        {
-            if (hexMembers[i].mapType.Equals(0))
-            {
-                hexMembers[i].gameObject.AddComponent<LowPolyWater>();
-            }
-        }
+        //for (int i = 0; i < hexMembers.Length; i++)
+        //{
+        //    if (hexMembers[i].mapType.Equals(0))
+        //    {
+        //        hexMembers[i].gameObject.AddComponent<LowPolyWater>();
+        //        if (hexMembers[i].zNum % 2 == 0)
+        //        {
+        //            hexMembers[i].gameObject.GetComponent<LowPolyWater>().down = false;
+        //        }
+        //    }
+        //}
     }
 
     //매개변수로 전달받는 index의 Material를 바꾼다
