@@ -240,7 +240,26 @@ public class CloneSlot : MonoBehaviour
                 Invoke("slotsOff", 1f);
                 if (SlotController.instance.limit <= SlotController.instance.success) //도주 성공이라면
                 {
-                    //도주,,,? 어떻게 처리하지? BattleManager에서 함수 만들어서 실행시켜주기
+                    int number = -1;
+                    for (int i =0; i < FindObjectOfType<BattleOrderManager>().Order.Count; i++)
+                    {
+                        for (int j = 0; j < FindObjectOfType<BattleLoader>().Players.Count; j++)
+                        {
+                            if (FindObjectOfType<BattleOrderManager>().Order[i].name == FindObjectOfType<BattleLoader>().Players[j].name)
+                            {
+                                number = j;
+                                break;
+                            }
+                        }
+                        if (number >= 0)
+                        {
+                            break;
+                        }
+                    }
+                    if (number >= 0)
+                    {
+                        FindObjectOfType<BattleLoader>().Players.RemoveAt(number);
+                    }
                 }
                 else //도주 실패라면
                 {

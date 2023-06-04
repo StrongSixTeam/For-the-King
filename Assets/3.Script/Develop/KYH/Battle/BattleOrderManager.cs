@@ -36,7 +36,7 @@ public class BattleOrderManager : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(turn);
+        //Debug.Log(turn);
     }
     public void SetOrder()
     {
