@@ -31,5 +31,6 @@ public class EncounterContent : ScriptableObject
     [Header("Enemy 관련")]
     public int enemyCount; //적이 몇마리인지
     public int runCount; //몰래 지나가기 카운트
+    public int level;
 }
 

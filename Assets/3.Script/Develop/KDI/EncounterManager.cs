@@ -21,6 +21,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject successCalc;
     [SerializeField] private GameObject preview;
     [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject level;
     public int number;
     public int enemyNumber;
     public bool isEncounterUI = false;
@@ -68,6 +69,8 @@ public class EncounterManager : MonoBehaviour
     }
     public void ActiveEnemies(int n)
     {
+        level.SetActive(true);
+        level.transform.GetChild(0).GetComponent<Text>().text = enemies[n].level.ToString();
         number = -1;
         enemyNumber = n;
         txtName.text = enemies[n].Name;
@@ -106,12 +109,14 @@ public class EncounterManager : MonoBehaviour
 
         if (encounter[n].type == EncounterContent.Type.town) 
         {
+            level.SetActive(false);
             ActiveBtn(0);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         }
         else if (encounter[n].type == EncounterContent.Type.interactiveObject)
         {
+            level.SetActive(false);
             ActiveBtn(1);
             SlotController.instance.fixCount = 0;
             SlotController.instance.maxSlotCount = encounter[n].slotCount;
@@ -137,7 +142,8 @@ public class EncounterManager : MonoBehaviour
             {
                 Debug.Log(ex);
             }
-            
+            level.SetActive(true);
+            level.transform.GetChild(1).GetComponent<Text>().text = encounter[n].level.ToString();
             btns[2].transform.GetChild(0).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(2).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(1).GetComponent<Button>().interactable = true;
@@ -159,12 +165,15 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.dungeon)
         {
+            level.SetActive(true);
+            level.transform.GetChild(1).GetComponent<Text>().text = encounter[n].level.ToString();
             ActiveBtn(3);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
         }
         else if (encounter[n].type == EncounterContent.Type.sanctum)
         {//성소 만나면
+            level.SetActive(false);
             if (!encounter[n].isCleared)
             { //남들이 거치지 않은 성소라면
                 ActiveBtn(4);
