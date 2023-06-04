@@ -45,7 +45,7 @@ public class ChaosControl : MonoBehaviour
         if (chaosTurn < 0)
         {
             //맨오른쪽에 있는 바에 상속시켜주자
-            for(int i=0; i<6; i++)
+            for(int i=0; i<4; i++)
             {
                 if (!chaosImageBox[i].activeSelf)
                 {
@@ -92,7 +92,8 @@ public class ChaosControl : MonoBehaviour
                         GameObject temp2 = chaosImageBox[FIFO.Dequeue()];
                         temp2.transform.SetParent(parentsChaos[1]);
                         temp2.transform.localPosition = Vector3.zero;
-                        Debug.Log("게임오버");
+
+                        GameManager.instance.currentLife = 0;
                         break;
                 }
                 break;
