@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)

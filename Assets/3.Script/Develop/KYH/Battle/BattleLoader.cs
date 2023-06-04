@@ -16,6 +16,7 @@ public class BattleLoader : MonoBehaviour
     [SerializeField] GameObject battleUI;
     [SerializeField] GameObject fieldUI;
     [SerializeField] GameObject QuestUI;
+    [SerializeField] GameObject SlotUI;
 
     //소환 위치 벡터값
     Vector3 playerPos;
@@ -203,7 +204,10 @@ public class BattleLoader : MonoBehaviour
         fieldUI.SetActive(false);
         QuestUI.SetActive(false);
         isBattle = true;
-
+        BattleOrderManager battleOrderManager = FindObjectOfType<BattleOrderManager>();
+        SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
+        SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
+        SlotController.instance.hasLimit = false;
         Invoke("PlayerSetActive", 7f);
     }
     private void PlayerSetActive()
@@ -229,6 +233,7 @@ public class BattleLoader : MonoBehaviour
         Gold = 0;
 
         battleUI.SetActive(false);
+        SlotUI.SetActive(false);
         fieldUI.SetActive(true);
         QuestUI.SetActive(true);
         isBattle = false;
@@ -240,5 +245,7 @@ public class BattleLoader : MonoBehaviour
         items.Clear();
         isIng = false;
         currentItemInputUI.Clear();
+        SlotController.instance.hasLimit = true;
+        SlotUI.GetComponent<CloneSlot>().isShowText = true;
     }
 }

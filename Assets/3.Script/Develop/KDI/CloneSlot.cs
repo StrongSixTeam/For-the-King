@@ -14,6 +14,8 @@ public class CloneSlot : MonoBehaviour
     public bool isShowText = true;
     [SerializeField] private GameObject highlight;
 
+    public bool hasLimit = true;
+    public bool runOut = false;
     public void Initialized()
     {
         isSuccess = false;
@@ -189,43 +191,75 @@ public class CloneSlot : MonoBehaviour
         }
         SlotController.instance.fixCount = a;
         SlotController.instance.isSlot = false;
-        //그라데이션 켜기
-        highlight.SetActive(true);
-        highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).gameObject.SetActive(true);
 
-        if (SlotController.instance.limit <= SlotController.instance.success)
+        if (SlotController.instance.hasLimit) //공격씬이 아니면
         {
-            //성공 처리
-            if (EncounterManager.instance.enemyNumber >= 0) //몬스터랑 만난 경우
+            //그라데이션 켜기
+            highlight.SetActive(true);
+            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).gameObject.SetActive(true);
+            if (SlotController.instance.limit <= SlotController.instance.success)
             {
-                Invoke("OffAll", 1f);
+                //성공 처리
+                if (EncounterManager.instance.enemyNumber >= 0) //몬스터랑 만난 경우
+                {
+                    Invoke("OffAll", 1f);
+                }
+                else if (EncounterManager.instance.number == 2) //신도 의식 도구
+                {
+                    StartCoroutine(GodSuccessWait_co());
+                }
+                //하이라이트 처리
+                highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(true);
+                highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
+                highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(false);
             }
-            else if (EncounterManager.instance.number == 2) //신도 의식 도구
+            else
             {
-                StartCoroutine(GodSuccessWait_co());
+                isSuccess = false;
+                if (EncounterManager.instance.enemyNumber >= 0) //몬스터랑 만난 경우
+                {
+                    StartCoroutine(BattleBtn_co());
+                }
+                else if (EncounterManager.instance.number == 2) //신도 의식 도구 실패시
+                {
+                    //실패 페널티 처리
+                }
+                Invoke("OffAll", 1f); //끄기
+                //하이라이트 처리
+                highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
+                highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
+                highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
+                FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
             }
-            //하이라이트 처리
-            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(true);
-            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
-            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(false);
         }
-        else
+        else //공격씬이면
         {
-            isSuccess = false;
-            if (EncounterManager.instance.enemyNumber >= 0) //몬스터랑 만난 경우
+            if (runOut) //공격씬에서 도주하면
             {
-                StartCoroutine(BattleBtn_co());
+                Invoke("slotsOff", 1f);
+                if (SlotController.instance.limit <= SlotController.instance.success) //도주 성공이라면
+                {
+                    //도주,,,? 어떻게 처리하지? BattleManager에서 함수 만들어서 실행시켜주기
+                }
+                else //도주 실패라면
+                {
+
+                }
             }
-            else if (EncounterManager.instance.number == 2) //신도 의식 도구 실패시
+            else //공격씬에서 공격이라면
             {
-                //실패 페널티 처리
+                FindObjectOfType<BattleManager>().CalculateAtk();
+                FindObjectOfType<BattleManager>().MakeBullet();
+                Invoke("slotsOff", 3f);
             }
-            Invoke("OffAll", 1f); //끄기
-            //하이라이트 처리
-            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
-            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).GetChild(0).GetComponent<Text>().text = SlotController.instance.success.ToString();
-            highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
-            FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
+        }
+    }
+
+    private void slotsOff()
+    {
+        for (int i = 0; i < SlotController.instance.maxSlotCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
         }
     }
 
