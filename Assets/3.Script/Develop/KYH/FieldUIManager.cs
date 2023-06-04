@@ -15,6 +15,16 @@ public class FieldUIManager : MonoBehaviour
 
     [SerializeField] private BattleLoader battleLoader;
 
+    private Vector2[] defaultPos = new Vector2[3];
+
+    private bool isCheck = false;
+
+    private void Start()
+    {
+        defaultPos[0] = portrait[0].transform.GetChild(0).GetComponent<RectTransform>().position;
+        defaultPos[1] = portrait[1].transform.GetChild(1).GetComponent<RectTransform>().position;
+        defaultPos[2] = portrait[2].transform.GetChild(2).GetComponent<RectTransform>().position;
+    }
     private void Update()
     {
         if(GameManager.instance.Players.Length > 0)
@@ -33,15 +43,22 @@ public class FieldUIManager : MonoBehaviour
                 PortraitAni.SetInteger("MainPlayer", GameManager.instance.nextTurn - 1);
             }
         }
-        if (battleLoader.isBattle)
+        if (battleLoader.isBattle && !isCheck)
         {
             for(int i = 0; i < portrait.Length; i++)
             {
                 for(int j = 0; j < 3; j++)
                 {
-                    portrait[i].transform.GetChild(j).localScale = new Vector2(30, 30);
+                    portrait[i].transform.GetChild(j).GetComponent<RectTransform>().sizeDelta = new Vector2(30, 30);
+                    portrait[i].transform.GetChild(j).GetComponent<RectTransform>().position = defaultPos[i];
                 }
             }
+
+            isCheck = true;
+        }
+        if (!battleLoader.isBattle)
+        {
+            isCheck = false;
         }
 
         SetLifeUI();
