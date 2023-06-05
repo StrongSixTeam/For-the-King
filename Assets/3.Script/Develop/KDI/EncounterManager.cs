@@ -116,6 +116,10 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.interactiveObject)
         {
+            for (int i = 0; i < highlight.transform.childCount; i++)
+            {
+                highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
+            }
             level.SetActive(false);
             ActiveBtn(1);
             SlotController.instance.fixCount = 0;
@@ -127,6 +131,7 @@ public class EncounterManager : MonoBehaviour
             slot.SetActive(true);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
+            successCalc.GetComponent<SuccessCalc>().sentence = encounter[n].SuccessText;
             successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
         }
         else if (encounter[n].type == EncounterContent.Type.enemy)
@@ -410,6 +415,7 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(true);
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
+        successCalc.GetComponent<SuccessCalc>().sentence = null;
         successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
     }
 
