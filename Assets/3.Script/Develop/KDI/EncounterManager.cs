@@ -22,6 +22,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField] private GameObject preview;
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject level;
+    [SerializeField] private GameObject already;
     public int number;
     public int enemyNumber;
     public bool isEncounterUI = false;
@@ -59,7 +60,7 @@ public class EncounterManager : MonoBehaviour
 
     private void Update()
     {
-        if (parent.GetChild(1).gameObject.activeSelf || outsideCheck)
+        if (parent.GetChild(1).gameObject.activeSelf || outsideCheck || already.activeSelf)
         {
             isEncounterUI = true;
         }
@@ -121,19 +122,26 @@ public class EncounterManager : MonoBehaviour
             {
                 highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
             }
-            ActiveBtn(1);
-            level.SetActive(false);
-            SlotController.instance.fixCount = 0;
-            SlotController.instance.maxSlotCount = encounter[n].slotCount;
-            SlotController.instance.type = StringToType(encounter[n].slotType);
-            SlotController.instance.limit = encounter[n].limit;
-            SlotController.instance.percent = FindTypePercent(encounter[n].slotType);
-            slot.GetComponent<CloneSlot>().Initialized();
-            slot.SetActive(true);
-            parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
-            parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
-            successCalc.GetComponent<SuccessCalc>().sentence = encounter[n].SuccessText;
-            successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
+            if (encounter[n].isCleared)
+            {
+                already.SetActive(true);
+            }
+            else
+            {
+                ActiveBtn(1);
+                level.SetActive(false);
+                SlotController.instance.fixCount = 0;
+                SlotController.instance.maxSlotCount = encounter[n].slotCount;
+                SlotController.instance.type = StringToType(encounter[n].slotType);
+                SlotController.instance.limit = encounter[n].limit;
+                SlotController.instance.percent = FindTypePercent(encounter[n].slotType);
+                slot.GetComponent<CloneSlot>().Initialized();
+                slot.SetActive(true);
+                parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
+                parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
+                successCalc.GetComponent<SuccessCalc>().sentence = encounter[n].SuccessText;
+                successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
+            }
         }
         else if (encounter[n].type == EncounterContent.Type.enemy)
         {
@@ -189,6 +197,7 @@ public class EncounterManager : MonoBehaviour
             else
             {
                 //남들이 거친 성소라면 이미 사용된 성소라는 UI 띄우기
+                already.SetActive(true);
             }
         }
         else if (encounter[n].type == EncounterContent.Type.exclamation) //느낌표라면
@@ -197,6 +206,12 @@ public class EncounterManager : MonoBehaviour
             level.SetActive(false);
             ActiveBtn(6);
         }
+    }
+    public void OffAlready()
+    {
+        already.SetActive(false);
+        isEncounterUI = false;
+        astsrPathfinding.ismovingTurn = true;
     }
 
     public void DisableButton()
