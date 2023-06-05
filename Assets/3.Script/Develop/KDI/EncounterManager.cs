@@ -26,6 +26,7 @@ public class EncounterManager : MonoBehaviour
     public int enemyNumber;
     public bool isEncounterUI = false;
     public bool outsideCheck = false;
+    [SerializeField] private Sprite OriginalBtn;
 
     private AstsrPathfinding astsrPathfinding;
 
@@ -107,7 +108,7 @@ public class EncounterManager : MonoBehaviour
             txtExtraContext.text = "";
         }
 
-        if (encounter[n].type == EncounterContent.Type.town) 
+        if (encounter[n].type == EncounterContent.Type.town)
         {
             level.SetActive(false);
             ActiveBtn(0);
@@ -120,8 +121,8 @@ public class EncounterManager : MonoBehaviour
             {
                 highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
             }
-            level.SetActive(false);
             ActiveBtn(1);
+            level.SetActive(false);
             SlotController.instance.fixCount = 0;
             SlotController.instance.maxSlotCount = encounter[n].slotCount;
             SlotController.instance.type = StringToType(encounter[n].slotType);
@@ -190,6 +191,12 @@ public class EncounterManager : MonoBehaviour
                 //남들이 거친 성소라면 이미 사용된 성소라는 UI 띄우기
             }
         }
+        else if (encounter[n].type == EncounterContent.Type.exclamation) //느낌표라면
+        {
+            parent.GetChild(1).gameObject.SetActive(true);
+            level.SetActive(false);
+            ActiveBtn(6);
+        }
     }
 
     public void DisableButton()
@@ -232,6 +239,10 @@ public class EncounterManager : MonoBehaviour
             btns[i].SetActive(false);
         }
         btns[n].SetActive(true);
+        for (int i = 0; i < btns[n].transform.childCount; i++)
+        {
+            btns[n].transform.GetChild(i).GetComponent<Image>().sprite = OriginalBtn;
+        }
     }
 
     public void UseFocus()
@@ -542,5 +553,14 @@ public class EncounterManager : MonoBehaviour
         {
             portraitUIs[i].gameObject.SetActive(true);
         }
+    }
+
+    public void GetDeadItems() //물음표
+    {
+        //아이템 얻기
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        encounter[number].isCleared = true;
+        FindObjectOfType<MapObjectCreator>().UseObject(4);
     }
 }
