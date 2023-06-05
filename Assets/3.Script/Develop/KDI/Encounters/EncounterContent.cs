@@ -14,7 +14,8 @@ public class EncounterContent : ScriptableObject
         interactiveObject,
         enemy,
         dungeon,
-        sanctum
+        sanctum,
+        exclamation
     }
     public Type type;
 
@@ -32,5 +33,8 @@ public class EncounterContent : ScriptableObject
     public int enemyCount; //적이 몇마리인지
     public int runCount; //몰래 지나가기 카운트
     public int level;
+
+    [Header("SuccessCalc 관련")]
+    public string[] SuccessText;
 }
 

@@ -13,6 +13,7 @@ public class SuccessCalc : MonoBehaviour
     [SerializeField] private int testFix = 0;
 
     [SerializeField] private GameObject[] resultNumbers;
+    public string[] sentence;
 
     private void Start()
     {
@@ -67,7 +68,14 @@ public class SuccessCalc : MonoBehaviour
                 }
                 resultNumbers[newIndex].SetActive(true);
                 resultNumbers[newIndex].transform.GetChild(0).GetComponent<Text>().text = i.ToString();
-                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 성공";
+                if (sentence != null)
+                {
+                    resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) " + sentence[i];
+                }
+                else
+                {
+                    resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 성공" ;
+                }
                 //Debug.Log(i + testFix + " " + result + "% 성공");
             }
             else
@@ -78,7 +86,14 @@ public class SuccessCalc : MonoBehaviour
                 }
                 resultNumbers[newIndex].SetActive(true);
                 resultNumbers[newIndex].transform.GetChild(0).GetComponent<Text>().text = i.ToString();
-                resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 실패";
+                if (sentence != null)
+                {
+                    resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) " + sentence[i];
+                }
+                else
+                {
+                    resultNumbers[newIndex].gameObject.transform.GetChild(1).GetComponent<Text>().text = "(" + result + "%) 실패";
+                }
                 //Debug.Log(i + testFix+ " " + result + "% 실패");
             }
             newIndex--;

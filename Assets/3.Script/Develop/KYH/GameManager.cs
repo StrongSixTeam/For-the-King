@@ -6,11 +6,14 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     #region ½Ì±ÛÅæ
+    public GameObject Inventory;
     public static GameManager instance = null;
 
     private void Awake()
     {
         instance = this;
+        Inventory.gameObject.SetActive(true);
+        Inventory.gameObject.SetActive(false);
     }
     #endregion
 
@@ -43,6 +46,8 @@ public class GameManager : MonoBehaviour
 
     private string MainPlayerName;
     public GameObject SpeedSlot;
+    public GameObject LifeUI;
+    public Sprite[] LifeUISprites; //»ý¸í ºó°Å Âù°Å
     [SerializeField] Text Name;
 
     [SerializeField] BattleLoader battleLoader;
@@ -220,6 +225,22 @@ public class GameManager : MonoBehaviour
             }
         }
         portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void SetLifeUI()
+    {
+        for (int i = 0; i < maxLife; i++)
+        {
+            LifeUI.transform.GetChild(i).gameObject.SetActive(true);
+            if (i < currentLife)
+            {
+                LifeUI.transform.GetChild(i).GetComponent<Image>().sprite = LifeUISprites[1]; //Âù°Å
+            }
+            else
+            {
+                LifeUI.transform.GetChild(i).GetComponent<Image>().sprite = LifeUISprites[0]; //ºó°Å
+            }
+        }
     }
 }
 

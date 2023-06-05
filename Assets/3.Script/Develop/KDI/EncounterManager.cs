@@ -116,6 +116,10 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.interactiveObject)
         {
+            for (int i = 0; i < highlight.transform.childCount; i++)
+            {
+                highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
+            }
             level.SetActive(false);
             ActiveBtn(1);
             SlotController.instance.fixCount = 0;
@@ -127,6 +131,7 @@ public class EncounterManager : MonoBehaviour
             slot.SetActive(true);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
+            successCalc.GetComponent<SuccessCalc>().sentence = encounter[n].SuccessText;
             successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
         }
         else if (encounter[n].type == EncounterContent.Type.enemy)
@@ -143,7 +148,7 @@ public class EncounterManager : MonoBehaviour
                 Debug.Log(ex);
             }
             level.SetActive(true);
-            level.transform.GetChild(1).GetComponent<Text>().text = encounter[n].level.ToString();
+            level.transform.GetChild(0).GetComponent<Text>().text = encounter[n].level.ToString();
             btns[2].transform.GetChild(0).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(2).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(1).GetComponent<Button>().interactable = true;
@@ -294,7 +299,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<ChaosControl>().RemoveChaos(false);
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
 
-        if (FindObjectOfType<QuestManager>().questTurn == 5)
+        if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
             FindObjectOfType<QuestManager>().PopUp("God");
             FindObjectOfType<QuestManager>().questTurn = 6;
@@ -305,11 +310,12 @@ public class EncounterManager : MonoBehaviour
     {
         //게임매니저 생명 늘리기
         btns[5].SetActive(false);
+        GameManager.instance.currentLife += 1;
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
 
-        if (FindObjectOfType<QuestManager>().questTurn == 5)
+        if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
             FindObjectOfType<QuestManager>().PopUp("God");
             FindObjectOfType<QuestManager>().questTurn = 6;
@@ -409,6 +415,7 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(true);
         parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
         parent.GetChild(2).gameObject.SetActive(true); //확률 결과도 보여주기
+        successCalc.GetComponent<SuccessCalc>().sentence = null;
         successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
     }
 
