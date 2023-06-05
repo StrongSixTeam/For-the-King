@@ -167,7 +167,7 @@ public class CloneSlot : MonoBehaviour
         int a = SlotController.instance.fixCount;
         for (int i = 0; i < SlotController.instance.maxSlotCount; i++)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.3f);
             if (SlotController.instance.fixCount > 0)
             {
                 transform.GetChild(i).GetChild(1).gameObject.SetActive(true); //고정 이동칸
@@ -208,6 +208,11 @@ public class CloneSlot : MonoBehaviour
                 else if (EncounterManager.instance.number == 2) //신도 의식 도구
                 {
                     StartCoroutine(GodSuccessWait_co());
+                }
+                else
+                {
+                    //성공 처리 isCleared
+                    Invoke("OffAll", 1f);
                 }
                 //하이라이트 처리
                 highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(true);
