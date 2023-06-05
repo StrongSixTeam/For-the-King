@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f0c546fbfbb59488dc8e551c2af47b, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  Name: hidden Enemy 1
-  Content: 
+  Name: "\uAC11\uC637 \uB291\uB300"
+  Content: "\uC228\uACA8\uC9C4 \uC801\uC744 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4."
   extraContent: 
   type: 2
-  limit: 0
+  limit: 3
   isCleared: 0
   isShowed: 0
-  slotType: empty
-  slotCount: 0
-  preview: {fileID: 0}
-  enemyCount: 0
-  runCount: 0
+  slotType: attackHunter
+  slotCount: 3
+  preview: {fileID: 7444046612802208997, guid: 46832794c7590384dbf431b95cd6e260, type: 3}
+  enemyCount: 3
+  runCount: 2
+  level: 1
+  SuccessText: []

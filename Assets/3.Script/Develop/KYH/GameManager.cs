@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Inventory.gameObject.SetActive(true);
+        //Inventory.gameObject.SetActive(true);
         Inventory.gameObject.SetActive(false);
     }
     #endregion

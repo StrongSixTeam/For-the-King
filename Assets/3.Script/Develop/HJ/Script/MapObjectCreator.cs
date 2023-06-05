@@ -970,7 +970,7 @@ public class MapObjectCreator : MonoBehaviour
                 yield break;
 
             case 4: //물음표 
-                if (activerandomObject[4].activeSelf)
+                if (activerandomObject[4]!= null && activerandomObject[4].activeSelf)
                 {
                     yield break;
                 }
@@ -985,7 +985,7 @@ public class MapObjectCreator : MonoBehaviour
                 yield break;
 
             case 5: //느낌표
-                if (activerandomObject[5].activeSelf)
+                if (activerandomObject[5] != null && activerandomObject[5].activeSelf)
                 {
                     yield break;
                 }
@@ -1084,7 +1084,7 @@ public class MapObjectCreator : MonoBehaviour
     }
 
 
-    //objType 0=신도의식도구, 1=집중성소, 2=생명성소, 3=지혜성소
+    //objType 0=신도의식도구, 1=집중성소, 2=생명성소, 3=지혜성소, 4=물음표, 5=느낌표
     public void UseObject(int objType)
     {
         switch (objType)
@@ -1109,6 +1109,12 @@ public class MapObjectCreator : MonoBehaviour
                 GameObject temp03 = Instantiate(sanctumUse);
                 temp03.transform.position = sanctumObj[2].transform.position;
                 Destroy(sanctumObj[2]);
+                break;
+            case 4:
+                Destroy(activerandomObject[4]);
+                break;
+            case 5:
+                Destroy(activerandomObject[5]);
                 break;
         }
     }
