@@ -241,7 +241,10 @@ public class EncounterManager : MonoBehaviour
         btns[n].SetActive(true);
         for (int i = 0; i < btns[n].transform.childCount; i++)
         {
-            btns[n].transform.GetChild(i).GetComponent<Image>().sprite = OriginalBtn;
+            if (n != 5)
+            {
+                btns[n].transform.GetChild(i).GetComponent<Image>().sprite = OriginalBtn;
+            }
         }
     }
 
@@ -328,7 +331,6 @@ public class EncounterManager : MonoBehaviour
 
         if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
-            FindObjectOfType<QuestManager>().PopUp("God");
             FindObjectOfType<QuestManager>().questTurn = 6;
         }
     }
@@ -350,6 +352,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<EncounterManager>().outsideCheck = true;
         slot.SetActive(false);
         btns[1].SetActive(false);
+        ActiveBtn(5);
         btns[5].SetActive(true);
         parent.GetChild(1).gameObject.SetActive(false);
         parent.GetChild(2).gameObject.SetActive(false);
