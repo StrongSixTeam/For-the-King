@@ -263,6 +263,7 @@ public class CloneSlot : MonoBehaviour
                     }
                     if (number >= 0)
                     {
+                        Destroy(FindObjectOfType<BattleLoader>().Players[number]);
                         FindObjectOfType<BattleLoader>().Players.RemoveAt(number);
                     }
                 }

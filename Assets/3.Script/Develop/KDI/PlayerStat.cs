@@ -22,8 +22,8 @@ public class PlayerStat : MonoBehaviour
 
     public int coins; //현재 가지고 있는 코인
 
-    public float nowExp = 1;
-    public float maxExp = 100;
+    public float nowExp = 0;
+    public float maxExp = 30;
     public int Lv = 1;
     public Sprite portrait;
 

@@ -147,6 +147,7 @@ public class BattleLoader : MonoBehaviour
             }
 
         }
+
         if (enemyPos == new Vector3(0, 0, -1))
         {
             for (int i = 0; i < Enemys.Count; i++)
@@ -157,11 +158,26 @@ public class BattleLoader : MonoBehaviour
             }
         }
 
+        GameObject temp = null;
+
         for (int i = 0; i < Players.Count; i++)
         {
-
+            for (int l = i + 1; l < Players.Count; l++)
+            {
+                if (Players[i].GetComponent<PlayerStat>().order > Players[l].GetComponent<PlayerStat>().order)
+                {
+                    temp = Players[i];
+                    Players[i] = Players[l];
+                    Players[l] = temp;
+                }
+            }                 
+            
             Players[i].GetComponent<PlayerController_Jin>().enabled = false;
             Players[i].transform.localScale = new Vector3(1, 1, 1);
+
+            Players[i].GetComponent<Animator>().applyRootMotion = true;
+            Players[i].GetComponent<Animator>().SetTrigger("Battle");
+
             if(playerPos == new Vector3(-200f, 0, -38))
             {
                 Players[i].SetActive(false);
@@ -208,7 +224,7 @@ public class BattleLoader : MonoBehaviour
         //SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
         //SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
         SlotController.instance.hasLimit = false;
-        Invoke("PlayerSetActive", 3f);
+        Invoke("PlayerSetActive", 4f);
     }
     private void PlayerSetActive()
     {
