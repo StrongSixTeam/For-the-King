@@ -44,6 +44,8 @@ public class QuestManager : MonoBehaviour
 
     private CameraController cameraController;
 
+    public int questClearCnt = 0;
+
     private void Awake()
     {
         cameraController = FindObjectOfType<CameraController>();
@@ -98,7 +100,7 @@ public class QuestManager : MonoBehaviour
                 if (questTurn == 2 || questTurn == 8 || questTurn == 11)
                 {
                     questCheckUI.GetComponentInChildren<Text>().text = questText[questTurn - 1].questListSentence;
-                    //questCheckUI.GetComponentInChildren<Text>().text.Replace("\n", "");
+                    questCheckUI.GetComponentInChildren<Text>().text.Replace(Environment.NewLine, "");
                 }
 
                 questCheckUI.SetActive(true);
@@ -257,35 +259,4 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
-
-    //테스트용, 함수 호출 형태
-
-    //public void TestMain()
-    //{
-    //    PopUp(questTurn);
-    //}
-    //public void TestClear1()
-    //{
-    //    PopUp("WoodSmoke");
-    //}
-    //public void TestClear2()
-    //{
-    //    PopUp("ChaosBoss");
-    //}
-    //public void TestClear3()
-    //{
-    //    PopUp("God");
-    //}
-    //public void TestClear4()
-    //{
-    //    PopUp("ShinyCave");
-    //}
-    //public void TestClear5()
-    //{
-    //    PopUp("Parid");
-    //}
-    //public void TestClear6()
-    //{
-    //    PopUp("Corpse");
-    //}
 }
