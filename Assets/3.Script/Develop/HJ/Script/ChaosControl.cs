@@ -8,7 +8,7 @@ public class ChaosControl : MonoBehaviour
     [SerializeField] Transform[] parentsChaos = new Transform[2];
     [SerializeField] GameObject[] chaosImageBox = new GameObject[4];
 
-    int chaosTurn = 6; //카오스 생성 턴
+    int chaosTurn = 5; //카오스 생성 턴
     int maxChaosCount = 0; //카오스가 끝까지 간 경우 ++
 
     public int endBarIndex;
@@ -54,7 +54,7 @@ public class ChaosControl : MonoBehaviour
                 }
             }
 
-            chaosTurn = 6;
+            chaosTurn = 5;
         }
     }
 

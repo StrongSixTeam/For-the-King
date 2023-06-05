@@ -20,6 +20,8 @@ public class PlayerController_Jin : MonoBehaviour
 
     public int monsterIndex;
 
+    bool active = false;
+
     private void Start()
     {
         map = FindObjectOfType<MapObjectCreator>();
@@ -169,6 +171,93 @@ public class PlayerController_Jin : MonoBehaviour
         }
     }
 
+    private bool CheckNextObject(int checkIndex)
+    {
+        if (map.objectIndex[0] == checkIndex) //오아튼
+        {
+            return true;
+        }
+        else if (map.objectIndex[1] == checkIndex) //우드스모크
+        {
+            return true;
+        }
+        else if (map.objectIndex[2] == checkIndex && EncounterManager.instance.encounter[2].isShowed && !EncounterManager.instance.encounter[2].isCleared) //신또의식도구
+        {
+            return true;
+        }
+        else if (map.objectIndex[3] == checkIndex && EncounterManager.instance.encounter[3].isShowed && !EncounterManager.instance.encounter[3].isCleared) //카오스 우두머리
+        {
+            return true;
+        }
+        else if (map.objectIndex[4] == checkIndex && EncounterManager.instance.encounter[4].isShowed) //눈부신 광산
+        {
+            return true;
+        }
+        else if (map.objectIndex[5] == checkIndex) //패리드
+        {
+            return true;
+        }
+        else if (map.objectIndex[6] == checkIndex && EncounterManager.instance.encounter[5].isShowed) //잊혀진 저장고
+        {
+            return true;
+        }
+        else if (map.objectIndex[7] == checkIndex) //카젤리의 시계
+        {
+            return true;
+        }
+        else if (map.objectIndex[8] == checkIndex && EncounterManager.instance.encounter[7].isShowed) //시체의 지하실
+        {
+            return true;
+        }
+        else if (map.objectIndex[9] == checkIndex) //집중 성소
+        {
+            return true;
+        }
+        else if (map.objectIndex[10] == checkIndex) //생명 성소
+        {
+            return true;
+        }
+        else if (map.objectIndex[11] == checkIndex) //지혜 성소
+        {
+            return true;
+        }
+        else if (map.randomObjectIndex[0] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            return true;
+        }
+        else if (map.randomObjectIndex[1] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            return true;
+        }
+        else if (map.randomObjectIndex[2] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            return true;
+        }
+        else if (map.randomObjectIndex[3] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            return true;
+        }
+        else if (map.randomObjectIndex[4] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            return true;
+        }
+        else if (map.randomObjectIndex[5] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        {
+            return true;
+        }
+        else
+        {
+            for (int i = 0; i < map.randomMonsterIndex.Count; i++)
+            {
+                if (map.randomMonsterIndex[i] == checkIndex)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     private IEnumerator MoveTargetNode()
     {
         List<HexMember> nowtTargetNodes = new List<HexMember>();
@@ -199,7 +288,7 @@ public class PlayerController_Jin : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rTime);
                 rTime += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 4f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, nowtTargetNodes[i].transform.position + new Vector3(0, 0.1f, 0), 6f * Time.deltaTime);
 
                 yield return null;
             }
@@ -209,6 +298,14 @@ public class PlayerController_Jin : MonoBehaviour
             myHexNum = nowtTargetNodes[i].index;
             cloudBox.CloudActiveFalse(myHexNum);
 
+            if (nowtTargetNodes.Count-1 >= i+1 && CheckNextObject(nowtTargetNodes[i + 1].index)) //멈춰야한다면 CheckObject()가 트루라면
+            {
+                StartCoroutine(SwitchScaleCo(false));
+            }
+            else if(!active)
+            {
+                StartCoroutine(SwitchScaleCo(true));
+            }
 
             if (myHexNum != origin)
             {
@@ -217,7 +314,7 @@ public class PlayerController_Jin : MonoBehaviour
                     //못이동한만큼 canMoveCount에 더해주자
                     astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
                     GameManager.instance.ActivePortrait();
-                    StartCoroutine(SwitchScaleCo(false));
+                    
                     saveWay = nowtTargetNodes[i-1]; 
                     CheckMyHexNum();
                     nowtTargetNodes.Clear();
@@ -230,7 +327,6 @@ public class PlayerController_Jin : MonoBehaviour
                 else //낫띵이라면
                 {
                     GameManager.instance.DeactivePortrait();
-                    StartCoroutine(SwitchScaleCo(true));
                 }
             }
         }
@@ -269,7 +365,8 @@ public class PlayerController_Jin : MonoBehaviour
         switch (active)
         {
             case true: //나타남
-                if(gameObject.transform.localScale == new Vector3(1f, 1f, 1f))
+                this.active = true;
+                if (gameObject.transform.localScale == new Vector3(1f, 1f, 1f))
                 {
                     yield break;
                 }
@@ -277,12 +374,13 @@ public class PlayerController_Jin : MonoBehaviour
                 {
                     float velue = (0.05f * i);
                     gameObject.transform.localScale = new Vector3(velue, velue, velue);
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(0.03f);
                 }
                 gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
                 break;
 
             case false: //사라짐
+                this.active = false;
                 if (gameObject.transform.localScale != new Vector3(1f, 1f, 1f))
                 {
                     yield break;
@@ -291,7 +389,7 @@ public class PlayerController_Jin : MonoBehaviour
                 {
                     float velue = (0.05f * i);
                     gameObject.transform.localScale = new Vector3(velue, velue, velue);
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(0.03f);
                 }
                 gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
                 break;
