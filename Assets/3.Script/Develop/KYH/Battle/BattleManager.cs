@@ -26,6 +26,7 @@ public class BattleManager : MonoBehaviour
     public GameObject target;
     public bool isPlayer = false;
     public bool isEnd = false;
+    private bool isCave = false;
 
     public int attackDamage = 0;
 
@@ -316,6 +317,11 @@ public class BattleManager : MonoBehaviour
     }
     public void BattleEnd()
     {
+        if (battleCameraController.gameObject.name == "CaveCamera")
+        {
+            EndCheck();
+        }
+
         battleLoader.PrefsDestroy();
         battleOrderManager.End();
 
@@ -324,11 +330,9 @@ public class BattleManager : MonoBehaviour
         WinBattleBanner.SetActive(false);
         LoseBattleBanner.SetActive(false);
 
-        EndCheck();
-
         isPlayer = false;
 
-        if (isEnd)
+        if (!isCave)
         {
             FindObjectOfType<MultiCamera>().ToMain();
             GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
@@ -341,18 +345,18 @@ public class BattleManager : MonoBehaviour
         if (battleLoader.caveBattleTurn == 1 || battleLoader.caveBattleTurn == 3 || battleLoader.caveBattleTurn == 4)
         {
             battleLoader.caveBattleTurn++;
-            isEnd = false;
+            isCave = true;
             readyChecker.SetActive(true);
 
-            for(int i = 0; i < battleLoader.Players.Count; i++)
+            for (int i = 0; i < battleLoader.Players.Count; i++)
             {
                 readyCheckUI[i].SetActive(true);
             }
         }
-        if(battleLoader.caveBattleTurn == 2)
+        else if (battleLoader.caveBattleTurn == 2 || battleLoader.caveBattleTurn == 5)
         {
             battleLoader.caveBattleTurn++;
-            isEnd = true;
+            isCave = false;
         }
     }
 }
