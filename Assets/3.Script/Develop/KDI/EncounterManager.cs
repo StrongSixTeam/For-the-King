@@ -324,6 +324,15 @@ public class EncounterManager : MonoBehaviour
     {
         //게임매니저 생명 늘리기
         btns[5].SetActive(false);
+        if (GameManager.instance.currentLife != GameManager.instance.maxLife)
+        {
+            GameManager.instance.currentLife += 1;
+        }
+        else if (GameManager.instance.maxLife < 5)
+        {
+            GameManager.instance.maxLife += 1;
+            GameManager.instance.currentLife = GameManager.instance.maxLife;
+        }
         GameManager.instance.currentLife += 1;
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
@@ -391,10 +400,13 @@ public class EncounterManager : MonoBehaviour
 
     public void DungeonEnterBtn()
     {
+        OffMovingUIs();
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         MultiCamera.instance.ToCave();
+        astsrPathfinding.ShowRedHexStop();
+        GameManager.instance.isBlock = true;
     }
 
     public void BattleBtn() //배틀씬으로 이동
@@ -517,17 +529,25 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-
+        if (GameManager.instance.currentLife != GameManager.instance.maxLife)
+        {
+            GameManager.instance.currentLife += 1;
+        }
+        else if (GameManager.instance.maxLife < 5)
+        {
+            GameManager.instance.maxLife += 1;
+            GameManager.instance.currentLife = GameManager.instance.maxLife;
+        }
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp += 10;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
     }
-    public void SanctumIntelBtn() //추가 경험치 25%
+    public void SanctumIntelBtn() //추가 경험치 15
     {
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowExp += 15;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
     }
