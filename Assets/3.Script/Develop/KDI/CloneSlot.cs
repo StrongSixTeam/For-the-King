@@ -242,21 +242,32 @@ public class CloneSlot : MonoBehaviour
             }
             else if (EncounterManager.instance.number == 2) //신도의식도구
             {
-                if (SlotController.instance.success == 3) //성공이면
+                if (SlotController.instance.success == 4) //성공이면
                 {
-                    Invoke("OffAll", 1f); //끄기
                     StartCoroutine(GodSuccessWait_co());
+                    Invoke("OffAll", 1f); //끄기
+                }
+                else if (SlotController.instance.success == 3) //성공이면
+                {
+                    StartCoroutine(GodSuccessWait_co());
+                    Invoke("OffAll", 1f); //끄기
                 }
                 else if (SlotController.instance.success == 2)
                 {
+                    GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp -= 5;
                     Invoke("OffAll", 1f); //끄기
                 }
                 else if (SlotController.instance.success == 1)
                 {
+                    for (int i =0; i < GameManager.instance.Players.Length; i++)
+                    {
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= 5;
+                    }
                     Invoke("OffAll", 1f); //끄기
                 }
                 else
                 {
+                    //chaosControl에서 하나 추가하는거 만들기
                     Invoke("OffAll", 1f); //끄기
                 }
             }
@@ -340,7 +351,7 @@ public class CloneSlot : MonoBehaviour
 
     IEnumerator GodSuccessWait_co()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.9f);
         EncounterManager.instance.GodSuccess();
     }
 
