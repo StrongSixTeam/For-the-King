@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -116,10 +115,25 @@ public class AstsrPathfinding : MonoBehaviour
         {
             MouseInput();
 
-            if (endNode != saveTargetNode && endNode != null)
+            if (endNode != null && isPathfinding)
             {
-                saveTargetNode = endNode;
 
+                Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
+
+                //if (endNode != saveTargetNode)
+                //{
+                if (finalNodeList.Count>0 && endNode.transform.position == finalNodeList[finalNodeList.Count - 1].transform.position)
+                {
+                    ShowHexCursorGreen();
+                }
+                else
+                {
+                    ShowHexCursorRad();
+                }
+                //}
+            }
+            else if (endNode != null)
+            {
                 switch (endNode.ispass)
                 {
                     case true:
@@ -128,22 +142,6 @@ public class AstsrPathfinding : MonoBehaviour
                     case false:
                         ShowHexCursorRad();
                         break;
-                }
-            }
-
-            if (isPathfinding && endNode != null)
-            {
-                Pathfinding(hexMapCreator.hexMembers[playerController[WhoseTurn].myHexNum]);
-
-                if (endNode != saveTargetNode)
-                {
-                    for (int i = 0; i < finalNodeList.Count; i++)
-                    {
-                        if (endNode.transform.position != finalNodeList[i].transform.position)
-                        {
-                            ShowHexCursorRad();
-                        }
-                    }
                 }
             }
 
