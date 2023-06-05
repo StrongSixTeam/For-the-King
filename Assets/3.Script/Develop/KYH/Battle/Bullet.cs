@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
-    private int speed = 5;
+    private int speed = 7;
 
     BattleManager battleManager;
     BattleOrderManager battleOrderManager;
@@ -35,19 +35,21 @@ public class Bullet : MonoBehaviour
 
             if (other.GetComponent<PlayerStat>() != null)
             {
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<Animator>().SetBool("Hit", true);
 
                 for (int i = 0; i < GameManager.instance.Players.Length; i++)
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
                     {
-                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
 
                         float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
 
                         if (currnetHP <= 0)
                         {
                             GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = 0;
+                            other.GetComponent<Animator>().SetBool("Die", true);
                             isZero = true;
                         }
                     }
@@ -55,16 +57,30 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)
                 {
+                    other.GetComponent<Animator>().SetTrigger("Die");
                     other.GetComponent<EnemyStat>().nowHp = 0;
                     isZero = true;
                 }
+                else
+                {
+                    other.GetComponent<Animator>().SetTrigger("Hit");
+                }
+
+                if (currnetHP > 0)
+                {
+                    for (int i = 0; i < battleLoader.Enemys.Count; i++)
+                    {
+                        battleLoader.Enemys[i].GetComponent<Animator>().SetTrigger("Idle");
+                    }
+                }
             }
-            Invoke("BulletDestroy", 3f);
+
+            Invoke("BulletDestroy", 1.5f);
         }
     }
     private void Update()
@@ -73,10 +89,16 @@ public class Bullet : MonoBehaviour
     }
     private void BulletDestroy()
     {
+        for (int i = 0; i < battleLoader.Players.Count; i++)
+        {
+            battleLoader.Players[i].GetComponent<Animator>().SetBool("Hit", false);
+            battleLoader.Players[i].GetComponent<Animator>().SetBool("Attack", false);
+        }
+
         if (isZero)
         {
             for (int i = 0; i < battleLoader.Players.Count; i++)
-            {              
+            {
                 if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp <= 0)
                 {
                     if (GameManager.instance.currentLife > 0)
@@ -84,8 +106,11 @@ public class Bullet : MonoBehaviour
                         GameManager.instance.currentLife--;
 
                         battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                        battleLoader.Players[i].GetComponent<Animator>().SetBool("Die", false);
+                        battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Revive");
+                        battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Battle");
 
-                        for(int j = 0; j < GameManager.instance.Players.Length; j++)
+                        for (int j = 0; j < GameManager.instance.Players.Length; j++)
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
@@ -93,7 +118,7 @@ public class Bullet : MonoBehaviour
                             }
                         }
 
-                        //플레이어 부활 애니메이션 ㄱㄱ
+
                     }
                     else
                     {
@@ -116,7 +141,7 @@ public class Bullet : MonoBehaviour
                     if (CurrnetCam.name == "BattleCamera")
                     {
                         Destroy(battleLoader.Encounter[i].gameObject);
-                        EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                        //EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
                     }
 
                     //EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
