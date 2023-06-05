@@ -104,4 +104,43 @@ public class ChaosControl : MonoBehaviour
         }
     }
 
+    //완전한 카오스를 하나 추가함
+    public void PlusChaos()
+    {
+        maxChaosCount++;
+
+        if (FIFO.Count > 0)
+        {
+            switch (maxChaosCount)
+            {
+                case 1:
+                    GameObject temp1 = chaosImageBox[FIFO.Dequeue()];
+                    temp1.transform.SetParent(parentsChaos[0]);
+                    temp1.transform.localPosition = Vector3.zero;
+                    return;
+
+                case 2:
+                    GameObject temp2 = chaosImageBox[FIFO.Dequeue()];
+                    temp2.transform.SetParent(parentsChaos[1]);
+                    temp2.transform.localPosition = Vector3.zero;
+
+                    GameManager.instance.currentLife = 0;
+                    return;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (!chaosImageBox[i].activeSelf)
+                {
+                    chaosImageBox[i].SetActive(true);
+                    chaosImageBox[i].transform.SetParent(parentsChaos[0]);
+                    chaosImageBox[i].transform.localPosition = Vector3.zero;
+                    return;
+                }
+            }
+        }
+    }
+
 }
