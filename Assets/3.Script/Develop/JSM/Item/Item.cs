@@ -23,4 +23,5 @@ public class Item : ScriptableObject
     public string detail_1;             // 아이템 설명 1
     public string detail_2;             // 아이템 설명 2
     public int price;                // 아이템 가격
+    public int stock;                // 아이템 재고
 }
