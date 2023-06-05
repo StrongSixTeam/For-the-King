@@ -8,9 +8,12 @@ public class TimeChecker : MonoBehaviour
     [SerializeField] private MapObjectCreator mapObjectCreator;
     ChaosControl chaosController;
 
+    [SerializeField] PostProcessingMainCamera postProcessingMainCamera;
+
     private void Start()
     {
         chaosController = FindObjectOfType<ChaosControl>();
+        postProcessingMainCamera = FindObjectOfType<PostProcessingMainCamera>();
         StartCoroutine(SetMapObjectCreatorCo());
     }
 
@@ -32,17 +35,20 @@ public class TimeChecker : MonoBehaviour
             Debug.Log("1시간 지났어요");
             chaosController.CountChaosTurn();
 
+
             if (!collision.GetComponent<TimeBarScrolling>().isDay && Day)
             {
                 Debug.Log("지금은 밤이에요");
                 Day = false;
                 mapObjectCreator.timeMonsterSpawn(Day);
+                postProcessingMainCamera.SetColorFilter(false);
             }
             if (collision.GetComponent<TimeBarScrolling>().isDay && !Day)
             {
                 Debug.Log("지금은 낮이에요");
                 Day = true;
                 mapObjectCreator.timeMonsterSpawn(Day);
+                postProcessingMainCamera.SetColorFilter(true);
             }
         }
 

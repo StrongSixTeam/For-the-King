@@ -4642,6 +4642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1104583721}
   - component: {fileID: 1104583720}
+  - component: {fileID: 1104583722}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -4680,6 +4681,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1104583722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104583719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0d9e389426523409ae4b8cc25c0f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1124843313
 GameObject:
   m_ObjectHideFlags: 0
@@ -30633,6 +30646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Day: 1
   mapObjectCreator: {fileID: 0}
+  postProcessingMainCamera: {fileID: 0}
 --- !u!222 &5891153151108909475
 CanvasRenderer:
   m_ObjectHideFlags: 0
