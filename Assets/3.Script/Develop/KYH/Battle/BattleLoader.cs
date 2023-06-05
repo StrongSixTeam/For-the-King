@@ -108,8 +108,6 @@ public class BattleLoader : MonoBehaviour
             Encounter.Add(GameManager.instance.Players[i]);
         }
 
-        caveBattleTurn++; //조건 수정 (이겼을 떄만 증가하게)
-
         playerPos = new Vector3(-200f, 0, -38);
         enemyPos = new Vector3(0, 0, -1);
 

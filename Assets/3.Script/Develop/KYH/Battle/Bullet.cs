@@ -35,13 +35,13 @@ public class Bullet : MonoBehaviour
 
             if (other.GetComponent<PlayerStat>() != null)
             {
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
 
                 for (int i = 0; i < GameManager.instance.Players.Length; i++)
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
                     {
-                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
 
                         float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
 
@@ -76,17 +76,36 @@ public class Bullet : MonoBehaviour
         if (isZero)
         {
             for (int i = 0; i < battleLoader.Players.Count; i++)
-            {
+            {              
                 if (battleLoader.Players[i].GetComponent<PlayerStat>().nowHp <= 0)
                 {
-                    Destroy(battleLoader.Players[i]);
-                    battleLoader.Players.RemoveAt(i);
+                    if (GameManager.instance.currentLife > 0)
+                    {
+                        GameManager.instance.currentLife--;
+
+                        battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+
+                        for(int j = 0; j < GameManager.instance.Players.Length; j++)
+                        {
+                            if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
+                            {
+                                GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                            }
+                        }
+
+                        //플레이어 부활 애니메이션 ㄱㄱ
+                    }
+                    else
+                    {
+                        Destroy(battleLoader.Players[i]);
+                        battleLoader.Players.RemoveAt(i);
+                    }
                 }
             }
 
             for (int i = 0; i < battleLoader.Enemys.Count; i++)
             {
-                if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp == 0)
+                if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp <= 0)
                 {
                     FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
                     Destroy(battleLoader.Enemys[i]);
@@ -94,8 +113,11 @@ public class Bullet : MonoBehaviour
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);
 
-                    Destroy(battleLoader.Encounter[i].gameObject);
-                    EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                    if (CurrnetCam.name == "BattleCamera")
+                    {
+                        Destroy(battleLoader.Encounter[i].gameObject);
+                        EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                    }
 
                     //EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
                     GameManager.instance.DeactivePortrait();
