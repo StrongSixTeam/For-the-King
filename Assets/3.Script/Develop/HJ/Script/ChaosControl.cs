@@ -17,7 +17,7 @@ public class ChaosControl : MonoBehaviour
 
     void Start()
     {
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
         {
             chaosImageBox[i].SetActive(false);
         }
@@ -31,7 +31,7 @@ public class ChaosControl : MonoBehaviour
     //1시간이 지날때마다
     public void CountChaosTurn()
     {
-        if(endBarIndex == 14)
+        if (endBarIndex == 14)
         {
             endBarIndex = 0;
         }
@@ -45,7 +45,7 @@ public class ChaosControl : MonoBehaviour
         if (chaosTurn < 0)
         {
             //맨오른쪽에 있는 바에 상속시켜주자
-            for(int i=0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (!chaosImageBox[i].activeSelf)
                 {
@@ -67,10 +67,10 @@ public class ChaosControl : MonoBehaviour
         FIFO.Enqueue(i);
         yield break;
     }
-    
+
     public void RemoveChaos(bool isMax)
     {
-        if(FIFO.Count <= 0)
+        if (FIFO.Count <= 0)
         {
             return;
         }
@@ -130,16 +130,35 @@ public class ChaosControl : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 4; i++)
+            switch (maxChaosCount)
             {
-                if (!chaosImageBox[i].activeSelf)
-                {
-                    chaosImageBox[i].SetActive(true);
-                    chaosImageBox[i].transform.SetParent(parentsChaos[0]);
-                    chaosImageBox[i].transform.localPosition = Vector3.zero;
+                case 1:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (!chaosImageBox[i].activeSelf)
+                        {
+                            chaosImageBox[i].SetActive(true);
+                            chaosImageBox[i].transform.SetParent(parentsChaos[0]);
+                            chaosImageBox[i].transform.localPosition = Vector3.zero;
+                            return;
+                        }
+                    }
                     return;
-                }
+
+                case 2:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (!chaosImageBox[i].activeSelf)
+                        {
+                            chaosImageBox[i].SetActive(true);
+                            chaosImageBox[i].transform.SetParent(parentsChaos[1]);
+                            chaosImageBox[i].transform.localPosition = Vector3.zero;
+                            return;
+                        }
+                    }
+                    return;
             }
+
         }
     }
 
