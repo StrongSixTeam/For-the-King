@@ -95,8 +95,9 @@ public class PlayerController_Jin : MonoBehaviour
         }
         else if (map.objectIndex[6] == myHexNum && EncounterManager.instance.encounter[5].isShowed) //잊혀진 저장고
         {
-            EncounterManager.instance.ActiveEncounter(6);
-            return true;
+            //EncounterManager.instance.ActiveEncounter(6);
+            //return true;
+            return false;
         }
         else if (map.objectIndex[7] == myHexNum) //카젤리의 시계
         {
@@ -213,7 +214,6 @@ public class PlayerController_Jin : MonoBehaviour
             {
                 if (CheckObject()) //현재 오브젝트에 도달하면
                 {
-                    Debug.Log("here");
                     //못이동한만큼 canMoveCount에 더해주자
                     astsrPathfinding.SetcanMoveCount((nowtTargetNodes.Count - 1) - i);
                     GameManager.instance.ActivePortrait();
