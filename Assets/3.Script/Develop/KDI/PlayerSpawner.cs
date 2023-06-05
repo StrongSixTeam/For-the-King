@@ -118,6 +118,7 @@ public class PlayerSpawner : MonoBehaviour
 
             player.GetComponent<PlayerController_Jin>().myHexNum = startIndex;
             astsrPathfinding.SetPlayer(i, player.GetComponent<PlayerController_Jin>(), player);
+            FindObjectOfType<LevelUpStatus>().characters.Add(player.GetComponent<PlayerStat>());
         }
         GameManager.instance.Setting();
     }

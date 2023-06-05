@@ -328,7 +328,7 @@ public class CloneSlot : MonoBehaviour
                 }
                 else //도주 실패라면
                 {
-
+                    FindObjectOfType<BattleManager>().RunFalse();
                 }
             }
             else //공격씬에서 공격이라면

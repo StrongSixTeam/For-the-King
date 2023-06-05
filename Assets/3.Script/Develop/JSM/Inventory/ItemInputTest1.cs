@@ -26,7 +26,7 @@ public class ItemInputTest1 : MonoBehaviour
     }
     public void Get(Item item)
     {
-        InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), string.Format("Player{0}", itemTurn));
+        //InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), string.Format("Player{0}", itemTurn));
 
         InventoryController1.instance.ItemStack(item, (int)InventoryController1.instance.playerNum);
         quick[(int)InventoryController1.instance.playerNum].QuickSlotShow((int)InventoryController1.instance.playerNum);

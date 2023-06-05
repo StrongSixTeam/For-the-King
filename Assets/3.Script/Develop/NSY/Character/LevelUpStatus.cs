@@ -22,15 +22,12 @@ public class LevelUpStatus : MonoBehaviour
 
      */
 
-    public CharacterStatusSet[] characters;
+    public List<PlayerStat> characters;
     //3개 다 있어야하니까 배열로 받자
-    
-
 
     public void LevelUp()
     {
-        
-        for (int i= 0; i<characters.Length; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             if (characters[i].nowExp >= characters[i].maxExp) //지금 Exp가 max Exp보다 크거나 같아질 때 레벨업.
             {
@@ -38,7 +35,7 @@ public class LevelUpStatus : MonoBehaviour
                 characters[i].nowExp = characters[i].nowExp - characters[i].maxExp;
 
 
-               if (characters[i].className=="Blacksmith")
+                if (characters[i].className == "Blacksmith")
                 {
                     characters[i].maxHp = characters[i].maxHp + 5f;
 
@@ -53,14 +50,14 @@ public class LevelUpStatus : MonoBehaviour
 
 
                     }
-                    
+
                     characters[i].intelligence = characters[i].intelligence + 2;
-                    characters[i].atk = characters[i].atk*characters[i].Lv;
+                    characters[i].atk = characters[i].atk * characters[i].Lv;
                     characters[i].def = characters[i].def + 2;
-                    characters[i].strength= characters[i].strength + 5;
+                    characters[i].strength = characters[i].strength + 5;
                     characters[i].awareness = characters[i].awareness + 2;
-                    characters[i].speed = characters[i].speed+ 2;
-                 
+                    characters[i].speed = characters[i].speed + 2;
+
                 }
 
                 else if (characters[i].className == "Hunter")
@@ -78,14 +75,14 @@ public class LevelUpStatus : MonoBehaviour
 
                     }
                     characters[i].intelligence = characters[i].intelligence + 2;
-                    characters[i].atk = characters[i].atk * characters[i].Lv+ 1.5f;
-                    characters[i].def = characters[i].def + 1.5f;
+                    characters[i].atk = characters[i].atk * characters[i].Lv + 2f;
+                    characters[i].def = characters[i].def + 2f;
                     characters[i].strength = characters[i].strength + 2;
                     characters[i].awareness = characters[i].awareness + 5;
                     characters[i].speed = characters[i].speed + 5;
                 }
 
-                else if (characters[i].className=="Scholar")
+                else if (characters[i].className == "Scholar")
                 {
                     characters[i].maxHp = characters[i].maxHp + 3f;
                     if (characters[i].nowHp <= characters[i].maxHp)
