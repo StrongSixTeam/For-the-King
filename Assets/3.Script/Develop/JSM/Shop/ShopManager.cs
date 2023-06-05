@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ public class ShopManager : MonoBehaviour
     {
         CreateShopItem();
         ShopSetting();
+        MarketEnter();
     }
 
     public void MarketEnter()
@@ -105,8 +107,31 @@ public class ShopManager : MonoBehaviour
             transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text = shopItemList[i].price.ToString();
             transform.GetChild(i).transform.GetChild(0).GetChild(3).GetComponent<Text>().text = shopItemList[i].stock.ToString();
             transform.GetChild(i).transform.gameObject.SetActive(true);
+            
+        }
+        ComparePrice();
+    }
+
+    private void ComparePrice()
+    {
+        for(int i = 0; i < shopItemList.Count; i++)
+        {
+            if(GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].coins 
+                < int.Parse(transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text))
+            {
+                transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.gray;
+                transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().color = Color.gray;
+                transform.GetChild(i).GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.white;
+                transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().color = Color.white;
+                transform.GetChild(i).GetChild(0).GetComponent<Button>().interactable = true;
+            }
         }
     }
+
     public void ShowShopUI()
     {
         GameObject Click = EventSystem.current.currentSelectedGameObject;

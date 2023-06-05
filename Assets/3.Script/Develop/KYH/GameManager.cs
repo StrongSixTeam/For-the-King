@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     #region ½Ì±ÛÅæ
-    public GameObject Inventory;
     public static GameManager instance = null;
+    public GameObject Inventory;
 
     private void Awake()
     {
         instance = this;
-        Inventory.gameObject.SetActive(true);
         Inventory.gameObject.SetActive(false);
     }
     #endregion
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int currentLife = 5; //ÇöÀç »ý¸í °³¼ö
 
     public GameObject[] Players;
+    public List<PlayerStat> playerStats = new List<PlayerStat>();
     public GameObject MainPlayer;
     public int nextTurn = 0;
 
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
+        
     }
     public void Setting()
     {
@@ -85,6 +87,10 @@ public class GameManager : MonoBehaviour
 
         cameraController.PlayerChange();
         isSettingDone = true;
+        for (int i = 0; i < Players.Length; i++)
+        {
+            playerStats.Add(Players[i].GetComponent<PlayerStat>());
+        }
     }
     private void Update()
     {
@@ -144,6 +150,7 @@ public class GameManager : MonoBehaviour
         isTrunChange = true;
 
         MainPlayer = Players[nextTurn];
+        InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), nextTurn.ToString());
         playerController = MainPlayer.GetComponent<PlayerController_Jin>();
 
         cameraController.PlayerChange();

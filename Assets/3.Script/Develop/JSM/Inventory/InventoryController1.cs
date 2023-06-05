@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,11 +63,12 @@ public class InventoryController1 : MonoBehaviour
 
     [Header("전체 아이템 담은 배열")]
     public ItemInputTest1 allItemArr;
-
+    public Text coinText;
 
     private void Awake()
     {
         instance = this;
+        Debug.Log("인벤토리 일어났쪄염 뿌우");
         for(int i = 0; i < equipBtn.Length; i++)
         {
             if (equipItemName[i].text.Equals(""))
@@ -222,6 +224,7 @@ public class InventoryController1 : MonoBehaviour
     public void InventoryShow(int playernum)          // 플레이어 별로 분할된 인벤토리 보여주기
     {
         InventoryReset();
+        coinText.text = GameManager.instance.playerStats[playernum].coins.ToString();
         if (playerInventory[playernum].Count < 1) return;
 
         ListPos = topListPos;

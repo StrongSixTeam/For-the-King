@@ -35,6 +35,7 @@ public class InventoryBtn1 : MonoBehaviour
         else
         {
             inventory.SetActive(false);
+            InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), GameManager.instance.nextTurn.ToString());
         }
     }
 }
