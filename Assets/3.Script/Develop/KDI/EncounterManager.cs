@@ -143,7 +143,7 @@ public class EncounterManager : MonoBehaviour
                 Debug.Log(ex);
             }
             level.SetActive(true);
-            level.transform.GetChild(1).GetComponent<Text>().text = encounter[n].level.ToString();
+            level.transform.GetChild(0).GetComponent<Text>().text = encounter[n].level.ToString();
             btns[2].transform.GetChild(0).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(2).GetComponent<Button>().interactable = true;
             btns[2].transform.GetChild(1).GetComponent<Button>().interactable = true;
@@ -294,7 +294,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<ChaosControl>().RemoveChaos(false);
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
 
-        if (FindObjectOfType<QuestManager>().questTurn == 5)
+        if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
             FindObjectOfType<QuestManager>().PopUp("God");
             FindObjectOfType<QuestManager>().questTurn = 6;
@@ -305,11 +305,12 @@ public class EncounterManager : MonoBehaviour
     {
         //게임매니저 생명 늘리기
         btns[5].SetActive(false);
+        GameManager.instance.currentLife += 1;
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = true;
 
-        if (FindObjectOfType<QuestManager>().questTurn == 5)
+        if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
             FindObjectOfType<QuestManager>().PopUp("God");
             FindObjectOfType<QuestManager>().questTurn = 6;
