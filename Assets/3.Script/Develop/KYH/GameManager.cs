@@ -6,11 +6,14 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     #region ΩÃ±€≈Ê
+    public GameObject Inventory;
     public static GameManager instance = null;
 
     private void Awake()
     {
         instance = this;
+        Inventory.gameObject.SetActive(true);
+        Inventory.gameObject.SetActive(false);
     }
     #endregion
 

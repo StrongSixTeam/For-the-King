@@ -58,7 +58,7 @@ public class InventoryController1 : MonoBehaviour
     [SerializeField] Button[] equipBtn;
 
     [Header("퀵슬롯")]
-    [SerializeField] QuickSlotController1[] quickSlot;
+    public QuickSlotController1[] quickSlot;
 
     [Header("전체 아이템 담은 배열")]
     public ItemInputTest1 allItemArr;
