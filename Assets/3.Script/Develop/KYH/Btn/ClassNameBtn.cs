@@ -14,7 +14,7 @@ public class ClassNameBtn : MonoBehaviour
     private string class1 = "사냥꾼";
     private string class2 = "학자";
 
-    private int num = 0; //순서 세기 위한 값
+    public int num = 0; //순서 세기 위한 값
 
     private void Awake()
     {
