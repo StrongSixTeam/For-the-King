@@ -204,6 +204,9 @@ public class CloneSlot : MonoBehaviour
             highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(false);
             if (EncounterManager.instance.number == 16) //물음표인 경우
             {
+                GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+                EncounterManager.instance.encounter[16].isCleared = true;
+                EncounterManager.instance.OffMovingUIs();
                 Invoke("OffAll", 1f); //끄기
                 if (SlotController.instance.success == 3) //성공이면
                 {

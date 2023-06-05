@@ -554,13 +554,16 @@ public class EncounterManager : MonoBehaviour
             portraitUIs[i].gameObject.SetActive(true);
         }
     }
-
     public void GetDeadItems() //물음표
     {
         //아이템 얻기
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         encounter[number].isCleared = true;
-        FindObjectOfType<MapObjectCreator>().UseObject(4);
+        FindObjectOfType<MapObjectCreator>().UseObject(5);
+        encounter[17].isCleared = true;
+        GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+        OffMovingUIs();
+        
     }
 }

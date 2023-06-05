@@ -970,7 +970,7 @@ public class MapObjectCreator : MonoBehaviour
                 yield break;
 
             case 4: //물음표 
-                if (activerandomObject[4].activeSelf)
+                if (activerandomObject[4]!= null && activerandomObject[4].activeSelf)
                 {
                     yield break;
                 }
@@ -985,7 +985,7 @@ public class MapObjectCreator : MonoBehaviour
                 yield break;
 
             case 5: //느낌표
-                if (activerandomObject[5].activeSelf)
+                if (activerandomObject[5] != null && activerandomObject[5].activeSelf)
                 {
                     yield break;
                 }
