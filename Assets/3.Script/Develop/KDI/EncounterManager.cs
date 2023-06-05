@@ -26,6 +26,7 @@ public class EncounterManager : MonoBehaviour
     public int enemyNumber;
     public bool isEncounterUI = false;
     public bool outsideCheck = false;
+    [SerializeField] private Sprite OriginalBtn;
 
     private AstsrPathfinding astsrPathfinding;
 
@@ -107,7 +108,7 @@ public class EncounterManager : MonoBehaviour
             txtExtraContext.text = "";
         }
 
-        if (encounter[n].type == EncounterContent.Type.town) 
+        if (encounter[n].type == EncounterContent.Type.town)
         {
             level.SetActive(false);
             ActiveBtn(0);
@@ -120,8 +121,8 @@ public class EncounterManager : MonoBehaviour
             {
                 highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
             }
-            level.SetActive(false);
             ActiveBtn(1);
+            level.SetActive(false);
             SlotController.instance.fixCount = 0;
             SlotController.instance.maxSlotCount = encounter[n].slotCount;
             SlotController.instance.type = StringToType(encounter[n].slotType);
@@ -190,6 +191,12 @@ public class EncounterManager : MonoBehaviour
                 //남들이 거친 성소라면 이미 사용된 성소라는 UI 띄우기
             }
         }
+        else if (encounter[n].type == EncounterContent.Type.exclamation) //느낌표라면
+        {
+            parent.GetChild(1).gameObject.SetActive(true);
+            level.SetActive(false);
+            ActiveBtn(6);
+        }
     }
 
     public void DisableButton()
@@ -232,6 +239,13 @@ public class EncounterManager : MonoBehaviour
             btns[i].SetActive(false);
         }
         btns[n].SetActive(true);
+        for (int i = 0; i < btns[n].transform.childCount; i++)
+        {
+            if (n != 5)
+            {
+                btns[n].transform.GetChild(i).GetComponent<Image>().sprite = OriginalBtn;
+            }
+        }
     }
 
     public void UseFocus()
@@ -310,6 +324,15 @@ public class EncounterManager : MonoBehaviour
     {
         //게임매니저 생명 늘리기
         btns[5].SetActive(false);
+        if (GameManager.instance.currentLife != GameManager.instance.maxLife)
+        {
+            GameManager.instance.currentLife += 1;
+        }
+        else if (GameManager.instance.maxLife < 5)
+        {
+            GameManager.instance.maxLife += 1;
+            GameManager.instance.currentLife = GameManager.instance.maxLife;
+        }
         GameManager.instance.currentLife += 1;
         FindObjectOfType<EncounterManager>().outsideCheck = false;
         FindObjectOfType<AstsrPathfinding>().ismovingTurn = false;
@@ -317,7 +340,6 @@ public class EncounterManager : MonoBehaviour
 
         if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
-            FindObjectOfType<QuestManager>().PopUp("God");
             FindObjectOfType<QuestManager>().questTurn = 6;
         }
     }
@@ -339,6 +361,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<EncounterManager>().outsideCheck = true;
         slot.SetActive(false);
         btns[1].SetActive(false);
+        ActiveBtn(5);
         btns[5].SetActive(true);
         parent.GetChild(1).gameObject.SetActive(false);
         parent.GetChild(2).gameObject.SetActive(false);
@@ -377,10 +400,13 @@ public class EncounterManager : MonoBehaviour
 
     public void DungeonEnterBtn()
     {
+        OffMovingUIs();
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         MultiCamera.instance.ToCave();
+        astsrPathfinding.ShowRedHexStop();
+        GameManager.instance.isBlock = true;
     }
 
     public void BattleBtn() //배틀씬으로 이동
@@ -503,17 +529,25 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-
+        if (GameManager.instance.currentLife != GameManager.instance.maxLife)
+        {
+            GameManager.instance.currentLife += 1;
+        }
+        else if (GameManager.instance.maxLife < 5)
+        {
+            GameManager.instance.maxLife += 1;
+            GameManager.instance.currentLife = GameManager.instance.maxLife;
+        }
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp += 10;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
     }
-    public void SanctumIntelBtn() //추가 경험치 25%
+    public void SanctumIntelBtn() //추가 경험치 15
     {
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-
+        GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowExp += 15;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;
     }
@@ -542,5 +576,17 @@ public class EncounterManager : MonoBehaviour
         {
             portraitUIs[i].gameObject.SetActive(true);
         }
+    }
+    public void GetDeadItems() //물음표
+    {
+        //아이템 얻기
+        parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
+        parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
+        encounter[number].isCleared = true;
+        FindObjectOfType<MapObjectCreator>().UseObject(5);
+        encounter[17].isCleared = true;
+        GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+        OffMovingUIs();
+        
     }
 }

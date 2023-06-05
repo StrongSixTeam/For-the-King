@@ -126,32 +126,32 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(11);
             return true;
         }
-        else if (map.randomObjectIndex[0] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[0] == myHexNum && !EncounterManager.instance.encounter[12].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(12);
             return true;
         }
-        else if (map.randomObjectIndex[1] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[1] == myHexNum && !EncounterManager.instance.encounter[13].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(13);
             return true;
         }
-        else if (map.randomObjectIndex[2] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[2] == myHexNum && !EncounterManager.instance.encounter[14].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(14);
             return true;
         }
-        else if (map.randomObjectIndex[3] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[3] == myHexNum && !EncounterManager.instance.encounter[15].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(15);
             return true;
         }
-        else if (map.randomObjectIndex[4] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[4] == myHexNum && !EncounterManager.instance.encounter[16].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(16);
             return true;
         }
-        else if (map.randomObjectIndex[5] == myHexNum) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[5] == myHexNum && !EncounterManager.instance.encounter[17].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             EncounterManager.instance.ActiveEncounter(17);
             return true;
@@ -237,11 +237,11 @@ public class PlayerController_Jin : MonoBehaviour
         {
             return true;
         }
-        else if (map.randomObjectIndex[4] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[4] == checkIndex && !EncounterManager.instance.encounter[16].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             return true;
         }
-        else if (map.randomObjectIndex[5] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[5] == checkIndex && !EncounterManager.instance.encounter[17].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             return true;
         }

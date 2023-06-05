@@ -18,6 +18,8 @@ public class ReadyCnt : MonoBehaviour
             CaveCam.SetActive(false);
             CaveCam.SetActive(true);
             battleLoader.SetActive(true);
+
+            battleLoader.GetComponent<BattleLoader>().CaveBattle();
         }
     }
 }

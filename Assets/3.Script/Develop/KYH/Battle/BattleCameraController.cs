@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class BattleCameraController : MonoBehaviour
@@ -57,7 +56,7 @@ public class BattleCameraController : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPos) > 0.01)
         {
             transform.LookAt(lookPos);
-            transform.position = Vector3.Lerp(transform.position, targetPos, 0.01f);
+            transform.position = Vector3.Slerp(transform.position, targetPos, 0.015f);
             yield return null;
         }
         transform.position = targetPos;

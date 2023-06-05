@@ -9,6 +9,7 @@ public class EnemyRunBtn : MonoBehaviour, IPointerEnterHandler
     private EncounterManager encounterManager;
     public int n;
     public bool active = true;
+    [SerializeField] private GameObject highlight;
 
     private void Start()
     {
@@ -19,6 +20,10 @@ public class EnemyRunBtn : MonoBehaviour, IPointerEnterHandler
     {
         if (active)
         {
+            for (int i = 0; i < highlight.transform.childCount; i++)
+            {
+                highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
+            }
             n = EncounterManager.instance.number;
             int en = EncounterManager.instance.enemyNumber;
             if (en >= 0)

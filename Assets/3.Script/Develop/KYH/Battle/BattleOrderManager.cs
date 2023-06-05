@@ -101,6 +101,8 @@ public class BattleOrderManager : MonoBehaviour
 
         if (!battleLoader.isIng)
         {
+            StartCoroutine(StartAni_co());
+            
             if (battleCameraController.gameObject.name == "BattleCamera")
             {
                 Invoke("CameraChange", 2f);
@@ -128,6 +130,20 @@ public class BattleOrderManager : MonoBehaviour
         else
         {
             battleCameraController.EnemyTurnCamera();
+        }
+    }
+    private IEnumerator StartAni_co()
+    {
+        for (int i = 0; i < battleLoader.Enemys.Count; i++)
+        {
+            battleLoader.Enemys[i].GetComponent<Animator>().SetTrigger("Battlein");
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < battleLoader.Enemys.Count; i++)
+        {
+            battleLoader.Enemys[i].GetComponent<Animator>().SetTrigger("Idle");
         }
     }
     private IEnumerator Ani_co()

@@ -26,6 +26,7 @@ public class BattleManager : MonoBehaviour
     public GameObject target;
     public bool isPlayer = false;
     public bool isEnd = false;
+    private bool isCave = false;
 
     public int attackDamage = 0;
 
@@ -90,6 +91,8 @@ public class BattleManager : MonoBehaviour
             }
 
             LoseBattleBanner.SetActive(true);
+
+            isCave = false;
 
             Invoke("BattleEnd", 5f);
 
@@ -206,7 +209,7 @@ public class BattleManager : MonoBehaviour
     {
         isPlayer = false;
 
-        //공격 애니메이션 넣기
+        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetBool("Attack", true);
 
         BattleUI.SetActive(false);
         //slot 작동
@@ -233,6 +236,7 @@ public class BattleManager : MonoBehaviour
         isPlayer = false;
         BattleUI.SetActive(false);
         slotUI.GetComponent<CloneSlot>().Try();
+
         Invoke("TurnChange", 1f);
     }
     private void TurnChange()
@@ -250,7 +254,7 @@ public class BattleManager : MonoBehaviour
     {
         isPlayer = false;
 
-        //공격 애니메이션 넣기
+        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
         BattleUI.SetActive(false);
         slotUI.SetActive(false);
@@ -298,7 +302,7 @@ public class BattleManager : MonoBehaviour
         battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(true);
     }
     public void ItemGet()
-    {
+    {       
         InventoryController1.instance.playerNum = PlayerNum.Player0;
 
         itemInput.Get(battleLoader.items[0]);
@@ -316,6 +320,11 @@ public class BattleManager : MonoBehaviour
     }
     public void BattleEnd()
     {
+        if (battleCameraController.gameObject.name == "CaveCamera" && battleLoader.Players.Count > 0)
+        {
+            EndCheck();
+        }
+
         battleLoader.PrefsDestroy();
         battleOrderManager.End();
 
@@ -324,11 +333,9 @@ public class BattleManager : MonoBehaviour
         WinBattleBanner.SetActive(false);
         LoseBattleBanner.SetActive(false);
 
-        EndCheck();
-
         isPlayer = false;
 
-        if (isEnd)
+        if (!isCave)
         {
             FindObjectOfType<MultiCamera>().ToMain();
             GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
@@ -341,18 +348,18 @@ public class BattleManager : MonoBehaviour
         if (battleLoader.caveBattleTurn == 1 || battleLoader.caveBattleTurn == 3 || battleLoader.caveBattleTurn == 4)
         {
             battleLoader.caveBattleTurn++;
-            isEnd = false;
+            isCave = true;
             readyChecker.SetActive(true);
 
-            for(int i = 0; i < battleLoader.Players.Count; i++)
+            for (int i = 0; i < battleLoader.Players.Count; i++)
             {
                 readyCheckUI[i].SetActive(true);
             }
         }
-        if(battleLoader.caveBattleTurn == 2)
+        else if (battleLoader.caveBattleTurn == 2 || battleLoader.caveBattleTurn == 5)
         {
             battleLoader.caveBattleTurn++;
-            isEnd = true;
+            isCave = false;
         }
     }
 }
