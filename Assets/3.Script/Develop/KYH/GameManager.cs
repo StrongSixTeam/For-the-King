@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public int maxLife = 5; //생명 슬롯 창 개수
-    public int currentLife = 5; //현재 생명 개수
+    public int maxLife = 3; //생명 슬롯 창 개수
+    public int currentLife = 3; //현재 생명 개수
 
     public GameObject[] Players;
     public GameObject MainPlayer;
@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        SetLifeUI();
         if (playerController != null)
         {
             if (questManager.isQuest || playerController.isRun || SlotController.instance.isSlot || battleLoader.isBattle)
@@ -235,6 +236,10 @@ public class GameManager : MonoBehaviour
 
     public void SetLifeUI()
     {
+        for (int i =0; i < LifeUI.transform.childCount; i++)
+        {
+            LifeUI.transform.GetChild(i).gameObject.SetActive(false);
+        }
         for (int i = 0; i < maxLife; i++)
         {
             LifeUI.transform.GetChild(i).gameObject.SetActive(true);

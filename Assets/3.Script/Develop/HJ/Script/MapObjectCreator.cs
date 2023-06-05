@@ -1070,10 +1070,10 @@ public class MapObjectCreator : MonoBehaviour
         {
             for (int j = 0; j < 6; j++)
             {
-                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[4].transform.GetChild(0).gameObject.activeSelf)
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[3].transform.GetChild(0).gameObject.activeSelf)
                 {
                     closeIndex.Add(objectIndex[3]);
-                    box.Add(forestObj[4]);
+                    box.Add(forestObj[3]);
                     break;
                 }
             }
