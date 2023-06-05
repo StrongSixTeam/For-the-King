@@ -166,7 +166,7 @@ public class EncounterManager : MonoBehaviour
         else if (encounter[n].type == EncounterContent.Type.dungeon)
         {
             level.SetActive(true);
-            level.transform.GetChild(1).GetComponent<Text>().text = encounter[n].level.ToString();
+            level.transform.GetChild(0).GetComponent<Text>().text = encounter[n].level.ToString();
             ActiveBtn(3);
             parent.GetChild(1).gameObject.SetActive(true); //EncountUI on
             parent.GetChild(2).gameObject.SetActive(false);
