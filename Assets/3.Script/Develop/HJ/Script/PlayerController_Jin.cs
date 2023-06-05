@@ -75,7 +75,7 @@ public class PlayerController_Jin : MonoBehaviour
             }
             return true;
         }
-        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed && !EncounterManager.instance.encounter[2].isCleared) //신또의식도구
+        else if (map.objectIndex[2] == myHexNum && EncounterManager.instance.encounter[2].isShowed) //신또의식도구
         {
             EncounterManager.instance.ActiveEncounter(2);
             return true;
