@@ -54,6 +54,11 @@ public class Bullet : MonoBehaviour
                         }
                     }
                 }
+
+                for (int i = 0; i < battleLoader.Enemys.Count; i++)
+                {
+                    battleLoader.Enemys[i].GetComponent<Animator>().SetTrigger("Idle");
+                }
             }
             else
             {
@@ -94,7 +99,6 @@ public class Bullet : MonoBehaviour
             battleLoader.Players[i].GetComponent<Animator>().SetBool("Hit", false);
             battleLoader.Players[i].GetComponent<Animator>().SetBool("Attack", false);
         }
-
         if (isZero)
         {
             for (int i = 0; i < battleLoader.Players.Count; i++)
