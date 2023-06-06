@@ -121,6 +121,8 @@ public class PlayerSpawner : MonoBehaviour
             FindObjectOfType<LevelUpStatus>().characters.Add(player.GetComponent<PlayerStat>());
         }
         GameManager.instance.Setting();
+        InventoryController1.instance.PlayerDefaultWeaponSet();
+        InventoryController1.instance.equipItemName[0].text = InventoryController1.instance.playerEquip[(int)InventoryController1.instance.playerNum][0].itemName;
     }
 
 

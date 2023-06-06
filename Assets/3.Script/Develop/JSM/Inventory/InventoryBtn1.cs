@@ -33,12 +33,15 @@ public class InventoryBtn1 : MonoBehaviour
             }
             InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
             InventoryController1.instance.ShowEquip();
-            shopManager.ShopSetting();
+            if(shopManager != null)
+            {
+                shopManager.ShopSetting();
+            }
         }
         else
         {
             inventory.SetActive(false);
-            InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), GameManager.instance.nextTurn.ToString());
+            //InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), GameManager.instance.nextTurn.ToString());
         }
     }
 }
