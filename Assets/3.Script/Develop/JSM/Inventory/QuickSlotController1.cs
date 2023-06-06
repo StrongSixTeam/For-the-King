@@ -58,6 +58,7 @@ public class QuickSlotController1 : MonoBehaviour
             {
                 itemSlotImg[j].GetComponent<Image>().sprite = quickSlot[playernum][j].itemImage;
                 itemCntTxt[j].text = InventoryController1.instance.itemCount[playernum][i].ToString();
+                if (itemCntTxt[j].text.Equals("0")) itemCntTxt[j].text = "";
             }
             else continue;
         }
@@ -102,7 +103,7 @@ public class QuickSlotController1 : MonoBehaviour
                         for(int a = 0; a < itemSlotImg.Length; a++)
                         {
                             itemSlotImg[a].sprite = blank;
-                            itemCntTxt[a].text = 0.ToString();
+                            itemCntTxt[a].text = "";
                         }
                     }
                 }

@@ -457,10 +457,11 @@ public class InventoryController1 : MonoBehaviour
                             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
                             quickSlot[(int)playerNum].quickSlot[(int)playerNum].Remove(playerInventory[(int)playerNum][i]);
                             playerInventory[(int)playerNum].RemoveAt(i);
+                            itemCount[(int)playerNum].RemoveAt(i);
                             for (int a = 0; a < quickSlot[(int)playerNum].itemSlotImg.Length; a++)
                             {
                                 quickSlot[(int)playerNum].itemSlotImg[a].sprite = quickSlot[(int)playerNum].blank;
-                                quickSlot[(int)playerNum].itemCntTxt[a].text = 0.ToString();
+                                quickSlot[(int)playerNum].itemCntTxt[a].text = "";
                             }
                             
                         }
