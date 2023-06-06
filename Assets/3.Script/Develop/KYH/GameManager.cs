@@ -8,12 +8,10 @@ public class GameManager : MonoBehaviour
 {
     #region ΩÃ±€≈Ê
     public static GameManager instance = null;
-    public GameObject Inventory;
 
     private void Awake()
     {
         instance = this;
-        Inventory.gameObject.SetActive(false);
     }
     #endregion
 
@@ -23,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] Players;
     public List<PlayerStat> playerStats = new List<PlayerStat>();
     public GameObject MainPlayer;
+    public GameObject Inventory;
     public int nextTurn = 0;
 
     private QuestManager questManager;
@@ -60,8 +59,9 @@ public class GameManager : MonoBehaviour
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
-        
+        Inventory.gameObject.SetActive(false);
     }
+
     public void Setting()
     {
         Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];

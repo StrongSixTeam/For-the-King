@@ -7,8 +7,10 @@ using UnityEngine.EventSystems;
 public class InventoryBtn1 : MonoBehaviour
 {
     [SerializeField] private GameObject inventory;
+    [SerializeField] private ShopManager shopManager;
     public void InventoryOnOff()
     {
+        shopManager = FindObjectOfType<ShopManager>();
         if (!inventory.activeSelf)
         {
             inventory.SetActive(true);
@@ -31,6 +33,7 @@ public class InventoryBtn1 : MonoBehaviour
             }
             InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
             InventoryController1.instance.ShowEquip();
+            shopManager.ShopSetting();
         }
         else
         {
