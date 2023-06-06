@@ -83,6 +83,11 @@ public class Bullet : MonoBehaviour
                         battleLoader.Enemys[i].GetComponent<Animator>().SetTrigger("Idle");
                     }
                 }
+
+                for (int i = 0; i < battleLoader.Players.Count; i++)
+                {
+                    battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Battle");
+                }
             }
 
             Invoke("BulletDestroy", 1.5f);
@@ -97,7 +102,7 @@ public class Bullet : MonoBehaviour
         for (int i = 0; i < battleLoader.Players.Count; i++)
         {
             battleLoader.Players[i].GetComponent<Animator>().SetBool("Hit", false);
-            battleLoader.Players[i].GetComponent<Animator>().SetBool("Attack", false);
+            battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Battle");
         }
         if (isZero)
         {
@@ -137,7 +142,9 @@ public class Bullet : MonoBehaviour
                 if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp <= 0)
                 {
                     FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
-                    Destroy(battleLoader.Enemys[i]);
+                    
+                    //Destroy(battleLoader.Enemys[i]);
+                    battleManager.dieObj.Add(battleLoader.Enemys[i]);
                     battleLoader.Enemys.RemoveAt(i);
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);

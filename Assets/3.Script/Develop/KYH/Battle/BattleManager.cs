@@ -10,6 +10,8 @@ public class BattleManager : MonoBehaviour
     BattleCameraController battleCameraController;
     ItemInputTest1 itemInput;
 
+    public List<GameObject> dieObj;
+
     [SerializeField] GameObject WinBattleBanner;
     [SerializeField] GameObject LoseBattleBanner;
 
@@ -206,7 +208,7 @@ public class BattleManager : MonoBehaviour
     {
         isPlayer = false;
 
-        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetBool("Attack", true);
+        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
         BattleUI.SetActive(false);
         //slot ¿€µø
@@ -327,6 +329,13 @@ public class BattleManager : MonoBehaviour
         {
             EndCheck();
         }
+
+        for(int i = 0; i < dieObj.Count; i++)
+        {
+            Destroy(dieObj[i]);
+        }
+
+        dieObj.Clear();
 
         battleLoader.PrefsDestroy();
         battleOrderManager.End();
