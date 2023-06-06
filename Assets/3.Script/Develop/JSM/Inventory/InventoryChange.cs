@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryChange : MonoBehaviour
 {
+    ShopManager shopManager;
     public void LeftChange()
     {
         if ((int)InventoryController1.instance.playerNum <= 0)
@@ -20,6 +21,9 @@ public class InventoryChange : MonoBehaviour
         transform.parent.GetChild(3).GetChild(0).GetComponent<Text>().text = GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].name;
         InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
         InventoryController1.instance.ShowEquip();
+        shopManager = FindObjectOfType<ShopManager>();
+        if (shopManager != null) shopManager.ShopSetting();
+        
     }
 
     public void RightChange()
@@ -37,5 +41,7 @@ public class InventoryChange : MonoBehaviour
         transform.parent.GetChild(3).GetChild(0).GetComponent<Text>().text = GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].name;
         InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
         InventoryController1.instance.ShowEquip();
+        shopManager = FindObjectOfType<ShopManager>();
+        if (shopManager != null) shopManager.ShopSetting();
     }
 }
