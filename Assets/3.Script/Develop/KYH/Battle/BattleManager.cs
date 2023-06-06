@@ -37,6 +37,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject Get;
 
     private Camera CurrnetCam;
+    [SerializeField] private bool isAgain = false;
 
     private void OnEnable()
     {
@@ -64,6 +65,11 @@ public class BattleManager : MonoBehaviour
         if (isPlayer)
         {
             BattleUI.SetActive(true);
+            if (!isAgain)
+            {
+                FindObjectOfType<BattleFightBtn>().GetComponent<BattleFightBtn>().SetText();
+                isAgain = true;
+            }
             for (int i = 0; i < enemySlotUI.transform.childCount; i++)
             {
                 enemySlotUI.transform.GetChild(i).gameObject.SetActive(false);
@@ -207,7 +213,7 @@ public class BattleManager : MonoBehaviour
     public void PlayerAttack() //플레이어 공격턴
     {
         isPlayer = false;
-
+        isAgain = false;
         battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
         BattleUI.SetActive(false);
