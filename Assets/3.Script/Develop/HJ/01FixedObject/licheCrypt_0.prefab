@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3512866781106710372}
   - component: {fileID: 5652921786391046526}
   - component: {fileID: 6439915424939925154}
+  - component: {fileID: -2342821005059472343}
   m_Layer: 0
   m_Name: licheCrypt_0
   m_TagString: Corpse
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-2342821005059472343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311003865724928210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358dcca5043e036498c9da0856603012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CaveEnemy02: {fileID: 0}

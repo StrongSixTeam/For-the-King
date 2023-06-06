@@ -6,18 +6,18 @@ public class ChaosBoss : MonoBehaviour
 {
     private void OnDisable()
     {
-        if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2)
+        if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && FindObjectOfType<QuestManager>().isChaos)
         {
-            Debug.Log("카오스 보스 깼다~");
-
             FindObjectOfType<QuestManager>().PopUp("ChaosBoss");
 
             FindObjectOfType<QuestManager>().questClearCnt++;
 
-            if (FindObjectOfType<QuestManager>().questClearCnt == 2)
-            {
-                FindObjectOfType<QuestManager>().questTurn = 6;
-            }
+            FindObjectOfType<QuestManager>().isChaos = false;
+
+        }
+        else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2)
+        {
+            FindObjectOfType<QuestManager>().isChaos = true;
         }
     }
 }
