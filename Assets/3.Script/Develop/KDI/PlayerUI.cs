@@ -56,9 +56,52 @@ public class PlayerUI : MonoBehaviour
                 awarenessText.text = playerStat.awareness.ToString();
                 speedText.text = playerStat.speed.ToString();
                 levelText.text = playerStat.Lv.ToString();
-                atkText.text = playerStat.atk.ToString();
-                defText.text = playerStat.def.ToString();
+                //공격력 계산
+                if (playerStat.weapon != null)
+                {
+                    if (playerStat.weapon.maxAdDmg != 0)
+                    {
+                        playerStat.atk = playerStat.weapon.maxAdDmg;
+                        atkText.text = playerStat.atk.ToString();
+                    }
+                    else
+                    {
+                        playerStat.atk = playerStat.weapon.maxApDmg;
+                        atkText.text = playerStat.weapon.maxApDmg.ToString();
+                    }
+                }
+                else
+                {
+                    atkText.text = playerStat.originalAtk.ToString();
+                }
+                int extraHp = 0;
+                //방어력 계산
+                float extraDef = 0;
+                if (playerStat.armorHelmet != null)
+                {
+                    extraDef += playerStat.armorHelmet.def;
+                }
+                if (playerStat.armor != null)
+                {
+                    extraDef += playerStat.armor.def;
+                }
+                if (playerStat.armorBoots != null)
+                {
+                    extraDef += playerStat.armorBoots.def;
+                }
+                if (playerStat.armorNecklace != null)
+                {
+                    extraDef += playerStat.armorNecklace.def;
+                    extraHp = 3;
+                }
+                else
+                {
+                    extraHp = 0;
+                }
+                playerStat.def = playerStat.originalDef + extraDef;
+                defText.text = ((int)playerStat.def).ToString();
 
+                playerStat.maxHp = playerStat.originalMaxHp + extraHp;
                 hpText.text = playerStat.nowHp + " / " + playerStat.maxHp;
                 hpText2.text = playerStat.nowHp.ToString();
                 expText.text = playerStat.nowExp + " / " + playerStat.maxExp;

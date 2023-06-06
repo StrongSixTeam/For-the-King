@@ -56,7 +56,7 @@ public class BattleCameraController : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPos) > 0.01)
         {
             transform.LookAt(lookPos);
-            transform.position = Vector3.Slerp(transform.position, targetPos, 0.015f);
+            transform.position = Vector3.Slerp(transform.position, targetPos, 0.03f);
             yield return null;
         }
         transform.position = targetPos;

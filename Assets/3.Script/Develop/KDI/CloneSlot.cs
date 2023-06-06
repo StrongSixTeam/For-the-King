@@ -304,27 +304,46 @@ public class CloneSlot : MonoBehaviour
                 Invoke("slotsOff", 1f);
                 if (SlotController.instance.limit <= SlotController.instance.success) //도주 성공이라면
                 {
-                    int number = -1;
-                    for (int i =0; i < FindObjectOfType<BattleOrderManager>().Order.Count; i++)
+                    //int number = -1;
+                    //for (int i =0; i < FindObjectOfType<BattleOrderManager>().Order.Count; i++)
+                    //{
+                    //    for (int j = 0; j < FindObjectOfType<BattleLoader>().Players.Count; j++)
+                    //    {
+                    //        if (FindObjectOfType<BattleOrderManager>().Order[i].name == FindObjectOfType<BattleLoader>().Players[j].name)
+                    //        {
+                    //            number = j;
+                    //            break;
+                    //        }
+                    //    }
+                    //    if (number >= 0)
+                    //    {
+                    //        break;
+                    //    }
+                    //}
+                    Destroy(FindObjectOfType<BattleLoader>().Players[FindObjectOfType<BattleOrderManager>().turn]);
+                    FindObjectOfType<BattleLoader>().Players.RemoveAt(FindObjectOfType<BattleOrderManager>().turn);
+
+                    FindObjectOfType<BattleOrderManager>().turn -= 1;
+
+                    FindObjectOfType<BattleOrderManager>().SetOrder();
+
+                    if (FindObjectOfType<BattleLoader>().Players.Count > 0)
                     {
-                        for (int j = 0; j < FindObjectOfType<BattleLoader>().Players.Count; j++)
-                        {
-                            if (FindObjectOfType<BattleOrderManager>().Order[i].name == FindObjectOfType<BattleLoader>().Players[j].name)
-                            {
-                                number = j;
-                                break;
-                            }
-                        }
-                        if (number >= 0)
-                        {
-                            break;
-                        }
+                        FindObjectOfType<BattleManager>().RunFalse();
                     }
-                    if (number >= 0)
-                    {
-                        Destroy(FindObjectOfType<BattleLoader>().Players[number]);
-                        FindObjectOfType<BattleLoader>().Players.RemoveAt(number);
-                    }
+
+                    //if (number >= 0)
+                    //{
+                    //    Destroy(FindObjectOfType<BattleLoader>().Players[number]);
+                    //    FindObjectOfType<BattleLoader>().Players.RemoveAt(number);
+                    //
+                    //    FindObjectOfType<BattleOrderManager>().SetOrder();
+                    //
+                    //    if (FindObjectOfType<BattleLoader>().Players.Count > 0)
+                    //    {
+                    //        FindObjectOfType<BattleManager>().RunFalse();
+                    //    }
+                    //}
                 }
                 else //도주 실패라면
                 {

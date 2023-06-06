@@ -8,8 +8,11 @@ public class PlayerStat : MonoBehaviour
     public string name;
     public int order; //플레이어 순서
     public string className = ""; //클래스 이름
+    public float originalAtk; //직업별 공격력
     public float atk; //공격력
+    public float originalDef; //직업별 방어력
     public float def; //방어력
+    public float originalMaxHp;
     public float maxHp;
     public float nowHp;
     public int intelligence;
@@ -28,6 +31,10 @@ public class PlayerStat : MonoBehaviour
     public Sprite portrait;
 
     public Weapon weapon;
+    public Armor armorHelmet;
+    public Armor armor;
+    public Armor armorBoots;
+    public Armor armorNecklace;
 
     public enum Sanctum
     {
@@ -38,8 +45,11 @@ public class PlayerStat : MonoBehaviour
     public void SetStat(CharacterStatusSet data)
     {
         className = data.className;
-        atk = data.atk + data.weapon.adDmg + data.weapon.apDmg;
+        originalAtk = data.atk;
+        atk = data.atk;
+        originalDef = data.def;
         def = data.def;
+        originalMaxHp = maxExp;
         maxHp = data.maxHp;
         nowHp = data.nowHp;
         intelligence = data.intelligence;

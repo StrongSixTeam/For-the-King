@@ -133,6 +133,8 @@ public class Bullet : MonoBehaviour
                     {
                         Destroy(battleLoader.Players[i]);
                         battleLoader.Players.RemoveAt(i);
+
+                        battleOrderManager.turn -= 1;
                     }
                 }
             }

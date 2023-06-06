@@ -567,7 +567,20 @@ public class InventoryController1 : MonoBehaviour
             playerEquip[(int)playerNum][0] = weapon;
             equipItemName[0].text = weapon.itemName;
             equipBtn[0].interactable = true;
-            
+            int num = 0;
+            if (playerNum == PlayerNum.Player0)
+            {
+                num = 0;
+            }
+            else if (playerNum == PlayerNum.Player1)
+            {
+                num = 1;
+            }
+            else if (playerNum == PlayerNum.Player2)
+            {
+                num = 2;
+            }
+            GameManager.instance.Players[num].GetComponent<PlayerStat>().weapon = weapon;
         }
 
         else if (playerEquip[(int)playerNum][0].itemName.Equals(weapon.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
@@ -577,6 +590,20 @@ public class InventoryController1 : MonoBehaviour
 
         else                                // 해당 장비창에 이미 착용된 장비가 있는 경우
         {
+            int num = 0;
+            if (playerNum == PlayerNum.Player0)
+            {
+                num = 0;
+            }
+            else if (playerNum == PlayerNum.Player1)
+            {
+                num = 1;
+            }
+            else if (playerNum == PlayerNum.Player2)
+            {
+                num = 2;
+            }
+            GameManager.instance.Players[num].GetComponent<PlayerStat>().weapon = weapon; //weapon값 반영
             int x = playerInventory[(int)playerNum].IndexOf(playerEquip[(int)playerNum][0]); // 착용 중인 장비가 인벤토리에 있는지 확인하기 위한 인덱스 번호 할당
             if (x == -1)                           // 착용 중인 장비가 인벤토리에 없다면
             {
@@ -609,11 +636,40 @@ public class InventoryController1 : MonoBehaviour
 
     private void UpdateEquip(Armor armor, int i, int arrNum)
     {
+        int num = 0;
+        if (playerNum == PlayerNum.Player0)
+        {
+            num = 0;
+        }
+        else if (playerNum == PlayerNum.Player1)
+        {
+            num = 1;
+        }
+        else if (playerNum == PlayerNum.Player2)
+        {
+            num = 2;
+        }
         if (playerEquip[(int)playerNum][arrNum] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
         {
             playerEquip[(int)playerNum][arrNum] = armor;
             equipItemName[arrNum].text = armor.itemName;
             equipBtn[arrNum].interactable = true;
+            if (armor.equipType == EquipType.헬멧)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorHelmet = armor;
+            }
+            else if (armor.equipType == EquipType.방어구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armor = armor;
+            }
+            else if (armor.equipType == EquipType.신발)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorBoots = armor;
+            }
+            else if (armor.equipType == EquipType.장신구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorNecklace = armor;
+            }
         }
 
         else if (playerEquip[(int)playerNum][arrNum].itemName.Equals(armor.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
@@ -635,6 +691,22 @@ public class InventoryController1 : MonoBehaviour
                 itemCount[(int)playerNum][x]++;
                 playerEquip[(int)playerNum][arrNum] = armor;
                 equipItemName[arrNum].text = armor.itemName;
+            }
+            if (armor.equipType == EquipType.헬멧)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorHelmet = armor;
+            }
+            else if (armor.equipType == EquipType.방어구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armor = armor;
+            }
+            else if (armor.equipType == EquipType.신발)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorBoots = armor;
+            }
+            else if (armor.equipType == EquipType.장신구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorNecklace = armor;
             }
         }
 
@@ -707,32 +779,50 @@ public class InventoryController1 : MonoBehaviour
     }
     private void SetUnequipUI()
     {
+        int num = 0;
+        if (playerNum == PlayerNum.Player0)
+        {
+            num = 0;
+        }
+        else if (playerNum == PlayerNum.Player1)
+        {
+            num = 1;
+        }
+        else if (playerNum == PlayerNum.Player2)
+        {
+            num = 2;
+        }
         switch (equipType)
         {
             case EquipType.무기:
                 FindInInventory(0);
                 equipItemName[0].text = "";
                 equipBtn[0].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().weapon = null;
                 break;
             case EquipType.헬멧:
                 FindInInventory(1);
                 equipItemName[1].text = "";
                 equipBtn[1].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorHelmet = null;
                 break;
             case EquipType.방어구:
                 FindInInventory(2);
                 equipItemName[2].text = "";
                 equipBtn[2].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armor = null;
                 break;
             case EquipType.신발:
                 FindInInventory(3);
                 equipItemName[3].text = "";
                 equipBtn[3].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorBoots = null;
                 break;
             case EquipType.장신구:
                 FindInInventory(4);
                 equipItemName[4].text = "";
                 equipBtn[4].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorNecklace = null;
                 break;
         }
         ShowItemUnequipUI();
