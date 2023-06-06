@@ -29883,6 +29883,7 @@ MonoBehaviour:
   equipItemSelectUI: {fileID: 8963706668745206095}
   detailUI: {fileID: 337782266959039645}
   playerNum: 0
+  playerStats: []
   category: {fileID: 5530437276126522830}
   categoryWeapon: []
   categoryArmor: []
@@ -29918,6 +29919,7 @@ MonoBehaviour:
   - {fileID: 1312894150}
   - {fileID: 1328267569}
   allItemArr: {fileID: 2283094264094309659}
+  coinText: {fileID: 5530437276724551703}
 --- !u!222 &5530437276613281628
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30294,7 +30296,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 25
+  m_Text: 0
 --- !u!1 &5530437276724551704
 GameObject:
   m_ObjectHideFlags: 0

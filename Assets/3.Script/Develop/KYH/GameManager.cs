@@ -1,27 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     #region 싱글톤
-    public GameObject Inventory;
     public static GameManager instance = null;
+    public GameObject Inventory;
 
     private void Awake()
     {
         instance = this;
-        //Inventory.gameObject.SetActive(true);
         Inventory.gameObject.SetActive(false);
     }
     #endregion
 
-    public int maxLife = 3; //생명 슬롯 창 개수
-    public int currentLife = 3; //현재 생명 개수
+    public int maxLife = 5; //생명 슬롯 창 개수
+    public int currentLife = 5; //현재 생명 개수
 
     public GameObject[] Players;
+    public List<PlayerStat> playerStats = new List<PlayerStat>();
     public GameObject MainPlayer;
     public int nextTurn = 0;
 
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
+        
     }
     public void Setting()
     {
@@ -86,10 +87,13 @@ public class GameManager : MonoBehaviour
 
         cameraController.PlayerChange();
         isSettingDone = true;
+        for (int i = 0; i < Players.Length; i++)
+        {
+            playerStats.Add(Players[i].GetComponent<PlayerStat>());
+        }
     }
     private void Update()
     {
-        SetLifeUI();
         if (playerController != null)
         {
             if (questManager.isQuest || playerController.isRun || SlotController.instance.isSlot || battleLoader.isBattle)
@@ -118,13 +122,8 @@ public class GameManager : MonoBehaviour
             if (!questManager.isQuest && !isQuestFinish && Players.Length > 0)
             {
                 isQuestFinish = true;
-
                 TurnChange();
             }
-        }
-        if(currentLife <= 0 && GameObject.Find("Main Camera") != null)
-        {
-            SceneManager.LoadScene("BadEndingScene");
         }
     }
     public void TurnChange()
@@ -151,6 +150,7 @@ public class GameManager : MonoBehaviour
         isTrunChange = true;
 
         MainPlayer = Players[nextTurn];
+        InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), nextTurn.ToString());
         playerController = MainPlayer.GetComponent<PlayerController_Jin>();
 
         cameraController.PlayerChange();
@@ -236,10 +236,6 @@ public class GameManager : MonoBehaviour
 
     public void SetLifeUI()
     {
-        for (int i =0; i < LifeUI.transform.childCount; i++)
-        {
-            LifeUI.transform.GetChild(i).gameObject.SetActive(false);
-        }
         for (int i = 0; i < maxLife; i++)
         {
             LifeUI.transform.GetChild(i).gameObject.SetActive(true);
