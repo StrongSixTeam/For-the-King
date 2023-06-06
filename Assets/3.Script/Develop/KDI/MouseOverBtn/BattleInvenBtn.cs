@@ -11,6 +11,9 @@ public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private GameObject battleFightBtn;
     private BattleOrderManager battleOrderManager;
 
+    public GameObject Accuracy;
+    public GameObject Damage;
+
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
@@ -33,6 +36,8 @@ public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             SlotController.instance.fixCount = 0;
         }
         slot.SetActive(false);
+        Accuracy.SetActive(false);
+        Damage.SetActive(false);
         icons[0].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[2].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[1].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);

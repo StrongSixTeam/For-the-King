@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject[] icons;
     private BattleOrderManager battleOrderManager;
     [SerializeField] private GameObject battleFightBtn;
+
+    public GameObject Accuracy;
+    public GameObject Damage;
+    private Vector3 fightPos = new Vector3(2.1f, 0f, 0f);
+    private Vector3 runPos = new Vector3(-50f, 0f, 0f);
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
@@ -33,10 +39,9 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         icons[1].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[2].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         slot.GetComponent<CloneSlot>().Initialized();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
+        Accuracy.SetActive(true);
+        Damage.SetActive(false);
+        Accuracy.transform.localPosition = runPos;
+        Accuracy.transform.GetChild(0).GetComponent<Text>().text = SlotController.instance.percent.ToString() + "%"; //½½·Ô´ç È®·ü
     }
 }

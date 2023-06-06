@@ -321,7 +321,7 @@ public class MapObjectCreator : MonoBehaviour
                     GameObject temp = Instantiate(forestObj[i]);
                     forestObj[i] = temp;
                     temp.SetActive(true);
-                    temp.transform.position = forestNode[random].transform.position + new Vector3(0, 0.2f, 0);
+                    temp.transform.position = forestNode[random].transform.position + new Vector3(0, 0.1f, 0);
                     temp.transform.SetParent(fixedObjectBox);
 
 
@@ -437,7 +437,7 @@ public class MapObjectCreator : MonoBehaviour
                     GameObject temp = Instantiate(plainsObj[i]);
                     plainsObj[i] = temp;
                     temp.SetActive(true);
-                    temp.transform.position = plainsNode[random].transform.position + new Vector3(0, 0.2f, 0);
+                    temp.transform.position = plainsNode[random].transform.position + new Vector3(0, 0.1f, 0);
                     temp.transform.SetParent(fixedObjectBox);
 
                     break;

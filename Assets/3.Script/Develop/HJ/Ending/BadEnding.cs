@@ -82,6 +82,8 @@ public class BadEnding : MonoBehaviour
 
         for(int i=0; i< PlayerPrefs.GetInt("PlayerCnt"); i++)
         {
+            players[i].GetComponent<Animator>().SetBool("Battle", true);
+            players[i].GetComponent<Animator>().SetBool("Hit", true);
             players[i].GetComponent<Animator>().SetBool("Die", true);
         }
         
