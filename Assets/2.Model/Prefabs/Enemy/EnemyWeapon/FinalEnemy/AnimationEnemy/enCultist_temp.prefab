@@ -1611,8 +1611,11 @@ MonoBehaviour:
   speed: 0
   Lv: 0
   Exp: 0
+  maxSlot: 0
   portrait: {fileID: 0}
   isDie: 0
+  attackType: 
+  percent: 0
 --- !u!136 &6211357435790801169
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1640,7 +1643,7 @@ Animator:
   m_Controller: {fileID: 22100000, guid: aef25399bea3a324496b2c3a62b5ff94, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1

@@ -92,7 +92,15 @@ public class PlayerController_Jin : MonoBehaviour
         }
         else if (map.objectIndex[5] == myHexNum) //패리드
         {
-            EncounterManager.instance.ActiveEncounter(5);
+            if (quest.questTurn == 9)
+            {
+                quest.PopUp("Farid");
+                quest.questTurn = 10;
+            }
+            else
+            {
+                EncounterManager.instance.ActiveEncounter(5);
+            }
             return true;
         }
         else if (map.objectIndex[6] == myHexNum && EncounterManager.instance.encounter[5].isShowed) //잊혀진 저장고

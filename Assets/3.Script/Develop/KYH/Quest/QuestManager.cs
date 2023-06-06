@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
@@ -29,7 +27,7 @@ public class QuestManager : MonoBehaviour
 
     [Header("퀘스트 팝업 등장 상태")]
     public bool isQuest = false;
-    private bool isClear = false;
+    public bool isClear = false;
     private bool isChaosLoss = false;
 
     [Header("퀘스트 순서")]
@@ -45,6 +43,11 @@ public class QuestManager : MonoBehaviour
     private CameraController cameraController;
 
     public int questClearCnt = 0;
+    public bool isChaos = false;
+    public bool isShinyCave = false;
+
+    public bool is2nd = false;
+    public bool is3rd = false;
 
     private void Awake()
     {
@@ -66,7 +69,7 @@ public class QuestManager : MonoBehaviour
 
     private void Update()
     {
-        if (!questPopUpUI.activeSelf && questTurn != 0 && questTurn != 2 && questTurn != 5 && questTurn != 8 && questTurn != 11)
+        if (!questPopUpUI.activeSelf && questTurn != 0 && questTurn != 2 && questTurn != 5 && questTurn != 8 && questTurn != 12)
         {
             if (questTurn == 1) //첫번째 퀘스트
             {
@@ -88,7 +91,7 @@ public class QuestManager : MonoBehaviour
         }
         if (!questCheckUI.activeSelf && !questPopUpUI.activeSelf && isQuest && !isChaosLoss)
         {
-            if (questTurn == 2 || questTurn == 5 || questTurn == 8 || questTurn != 11)
+            if (questTurn == 2 || questTurn == 5 || questTurn == 8 || questTurn == 9 || questTurn == 11)
             {
                 cameraController.targetPos = GameManager.instance.MainPlayer.transform.position + cameraController.defaultPos;
                 StartCoroutine(cameraController.CameraSoftMove());
@@ -97,7 +100,7 @@ public class QuestManager : MonoBehaviour
                 {
                     questCheckUI.GetComponentInChildren<Text>().text = "순서와 상관없이 목표 완료하기";
                 }
-                if (questTurn == 2 || questTurn == 8 || questTurn == 11)
+                if (questTurn == 2 || questTurn == 8 || questTurn == 9 || questTurn == 11)
                 {
                     questCheckUI.GetComponentInChildren<Text>().text = questText[questTurn - 1].questListSentence;
                     questCheckUI.GetComponentInChildren<Text>().text.Replace(Environment.NewLine, "");
@@ -105,6 +108,16 @@ public class QuestManager : MonoBehaviour
 
                 questCheckUI.SetActive(true);
             }
+        }
+        if (questClearCnt == 2 && !is2nd)
+        {
+            questTurn = 6;
+            is2nd = true;
+        }
+        if (questClearCnt == 3 && !is3rd)
+        {
+            questTurn = 8;
+            is3rd = true;
         }
         if (!questPopUpUI.activeSelf && isChaosLoss)
         {
@@ -241,6 +254,11 @@ public class QuestManager : MonoBehaviour
             {
                 isClear = false;
                 isQuest = false;
+
+                if (is3rd)
+                {
+                    PopUp(questTurn);
+                }
             }
             return;
         }

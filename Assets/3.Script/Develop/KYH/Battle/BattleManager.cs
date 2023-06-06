@@ -10,6 +10,8 @@ public class BattleManager : MonoBehaviour
     BattleCameraController battleCameraController;
     ItemInputTest1 itemInput;
 
+    public List<GameObject> dieObj;
+
     [SerializeField] GameObject WinBattleBanner;
     [SerializeField] GameObject LoseBattleBanner;
 
@@ -35,6 +37,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject Get;
 
     private Camera CurrnetCam;
+    [SerializeField] private bool isAgain = false;
 
     private void OnEnable()
     {
@@ -62,6 +65,11 @@ public class BattleManager : MonoBehaviour
         if (isPlayer)
         {
             BattleUI.SetActive(true);
+            if (!isAgain)
+            {
+                FindObjectOfType<BattleFightBtn>().GetComponent<BattleFightBtn>().SetText();
+                isAgain = true;
+            }
             for (int i = 0; i < enemySlotUI.transform.childCount; i++)
             {
                 enemySlotUI.transform.GetChild(i).gameObject.SetActive(false);
@@ -205,8 +213,8 @@ public class BattleManager : MonoBehaviour
     public void PlayerAttack() //플레이어 공격턴
     {
         isPlayer = false;
-
-        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetBool("Attack", true);
+        isAgain = false;
+        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
         BattleUI.SetActive(false);
         //slot 작동
@@ -327,6 +335,13 @@ public class BattleManager : MonoBehaviour
         {
             EndCheck();
         }
+
+        for(int i = 0; i < dieObj.Count; i++)
+        {
+            Destroy(dieObj[i]);
+        }
+
+        dieObj.Clear();
 
         battleLoader.PrefsDestroy();
         battleOrderManager.End();

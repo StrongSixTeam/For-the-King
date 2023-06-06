@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4938,7 +4938,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104583719}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 106.69334, y: 44.14673, z: 39.046898}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14290,11 +14290,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fba18ebf2ca1b03468053cabedecda73, type: 2}
   - {fileID: 11400000, guid: 8918ce8f79a91334d85dee7084f63bbc, type: 2}
   isQuest: 0
+  isClear: 0
   questTurn: 0
   questName: 
   mapObjectCreator: {fileID: 0}
   cloudBox: {fileID: 0}
   questClearCnt: 0
+  isChaos: 0
+  isShinyCave: 0
+  is2nd: 0
+  is3rd: 0
 --- !u!224 &1265687706674145248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14845,6 +14850,8 @@ MonoBehaviour:
   - {fileID: 7180885784129931669}
   - {fileID: 1420673492468820555}
   battleFightBtn: {fileID: 1802723977751608711}
+  Accuracy: {fileID: 1802723979152911995}
+  Damage: {fileID: 1802723978379440929}
 --- !u!114 &1420673492468820557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16690,6 +16697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleLoader: {fileID: 8962242860372419430}
+  dieObj: []
   WinBattleBanner: {fileID: 901080076}
   LoseBattleBanner: {fileID: 1241652839}
   MainCam: {fileID: 963194227}
@@ -18887,6 +18895,8 @@ MonoBehaviour:
   - {fileID: 7180885784129931669}
   - {fileID: 1420673492468820555}
   battleRunBtn: {fileID: 1420673492468820555}
+  Accuracy: {fileID: 1802723979152911995}
+  Damage: {fileID: 1802723978379440929}
 --- !u!114 &1802723977751608713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19068,7 +19078,7 @@ GameObject:
   - component: {fileID: 1802723978149704883}
   - component: {fileID: 1802723978149704880}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Percent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19488,7 +19498,7 @@ GameObject:
   - component: {fileID: 1802723979528390522}
   - component: {fileID: 1802723979528390523}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32464,6 +32474,8 @@ MonoBehaviour:
   - {fileID: 1420673492468820555}
   battleRunBtn: {fileID: 1420673492468820555}
   battleFightBtn: {fileID: 1802723977751608711}
+  Accuracy: {fileID: 1802723979152911995}
+  Damage: {fileID: 1802723978379440929}
 --- !u!114 &7195277714000588776
 MonoBehaviour:
   m_ObjectHideFlags: 0
