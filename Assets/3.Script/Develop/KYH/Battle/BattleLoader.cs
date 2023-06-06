@@ -90,15 +90,15 @@ public class BattleLoader : MonoBehaviour
                 Encounter = GameObject.Find("CaveEnemy01").GetComponent<CaveBattleBox>().enemys02;
                 break;
             case 3:
-                scrollMap = 1;
+                scrollMap = 3;
                 Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys01;
                 break;
             case 4:
-                scrollMap = 2;
+                scrollMap = 1;
                 Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys02;
                 break;
             case 5:
-                scrollMap = 3;
+                scrollMap = 2;
                 Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys03;
                 break;
         }
