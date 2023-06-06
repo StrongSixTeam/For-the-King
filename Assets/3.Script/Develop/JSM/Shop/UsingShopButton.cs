@@ -10,7 +10,7 @@ public class UsingShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] bool isEquip = false;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isEquip = currentBtn.transform.GetChild(1).GetComponent<Text>().text.Equals("<color=#FFFFFF>구입 및 착용</color>");
+        isEquip = currentBtn.transform.GetChild(1).GetComponent<Text>().text.Equals("구입 및 착용");
         //Debug.Log(isEquip);
         if (InventoryController1.instance.isUsed && isEquip)
         {

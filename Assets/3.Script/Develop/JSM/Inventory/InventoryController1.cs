@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,11 +63,12 @@ public class InventoryController1 : MonoBehaviour
 
     [Header("전체 아이템 담은 배열")]
     public ItemInputTest1 allItemArr;
-
+    public Text coinText;
 
     private void Awake()
     {
         instance = this;
+        Debug.Log("인벤토리 일어났쪄염 뿌우");
         for(int i = 0; i < equipBtn.Length; i++)
         {
             if (equipItemName[i].text.Equals(""))
@@ -89,6 +91,7 @@ public class InventoryController1 : MonoBehaviour
         poolPos = new Vector3(0, 0, -100);
         topListPos = new Vector3(0, 105);
         ListPos = topListPos;
+        Debug.Log("스타트");
     }
 
     private void CreatePoolItem() // 오브젝트 풀링할 리스트 초기화
@@ -124,7 +127,7 @@ public class InventoryController1 : MonoBehaviour
         }
         for (int j = 0; j < itemCount[playerNum].Count; j++)
         {
-            Debug.Log("itemCount의 " + j + "번째 인덱스의 값: " + itemCount[playerNum][j]);
+            //Debug.Log("itemCount의 " + j + "번째 인덱스의 값: " + itemCount[playerNum][j]);
         }
         
     }
@@ -183,7 +186,7 @@ public class InventoryController1 : MonoBehaviour
         GameObject newitem = poolItemQueue.Dequeue();
         //Debug.Log(this.transform.childCount);
         newitem.transform.SetParent(this.transform);
-        Debug.Log(this.transform.childCount);
+        //Debug.Log(this.transform.childCount);
         switch (putitem.itemType)
         {
             case ItemType.무기:
@@ -222,6 +225,8 @@ public class InventoryController1 : MonoBehaviour
     public void InventoryShow(int playernum)          // 플레이어 별로 분할된 인벤토리 보여주기
     {
         InventoryReset();
+        coinText.text = GameManager.instance.playerStats[playernum].coins.ToString();
+        
         if (playerInventory[playernum].Count < 1) return;
 
         ListPos = topListPos;
@@ -441,6 +446,7 @@ public class InventoryController1 : MonoBehaviour
         {
             if (playerInventory[(int)playerNum][i].itemName.Equals(itemName))
             {
+                Used used = playerInventory[(int)playerNum][i] as Used;
                 switch (playerInventory[(int)playerNum][i].itemType)
                 {
                     case ItemType.허브:
@@ -456,11 +462,21 @@ public class InventoryController1 : MonoBehaviour
                                 quickSlot[(int)playerNum].itemSlotImg[a].sprite = quickSlot[(int)playerNum].blank;
                                 quickSlot[(int)playerNum].itemCntTxt[a].text = 0.ToString();
                             }
+                            
                         }
 
                         else
                         {
                             itemCount[(int)playerNum][i]--;
+                        }
+
+                        if(GameManager.instance.playerStats[(int)playerNum].nowHp + used.recoveryStat > GameManager.instance.playerStats[(int)playerNum].maxHp)
+                        {
+                            GameManager.instance.playerStats[(int)playerNum].nowHp = GameManager.instance.playerStats[(int)playerNum].maxHp;
+                        }
+                        else
+                        {
+                            GameManager.instance.playerStats[(int)playerNum].nowHp += used.recoveryStat;
                         }
                         break;
 
@@ -857,5 +873,13 @@ public class InventoryController1 : MonoBehaviour
             }
         }
         detailUI.gameObject.SetActive(true);
+    }
+
+    public void PlayerDefaultWeaponSet()
+    {
+        for(int i = 0; i < playerEquip.Count; i++)
+        {
+            playerEquip[i][0] = GameManager.instance.playerStats[i].weapon;
+        }
     }
 }
