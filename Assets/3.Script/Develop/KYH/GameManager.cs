@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text Name;
 
     [SerializeField] BattleLoader battleLoader;
+    [SerializeField] GlowControl glowControl;
 
     private void Start()
     {
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
+        glowControl = FindObjectOfType<GlowControl>();
         Inventory.gameObject.SetActive(false);
     }
 
@@ -129,6 +131,7 @@ public class GameManager : MonoBehaviour
     public void TurnChange()
     {
         MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
+        glowControl.SetTurnGlow(nextTurn);
 
         if (nextTurn == 0 && !isFisrtTurn)
         {
