@@ -352,7 +352,9 @@ public class AstsrPathfinding : MonoBehaviour
 
                     if (loopNumber++ > 1000)
                     {
-                        throw new System.Exception("finalNodeList 에러");
+                        //throw new System.Exception("finalNodeList 에러");
+                        Debug.Log("finalNodeList 에러");
+                        return;
                     }
                 }
 
