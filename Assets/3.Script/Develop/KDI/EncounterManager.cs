@@ -594,7 +594,7 @@ public class EncounterManager : MonoBehaviour
         //txt.transform.SetParent(GameObject.Find("Canvas").transform);
         //txt.text = "+" + FindObjectOfType<ItemInputTest1>().EatItem[6].itemName;
 
-        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        for (int i = 0; i < GameManager.instance.Players.Count; i++)
         {
             if (GameManager.instance.MainPlayer == GameManager.instance.Players[i])
             {

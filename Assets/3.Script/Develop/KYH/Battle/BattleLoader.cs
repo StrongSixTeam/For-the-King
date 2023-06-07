@@ -103,7 +103,7 @@ public class BattleLoader : MonoBehaviour
                 break;
         }
 
-        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        for (int i = 0; i < GameManager.instance.Players.Count; i++)
         {
             Encounter.Add(GameManager.instance.Players[i]);
         }

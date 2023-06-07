@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
     public int maxLife = 3; //생명 슬롯 창 개수
     public int currentLife = 3; //현재 생명 개수
 
-    public GameObject[] Players;
+    public List<GameObject> Players;
     public GameObject MainPlayer;
     public int nextTurn = 0;
 
@@ -51,6 +52,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] BattleLoader battleLoader;
     GlowControl glowControl;
 
+    public bool isClear = false;
+    public bool isDie = false;
+
+    [SerializeField] GameObject Ending;
+    [SerializeField] GameObject BadEnding;
+
     private void Start()
     {
         //Inventory.gameObject.SetActive(true);
@@ -64,11 +71,11 @@ public class GameManager : MonoBehaviour
     }
     public void Setting()
     {
-        Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
+        //Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
 
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
         {
-            Players[i] = GameObject.FindGameObjectsWithTag("Player")[i];
+            Players.Add(GameObject.FindGameObjectsWithTag("Player")[i]);
             playerSpawner = FindObjectOfType<PlayerSpawner>();
             playerSpawner.movingUIs[i].Player = Players[i].transform;
             movingUIs[i] = playerSpawner.movingUIs[i].gameObject;
@@ -116,11 +123,27 @@ public class GameManager : MonoBehaviour
                 turnChageBtn.interactable = true;
             }
 
-            if (!questManager.isQuest && !isQuestFinish && Players.Length > 0)
+            if (!questManager.isQuest && !isQuestFinish && Players.Count > 0)
             {
                 isQuestFinish = true;
                 TurnChange();
             }
+        }
+
+        if(currentLife <= 0 && Players.Count == 0)
+        {
+            isDie = true;
+        }
+
+        if (isClear)
+        {
+            Ending.SetActive(true);
+            Invoke("End", 5f);
+        }
+        if (isDie)
+        {
+            BadEnding.SetActive(true);
+            Invoke("BadEnd", 5f);
         }
     }
     public void TurnChange()
@@ -162,7 +185,7 @@ public class GameManager : MonoBehaviour
         SlotController.instance.OnClick();
 
         nextTurn++;
-        if (nextTurn >= Players.Length)
+        if (nextTurn >= Players.Count)
         {
             nextTurn = 0;
         }
@@ -249,6 +272,15 @@ public class GameManager : MonoBehaviour
                 LifeUI.transform.GetChild(i).GetComponent<Image>().sprite = LifeUISprites[0]; //빈거
             }
         }
+    }
+
+    private void End()
+    {
+        SceneManager.LoadScene("EndingScene");
+    }
+    private void BadEnd()
+    {
+        SceneManager.LoadScene("BadEndingScene");
     }
 }
 

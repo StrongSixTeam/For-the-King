@@ -26,9 +26,7 @@ public class Corpse : MonoBehaviour
     {
         if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && isEnd)
         {
-            Debug.Log("갑자기 끝난다고?");
-            
-            SceneManager.LoadScene("EndingScene");
+            GameManager.instance.isClear = true;
         }
     }
 }

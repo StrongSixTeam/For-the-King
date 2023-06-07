@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
                 other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
-                for (int i = 0; i < GameManager.instance.Players.Length; i++)
+                for (int i = 0; i < GameManager.instance.Players.Count; i++)
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
                     {
@@ -126,11 +126,11 @@ public class Bullet : MonoBehaviour
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Revive");
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Battle");
 
-                        for (int j = 0; j < GameManager.instance.Players.Length; j++)
+                        for (int j = 0; j < GameManager.instance.Players.Count; j++)
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
-                                GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                                GameManager.instance.Players[j].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                             }
                         }
 
@@ -140,6 +140,15 @@ public class Bullet : MonoBehaviour
                     {
                         Destroy(battleLoader.Players[i]);
                         battleLoader.Players.RemoveAt(i);
+
+                        for (int j = 0; j < GameManager.instance.Players.Count; j++)
+                        {
+                            if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
+                            {
+                                Destroy(GameManager.instance.Players[j]);
+                                GameManager.instance.Players.RemoveAt(j);
+                            }
+                        }
 
                         battleOrderManager.turn -= 1;
                     }

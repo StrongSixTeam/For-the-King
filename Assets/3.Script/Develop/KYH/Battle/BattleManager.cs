@@ -121,7 +121,7 @@ public class BattleManager : MonoBehaviour
                 txt.transform.SetParent(GameObject.Find("Canvas").transform);
                 txt.text = "+" + battleLoader.totalExp + "Exp";
 
-                for (int j = 0; j < GameManager.instance.Players.Length; j++)
+                for (int j = 0; j < GameManager.instance.Players.Count; j++)
                 {
                     if (battleLoader.Players[i].GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[j].GetComponent<PlayerStat>().name))
                     {
@@ -168,7 +168,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject FindPlayer(int x)
     {
-        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        for (int i = 0; i < GameManager.instance.Players.Count; i++)
         {
             if (x == GameManager.instance.Players[i].GetComponent<PlayerStat>().order)
             {
