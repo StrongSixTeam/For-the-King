@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject target;
     public bool isPlayer = false;
+    public bool isEnemy = false;
     public bool isEnd = false;
     private bool isCave = false;
 
@@ -63,7 +64,7 @@ public class BattleManager : MonoBehaviour
         enemySlotUI.GetComponent<CloneSlot>().playerTurn = slotUI.GetComponent<CloneSlot>().playerTurn;
 
         if (isPlayer)
-        {
+        {        
             BattleUI.SetActive(true);
             if (!isAgain)
             {
@@ -89,6 +90,9 @@ public class BattleManager : MonoBehaviour
                     }
                 }
             }
+
+            battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
+            target.transform.GetChild(2).gameObject.SetActive(true);
         }
 
         if (battleLoader.Players.Count == 0 && !isEnd)
@@ -150,11 +154,14 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
+            isEnemy = true;
             slotUI.GetComponent<CloneSlot>().playerTurn = false;
             int rnd = Random.Range(0, battleLoader.Players.Count);
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Players[rnd].transform);
             target = battleLoader.Players[rnd];
-            //DefaultAttack();
+
+            battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
+            target.transform.GetChild(2).gameObject.SetActive(true);
             EnemyAttack();
         }
     }
@@ -213,6 +220,8 @@ public class BattleManager : MonoBehaviour
     public void PlayerAttack() //플레이어 공격턴
     {
         isPlayer = false;
+        isEnemy = false;
+
         isAgain = false;
         battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
@@ -260,6 +269,7 @@ public class BattleManager : MonoBehaviour
     public void EnemyAttack()
     {
         isPlayer = false;
+        isEnemy = false;
 
         battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
