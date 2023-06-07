@@ -64,7 +64,6 @@ public class HexMapCreator : MonoBehaviour
     [SerializeField] GameObject mapObjectCreatorObj;
     GameObject mapObjectCreatorObjsave = null;
 
-    public LowPolyWater lowPolyWater;
     public HexMember lowPolyWataer;
 
     [SerializeField] GameObject cloudBoxObj;
@@ -294,9 +293,6 @@ public class HexMapCreator : MonoBehaviour
             }
         }
 
-
-        //바다 영역에 LowPolyWater 스크립트를 부여한다
-        AddLowPolyWater();
     }
 
 
@@ -387,21 +383,6 @@ public class HexMapCreator : MonoBehaviour
 
             centerIndex = hexMembers[centerIndex].neighbors[randomNum].index;
         }
-    }
-
-    void AddLowPolyWater()
-    {
-        //for (int i = 0; i < hexMembers.Length; i++)
-        //{
-        //    if (hexMembers[i].mapType.Equals(0))
-        //    {
-        //        hexMembers[i].gameObject.AddComponent<LowPolyWater>();
-        //        if (hexMembers[i].zNum % 2 == 0)
-        //        {
-        //            hexMembers[i].gameObject.GetComponent<LowPolyWater>().down = false;
-        //        }
-        //    }
-        //}
     }
 
     //매개변수로 전달받는 index의 Material를 바꾼다
