@@ -36,7 +36,7 @@ public class PlayerUI : MonoBehaviour
     private bool playerStatSet = false;
     private void Update()
     {
-        if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Length > order))
+        if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Count > order))
         {
             if (!playerStatSet) //한번만 실행해도 되는 부분
             {

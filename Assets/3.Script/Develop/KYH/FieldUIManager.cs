@@ -27,9 +27,9 @@ public class FieldUIManager : MonoBehaviour
     }
     private void Update()
     {
-        if(GameManager.instance.Players.Length > 0)
+        if(GameManager.instance.Players.Count > 0)
         {
-            PortraitAni.SetInteger("PlayerCnt", GameManager.instance.Players.Length);
+            PortraitAni.SetInteger("PlayerCnt", GameManager.instance.Players.Count);
         }
         
         if (GameManager.instance.isQuestFinish)

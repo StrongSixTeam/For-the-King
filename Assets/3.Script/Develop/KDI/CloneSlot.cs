@@ -209,7 +209,7 @@ public class CloneSlot : MonoBehaviour
                 if (SlotController.instance.success == 3) //성공이면
                 {
                     //아이템 하나 획득
-                    for (int i = 0; i < GameManager.instance.Players.Length; i++)
+                    for (int i = 0; i < GameManager.instance.Players.Count; i++)
                     {
                         if (GameManager.instance.MainPlayer == GameManager.instance.Players[i])
                         {
@@ -296,7 +296,7 @@ public class CloneSlot : MonoBehaviour
                 {
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
-                    for (int i =0; i < GameManager.instance.Players.Length; i++)
+                    for (int i =0; i < GameManager.instance.Players.Count; i++)
                     {
                         GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= 5;
                     }

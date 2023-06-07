@@ -11,7 +11,7 @@ public class ReadyCnt : MonoBehaviour
     
     private void Update()
     {
-        if (readyCnt == GameManager.instance.Players.Length)
+        if (readyCnt == GameManager.instance.Players.Count)
         {
             readyCnt = 0;
 
