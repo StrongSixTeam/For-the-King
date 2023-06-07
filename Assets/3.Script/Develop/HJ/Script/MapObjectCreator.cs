@@ -332,6 +332,7 @@ public class MapObjectCreator : MonoBehaviour
         }
 
         forestObj[2].transform.GetChild(0).gameObject.SetActive(false);
+        forestObj[2].transform.GetChild(1).gameObject.SetActive(false);
         forestObj[3].transform.GetChild(0).gameObject.SetActive(false);
         forestObj[3].transform.GetChild(1).gameObject.SetActive(false);
         forestObj[3].transform.GetChild(2).gameObject.SetActive(false);
@@ -848,6 +849,7 @@ public class MapObjectCreator : MonoBehaviour
                     yield return new WaitForSeconds(0.02f);
                 }
                 forestObj[2].transform.GetChild(0).localScale = new Vector3(20f, 20f, 20f);
+                forestObj[2].transform.GetChild(1).gameObject.SetActive(true);
                 yield break;
             case 1:
                 forestObj[3].transform.GetChild(0).localScale = Vector3.zero;

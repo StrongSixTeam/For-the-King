@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CloneSlot : MonoBehaviour
 {
+    [SerializeField] private GameObject Get;
     private bool isSuccess = false;
     public Sprite[] move; //이동 UI 이미지
     public Sprite[] attackBlackSmith; //공격 UI 이미지 - 대장장이
@@ -209,6 +210,9 @@ public class CloneSlot : MonoBehaviour
                 if (SlotController.instance.success == 3) //성공이면
                 {
                     //아이템 하나 획득
+                    Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+                    txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                    txt.text = "+ " + FindObjectOfType<ItemInputTest1>().EatItem[3].itemName;
                     for (int i = 0; i < GameManager.instance.Players.Count; i++)
                     {
                         if (GameManager.instance.MainPlayer == GameManager.instance.Players[i])
@@ -240,6 +244,9 @@ public class CloneSlot : MonoBehaviour
                 }
                 else if (SlotController.instance.success == 1) //+5 대미지
                 {
+                    Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+                    txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                    txt.text = "+ 5 대미지";
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
                     GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp -= 5;
@@ -247,6 +254,9 @@ public class CloneSlot : MonoBehaviour
                 }
                 else //+10 대미지
                 {
+                    Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+                    txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                    txt.text = "+ 10 대미지";
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
                     GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp -= 10;
@@ -287,6 +297,9 @@ public class CloneSlot : MonoBehaviour
                 }
                 else if (SlotController.instance.success == 2)
                 {
+                    Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+                    txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                    txt.text = "+ 5 대미지";
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
                     GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp -= 5;
@@ -294,6 +307,12 @@ public class CloneSlot : MonoBehaviour
                 }
                 else if (SlotController.instance.success == 1)
                 {
+                    for (int i =0; i < GameManager.instance.Players.Count; i++)
+                    {
+                        Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.Players[i].transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+                        txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                        txt.text = "+ 5 파티 대미지";
+                    }
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
                     for (int i = 0; i < GameManager.instance.Players.Count; i++)
@@ -304,6 +323,9 @@ public class CloneSlot : MonoBehaviour
                 }
                 else
                 {
+                    Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+                    txt.transform.SetParent(GameObject.Find("Canvas").transform);
+                    txt.text = "+ 1 카오스";
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
                     FindObjectOfType<ChaosControl>().PlusChaos();

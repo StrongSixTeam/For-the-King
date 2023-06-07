@@ -6,6 +6,7 @@ public class ChaosBoss : MonoBehaviour
 {
     private void OnDisable()
     {
+        EncounterManager.instance.encounter[3].isCleared = true;
         if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && FindObjectOfType<QuestManager>().isChaos)
         {
             FindObjectOfType<QuestManager>().PopUp("ChaosBoss");
@@ -13,6 +14,8 @@ public class ChaosBoss : MonoBehaviour
             FindObjectOfType<QuestManager>().questClearCnt++;
 
             FindObjectOfType<QuestManager>().isChaos = false;
+
+            FindObjectOfType<GlowControl>().SetQuestObjectGlow(2, false);
 
         }
         else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2)

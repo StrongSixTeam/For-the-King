@@ -88,7 +88,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(3);
             return true;
         }
-        else if (map.objectIndex[4] == myHexNum && EncounterManager.instance.encounter[4].isShowed) //눈부신 광산
+        else if (map.objectIndex[4] == myHexNum && EncounterManager.instance.encounter[4].isShowed && !EncounterManager.instance.encounter[4].isCleared) //눈부신 광산
         {
             EncounterManager.instance.ActiveEncounter(4);
             return true;
@@ -118,7 +118,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(7);
             return true;
         }
-        else if (map.objectIndex[8] == myHexNum && EncounterManager.instance.encounter[7].isShowed) //시체의 지하실
+        else if (map.objectIndex[8] == myHexNum && EncounterManager.instance.encounter[7].isShowed && !EncounterManager.instance.encounter[7].isCleared) //시체의 지하실
         {
             EncounterManager.instance.ActiveEncounter(8);
             return true;
@@ -201,7 +201,7 @@ public class PlayerController_Jin : MonoBehaviour
         {
             return true;
         }
-        else if (map.objectIndex[4] == checkIndex && EncounterManager.instance.encounter[4].isShowed) //눈부신 광산
+        else if (map.objectIndex[4] == checkIndex && EncounterManager.instance.encounter[4].isShowed && !EncounterManager.instance.encounter[4].isCleared) //눈부신 광산
         {
             return true;
         }
@@ -217,7 +217,7 @@ public class PlayerController_Jin : MonoBehaviour
         {
             return true;
         }
-        else if (map.objectIndex[8] == checkIndex && EncounterManager.instance.encounter[7].isShowed) //시체의 지하실
+        else if (map.objectIndex[8] == checkIndex && EncounterManager.instance.encounter[7].isShowed && !EncounterManager.instance.encounter[7].isCleared) //시체의 지하실
         {
             return true;
         }
@@ -233,19 +233,19 @@ public class PlayerController_Jin : MonoBehaviour
         {
             return true;
         }
-        else if (map.randomObjectIndex[0] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[0] == checkIndex && !EncounterManager.instance.encounter[12].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             return true;
         }
-        else if (map.randomObjectIndex[1] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[1] == checkIndex && !EncounterManager.instance.encounter[13].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             return true;
         }
-        else if (map.randomObjectIndex[2] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[2] == checkIndex && !EncounterManager.instance.encounter[14].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             return true;
         }
-        else if (map.randomObjectIndex[3] == checkIndex) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
+        else if (map.randomObjectIndex[3] == checkIndex && !EncounterManager.instance.encounter[15].isCleared) //몬스터01=0, 몬스터02, 몬스터03, 몬스터04, 물음표, 느낌표=5
         {
             return true;
         }
