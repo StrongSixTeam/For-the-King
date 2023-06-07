@@ -16,7 +16,7 @@ public class PortraitUI : MonoBehaviour
     void Update()
     {
         transform.position = cam.WorldToScreenPoint(Player.position + move);
-        if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Length > order))
+        if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Count > order))
         {
             if (!set)
             {
