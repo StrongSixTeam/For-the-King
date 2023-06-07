@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class AstsrPathfinding : MonoBehaviour
@@ -149,36 +150,38 @@ public class AstsrPathfinding : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) //왼쪽을 클릭하면
                 {
-                    if (endNode == null || !endNode.ispass || hexCursor[0].activeSelf || endNode.index == playerController[WhoseTurn].myHexNum)
+                    if (!EventSystem.current.IsPointerOverGameObject()) // 포인터의 위치가 UI가 아니라면
                     {
-                        return;
-                    }
-
-                    //이동
-                    playerController[WhoseTurn].StartMove(finalNodeList);
-
-                    //번호 없앰
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (showMoveCount[i].activeSelf)
+                        if (endNode == null || !endNode.ispass || hexCursor[0].activeSelf || endNode.index == playerController[WhoseTurn].myHexNum)
                         {
-                            showMoveCount[i].SetActive(false);
+                            return;
                         }
-                    }
 
-                    if (canMoveCount - (finalNodeList.Count - 1) > 0)
-                    {
-                        //Debug.Log(canMoveCount + "칸 이동할수있는데 " + (finalNodeList.Count - 1) + "이동 | 남은수 : " + (canMoveCount - (finalNodeList.Count - 1)));
-                        canMoveCount -= (finalNodeList.Count - 1);
-                    }
-                    else
-                    {
-                        //Debug.Log("전부 소비! 턴 종료");
-                        canMoveCount -= (finalNodeList.Count - 1);
-                        ismovingTurn = false;
-                    }
-                    isPathfinding = false;
+                        //이동
+                        playerController[WhoseTurn].StartMove(finalNodeList);
 
+                        //번호 없앰
+                        for (int i = 0; i < 10; i++)
+                        {
+                            if (showMoveCount[i].activeSelf)
+                            {
+                                showMoveCount[i].SetActive(false);
+                            }
+                        }
+
+                        if (canMoveCount - (finalNodeList.Count - 1) > 0)
+                        {
+                            //Debug.Log(canMoveCount + "칸 이동할수있는데 " + (finalNodeList.Count - 1) + "이동 | 남은수 : " + (canMoveCount - (finalNodeList.Count - 1)));
+                            canMoveCount -= (finalNodeList.Count - 1);
+                        }
+                        else
+                        {
+                            //Debug.Log("전부 소비! 턴 종료");
+                            canMoveCount -= (finalNodeList.Count - 1);
+                            ismovingTurn = false;
+                        }
+                        isPathfinding = false;
+                    }
                 }
             }
 
