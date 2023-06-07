@@ -86,13 +86,13 @@ public class QuickSlotController1 : MonoBehaviour
                 {
                     Used used = InventoryController1.instance.playerInventory[playernum][j] as Used;
                     InventoryController1.instance.itemCount[playernum][j]--;
-                    if (GameManager.instance.playerStats[playernum].nowHp + used.recoveryStat > GameManager.instance.playerStats[playernum].maxHp)
+                    if (GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp)
                     {
-                        GameManager.instance.playerStats[playernum].nowHp = GameManager.instance.playerStats[playernum].maxHp;
+                        GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp;
                     }
                     else
                     {
-                        GameManager.instance.playerStats[playernum].nowHp += used.recoveryStat;
+                        GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
                     }
                     if (InventoryController1.instance.itemCount[playernum][j] < 1)
                     {
