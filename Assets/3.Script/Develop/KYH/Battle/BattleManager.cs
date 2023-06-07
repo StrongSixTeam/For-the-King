@@ -64,7 +64,7 @@ public class BattleManager : MonoBehaviour
         enemySlotUI.GetComponent<CloneSlot>().playerTurn = slotUI.GetComponent<CloneSlot>().playerTurn;
 
         if (isPlayer)
-        {        
+        {
             BattleUI.SetActive(true);
             if (!isAgain)
             {
@@ -91,8 +91,8 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
-            battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
-            target.transform.GetChild(2).gameObject.SetActive(true);
+            //battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
+            //target.transform.GetChild(2).gameObject.SetActive(true);
         }
 
         if (battleLoader.Players.Count == 0 && !isEnd)
@@ -160,8 +160,8 @@ public class BattleManager : MonoBehaviour
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Players[rnd].transform);
             target = battleLoader.Players[rnd];
 
-            battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
-            target.transform.GetChild(2).gameObject.SetActive(true);
+            //battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
+            //target.transform.GetChild(2).gameObject.SetActive(true);
             EnemyAttack();
         }
     }
@@ -346,7 +346,7 @@ public class BattleManager : MonoBehaviour
             EndCheck();
         }
 
-        for(int i = 0; i < dieObj.Count; i++)
+        for (int i = 0; i < dieObj.Count; i++)
         {
             Destroy(dieObj[i]);
         }
@@ -366,7 +366,10 @@ public class BattleManager : MonoBehaviour
         if (!isCave)
         {
             FindObjectOfType<MultiCamera>().ToMain();
-            GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+            if (GameManager.instance.MainPlayer != null)
+            {
+                GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
+            }
         }
 
         gameObject.SetActive(false);

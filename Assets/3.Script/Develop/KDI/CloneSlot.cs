@@ -16,7 +16,7 @@ public class CloneSlot : MonoBehaviour
 
     public bool hasLimit = true;
     public bool runOut = false;
-    public bool playerTurn = true; 
+    public bool playerTurn = true;
     public void Initialized()
     {
         isSuccess = false;
@@ -296,7 +296,7 @@ public class CloneSlot : MonoBehaviour
                 {
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(false);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(true);
-                    for (int i =0; i < GameManager.instance.Players.Count; i++)
+                    for (int i = 0; i < GameManager.instance.Players.Count; i++)
                     {
                         GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= 5;
                     }
@@ -339,8 +339,15 @@ public class CloneSlot : MonoBehaviour
                     //        break;
                     //    }
                     //}
-                    Destroy(FindObjectOfType<BattleLoader>().Players[FindObjectOfType<BattleOrderManager>().turn]);
-                    FindObjectOfType<BattleLoader>().Players.RemoveAt(FindObjectOfType<BattleOrderManager>().turn);
+                    Destroy(FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn]);
+
+                    for (int i = 0; i < FindObjectOfType<BattleLoader>().Players.Count; i++)
+                    {
+                        if (FindObjectOfType<BattleLoader>().Players[i].Equals(FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn]))
+                        {
+                            FindObjectOfType<BattleLoader>().Players.RemoveAt(i);
+                        }
+                    }
 
                     FindObjectOfType<BattleOrderManager>().turn -= 1;
 
