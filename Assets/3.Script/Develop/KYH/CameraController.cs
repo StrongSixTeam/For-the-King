@@ -106,7 +106,7 @@ public class CameraController : MonoBehaviour
 
         while (Vector3.Distance(transform.position, targetPos) > 0.01)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPos, 0.01f);
+            transform.position = Vector3.Lerp(transform.position, targetPos, 0.02f);
             yield return null;
 
             if (GameManager.instance.MainPlayer.transform.position + defaultPos != targetPos && isPlayer)
