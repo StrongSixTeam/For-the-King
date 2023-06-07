@@ -629,7 +629,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<MapObjectCreator>().UseObject(5);
         encounter[17].isCleared = true;
         GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
-        OffMovingUIs();
-        
+        GameManager.instance.DeactivePortrait();
+
     }
 }
