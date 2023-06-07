@@ -19,7 +19,7 @@ public class PortraitController : MonoBehaviour
     {
         if (GameManager.instance.isSettingDone)
         {
-            count = GameManager.instance.Players.Count;
+            count = GameManager.instance.Players.Count - GameManager.instance.dieCnt;
             CheckPositions();
         }
     }

@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject mainCam;
 
-    private int playerCnt;
+    public int dieCnt = 0;
 
     private void Start()
     {
@@ -72,8 +72,6 @@ public class GameManager : MonoBehaviour
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
         glowControl = FindObjectOfType<GlowControl>();
-
-        playerCnt = PlayerPrefs.GetInt("PlayerCnt");
     }
     public void Setting()
     {
@@ -137,23 +135,40 @@ public class GameManager : MonoBehaviour
         }
         if (MainPlayer == null && Players.Count > 0 && mainCam.activeSelf && isSettingDone)
         {
-            nextTurn -= 1;
-            if(nextTurn < 0)
-            {
-                nextTurn = Players.Count - 1;
-            }
-
-            MainPlayer = Players[nextTurn];
-
             TurnChange();
         }
-        if(Players.Count != playerCnt && isSettingDone)
+        if (isSettingDone && Players[nextTurn] == null && Players.Count > 0 && mainCam.activeSelf)
         {
-            playerCnt = Players.Count;
-            nextTurn -= 1;
+            if (Players.Count == 2)
+            {
+                if (nextTurn == 0)
+                {
+                    nextTurn = 1;
+                }
+                else if (nextTurn == 1)
+                {
+                    nextTurn = 0;
+                }
+            }
+            else if(Players.Count == 3)
+            {
+                if (nextTurn == 0)
+                {
+                    nextTurn = 1;
+                }
+                else if (nextTurn == 1)
+                {
+                    nextTurn = 2;
+                }
+                else if (nextTurn == 2)
+                {
+                    nextTurn = 0;
+                }
+            }
+
         }
 
-        if (currentLife <= 0 && Players.Count == 0 && mainCam.activeSelf)
+        if (currentLife <= 0 && Players.Count == dieCnt && mainCam.activeSelf)
         {
             isDie = true;
         }
@@ -177,7 +192,6 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
-        MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
         glowControl.SetTurnGlow(nextTurn);
 
         if (nextTurn == 0 && !isFisrtTurn)
@@ -200,6 +214,7 @@ public class GameManager : MonoBehaviour
         isTrunChange = true;
 
         MainPlayer = Players[nextTurn];
+
         playerController = MainPlayer.GetComponent<PlayerController_Jin>();
 
         cameraController.PlayerChange();
