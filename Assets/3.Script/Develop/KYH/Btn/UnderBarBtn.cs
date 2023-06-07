@@ -43,9 +43,12 @@ public class UnderBarBtn : MonoBehaviour
     public void GameStart()
     {
         PlayerNameSave();
-
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+        AudioManager.instance.BGMPlayer.Play();
         SceneManager.LoadScene("SampleScene");
     }
+
     public void Back()
     {
         StartCoroutine(CameraMove_co());
