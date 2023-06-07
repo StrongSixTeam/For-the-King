@@ -13,6 +13,7 @@ public class PlayerController_Jin : MonoBehaviour
     private CloudBox cloudBox;
 
     private AstsrPathfinding astsrPathfinding;
+    GlowControl glowControl;
 
     public bool isRun;
 
@@ -32,6 +33,7 @@ public class PlayerController_Jin : MonoBehaviour
         cloudBox = FindObjectOfType<CloudBox>();
         cloudBox.CloudActiveFalse(myHexNum);
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
+        glowControl = FindObjectOfType<GlowControl>();
     }
 
 
@@ -68,6 +70,7 @@ public class PlayerController_Jin : MonoBehaviour
             {
                 quest.PopUp("WoodSmoke");
                 quest.questTurn = 3;
+                glowControl.SetQuestObjectGlow(0, false);
             }
             else
             {
@@ -96,6 +99,7 @@ public class PlayerController_Jin : MonoBehaviour
             {
                 quest.PopUp("Farid");
                 quest.questTurn = 10;
+                glowControl.SetQuestObjectGlow(4, false);
             }
             else
             {
