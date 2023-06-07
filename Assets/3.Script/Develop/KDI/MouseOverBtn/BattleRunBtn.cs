@@ -35,7 +35,7 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
         SlotController.instance.maxSlotCount = 2;
         SlotController.instance.limit = 2;
         SlotController.instance.type = SlotController.Type.move;
-        SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().speed;
+        SlotController.instance.percent = GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().speed;
         slot.SetActive(true);
         icons[0].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[1].transform.localScale = new Vector3(1f, 1f, 1f);
