@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2777,7 +2777,7 @@ MonoBehaviour:
   isDie: 0
   Ending: {fileID: 337778991}
   BadEnding: {fileID: 687788432}
-  mainCam: {fileID: 0}
+  mainCam: {fileID: 963194225}
 --- !u!4 &514105501
 Transform:
   m_ObjectHideFlags: 0
@@ -3224,6 +3224,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 354772817}
     m_Modifications:
+    - target: {fileID: 213474777988108180, guid: cfa53dd38f4786d41adf16aebe3fe8ff, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: f39e51c20811d6e4ebae083076abfa6a, type: 3}
     - target: {fileID: 983400326143578956, guid: cfa53dd38f4786d41adf16aebe3fe8ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -28466,6 +28470,7 @@ GameObject:
   - component: {fileID: 5205587164788068599}
   - component: {fileID: 5205587164788068597}
   - component: {fileID: 5205587164788068593}
+  - component: {fileID: 5205587164788068595}
   m_Layer: 0
   m_Name: CaveCamera
   m_TagString: CaveCamera
@@ -28473,6 +28478,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!81 &5205587164788068595
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5205587164788068594}
+  m_Enabled: 0
 --- !u!114 &5205587164788068597
 MonoBehaviour:
   m_ObjectHideFlags: 0

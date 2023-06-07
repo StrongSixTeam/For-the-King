@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class Ending : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
+
+
     //blackSmith, hunter, scholar
     [SerializeField] GameObject[] playerObj = new GameObject[3];
 
@@ -11,6 +14,8 @@ public class Ending : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         switch (PlayerPrefs.GetInt("PlayerCnt"))
         {
             case 1:
@@ -82,7 +87,30 @@ public class Ending : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            MouseInput();
+        }
+    }
+    private void MouseInput()
+    {
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), 100f);
 
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.GetComponent<Animator>() != null)
+            {
+                hits[i].transform.GetComponent<Animator>().SetBool("Battle", true);
+                hits[i].transform.GetComponent<Animator>().SetBool("Hit", true);
+                hits[i].transform.GetComponent<Animator>().SetBool("Die", true);
+                audioSource.Play();
+                return;
+            }
+        }
+    }
 
 
 

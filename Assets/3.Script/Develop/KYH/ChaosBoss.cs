@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class ChaosBoss : MonoBehaviour
 {
-    [SerializeField] ChaosControl chaosControl;
-
-    private void Start()
-    {
-        chaosControl = FindObjectOfType<ChaosControl>();
-    }
-
     private void OnDisable()
     {
         EncounterManager.instance.encounter[3].isCleared = true;
@@ -23,11 +16,10 @@ public class ChaosBoss : MonoBehaviour
             FindObjectOfType<QuestManager>().isChaos = false;
 
             FindObjectOfType<GlowControl>().SetQuestObjectGlow(2, false);
-
-            chaosControl.RemoveChaos(false);
+            FindObjectOfType<ChaosControl>().RemoveChaos(false);
 
         }
-        else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && FindObjectOfType<QuestManager>().questClearCnt < 2)
+        else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2)
         {
             FindObjectOfType<QuestManager>().isChaos = true;
         }

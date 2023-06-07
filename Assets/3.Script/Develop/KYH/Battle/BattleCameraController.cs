@@ -14,12 +14,14 @@ public class BattleCameraController : MonoBehaviour
     [SerializeField] private Vector3 lookPos;
 
     [SerializeField] private BattleManager battleManager;
+    AudioListener audioListener;
 
     private Vector3 defaultPos;
     private Vector3 defaultAngle;
 
     private void OnEnable()
     {
+        audioListener = transform.GetComponent<AudioListener>();
         if (gameObject.CompareTag("BattleCamera"))
         {
             targetPosP = new Vector3(-109, 3.5f, -17.8f);
@@ -38,6 +40,7 @@ public class BattleCameraController : MonoBehaviour
 
         transform.position = defaultPos;
         transform.eulerAngles = defaultAngle;
+        audioListener.enabled = true;
     }
     public void PlayerTurnCamera()
     {
@@ -75,5 +78,10 @@ public class BattleCameraController : MonoBehaviour
         }
         transform.position = targetPosE;
         yield break;
+    }
+
+    private void OnDisable()
+    {
+        audioListener.enabled = false;
     }
 }

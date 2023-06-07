@@ -6,18 +6,12 @@ using UnityEngine.SceneManagement;
 public class Corpse : MonoBehaviour
 {
     [SerializeField] private CaveBattleBox CaveEnemy02;
-    [SerializeField] ChaosControl chaosControl;
 
     private bool isEnd = false;
 
     private void Awake()
     {
         CaveEnemy02 = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>();
-    }
-
-    private void Start()
-    {
-        chaosControl = FindObjectOfType<ChaosControl>();
     }
     private void Update()
     {
@@ -34,8 +28,11 @@ public class Corpse : MonoBehaviour
         if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && isEnd)
         {
             FindObjectOfType<GlowControl>().SetQuestObjectGlow(5, false);
-            chaosControl.RemoveChaos(false);
+            FindObjectOfType<ChaosControl>().RemoveChaos(false);
             GameManager.instance.isClear = true;
         }
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+        AudioManager.instance.BGMPlayer.Play();
     }
 }

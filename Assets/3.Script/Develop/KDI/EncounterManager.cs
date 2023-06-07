@@ -418,6 +418,8 @@ public class EncounterManager : MonoBehaviour
         MultiCamera.instance.ToCave();
         astsrPathfinding.ShowRedHexStop();
         GameManager.instance.isBlock = true;
+
+        
     }
 
     public void BattleBtn() //배틀씬으로 이동
@@ -430,6 +432,9 @@ public class EncounterManager : MonoBehaviour
 
         astsrPathfinding.ShowRedHexStop();
         GameManager.instance.isBlock = true;
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[2].clip;
+        AudioManager.instance.BGMPlayer.Play();
         //전투 끝났을때 다시 true로 돌려줘야함
     }
 
@@ -630,7 +635,7 @@ public class EncounterManager : MonoBehaviour
         FindObjectOfType<MapObjectCreator>().UseObject(5);
         encounter[17].isCleared = true;
         GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
-        GameManager.instance.DeactivePortrait();
-
+        OffMovingUIs();
+        
     }
 }

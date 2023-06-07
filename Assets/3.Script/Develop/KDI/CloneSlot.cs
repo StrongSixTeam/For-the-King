@@ -205,8 +205,8 @@ public class CloneSlot : MonoBehaviour
             {
                 GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
                 EncounterManager.instance.encounter[16].isCleared = true;
-                GameManager.instance.DeactivePortrait();
-                Invoke("OffAll", 1f);
+                EncounterManager.instance.OffMovingUIs();
+                Invoke("OffAll", 1f); //≤Ù±‚
                 if (SlotController.instance.success == 3) //º∫∞¯¿Ã∏È
                 {
                     //æ∆¿Ã≈€ «œ≥™ »πµÊ

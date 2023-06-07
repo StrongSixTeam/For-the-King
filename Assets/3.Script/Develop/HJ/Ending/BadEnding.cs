@@ -90,12 +90,11 @@ public class BadEnding : MonoBehaviour
     }
 
 
-
-
-
-
     public void LobbySceneButton()
     {
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[0].clip;
+        AudioManager.instance.BGMPlayer.Play();
         SceneManager.LoadScene("LobbyScene");
     }
 

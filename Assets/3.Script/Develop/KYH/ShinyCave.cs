@@ -5,15 +5,10 @@ using UnityEngine;
 public class ShinyCave : MonoBehaviour
 {
     [SerializeField] private CaveBattleBox CaveEnemy01;
-    [SerializeField] ChaosControl chaosControl;
 
     private void Awake()
     {
         CaveEnemy01 = GameObject.Find("CaveEnemy01").GetComponent<CaveBattleBox>();
-    }
-    private void Start()
-    {
-        chaosControl = FindObjectOfType<ChaosControl>();
     }
     private void Update()
     {
@@ -35,7 +30,10 @@ public class ShinyCave : MonoBehaviour
             FindObjectOfType<QuestManager>().isShinyCave = true;
 
             FindObjectOfType<GlowControl>().SetQuestObjectGlow(3, false);
-            chaosControl.RemoveChaos(false);
+            FindObjectOfType<ChaosControl>().RemoveChaos(false);
         }
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+        AudioManager.instance.BGMPlayer.Play();
     }
 }
