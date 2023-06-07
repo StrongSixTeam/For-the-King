@@ -83,23 +83,32 @@ public class InventoryController1 : MonoBehaviour
             playerEquip.Add(new Item[5]);
             itemCount.Add(new List<int>());
         }
-    }
-
-    private void Start()
-    {
-        CreatePoolItem();
         poolPos = new Vector3(0, 0, -100);
         topListPos = new Vector3(0, 105);
+        CreatePoolItem();
         ListPos = topListPos;
-        Debug.Log("스타트");
+        Debug.Log("어웨이크");
     }
+
+    /*private void Start()
+    {
+    }
+
+    private void SetItemList()
+    {
+        
+    }*/
 
     private void CreatePoolItem() // 오브젝트 풀링할 리스트 초기화
     {
+        ListPos = topListPos;
         for(int i = 0; i < allItemArr.EatItem.Length; i++)
         {
             item = Instantiate(itemlistPrebs, poolPos, Quaternion.identity);
             item.SetActive(false);
+            item.transform.SetParent(this.transform);
+            item.transform.localPosition = ListPos;
+            ListPos.y -= 25f;
             poolItemQueue.Enqueue(item);
         }
     }
@@ -131,61 +140,12 @@ public class InventoryController1 : MonoBehaviour
         }
         
     }
-    /*public void ItemListStack(Item putitem)
-    {
-        if (poolItem.Count != 0)
-        {
-            item = poolItemList[0];
-            poolItemList.RemoveAt(0);
-        }
-        else
-        {
-            item = Instantiate(itemlistPrebs, poolPos, Quaternion.identity);
-            Debug.Log(this.transform.childCount);
-            item.transform.SetParent(this.transform);
-            Debug.Log(this.transform.childCount);
-            switch (putitem.itemType)
-            {
-                case ItemType.무기:
-                    Weapon weapon = putitem as Weapon;
-                    item.transform.tag = weapon.equipType.ToString();
-                    item.transform.GetChild(0).GetComponent<Button>().tag = putitem.itemType.ToString();
-                    break;
-                case ItemType.방어구:
-                    Armor armor = putitem as Armor;
-                    armor = putitem as Armor;
-                    item.transform.tag = armor.equipType.ToString();
-                    item.transform.GetChild(0).GetComponent<Button>().tag = putitem.itemType.ToString();
-                    break;
-                case ItemType.허브:
-                    item.transform.tag = putitem.itemType.ToString();
-                    item.transform.GetChild(0).GetComponent<Button>().tag = putitem.itemType.ToString();
-                    break;
-                case ItemType.스크롤:
-                    item.transform.tag = putitem.itemType.ToString();
-                    item.transform.GetChild(0).GetComponent<Button>().tag = putitem.itemType.ToString();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        item.transform.localPosition = ListPos;
-        ListPos.y -= 25f;
-        //Debug.Log(ListPos.y);
-
-        item.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = putitem.itemImage;
-        item.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = putitem.itemName;
-
-    }*/
-
     public void PoolItemListStack(Item putitem)         // 오브젝트 풀링 함수
     {
         if (poolItemQueue.Count < 1) return;
         GameObject newitem = poolItemQueue.Dequeue();
         //Debug.Log(this.transform.childCount);
-        newitem.transform.SetParent(this.transform);
+        //newitem.transform.SetParent(this.transform);
         //Debug.Log(this.transform.childCount);
         switch (putitem.itemType)
         {
@@ -213,8 +173,8 @@ public class InventoryController1 : MonoBehaviour
                 break;
         }
 
-        newitem.transform.localPosition = ListPos;
-        ListPos.y -= 25f;
+        //newitem.transform.localPosition = ListPos;
+        //ListPos.y -= 25f;
         //Debug.Log(ListPos.y);
 
         newitem.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = putitem.itemImage;
