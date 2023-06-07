@@ -429,6 +429,9 @@ public class EncounterManager : MonoBehaviour
 
         astsrPathfinding.ShowRedHexStop();
         GameManager.instance.isBlock = true;
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[2].clip;
+        AudioManager.instance.BGMPlayer.Play();
         //전투 끝났을때 다시 true로 돌려줘야함
     }
 
