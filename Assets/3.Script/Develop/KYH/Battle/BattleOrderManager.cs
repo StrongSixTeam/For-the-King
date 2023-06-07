@@ -88,7 +88,7 @@ public class BattleOrderManager : MonoBehaviour
             {
                 portrait[i - turn].sprite = Order[j].GetComponent<PlayerStat>().portrait;
                 background[i - turn].sprite = PBground;
-                glowControl.SetTurnGlow(turn);
+                glowControl.SetTurnGlow(turn); //현재 턴인 플레이어를 가리켜야 합니다 두목님
             }
             else
             {
