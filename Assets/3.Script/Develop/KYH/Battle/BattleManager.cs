@@ -86,11 +86,18 @@ public class BattleManager : MonoBehaviour
                     if (hit.transform.gameObject == battleLoader.Enemys[i] && Input.GetMouseButtonDown(0))
                     {
                         battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Enemys[i].transform);
+                        GameObject tar = target;
                         target = battleLoader.Enemys[i];
+
+                        if (tar.transform.GetChild(0).gameObject != target.transform.GetChild(0).gameObject)
+                        {
+                            tar.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+
                     }
+                    target.transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
-            target.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         if (battleLoader.Players.Count == 0 && !isEnd)
@@ -335,14 +342,23 @@ public class BattleManager : MonoBehaviour
     {
         Text txt = Instantiate(Get, CurrnetCam.WorldToScreenPoint(battleLoader.Players[itemInput.itemTurn].transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
         txt.transform.SetParent(GameObject.Find("Canvas").transform);
-        txt.text = "+" + battleLoader.items[0].itemName;
 
         InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), string.Format("Player{0}", battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order));
 
-        itemInput.Get(battleLoader.items[0]);
-        battleLoader.items.RemoveAt(0);
-
         if (battleLoader.items.Count > 0)
+        {
+            txt.text = "+" + battleLoader.items[0].itemName;
+            itemInput.Get(battleLoader.items[0]);
+            battleLoader.items.RemoveAt(0);
+        }
+        else
+        {
+            txt.text = "+" + battleLoader.Gold + "G";
+            GameManager.instance.Players[battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().coins += battleLoader.Gold;
+            battleLoader.Gold = 0;
+        }
+
+        if (battleLoader.items.Count > 0 || battleLoader.Gold > 0)
         {
             Pass();
         }
