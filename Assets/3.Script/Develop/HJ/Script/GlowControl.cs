@@ -22,6 +22,16 @@ public class GlowControl : MonoBehaviour
 
         switch (player)
         {
+            case -1: //¸ðµÎ ²ô±â
+                for (int i = 0; i < 3; i++)
+                {
+                    if (playerGlowBox[i].activeSelf)
+                    {
+                        playerGlowBox[i].SetActive(false);
+                    }
+                }
+                break;
+
             case 0:
                 for (int i = 1; i < 3; i++)
                 {

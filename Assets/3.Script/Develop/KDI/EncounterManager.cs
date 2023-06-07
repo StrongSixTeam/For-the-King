@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class EncounterManager : MonoBehaviour
 {
     public static EncounterManager instance = null;
+    [SerializeField] GameObject Get;
 
+    public bool enemyButtonActive = true;
     public Text txtName;
     public Text txtContext;
     public Text txtExtraContext;
@@ -71,6 +73,7 @@ public class EncounterManager : MonoBehaviour
     }
     public void ActiveEnemies(int n)
     {
+        enemyButtonActive = true;
         level.SetActive(true);
         level.transform.GetChild(0).GetComponent<Text>().text = enemies[n].level.ToString();
         number = -1;
@@ -145,17 +148,7 @@ public class EncounterManager : MonoBehaviour
         }
         else if (encounter[n].type == EncounterContent.Type.enemy)
         {
-            try
-            {
-                FindObjectOfType<EnemyBattleBtn>().active = true;
-                FindObjectOfType<EnemyExitBtn>().active = true;
-                FindObjectOfType<EnemyRunBtn>().active = true;
-
-            }
-            catch(System.Exception ex)
-            {
-                Debug.Log(ex);
-            }
+            enemyButtonActive = true;
             level.SetActive(true);
             level.transform.GetChild(0).GetComponent<Text>().text = encounter[n].level.ToString();
             btns[2].transform.GetChild(0).GetComponent<Button>().interactable = true;
@@ -256,6 +249,10 @@ public class EncounterManager : MonoBehaviour
         btns[n].SetActive(true);
         for (int i = 0; i < btns[n].transform.childCount; i++)
         {
+            if (btns[n].transform.GetChild(i).GetComponent<Button>() != null)
+            {
+                btns[n].transform.GetChild(i).GetComponent<Button>().interactable = true;
+            }
             if (n != 5)
             {
                 btns[n].transform.GetChild(i).GetComponent<Image>().sprite = OriginalBtn;
@@ -365,9 +362,7 @@ public class EncounterManager : MonoBehaviour
         btns[2].transform.GetChild(0).GetComponent<Button>().interactable = false;
         btns[2].transform.GetChild(2).GetComponent<Button>().interactable = false;
         btns[2].transform.GetChild(1).GetComponent<Button>().interactable = false;
-        FindObjectOfType<EnemyBattleBtn>().active = false;
-        FindObjectOfType<EnemyExitBtn>().active = false;
-        FindObjectOfType<EnemyRunBtn>().active = false;
+        enemyButtonActive = false;
         astsrPathfinding.ShowRedHexStop();
     }
 
@@ -595,6 +590,30 @@ public class EncounterManager : MonoBehaviour
     public void GetDeadItems() //물음표
     {
         //아이템 얻기
+        //Text txt = Instantiate(Get, Camera.current.WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
+        //txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        //txt.text = "+" + FindObjectOfType<ItemInputTest1>().EatItem[6].itemName;
+
+        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        {
+            if (GameManager.instance.MainPlayer == GameManager.instance.Players[i])
+            {
+                if (i == 0)
+                {
+                    InventoryController1.instance.playerNum = PlayerNum.Player0;
+                }
+                else if (i == 1)
+                {
+                    InventoryController1.instance.playerNum = PlayerNum.Player1;
+                }
+                else if (i == 2)
+                {
+                    InventoryController1.instance.playerNum = PlayerNum.Player2;
+                }
+            }
+        }
+        FindObjectOfType<ItemInputTest1>().Get(FindObjectOfType<ItemInputTest1>().EatItem[6]);
+
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         encounter[number].isCleared = true;

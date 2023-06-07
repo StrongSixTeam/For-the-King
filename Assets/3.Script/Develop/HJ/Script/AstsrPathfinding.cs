@@ -188,6 +188,7 @@ public class AstsrPathfinding : MonoBehaviour
                 isPathfinding = true;
                 ismovingTurn = true;
                 canMoveCount = SlotController.instance.success;
+                canMoveCount = 9; //테스트용
                 WhoseTurn = GameManager.instance.nextTurn - 1;
                 if (WhoseTurn < 0)
                 {
