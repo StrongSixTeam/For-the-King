@@ -58,6 +58,7 @@ public class QuickSlotController1 : MonoBehaviour
             {
                 itemSlotImg[j].GetComponent<Image>().sprite = quickSlot[playernum][j].itemImage;
                 itemCntTxt[j].text = InventoryController1.instance.itemCount[playernum][i].ToString();
+                if (itemCntTxt[j].text.Equals("0")) itemCntTxt[j].text = "";
             }
             else continue;
         }
@@ -83,7 +84,16 @@ public class QuickSlotController1 : MonoBehaviour
                 j = InventoryController1.instance.playerInventory[playernum].IndexOf(quickSlot[playernum][i]);
                 if (j != -1)
                 {
+                    Used used = InventoryController1.instance.playerInventory[playernum][j] as Used;
                     InventoryController1.instance.itemCount[playernum][j]--;
+                    if (GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp)
+                    {
+                        GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp;
+                    }
+                    else
+                    {
+                        GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
+                    }
                     if (InventoryController1.instance.itemCount[playernum][j] < 1)
                     {
                         InventoryController1.instance.itemCount[playernum].RemoveAt(j);
@@ -93,7 +103,7 @@ public class QuickSlotController1 : MonoBehaviour
                         for(int a = 0; a < itemSlotImg.Length; a++)
                         {
                             itemSlotImg[a].sprite = blank;
-                            itemCntTxt[a].text = 0.ToString();
+                            itemCntTxt[a].text = "";
                         }
                     }
                 }

@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject[] icons;
     [SerializeField] private GameObject battleRunBtn;
     [SerializeField] private GameObject battleFightBtn;
     private BattleOrderManager battleOrderManager;
+    [SerializeField] private Text infoText;
 
     public GameObject Accuracy;
     public GameObject Damage;
@@ -21,6 +23,7 @@ public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        infoText.text = "소지품 살펴보기";
         if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
         {
             FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
@@ -43,8 +46,4 @@ public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         icons[1].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
-    }
 }

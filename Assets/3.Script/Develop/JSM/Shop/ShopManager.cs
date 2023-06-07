@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class ShopManager : MonoBehaviour
     public List<Item> shopItemList = new List<Item>();
     public GameObject ShopItemSelectUI;
     public List<int> shopItemCount = new List<int>();
+    public Text shopCoinText;
     Vector3 poolPos;
     Vector3 topPos;
     Vector3 listPos;
@@ -65,7 +67,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    void ShopSetting()
+    public void ShopSetting()
     {
         ShopReset();
         for (int i = 0; i < shopItemList.Count; i++)
@@ -104,13 +106,38 @@ public class ShopManager : MonoBehaviour
             transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().text = shopItemList[i].itemName;
             transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text = shopItemList[i].price.ToString();
             transform.GetChild(i).transform.GetChild(0).GetChild(3).GetComponent<Text>().text = shopItemList[i].stock.ToString();
+            shopCoinText.text = GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().coins.ToString();
             transform.GetChild(i).transform.gameObject.SetActive(true);
+            
+        }
+        ComparePrice();
+    }
+
+    private void ComparePrice()
+    {
+        for(int i = 0; i < shopItemList.Count; i++)
+        {
+            if(GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().coins 
+                < int.Parse(transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text))
+            {
+                transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.gray;
+                transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().color = Color.gray;
+                transform.GetChild(i).GetChild(0).GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.white;
+                transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().color = Color.white;
+                transform.GetChild(i).GetChild(0).GetComponent<Button>().interactable = true;
+            }
         }
     }
+
     public void ShowShopUI()
     {
         GameObject Click = EventSystem.current.currentSelectedGameObject;
         ItemType itemtype = (ItemType)System.Enum.Parse(typeof(ItemType), Click.transform.tag);
+        InventoryController1.instance.itemName = Click.transform.GetChild(1).GetComponent<Text>().text;
         point = Input.mousePosition;
         ShopItemSelectUI.transform.position = new Vector3(point.x + 95f, point.y - 77.5f, 0f);
 
@@ -127,10 +154,8 @@ public class ShopManager : MonoBehaviour
                     InventoryController1.instance.actImage;
                 ShopItemSelectUI.transform.GetChild(1).GetChild(0).GetComponentInChildren<Image>().sprite =
                     InventoryController1.instance.actImage;
-                ShopItemSelectUI.transform.GetChild(1).GetChild(1).GetComponentInChildren<Text>().text =
-                    "<color=#FFFFFF>구입 및 착용</color>";
-                ShopItemSelectUI.transform.GetChild(0).GetChild(1).GetComponentInChildren<Text>().text =
-                    "<color=#FFFFFF>구입</color>";
+                ShopItemSelectUI.transform.GetChild(1).GetChild(1).GetComponentInChildren<Text>().color = Color.white;
+                ShopItemSelectUI.transform.GetChild(0).GetChild(1).GetComponentInChildren<Text>().color = Color.white;
 
                 break;
             case ItemType.스크롤:
@@ -147,11 +172,17 @@ public class ShopManager : MonoBehaviour
 
     }
 
+    public void ExitShop()
+    {
+        transform.parent.parent.parent.gameObject.SetActive(false);
+    }
+
     public void QuitShopUI()
     {
         InventoryController1.instance.isEquip = false;
         InventoryController1.instance.isUsed = false;
         ShopItemSelectUI.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite = InventoryController1.instance.actImage;
+        ShopItemSelectUI.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = InventoryController1.instance.actImage;
         ShopItemSelectUI.gameObject.SetActive(false);
         //InventoryController1.instance.itemName = "";
     }
@@ -165,6 +196,8 @@ public class ShopManager : MonoBehaviour
             if (shopItemList[i].itemName.Equals(InventoryController1.instance.itemName))
             {
                 buyItem = shopItemList[i];
+                GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().coins -=
+                        buyItem.price;
                 if (shopItemList[i].stock <= 1) // 상점에서 마지막 하나 남은 아이템을 샀을 경우
                 {
                     shopItemList.RemoveAt(i);
