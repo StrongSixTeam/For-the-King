@@ -26,7 +26,7 @@ public class LobbyBtn : MonoBehaviour
         
         while(Vector3.Distance(MainCam.transform.position, MoveCamPos) > 0.01f)
         {
-            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.01f);
+            MainCam.transform.position = Vector3.Lerp(MainCam.transform.position, MoveCamPos, 0.03f);
             yield return null;
         }
         MainCam.transform.position = MoveCamPos;
