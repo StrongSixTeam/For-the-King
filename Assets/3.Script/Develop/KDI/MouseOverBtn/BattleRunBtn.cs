@@ -10,6 +10,7 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private GameObject[] icons;
     private BattleOrderManager battleOrderManager;
     [SerializeField] private GameObject battleFightBtn;
+    [SerializeField] private Text infoText;
 
     public GameObject Accuracy;
     public GameObject Damage;
@@ -21,6 +22,7 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        infoText.text = "µµ¸Á°¡±â";
         if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
         {
             FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;

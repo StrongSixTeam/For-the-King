@@ -10,6 +10,7 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private GameObject[] icons;
     private BattleOrderManager battleOrderManager;
     [SerializeField] private GameObject battleRunBtn;
+    [SerializeField] private Text infoText;
 
     public GameObject Accuracy;
     public GameObject Damage;
@@ -22,6 +23,7 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     private void Start()
     {
+        infoText.text = "일반 공격";
         slot.GetComponent<CloneSlot>().runOut = false;
         SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
         SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
@@ -50,6 +52,7 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     public void SetText()
     {
+        infoText.text = "일반 공격";
         slot.GetComponent<CloneSlot>().runOut = false;
         SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
         SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
