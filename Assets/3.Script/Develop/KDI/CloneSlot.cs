@@ -209,6 +209,25 @@ public class CloneSlot : MonoBehaviour
                 if (SlotController.instance.success == 3) //성공이면
                 {
                     //아이템 하나 획득
+                    for (int i = 0; i < GameManager.instance.Players.Length; i++)
+                    {
+                        if (GameManager.instance.MainPlayer == GameManager.instance.Players[i])
+                        {
+                            if (i == 0)
+                            {
+                                InventoryController1.instance.playerNum = PlayerNum.Player0;
+                            }
+                            else if (i == 1)
+                            {
+                                InventoryController1.instance.playerNum = PlayerNum.Player1;
+                            }
+                            else if (i == 2)
+                            {
+                                InventoryController1.instance.playerNum = PlayerNum.Player2;
+                            }
+                        }
+                    }
+                    FindObjectOfType<ItemInputTest1>().Get(FindObjectOfType<ItemInputTest1>().EatItem[3]);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(0).gameObject.SetActive(true);
                     highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).GetChild(1).gameObject.SetActive(false);
                     FindObjectOfType<MapObjectCreator>().UseObject(4);

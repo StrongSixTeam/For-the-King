@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EncounterManager : MonoBehaviour
 {
     public static EncounterManager instance = null;
+    [SerializeField] GameObject Get;
 
     public bool enemyButtonActive = true;
     public Text txtName;
@@ -589,6 +590,30 @@ public class EncounterManager : MonoBehaviour
     public void GetDeadItems() //물음표
     {
         //아이템 얻기
+        //Text txt = Instantiate(Get, Camera.current.WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
+        //txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        //txt.text = "+" + FindObjectOfType<ItemInputTest1>().EatItem[6].itemName;
+
+        for (int i = 0; i < GameManager.instance.Players.Length; i++)
+        {
+            if (GameManager.instance.MainPlayer == GameManager.instance.Players[i])
+            {
+                if (i == 0)
+                {
+                    InventoryController1.instance.playerNum = PlayerNum.Player0;
+                }
+                else if (i == 1)
+                {
+                    InventoryController1.instance.playerNum = PlayerNum.Player1;
+                }
+                else if (i == 2)
+                {
+                    InventoryController1.instance.playerNum = PlayerNum.Player2;
+                }
+            }
+        }
+        FindObjectOfType<ItemInputTest1>().Get(FindObjectOfType<ItemInputTest1>().EatItem[6]);
+
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
         encounter[number].isCleared = true;
