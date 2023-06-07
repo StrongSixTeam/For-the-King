@@ -6204,7 +6204,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 5362873400039459879}
   n: 0
-  active: 1
   highlight: {fileID: 0}
 --- !u!114 &8464645344851439057
 MonoBehaviour:
@@ -6532,7 +6531,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 5362873400039459879}
   n: 0
-  active: 1
 --- !u!114 &6500342610848852912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6883,7 +6881,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 5362873400039459879}
   n: 0
-  active: 1
 --- !u!114 &5406001124010810838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9299,6 +9296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a58798804b6a745a46705f1a5bd01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Get: {fileID: 1031178320570739929, guid: 0292b19c83b040a4cb71de723737692f, type: 3}
+  enemyButtonActive: 1
   txtName: {fileID: 8408971818436573819}
   txtContext: {fileID: 8408971816882997426}
   txtExtraContext: {fileID: 1665652979845618981}
