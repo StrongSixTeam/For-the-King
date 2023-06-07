@@ -97,17 +97,23 @@ public class BattleOrderManager : MonoBehaviour
                 glowControl.SetTurnGlow(-1);
             }
         }
-        if(Order[turn].GetComponent<PlayerStat>() != null)
+        for(int i = 0; i < battleLoader.Players.Count; i++)
+        {
+            battleLoader.Players[i].transform.GetChild(2).gameObject.SetActive(false);
+        }
+        for (int i = 0; i < battleLoader.Enemys.Count; i++)
+        {
+            battleLoader.Enemys[i].transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        if (Order[turn].GetComponent<PlayerStat>() != null)
         {
             glowControl.SetTurnGlow(Order[turn].GetComponent<PlayerStat>().order);
             Order[turn].transform.GetChild(2).gameObject.SetActive(true);
         }
         else
         {
-            for(int i = 0; i < battleLoader.Players.Count; i++)
-            {
-                battleLoader.Players[i].transform.GetChild(2).gameObject.SetActive(false);
-            }
+            Order[turn].transform.GetChild(0).gameObject.SetActive(true);
         }
     }
     public void TurnChange()
