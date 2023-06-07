@@ -91,8 +91,8 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
-            battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
-            target.transform.GetChild(2).gameObject.SetActive(true);
+            //battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
+            //target.transform.GetChild(2).gameObject.SetActive(true);
         }
 
         if (battleLoader.Players.Count == 0 && !isEnd)
@@ -160,8 +160,8 @@ public class BattleManager : MonoBehaviour
             battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Players[rnd].transform);
             target = battleLoader.Players[rnd];
 
-            battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
-            target.transform.GetChild(2).gameObject.SetActive(true);
+            //battleOrderManager.Order[battleOrderManager.turn].transform.GetChild(2).gameObject.SetActive(true);
+           // target.transform.GetChild(2).gameObject.SetActive(true);
             EnemyAttack();
         }
     }
