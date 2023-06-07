@@ -418,7 +418,6 @@ MonoBehaviour:
   - {fileID: 171052309}
   - {fileID: 1682622068}
   - {fileID: 928809337}
-  GodGlow: {fileID: 2081250377}
   mapObjectCreator: {fileID: 0}
   hexMapCreator: {fileID: 0}
 --- !u!4 &93886120
@@ -437,7 +436,6 @@ Transform:
   - {fileID: 171052310}
   - {fileID: 1682622069}
   - {fileID: 928809338}
-  - {fileID: 2081250378}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1248,7 +1246,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.8162321, b: 0.5424528, a: 1}
-  m_Intensity: 1.48
+  m_Intensity: 1.2
   m_Range: 4.23
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1341,7 +1339,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.8162321, b: 0.5424528, a: 1}
-  m_Intensity: 1.48
+  m_Intensity: 1.2
   m_Range: 4.23
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4857,7 +4855,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.8162321, b: 0.5424528, a: 1}
-  m_Intensity: 1.48
+  m_Intensity: 1.2
   m_Range: 4.23
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9660,7 +9658,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.8162321, b: 0.5424528, a: 1}
-  m_Intensity: 1.48
+  m_Intensity: 1.2
   m_Range: 4.23
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -11410,7 +11408,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.8162321, b: 0.5424528, a: 1}
-  m_Intensity: 1.48
+  m_Intensity: 1.2
   m_Range: 4.23
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -11739,6 +11737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444c8f30e6ff18f4289351cbccfe0ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Get: {fileID: 0}
   move:
   - {fileID: 21300000, guid: eabf456f0e09cdd45915437da8b6d6a0, type: 3}
   - {fileID: 21300000, guid: 13786dc1dbffe1641ae0920117e075fd, type: 3}
@@ -12631,99 +12630,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064454508}
   m_CullTransparentMesh: 1
---- !u!1 &2081250377
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2081250378}
-  - component: {fileID: 2081250379}
-  m_Layer: 0
-  m_Name: Point Light (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2081250378
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2081250377}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 93886120}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &2081250379
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2081250377}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 0.19215687, g: 0, b: 0.40784314, a: 1}
-  m_Intensity: 1.48
-  m_Range: 4.23
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 0
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!1 &2087022226
 GameObject:
   m_ObjectHideFlags: 0
@@ -20533,7 +20439,6 @@ MonoBehaviour:
   forestNodeCount: 0
   plainsNodeCount: 0
   mapObjectCreatorObj: {fileID: 4206465801367493472, guid: 5535b06e53ed20e459d2f3f223ac71c6, type: 3}
-  lowPolyWater: {fileID: 0}
   lowPolyWataer: {fileID: 0}
   cloudBoxObj: {fileID: 2298680988735807307, guid: 6e68ff20f9b545245926df50322c9f1f, type: 3}
 --- !u!4 &1790462393117720314
@@ -27446,6 +27351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444c8f30e6ff18f4289351cbccfe0ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Get: {fileID: 0}
   move:
   - {fileID: 21300000, guid: eabf456f0e09cdd45915437da8b6d6a0, type: 3}
   - {fileID: 21300000, guid: 13786dc1dbffe1641ae0920117e075fd, type: 3}
@@ -28580,7 +28486,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

@@ -44,7 +44,7 @@ public class EncounterManager : MonoBehaviour
         encounter[2].isShowed = false;
         encounter[3].isShowed = false;
         encounter[4].isShowed = false;
-        encounter[8].isShowed = false;
+        encounter[7].isShowed = false;
         for (int i = 0; i < encounter.Length; i++)
         {
             encounter[i].isCleared = false;
@@ -526,6 +526,9 @@ public class EncounterManager : MonoBehaviour
 
     public void SanctumFocusBtn()
     {
+        Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+        txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        txt.text = "+ 2 최대 집중력";
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
@@ -536,6 +539,9 @@ public class EncounterManager : MonoBehaviour
     }
     public void SanctumLifeBtn()
     {
+        Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+        txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        txt.text = "+ 2 추가체력\n\n+ Hp 10 회복";
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
@@ -554,6 +560,9 @@ public class EncounterManager : MonoBehaviour
     }
     public void SanctumIntelBtn() //추가 경험치 15
     {
+        Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+        txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        txt.text = "+ 15 Exp";
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
@@ -590,9 +599,9 @@ public class EncounterManager : MonoBehaviour
     public void GetDeadItems() //물음표
     {
         //아이템 얻기
-        //Text txt = Instantiate(Get, Camera.current.WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
-        //txt.transform.SetParent(GameObject.Find("Canvas").transform);
-        //txt.text = "+" + FindObjectOfType<ItemInputTest1>().EatItem[6].itemName;
+        Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
+        txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        txt.text = "+" + FindObjectOfType<ItemInputTest1>().EatItem[6].itemName;
 
         for (int i = 0; i < GameManager.instance.Players.Count; i++)
         {

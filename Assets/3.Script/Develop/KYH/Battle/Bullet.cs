@@ -41,14 +41,14 @@ public class Bullet : MonoBehaviour
                     battleManager.attackDamage = 0;
                 }
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
                 for (int i = 0; i < GameManager.instance.Players.Count; i++)
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
                     {
-                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
 
                         float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
 
@@ -69,7 +69,7 @@ public class Bullet : MonoBehaviour
             else //적이 맞을때
             {
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<EnemyStat>().nowHp -= 10f;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)
@@ -138,9 +138,6 @@ public class Bullet : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(battleLoader.Players[i]);
-                        battleLoader.Players.RemoveAt(i);
-
                         for (int j = 0; j < GameManager.instance.Players.Count; j++)
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
@@ -149,6 +146,9 @@ public class Bullet : MonoBehaviour
                                 GameManager.instance.Players.RemoveAt(j);
                             }
                         }
+
+                        Destroy(battleLoader.Players[i]);
+                        battleLoader.Players.RemoveAt(i);
 
                         battleOrderManager.turn -= 1;
                     }

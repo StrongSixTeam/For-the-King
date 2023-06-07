@@ -21,8 +21,16 @@ public class MovingUI : MonoBehaviour
     }
     void Update()
     {
-        transform.position = cam.WorldToScreenPoint(Player.position + move);
-        txtMoving.text = astar.canMoveCount.ToString();
+        if (Player != null)
+        {
+            transform.position = cam.WorldToScreenPoint(Player.position + move);
+            txtMoving.text = astar.canMoveCount.ToString();
+
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
     public void ResetText()
     {
