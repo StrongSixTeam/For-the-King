@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField] private GameObject slot;
     [SerializeField] private GameObject[] icons;
@@ -25,54 +25,76 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         infoText.text = "ÀÏ¹Ý °ø°Ý";
         slot.GetComponent<CloneSlot>().runOut = false;
-        SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
-        SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
+
+        GameObject mainPlayer = GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order];
+
+        if (mainPlayer.GetComponent<PlayerStat>().weapon != null)
+        {
+            SlotController.instance.maxSlotCount = mainPlayer.GetComponent<PlayerStat>().weapon.maxSlot;
+            SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(mainPlayer.GetComponent<PlayerStat>().weapon);
+        }
+        else
+        {
+            SlotController.instance.maxSlotCount = 0;
+            SlotController.instance.type = SlotController.Type.empty;
+        }
         if (SlotController.instance.type == SlotController.Type.attackBlackSmith)
         {
-            SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().strength;
+            SlotController.instance.percent = mainPlayer.GetComponent<PlayerStat>().strength;
         }
         else if (SlotController.instance.type == SlotController.Type.attackHunter)
         {
-            SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().awareness;
+            SlotController.instance.percent = mainPlayer.GetComponent<PlayerStat>().awareness;
         }
         else if (SlotController.instance.type == SlotController.Type.attackScholar)
         {
-            SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().intelligence;
+            SlotController.instance.percent = mainPlayer.GetComponent<PlayerStat>().intelligence;
         }
+        Accuracy.SetActive(true);
+        Damage.SetActive(true);
+        Accuracy.transform.localPosition = fightPos;
+        Accuracy.transform.GetChild(0).GetComponent<Text>().text = SlotController.instance.percent.ToString() + "%"; //½½·Ô´ç È®·ü
+        Damage.transform.GetChild(0).GetComponent<Text>().text = mainPlayer.GetComponent<PlayerStat>().atk.ToString(); //´ë¹ÌÁö
         slot.SetActive(true);
         icons[2].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[1].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[0].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         slot.GetComponent<CloneSlot>().Initialized();
-        Accuracy.SetActive(true);
-        Damage.SetActive(true);
-        Accuracy.transform.localPosition = fightPos;
-        Accuracy.transform.GetChild(0).GetComponent<Text>().text = SlotController.instance.percent.ToString() + "%"; //½½·Ô´ç È®·ü
-        Damage.transform.GetChild(0).GetComponent<Text>().text = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk.ToString(); //´ë¹ÌÁö
     }
     public void SetText()
     {
         infoText.text = "ÀÏ¹Ý °ø°Ý";
         slot.GetComponent<CloneSlot>().runOut = false;
-        SlotController.instance.maxSlotCount = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot;
-        SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon);
+
+        GameObject mainPlayer = GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order];
+
+        if (mainPlayer.GetComponent<PlayerStat>().weapon != null)
+        {
+            SlotController.instance.maxSlotCount = mainPlayer.GetComponent<PlayerStat>().weapon.maxSlot;
+            SlotController.instance.type = FindObjectOfType<BattleManager>().AttackTypeToType(mainPlayer.GetComponent<PlayerStat>().weapon);
+        }
+        else
+        {
+            SlotController.instance.maxSlotCount = 0;
+            SlotController.instance.type = SlotController.Type.empty;
+        }
         if (SlotController.instance.type == SlotController.Type.attackBlackSmith)
         {
-            SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().strength;
+            SlotController.instance.percent = mainPlayer.GetComponent<PlayerStat>().strength;
         }
         else if (SlotController.instance.type == SlotController.Type.attackHunter)
         {
-            SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().awareness;
+            SlotController.instance.percent = mainPlayer.GetComponent<PlayerStat>().awareness;
         }
         else if (SlotController.instance.type == SlotController.Type.attackScholar)
         {
-            SlotController.instance.percent = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().intelligence;
+            SlotController.instance.percent = mainPlayer.GetComponent<PlayerStat>().intelligence;
         }
         Accuracy.SetActive(true);
         Damage.SetActive(true);
         Accuracy.transform.localPosition = fightPos;
         Accuracy.transform.GetChild(0).GetComponent<Text>().text = SlotController.instance.percent.ToString() + "%"; //½½·Ô´ç È®·ü
-        Damage.transform.GetChild(0).GetComponent<Text>().text = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk.ToString(); //´ë¹ÌÁö
+        Damage.transform.GetChild(0).GetComponent<Text>().text = mainPlayer.GetComponent<PlayerStat>().atk.ToString(); //´ë¹ÌÁö
         slot.SetActive(true);
         icons[2].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[1].transform.localScale = new Vector3(1f, 1f, 1f);
@@ -80,7 +102,7 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         slot.GetComponent<CloneSlot>().Initialized();
     }
     public void OnPointerEnter(PointerEventData eventData)
-    {
+    {  
         if (battleRunBtn.GetComponent<RightClick>().usedFocus > 0)
         {
             FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleRunBtn.GetComponent<RightClick>().usedFocus;
@@ -90,10 +112,5 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
         SetText();
         //±Û¾¾ ¶ß°Ô
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
     }
 }
