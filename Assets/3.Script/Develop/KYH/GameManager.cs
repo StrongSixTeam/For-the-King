@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Ending;
     [SerializeField] GameObject BadEnding;
 
+    [SerializeField] GameObject mainCam;
+
     private void Start()
     {
         //Inventory.gameObject.SetActive(true);
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
             portraitUIs[i].GetComponent<PortraitUI>().Player = Players[i].transform;
         }
 
-        for (int i = 2; i > PlayerPrefs.GetInt("PlayerCnt")-1; i--)
+        for (int i = 2; i > PlayerPrefs.GetInt("PlayerCnt") - 1; i--)
         {
             portraitUIs[i].transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -112,11 +114,11 @@ public class GameManager : MonoBehaviour
                     isBlock = true;
                     turnChageBtn.interactable = true;
                 }
-                else if(Camera.main != null)
+                else if (Camera.main != null)
                 {
                     isBlock = false;
                 }
-                else if(Camera.main == null)
+                else if (Camera.main == null)
                 {
                     isBlock = true;
                 }
@@ -129,8 +131,17 @@ public class GameManager : MonoBehaviour
                 TurnChange();
             }
         }
+        if (MainPlayer == null && Players.Count > 0)
+        {
+            if (nextTurn + 1 >= Players.Count)
+            {
+                nextTurn = 0;
+            }
 
-        if(currentLife <= 0 && Players.Count == 0)
+            MainPlayer = Players[nextTurn + 1];
+        }
+
+        if (currentLife <= 0 && Players.Count == 0 && mainCam.activeSelf)
         {
             isDie = true;
         }
@@ -231,7 +242,7 @@ public class GameManager : MonoBehaviour
             nowTurn = nextTurn - 1;
             if (nowTurn < 0)
             {
-                nowTurn = PlayerPrefs.GetInt("PlayerCnt") -1;
+                nowTurn = PlayerPrefs.GetInt("PlayerCnt") - 1;
             }
         }
         portraitUIs[nowTurn].transform.GetChild(0).gameObject.SetActive(true);
@@ -256,7 +267,7 @@ public class GameManager : MonoBehaviour
 
     public void SetLifeUI()
     {
-        for (int i =0; i < LifeUI.transform.childCount; i++)
+        for (int i = 0; i < LifeUI.transform.childCount; i++)
         {
             LifeUI.transform.GetChild(i).gameObject.SetActive(false);
         }

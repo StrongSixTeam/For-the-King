@@ -15,12 +15,19 @@ public class PortraitUI : MonoBehaviour
 
     void Update()
     {
-        transform.position = cam.WorldToScreenPoint(Player.position + move);
+        if (Player != null)
+        {
+            transform.position = cam.WorldToScreenPoint(Player.position + move);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
         if (GameManager.instance.isSettingDone && (GameManager.instance.Players.Count > order))
         {
             if (!set)
             {
-            portrait.sprite = GameManager.instance.Players[order].GetComponent<PlayerStat>().portrait;
+                portrait.sprite = GameManager.instance.Players[order].GetComponent<PlayerStat>().portrait;
             }
         }
     }
