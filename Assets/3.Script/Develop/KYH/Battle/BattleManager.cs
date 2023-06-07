@@ -95,9 +95,9 @@ public class BattleManager : MonoBehaviour
                         }
 
                     }
-                    target.transform.GetChild(0).gameObject.SetActive(true);
                 }
             }
+            target.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         if (battleLoader.Players.Count == 0 && !isEnd)

@@ -32,6 +32,8 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Sprite[] focusSprites;
     [SerializeField] private GameObject sanctum;
 
+    [SerializeField] private GameObject dieImg;
+
 
     private bool playerStatSet = false;
     private void Update()
@@ -42,9 +44,9 @@ public class PlayerUI : MonoBehaviour
             {
                 playerStat = GameManager.instance.Players[order].GetComponent<PlayerStat>();
                 playerStatSet = true;
-                portrait.sprite = playerStat.portrait; 
+                portrait.sprite = playerStat.portrait;
                 nameText.text = playerStat.name;
-                for (int i = 0; i < playerStat.maxFocus; i++) 
+                for (int i = 0; i < playerStat.maxFocus; i++)
                 {
                     focus.transform.GetChild(i).gameObject.SetActive(true);
                 }
@@ -113,9 +115,14 @@ public class PlayerUI : MonoBehaviour
 
                 expSlider.maxValue = playerStat.maxExp;
                 expSlider.value = playerStat.nowExp;
-                
+
                 SetFocus();
                 SetSanctum();
+
+                if (playerStat.nowHp <= 0 && GameManager.instance.currentLife <= 0)
+                {
+                    dieImg.SetActive(true);
+                }
             }
         }
     }
@@ -140,7 +147,7 @@ public class PlayerUI : MonoBehaviour
     {
         if (playerStat.whichSanctum == PlayerStat.Sanctum.none)
         {
-            for (int i =0; i < sanctum.transform.childCount; i++)
+            for (int i = 0; i < sanctum.transform.childCount; i++)
             {
                 sanctum.transform.GetChild(i).gameObject.SetActive(false);
             }

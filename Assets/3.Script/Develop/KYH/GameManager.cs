@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject mainCam;
 
+    public int dieCnt = 0;
+
     private void Start()
     {
         //Inventory.gameObject.SetActive(true);
@@ -131,17 +133,42 @@ public class GameManager : MonoBehaviour
                 TurnChange();
             }
         }
-        if (MainPlayer == null && Players.Count > 0)
+        if (MainPlayer == null && Players.Count > 0 && mainCam.activeSelf && isSettingDone)
         {
-            if (nextTurn + 1 >= Players.Count)
+            TurnChange();
+        }
+        if (isSettingDone && Players[nextTurn] == null && Players.Count > 0 && mainCam.activeSelf)
+        {
+            if (Players.Count == 2)
             {
-                nextTurn = 0;
+                if (nextTurn == 0)
+                {
+                    nextTurn = 1;
+                }
+                else if (nextTurn == 1)
+                {
+                    nextTurn = 0;
+                }
+            }
+            else if(Players.Count == 3)
+            {
+                if (nextTurn == 0)
+                {
+                    nextTurn = 1;
+                }
+                else if (nextTurn == 1)
+                {
+                    nextTurn = 2;
+                }
+                else if (nextTurn == 2)
+                {
+                    nextTurn = 0;
+                }
             }
 
-            MainPlayer = Players[nextTurn + 1];
         }
 
-        if (currentLife <= 0 && Players.Count == 0 && mainCam.activeSelf)
+        if (currentLife <= 0 && Players.Count == dieCnt && mainCam.activeSelf)
         {
             isDie = true;
         }
@@ -165,7 +192,6 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
-        MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
         glowControl.SetTurnGlow(nextTurn);
 
         if (nextTurn == 0 && !isFisrtTurn)
@@ -188,6 +214,7 @@ public class GameManager : MonoBehaviour
         isTrunChange = true;
 
         MainPlayer = Players[nextTurn];
+
         playerController = MainPlayer.GetComponent<PlayerController_Jin>();
 
         cameraController.PlayerChange();
