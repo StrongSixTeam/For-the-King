@@ -336,6 +336,7 @@ public class MapObjectCreator : MonoBehaviour
         forestObj[3].transform.GetChild(0).gameObject.SetActive(false);
         forestObj[3].transform.GetChild(1).gameObject.SetActive(false);
         forestObj[3].transform.GetChild(2).gameObject.SetActive(false);
+        forestObj[3].transform.GetChild(3).gameObject.SetActive(false);
         forestObj[4].transform.GetChild(0).gameObject.SetActive(false);
         forestObj[4].transform.GetChild(1).gameObject.SetActive(false);
 
@@ -852,22 +853,22 @@ public class MapObjectCreator : MonoBehaviour
                 forestObj[2].transform.GetChild(1).gameObject.SetActive(true);
                 yield break;
             case 1:
-                forestObj[3].transform.GetChild(0).localScale = Vector3.zero;
                 forestObj[3].transform.GetChild(1).localScale = Vector3.zero;
                 forestObj[3].transform.GetChild(2).localScale = Vector3.zero;
-                forestObj[3].transform.GetChild(0).gameObject.SetActive(true);
+                forestObj[3].transform.GetChild(3).localScale = Vector3.zero;
                 forestObj[3].transform.GetChild(1).gameObject.SetActive(true);
                 forestObj[3].transform.GetChild(2).gameObject.SetActive(true);
+                forestObj[3].transform.GetChild(3).gameObject.SetActive(true);
 
                 for (int i = 0; i < 20; i++)
                 {
-                    forestObj[3].transform.GetChild(1).localScale += new Vector3(0.05f, 0.05f, 0.05f);
                     forestObj[3].transform.GetChild(2).localScale += new Vector3(0.05f, 0.05f, 0.05f);
+                    forestObj[3].transform.GetChild(3).localScale += new Vector3(0.05f, 0.05f, 0.05f);
                     yield return new WaitForSeconds(0.02f);
                 }
-                forestObj[3].transform.GetChild(0).localScale = new Vector3(1f, 1f, 1f);
                 forestObj[3].transform.GetChild(1).localScale = new Vector3(1f, 1f, 1f);
                 forestObj[3].transform.GetChild(2).localScale = new Vector3(1f, 1f, 1f);
+                forestObj[3].transform.GetChild(3).localScale = new Vector3(1f, 1f, 1f);
 
                 yield break;
             case 2:
@@ -1090,7 +1091,7 @@ public class MapObjectCreator : MonoBehaviour
         {
             for (int j = 0; j < 6; j++)
             {
-                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[3].transform.GetChild(0).gameObject.activeSelf)
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[3].transform.GetChild(1).gameObject.activeSelf)
                 {
                     closeIndex.Add(objectIndex[3]);
                     box.Add(forestObj[3]);
