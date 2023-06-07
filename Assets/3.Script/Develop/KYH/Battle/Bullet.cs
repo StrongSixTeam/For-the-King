@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
                     battleManager.attackDamage = 0;
                 }
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
                 for (int i = 0; i < GameManager.instance.Players.Count; i++)
@@ -69,7 +69,7 @@ public class Bullet : MonoBehaviour
             else //적이 맞을때
             {
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)
@@ -170,10 +170,15 @@ public class Bullet : MonoBehaviour
                     if (CurrnetCam.name == "BattleCamera")
                     {
                         Destroy(battleLoader.Encounter[i].gameObject);
-                        //EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                        if (EncounterManager.instance.number > 0)
+                        {
+                            EncounterManager.instance.encounter[EncounterManager.instance.number].isCleared = true;
+                        }
+                        else
+                        {
+                            EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
+                        }
                     }
-
-                    //EncounterManager.instance.enemies[EncounterManager.instance.enemyNumber].isCleared = true;
                     GameManager.instance.DeactivePortrait();
                 }
             }

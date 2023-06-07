@@ -912,93 +912,111 @@ public class MapObjectCreator : MonoBehaviour
         switch (objNum)
         {
             case 0: //monster01
-                if (activerandomObject[0].activeSelf)
+                if (activerandomObject[0] != null)
                 {
-                    yield break;
+                    if (activerandomObject[0].activeSelf)
+                    {
+                        yield break;
+                    }
+                    activerandomObject[0].SetActive(true);
+                    activerandomObject[0].transform.localScale = Vector3.zero;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        activerandomObject[0].transform.localScale += new Vector3(3.5f, 3.5f, 3.5f);
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    activerandomObject[0].transform.localScale = new Vector3(70f, 70f, 70f);
                 }
-                activerandomObject[0].SetActive(true);
-                activerandomObject[0].transform.localScale = Vector3.zero;
-                for (int i = 0; i < 20; i++)
-                {
-                    activerandomObject[0].transform.localScale += new Vector3(3.5f, 3.5f, 3.5f);
-                    yield return new WaitForSeconds(0.02f);
-                }
-                activerandomObject[0].transform.localScale = new Vector3(70f, 70f, 70f);
                 yield break;
 
             case 1: //monster02
-                if (activerandomObject[1].activeSelf)
+                if (activerandomObject[1] != null)
                 {
-                    yield break;
+                    if (activerandomObject[1].activeSelf)
+                    {
+                        yield break;
+                    }
+                    activerandomObject[1].SetActive(true);
+                    activerandomObject[1].transform.localScale = Vector3.zero;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        activerandomObject[1].transform.localScale += new Vector3(4f, 4f, 4f);
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    activerandomObject[1].transform.localScale = new Vector3(80f, 80f, 80f);
                 }
-                activerandomObject[1].SetActive(true);
-                activerandomObject[1].transform.localScale = Vector3.zero;
-                for (int i = 0; i < 20; i++)
-                {
-                    activerandomObject[1].transform.localScale += new Vector3(4f, 4f, 4f);
-                    yield return new WaitForSeconds(0.02f);
-                }
-                activerandomObject[1].transform.localScale = new Vector3(80f, 80f, 80f);
                 yield break;
 
             case 2: //monster03 
-                if (activerandomObject[2].activeSelf)
+                if (activerandomObject[2] != null)
                 {
-                    yield break;
+                    if (activerandomObject[2].activeSelf)
+                    {
+                        yield break;
+                    }
+                    activerandomObject[2].SetActive(true);
+                    activerandomObject[2].transform.localScale = Vector3.zero;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        activerandomObject[2].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    activerandomObject[2].transform.localScale = new Vector3(1f, 1f, 1f);
                 }
-                activerandomObject[2].SetActive(true);
-                activerandomObject[2].transform.localScale = Vector3.zero;
-                for (int i = 0; i < 20; i++)
-                {
-                    activerandomObject[2].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
-                    yield return new WaitForSeconds(0.02f);
-                }
-                activerandomObject[2].transform.localScale = new Vector3(1f, 1f, 1f);
                 yield break;
 
-            case 3: //monster04 
-                if (activerandomObject[3].activeSelf)
+            case 3: //monster04
+                if (activerandomObject[3] != null)
                 {
-                    yield break;
+                    if (activerandomObject[3].activeSelf)
+                    {
+                        yield break;
+                    }
+                    activerandomObject[3].SetActive(true);
+                    activerandomObject[3].transform.localScale = Vector3.zero;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        activerandomObject[3].transform.localScale += new Vector3(3f, 3f, 3f);
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    activerandomObject[3].transform.localScale = new Vector3(60f, 60f, 60f);
                 }
-                activerandomObject[3].SetActive(true);
-                activerandomObject[3].transform.localScale = Vector3.zero;
-                for (int i = 0; i < 20; i++)
-                {
-                    activerandomObject[3].transform.localScale += new Vector3(3f, 3f, 3f);
-                    yield return new WaitForSeconds(0.02f);
-                }
-                activerandomObject[3].transform.localScale = new Vector3(60f, 60f, 60f);
                 yield break;
 
             case 4: //물음표 
-                if (activerandomObject[4]!= null && activerandomObject[4].activeSelf)
+                if (activerandomObject[4] != null)
                 {
-                    yield break;
+                    if (activerandomObject[4].activeSelf)
+                    {
+                        yield break;
+                    }
+                    activerandomObject[4].SetActive(true);
+                    activerandomObject[4].transform.localScale = Vector3.zero;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        activerandomObject[4].transform.localScale += new Vector3(5.5f, 5.5f, 5.5f);
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    activerandomObject[4].transform.localScale = new Vector3(110f, 110f, 110f);
                 }
-                activerandomObject[4].SetActive(true);
-                activerandomObject[4].transform.localScale = Vector3.zero;
-                for (int i = 0; i < 20; i++)
-                {
-                    activerandomObject[4].transform.localScale += new Vector3(5.5f, 5.5f, 5.5f);
-                    yield return new WaitForSeconds(0.02f);
-                }
-                activerandomObject[4].transform.localScale = new Vector3(110f, 110f, 110f);
                 yield break;
 
             case 5: //느낌표
-                if (activerandomObject[5] != null && activerandomObject[5].activeSelf)
+                if (activerandomObject[5] != null)
                 {
-                    yield break;
+                    if (activerandomObject[5].activeSelf)
+                    {
+                        yield break;
+                    }
+                    activerandomObject[5].SetActive(true);
+                    activerandomObject[5].transform.localScale = Vector3.zero;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        activerandomObject[5].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+                        yield return new WaitForSeconds(0.02f);
+                    }
+                    activerandomObject[5].transform.localScale = new Vector3(1f, 1f, 1f);
                 }
-                activerandomObject[5].SetActive(true);
-                activerandomObject[5].transform.localScale = Vector3.zero;
-                for (int i = 0; i < 20; i++)
-                {
-                    activerandomObject[5].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
-                    yield return new WaitForSeconds(0.02f);
-                }
-                activerandomObject[5].transform.localScale = new Vector3(1f, 1f, 1f);
                 yield break;
         }
     }
