@@ -107,7 +107,7 @@ public class PlayerController_Jin : MonoBehaviour
             }
             return true;
         }
-        else if (map.objectIndex[6] == myHexNum && EncounterManager.instance.encounter[5].isShowed) //잊혀진 저장고
+        else if (map.objectIndex[6] == myHexNum && EncounterManager.instance.encounter[6].isShowed) //잊혀진 저장고
         {
             //EncounterManager.instance.ActiveEncounter(6);
             //return true;
@@ -118,7 +118,7 @@ public class PlayerController_Jin : MonoBehaviour
             EncounterManager.instance.ActiveEncounter(7);
             return true;
         }
-        else if (map.objectIndex[8] == myHexNum && EncounterManager.instance.encounter[7].isShowed && !EncounterManager.instance.encounter[7].isCleared) //시체의 지하실
+        else if (map.objectIndex[8] == myHexNum && EncounterManager.instance.encounter[8].isShowed && !EncounterManager.instance.encounter[8].isCleared) //시체의 지하실
         {
             EncounterManager.instance.ActiveEncounter(8);
             return true;
