@@ -8,6 +8,8 @@ public class ReadyCnt : MonoBehaviour
 
     public GameObject battleLoader;
     public GameObject CaveCam;
+
+    [SerializeField] GameObject fieldUI;
     
     private void Update()
     {
@@ -20,6 +22,7 @@ public class ReadyCnt : MonoBehaviour
             battleLoader.SetActive(true);
 
             battleLoader.GetComponent<BattleLoader>().CaveBattle();
+            fieldUI.SetActive(false);
         }
     }
 }
