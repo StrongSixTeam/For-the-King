@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public int maxLife = 3; //생명 슬롯 창 개수
     public int currentLife = 3; //현재 생명 개수
 
-    public GameObject[] Players;
+    public List<GameObject> Players;
     public GameObject MainPlayer;
     public int nextTurn = 0;
 
@@ -71,11 +71,11 @@ public class GameManager : MonoBehaviour
     }
     public void Setting()
     {
-        Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
+        //Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
 
         for (int i = 0; i < PlayerPrefs.GetInt("PlayerCnt"); i++)
         {
-            Players[i] = GameObject.FindGameObjectsWithTag("Player")[i];
+            Players.Add(GameObject.FindGameObjectsWithTag("Player")[i]);
             playerSpawner = FindObjectOfType<PlayerSpawner>();
             playerSpawner.movingUIs[i].Player = Players[i].transform;
             movingUIs[i] = playerSpawner.movingUIs[i].gameObject;
@@ -123,14 +123,14 @@ public class GameManager : MonoBehaviour
                 turnChageBtn.interactable = true;
             }
 
-            if (!questManager.isQuest && !isQuestFinish && Players.Length > 0)
+            if (!questManager.isQuest && !isQuestFinish && Players.Count > 0)
             {
                 isQuestFinish = true;
                 TurnChange();
             }
         }
 
-        if(currentLife <= 0 && Players.Length == 0)
+        if(currentLife <= 0 && Players.Count == 0)
         {
             isDie = true;
         }
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
         SlotController.instance.OnClick();
 
         nextTurn++;
-        if (nextTurn >= Players.Length)
+        if (nextTurn >= Players.Count)
         {
             nextTurn = 0;
         }

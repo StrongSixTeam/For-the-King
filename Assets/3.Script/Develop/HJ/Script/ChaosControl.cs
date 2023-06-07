@@ -125,7 +125,7 @@ public class ChaosControl : MonoBehaviour
                     temp2.transform.localPosition = Vector3.zero;
 
                     GameManager.instance.currentLife = 0;
-                    GameManager.instance.Players = new GameObject[0];
+                    GameManager.instance.Players.Clear();
                     return;
             }
         }
