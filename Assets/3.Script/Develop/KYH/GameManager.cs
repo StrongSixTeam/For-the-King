@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     #region 싱글톤
+    public GameObject Inventory;
     public static GameManager instance = null;
 
     private void Awake()
@@ -15,13 +15,11 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public int maxLife = 5; //생명 슬롯 창 개수
-    public int currentLife = 5; //현재 생명 개수
+    public int maxLife = 3; //생명 슬롯 창 개수
+    public int currentLife = 3; //현재 생명 개수
 
     public GameObject[] Players;
-    public List<PlayerStat> playerStats = new List<PlayerStat>();
     public GameObject MainPlayer;
-    public GameObject Inventory;
     public int nextTurn = 0;
 
     private QuestManager questManager;
@@ -51,17 +49,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text Name;
 
     [SerializeField] BattleLoader battleLoader;
+    GlowControl glowControl;
 
     private void Start()
     {
+        //Inventory.gameObject.SetActive(true);
+        Inventory.gameObject.SetActive(false);
         questManager = FindObjectOfType<QuestManager>();
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
-        Inventory.gameObject.SetActive(false);
+        glowControl = FindObjectOfType<GlowControl>();
     }
-
     public void Setting()
     {
         Players = new GameObject[PlayerPrefs.GetInt("PlayerCnt")];
@@ -87,13 +87,10 @@ public class GameManager : MonoBehaviour
 
         cameraController.PlayerChange();
         isSettingDone = true;
-        for (int i = 0; i < Players.Length; i++)
-        {
-            playerStats.Add(Players[i].GetComponent<PlayerStat>());
-        }
     }
     private void Update()
     {
+        SetLifeUI();
         if (playerController != null)
         {
             if (questManager.isQuest || playerController.isRun || SlotController.instance.isSlot || battleLoader.isBattle)
@@ -129,6 +126,7 @@ public class GameManager : MonoBehaviour
     public void TurnChange()
     {
         MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
+        glowControl.SetTurnGlow(nextTurn);
 
         if (nextTurn == 0 && !isFisrtTurn)
         {
@@ -150,7 +148,6 @@ public class GameManager : MonoBehaviour
         isTrunChange = true;
 
         MainPlayer = Players[nextTurn];
-        InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), nextTurn.ToString());
         playerController = MainPlayer.GetComponent<PlayerController_Jin>();
 
         cameraController.PlayerChange();
@@ -236,6 +233,10 @@ public class GameManager : MonoBehaviour
 
     public void SetLifeUI()
     {
+        for (int i =0; i < LifeUI.transform.childCount; i++)
+        {
+            LifeUI.transform.GetChild(i).gameObject.SetActive(false);
+        }
         for (int i = 0; i < maxLife; i++)
         {
             LifeUI.transform.GetChild(i).gameObject.SetActive(true);

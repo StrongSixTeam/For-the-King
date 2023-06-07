@@ -18,7 +18,7 @@ public class InventoryChange : MonoBehaviour
             int num = (int)InventoryController1.instance.playerNum;
             InventoryController1.instance.playerNum = (PlayerNum)(--num);
         }
-        transform.parent.GetChild(3).GetChild(0).GetComponent<Text>().text = GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].name;
+        transform.parent.GetChild(3).GetChild(0).GetComponent<Text>().text = GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().name;
         InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
         InventoryController1.instance.ShowEquip();
         shopManager = FindObjectOfType<ShopManager>();
@@ -38,7 +38,7 @@ public class InventoryChange : MonoBehaviour
             int num = (int)InventoryController1.instance.playerNum;
             InventoryController1.instance.playerNum = (PlayerNum)(++num);
         }
-        transform.parent.GetChild(3).GetChild(0).GetComponent<Text>().text = GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].name;
+        transform.parent.GetChild(3).GetChild(0).GetComponent<Text>().text = GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().name;
         InventoryController1.instance.InventoryShow((int)InventoryController1.instance.playerNum);
         InventoryController1.instance.ShowEquip();
         shopManager = FindObjectOfType<ShopManager>();

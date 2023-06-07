@@ -31,10 +31,16 @@ public class Bullet : MonoBehaviour
         {
             Text txt = Instantiate(Damage, CurrnetCam.WorldToScreenPoint(other.transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
             txt.transform.SetParent(GameObject.Find("Canvas").transform);
-            txt.text = "-" + battleManager.attackDamage;
+            //txt.text = "-" + battleManager.attackDamage;
 
             if (other.GetComponent<PlayerStat>() != null)
-            {
+            { //플레이어가 맞을때
+                battleManager.attackDamage -= (int)other.GetComponent<PlayerStat>().def;
+                if (battleManager.attackDamage < 0)
+                {
+                    battleManager.attackDamage = 0;
+                }
+                txt.text = "-" + battleManager.attackDamage;
                 other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
@@ -60,9 +66,10 @@ public class Bullet : MonoBehaviour
                     battleLoader.Enemys[i].GetComponent<Animator>().SetTrigger("Idle");
                 }
             }
-            else
+            else //적이 맞을때
             {
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
+                txt.text = "-" + battleManager.attackDamage;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 if (currnetHP <= 0)

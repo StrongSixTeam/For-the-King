@@ -106,7 +106,7 @@ public class ShopManager : MonoBehaviour
             transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().text = shopItemList[i].itemName;
             transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text = shopItemList[i].price.ToString();
             transform.GetChild(i).transform.GetChild(0).GetChild(3).GetComponent<Text>().text = shopItemList[i].stock.ToString();
-            shopCoinText.text = GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].coins.ToString();
+            shopCoinText.text = GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().coins.ToString();
             transform.GetChild(i).transform.gameObject.SetActive(true);
             
         }
@@ -117,7 +117,7 @@ public class ShopManager : MonoBehaviour
     {
         for(int i = 0; i < shopItemList.Count; i++)
         {
-            if(GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].coins 
+            if(GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().coins 
                 < int.Parse(transform.GetChild(i).transform.GetChild(1).GetComponent<Text>().text))
             {
                 transform.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<Text>().color = Color.gray;
@@ -196,7 +196,7 @@ public class ShopManager : MonoBehaviour
             if (shopItemList[i].itemName.Equals(InventoryController1.instance.itemName))
             {
                 buyItem = shopItemList[i];
-                GameManager.instance.playerStats[(int)InventoryController1.instance.playerNum].coins -=
+                GameManager.instance.Players[(int)InventoryController1.instance.playerNum].GetComponent<PlayerStat>().coins -=
                         buyItem.price;
                 if (shopItemList[i].stock <= 1) // 상점에서 마지막 하나 남은 아이템을 샀을 경우
                 {

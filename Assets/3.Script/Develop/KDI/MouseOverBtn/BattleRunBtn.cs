@@ -10,17 +10,19 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private GameObject[] icons;
     private BattleOrderManager battleOrderManager;
     [SerializeField] private GameObject battleFightBtn;
+    [SerializeField] private Text infoText;
 
     public GameObject Accuracy;
     public GameObject Damage;
     private Vector3 fightPos = new Vector3(2.1f, 0f, 0f);
-    private Vector3 runPos = new Vector3(-50f, 0f, 0f);
+    private Vector3 runPos = new Vector3(-58f, 0f, 0f);
     private void Awake()
     {
         battleOrderManager = FindObjectOfType<BattleOrderManager>();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        infoText.text = "µµ¸Á°¡±â";
         if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
         {
             FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
