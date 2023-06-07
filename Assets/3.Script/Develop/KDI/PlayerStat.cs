@@ -49,8 +49,8 @@ public class PlayerStat : MonoBehaviour
         atk = data.atk;
         originalDef = data.def;
         def = data.def;
-        originalMaxHp = maxExp;
         maxHp = data.maxHp;
+        originalMaxHp = maxHp;
         nowHp = data.nowHp;
         intelligence = data.intelligence;
         strength = data.strength;

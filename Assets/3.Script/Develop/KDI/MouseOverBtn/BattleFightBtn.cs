@@ -14,7 +14,7 @@ public class BattleFightBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public GameObject Accuracy;
     public GameObject Damage;
     private Vector3 fightPos = new Vector3(2.1f, 0f, 0f);
-    private Vector3 runPos = new Vector3(-50f, 0f, 0f);
+    private Vector3 runPos = new Vector3(-58f, 0f, 0f);
 
     private void Awake()
     {
