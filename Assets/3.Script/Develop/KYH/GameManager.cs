@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -51,6 +52,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text Name;
 
     [SerializeField] BattleLoader battleLoader;
+
+    public bool isClear = false;
+    public bool isDie = false;
+
+    [SerializeField] GameObject Ending;
+    [SerializeField] GameObject BadEnding;
 
     private void Start()
     {
@@ -119,6 +126,22 @@ public class GameManager : MonoBehaviour
                 isQuestFinish = true;
                 TurnChange();
             }
+        }
+
+        if(currentLife <= 0 && Players.Length == 0)
+        {
+            isDie = true;
+        }
+
+        if (isClear)
+        {
+            Ending.SetActive(true);
+            Invoke("End", 5f);
+        }
+        if (isDie)
+        {
+            BadEnding.SetActive(true);
+            Invoke("BadEnd", 5f);
         }
     }
     public void TurnChange()
@@ -246,6 +269,15 @@ public class GameManager : MonoBehaviour
                 LifeUI.transform.GetChild(i).GetComponent<Image>().sprite = LifeUISprites[0]; //ºó°Å
             }
         }
+    }
+
+    private void End()
+    {
+        SceneManager.LoadScene("EndingScene");
+    }
+    private void BadEnd()
+    {
+        SceneManager.LoadScene("BadEndingScene");
     }
 }
 
