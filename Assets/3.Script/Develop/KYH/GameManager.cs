@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        //Inventory.gameObject.SetActive(true);
-        Inventory.gameObject.SetActive(false);
     }
     #endregion
 
@@ -51,14 +49,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text Name;
 
     [SerializeField] BattleLoader battleLoader;
+    GlowControl glowControl;
 
     private void Start()
     {
+        //Inventory.gameObject.SetActive(true);
+        Inventory.gameObject.SetActive(false);
         questManager = FindObjectOfType<QuestManager>();
         cameraController = FindObjectOfType<CameraController>();
         moveSlot = FindObjectOfType<MoveSlot>();
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
+        glowControl = FindObjectOfType<GlowControl>();
     }
     public void Setting()
     {
@@ -124,6 +126,7 @@ public class GameManager : MonoBehaviour
     public void TurnChange()
     {
         MainPlayerName = MainPlayer.GetComponent<PlayerStat>().name;
+        glowControl.SetTurnGlow(nextTurn);
 
         if (nextTurn == 0 && !isFisrtTurn)
         {

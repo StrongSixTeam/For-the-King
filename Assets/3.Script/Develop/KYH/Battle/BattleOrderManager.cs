@@ -19,10 +19,12 @@ public class BattleOrderManager : MonoBehaviour
     private Animator UIAni;
 
     private BattleCameraController battleCameraController;
+    GlowControl glowControl;
 
     private void Awake()
     {
         battleLoader = FindObjectOfType<BattleLoader>();
+        glowControl = FindObjectOfType<GlowControl>();
         TryGetComponent(out UIAni);
     }
     private void OnEnable()
@@ -86,11 +88,13 @@ public class BattleOrderManager : MonoBehaviour
             {
                 portrait[i - turn].sprite = Order[j].GetComponent<PlayerStat>().portrait;
                 background[i - turn].sprite = PBground;
+                glowControl.SetTurnGlow(turn);
             }
             else
             {
                 portrait[i - turn].sprite = Order[j].GetComponent<EnemyStat>().portrait;
                 background[i - turn].sprite = EBground;
+                glowControl.SetTurnGlow(-1);
             }
         }
     }
