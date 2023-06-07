@@ -8,7 +8,6 @@ public class GlowControl : MonoBehaviour
     [SerializeField] GameObject[] playerGlowBox = new GameObject[3];
 
     [SerializeField] GameObject[] objectGlowBox = new GameObject[5];
-    [SerializeField] GameObject GodGlow;
     int[] saveobjectGlowIndex = new int[6];
 
     [SerializeField] MapObjectCreator mapObjectCreator;
@@ -18,7 +17,6 @@ public class GlowControl : MonoBehaviour
     {
         StartCoroutine(FindMapObjectCreatorCo());
         hexMapCreator = FindObjectOfType<HexMapCreator>();
-        GodGlow.SetActive(false);
 
         for (int i = 0; i < 3; i++)
         {
@@ -93,7 +91,7 @@ public class GlowControl : MonoBehaviour
 
     public void SetQuestObjectGlow(int objNum, bool on)
     {
-        //objNum : 우드스모크(0), 신도의식도구(1), 카오스우두머리(2), 눈부신광산(3), 패리드(4), 시체의지하실(5)
+        //objNum : 우드스모크(0), 카오스우두머리(2), 눈부신광산(3), 패리드(4), 시체의지하실(5)
         //on : 글로우켜기(true), 끄기(false)
 
         switch (objNum)
@@ -115,23 +113,6 @@ public class GlowControl : MonoBehaviour
                 else
                 {
                     objectGlowBox[saveobjectGlowIndex[0]].SetActive(false);
-                    return;
-                }
-                break;
-            case 1:
-                if (on)
-                {
-                    if (!GodGlow.activeSelf)
-                    {
-                        GodGlow.SetActive(true);
-                        GodGlow.transform.position = hexMapCreator.hexMembers[mapObjectCreator.objectIndex[2]].transform.position + new Vector3(0f, 1f, 0f);
-                        return;
-                    }
-
-                }
-                else
-                {
-                    GodGlow.SetActive(false);
                     return;
                 }
                 break;
@@ -216,8 +197,6 @@ public class GlowControl : MonoBehaviour
                 }
                 break;
         }
-
-
     }
 
 
