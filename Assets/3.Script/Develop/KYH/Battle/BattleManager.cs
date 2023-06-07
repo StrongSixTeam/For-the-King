@@ -86,11 +86,14 @@ public class BattleManager : MonoBehaviour
                     if (hit.transform.gameObject == battleLoader.Enemys[i] && Input.GetMouseButtonDown(0))
                     {
                         battleOrderManager.Order[battleOrderManager.turn].transform.LookAt(battleLoader.Enemys[i].transform);
+                        GameObject tar = target;
                         target = battleLoader.Enemys[i];
+
+                        tar.transform.GetChild(0).gameObject.SetActive(false);
+                        target.transform.GetChild(0).gameObject.SetActive(true);
                     }
                 }
             }
-            target.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         if (battleLoader.Players.Count == 0 && !isEnd)
