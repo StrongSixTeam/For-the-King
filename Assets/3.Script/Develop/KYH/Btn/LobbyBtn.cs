@@ -20,6 +20,10 @@ public class LobbyBtn : MonoBehaviour
     {
         StartCoroutine(CameraMove_co());
     }
+    public void GameExit()
+    {
+        Application.Quit();
+    }
     private IEnumerator CameraMove_co()
     {
         LobbyMenuUI.SetActive(false);

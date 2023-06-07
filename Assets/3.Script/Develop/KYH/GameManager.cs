@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject mainCam;
 
+    private int playerCnt;
+
     private void Start()
     {
         //Inventory.gameObject.SetActive(true);
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
         glowControl = FindObjectOfType<GlowControl>();
+
+        playerCnt = PlayerPrefs.GetInt("PlayerCnt");
     }
     public void Setting()
     {
@@ -131,14 +135,22 @@ public class GameManager : MonoBehaviour
                 TurnChange();
             }
         }
-        if (MainPlayer == null && Players.Count > 0)
+        if (MainPlayer == null && Players.Count > 0 && mainCam.activeSelf && isSettingDone)
         {
-            if (nextTurn + 1 >= Players.Count)
+            nextTurn -= 1;
+            if(nextTurn < 0)
             {
-                nextTurn = 0;
+                nextTurn = Players.Count - 1;
             }
 
-            MainPlayer = Players[nextTurn + 1];
+            MainPlayer = Players[nextTurn];
+
+            TurnChange();
+        }
+        if(Players.Count != playerCnt && isSettingDone)
+        {
+            playerCnt = Players.Count;
+            nextTurn -= 1;
         }
 
         if (currentLife <= 0 && Players.Count == 0 && mainCam.activeSelf)
