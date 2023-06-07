@@ -90,10 +90,6 @@ public class BadEnding : MonoBehaviour
     }
 
 
-
-
-
-
     public void LobbySceneButton()
     {
         SceneManager.LoadScene("LobbyScene");
