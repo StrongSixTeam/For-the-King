@@ -130,7 +130,7 @@ public class Bullet : MonoBehaviour
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
-                                GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                                GameManager.instance.Players[j].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                             }
                         }
 
