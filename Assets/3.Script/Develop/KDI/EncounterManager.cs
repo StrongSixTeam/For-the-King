@@ -331,7 +331,7 @@ public class EncounterManager : MonoBehaviour
         if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
             FindObjectOfType<QuestManager>().PopUp("God");
-            FindObjectOfType<QuestManager>().questTurn = 6;
+            FindObjectOfType<QuestManager>().questClearCnt++;
         }
     }
 
@@ -355,7 +355,7 @@ public class EncounterManager : MonoBehaviour
 
         if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
-            FindObjectOfType<QuestManager>().questTurn = 6;
+            FindObjectOfType<QuestManager>().questClearCnt++;
         }
     }
 

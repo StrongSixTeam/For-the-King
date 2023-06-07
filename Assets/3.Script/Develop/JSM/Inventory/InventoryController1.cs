@@ -91,6 +91,7 @@ public class InventoryController1 : MonoBehaviour
         poolPos = new Vector3(0, 0, -100);
         topListPos = new Vector3(0, 105);
         ListPos = topListPos;
+        Debug.Log("스타트");
     }
 
     private void CreatePoolItem() // 오브젝트 풀링할 리스트 초기화
@@ -126,7 +127,7 @@ public class InventoryController1 : MonoBehaviour
         }
         for (int j = 0; j < itemCount[playerNum].Count; j++)
         {
-            Debug.Log("itemCount의 " + j + "번째 인덱스의 값: " + itemCount[playerNum][j]);
+            //Debug.Log("itemCount의 " + j + "번째 인덱스의 값: " + itemCount[playerNum][j]);
         }
         
     }
@@ -185,7 +186,7 @@ public class InventoryController1 : MonoBehaviour
         GameObject newitem = poolItemQueue.Dequeue();
         //Debug.Log(this.transform.childCount);
         newitem.transform.SetParent(this.transform);
-        Debug.Log(this.transform.childCount);
+        //Debug.Log(this.transform.childCount);
         switch (putitem.itemType)
         {
             case ItemType.무기:
@@ -225,6 +226,7 @@ public class InventoryController1 : MonoBehaviour
     {
         InventoryReset();
         coinText.text = GameManager.instance.playerStats[playernum].coins.ToString();
+        
         if (playerInventory[playernum].Count < 1) return;
 
         ListPos = topListPos;
@@ -444,6 +446,7 @@ public class InventoryController1 : MonoBehaviour
         {
             if (playerInventory[(int)playerNum][i].itemName.Equals(itemName))
             {
+                Used used = playerInventory[(int)playerNum][i] as Used;
                 switch (playerInventory[(int)playerNum][i].itemType)
                 {
                     case ItemType.허브:
@@ -454,16 +457,27 @@ public class InventoryController1 : MonoBehaviour
                             poolItemQueue.Enqueue(transform.GetChild(transform.childCount - 1).gameObject);
                             quickSlot[(int)playerNum].quickSlot[(int)playerNum].Remove(playerInventory[(int)playerNum][i]);
                             playerInventory[(int)playerNum].RemoveAt(i);
+                            itemCount[(int)playerNum].RemoveAt(i);
                             for (int a = 0; a < quickSlot[(int)playerNum].itemSlotImg.Length; a++)
                             {
                                 quickSlot[(int)playerNum].itemSlotImg[a].sprite = quickSlot[(int)playerNum].blank;
-                                quickSlot[(int)playerNum].itemCntTxt[a].text = 0.ToString();
+                                quickSlot[(int)playerNum].itemCntTxt[a].text = "";
                             }
+                            
                         }
 
                         else
                         {
                             itemCount[(int)playerNum][i]--;
+                        }
+
+                        if(GameManager.instance.playerStats[(int)playerNum].nowHp + used.recoveryStat > GameManager.instance.playerStats[(int)playerNum].maxHp)
+                        {
+                            GameManager.instance.playerStats[(int)playerNum].nowHp = GameManager.instance.playerStats[(int)playerNum].maxHp;
+                        }
+                        else
+                        {
+                            GameManager.instance.playerStats[(int)playerNum].nowHp += used.recoveryStat;
                         }
                         break;
 
@@ -567,7 +581,20 @@ public class InventoryController1 : MonoBehaviour
             playerEquip[(int)playerNum][0] = weapon;
             equipItemName[0].text = weapon.itemName;
             equipBtn[0].interactable = true;
-            
+            int num = 0;
+            if (playerNum == PlayerNum.Player0)
+            {
+                num = 0;
+            }
+            else if (playerNum == PlayerNum.Player1)
+            {
+                num = 1;
+            }
+            else if (playerNum == PlayerNum.Player2)
+            {
+                num = 2;
+            }
+            GameManager.instance.Players[num].GetComponent<PlayerStat>().weapon = weapon;
         }
 
         else if (playerEquip[(int)playerNum][0].itemName.Equals(weapon.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
@@ -577,6 +604,20 @@ public class InventoryController1 : MonoBehaviour
 
         else                                // 해당 장비창에 이미 착용된 장비가 있는 경우
         {
+            int num = 0;
+            if (playerNum == PlayerNum.Player0)
+            {
+                num = 0;
+            }
+            else if (playerNum == PlayerNum.Player1)
+            {
+                num = 1;
+            }
+            else if (playerNum == PlayerNum.Player2)
+            {
+                num = 2;
+            }
+            GameManager.instance.Players[num].GetComponent<PlayerStat>().weapon = weapon; //weapon값 반영
             int x = playerInventory[(int)playerNum].IndexOf(playerEquip[(int)playerNum][0]); // 착용 중인 장비가 인벤토리에 있는지 확인하기 위한 인덱스 번호 할당
             if (x == -1)                           // 착용 중인 장비가 인벤토리에 없다면
             {
@@ -609,11 +650,40 @@ public class InventoryController1 : MonoBehaviour
 
     private void UpdateEquip(Armor armor, int i, int arrNum)
     {
+        int num = 0;
+        if (playerNum == PlayerNum.Player0)
+        {
+            num = 0;
+        }
+        else if (playerNum == PlayerNum.Player1)
+        {
+            num = 1;
+        }
+        else if (playerNum == PlayerNum.Player2)
+        {
+            num = 2;
+        }
         if (playerEquip[(int)playerNum][arrNum] == null)             // 해당 장비창에 아무것도 착용이 되어있지 않은 경우
         {
             playerEquip[(int)playerNum][arrNum] = armor;
             equipItemName[arrNum].text = armor.itemName;
             equipBtn[arrNum].interactable = true;
+            if (armor.equipType == EquipType.헬멧)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorHelmet = armor;
+            }
+            else if (armor.equipType == EquipType.방어구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armor = armor;
+            }
+            else if (armor.equipType == EquipType.신발)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorBoots = armor;
+            }
+            else if (armor.equipType == EquipType.장신구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorNecklace = armor;
+            }
         }
 
         else if (playerEquip[(int)playerNum][arrNum].itemName.Equals(armor.itemName))      // 해당 장비창에 있는 장비와 착용하려는 장비가 같은 경우
@@ -635,6 +705,22 @@ public class InventoryController1 : MonoBehaviour
                 itemCount[(int)playerNum][x]++;
                 playerEquip[(int)playerNum][arrNum] = armor;
                 equipItemName[arrNum].text = armor.itemName;
+            }
+            if (armor.equipType == EquipType.헬멧)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorHelmet = armor;
+            }
+            else if (armor.equipType == EquipType.방어구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armor = armor;
+            }
+            else if (armor.equipType == EquipType.신발)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorBoots = armor;
+            }
+            else if (armor.equipType == EquipType.장신구)
+            {
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorNecklace = armor;
             }
         }
 
@@ -707,32 +793,50 @@ public class InventoryController1 : MonoBehaviour
     }
     private void SetUnequipUI()
     {
+        int num = 0;
+        if (playerNum == PlayerNum.Player0)
+        {
+            num = 0;
+        }
+        else if (playerNum == PlayerNum.Player1)
+        {
+            num = 1;
+        }
+        else if (playerNum == PlayerNum.Player2)
+        {
+            num = 2;
+        }
         switch (equipType)
         {
             case EquipType.무기:
                 FindInInventory(0);
                 equipItemName[0].text = "";
                 equipBtn[0].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().weapon = null;
                 break;
             case EquipType.헬멧:
                 FindInInventory(1);
                 equipItemName[1].text = "";
                 equipBtn[1].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorHelmet = null;
                 break;
             case EquipType.방어구:
                 FindInInventory(2);
                 equipItemName[2].text = "";
                 equipBtn[2].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armor = null;
                 break;
             case EquipType.신발:
                 FindInInventory(3);
                 equipItemName[3].text = "";
                 equipBtn[3].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorBoots = null;
                 break;
             case EquipType.장신구:
                 FindInInventory(4);
                 equipItemName[4].text = "";
                 equipBtn[4].interactable = false;
+                GameManager.instance.Players[num].GetComponent<PlayerStat>().armorNecklace = null;
                 break;
         }
         ShowItemUnequipUI();
@@ -770,5 +874,13 @@ public class InventoryController1 : MonoBehaviour
             }
         }
         detailUI.gameObject.SetActive(true);
+    }
+
+    public void PlayerDefaultWeaponSet()
+    {
+        for(int i = 0; i < playerEquip.Count; i++)
+        {
+            playerEquip[i][0] = GameManager.instance.playerStats[i].weapon;
+        }
     }
 }

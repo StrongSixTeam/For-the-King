@@ -31,7 +31,7 @@ public class MouseOverEvent_Equip : MonoBehaviour, IPointerEnterHandler, IPointe
                 InventoryController1.instance.overItemName += " ";
             }
         }
-        Debug.Log(InventoryController1.instance.overItemName);
+        //Debug.Log(InventoryController1.instance.overItemName);
         InventoryController1.instance.ShowDetailUI();
     }
 

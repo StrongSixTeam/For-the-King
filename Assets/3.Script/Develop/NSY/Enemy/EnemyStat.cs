@@ -21,7 +21,7 @@ public class EnemyStat : MonoBehaviour
     public string attackType;
     public float percent;
 
-    private void Start()
+    private void Awake()
     {
         SetEnemyStat();
     }

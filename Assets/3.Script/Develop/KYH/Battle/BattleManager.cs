@@ -10,6 +10,8 @@ public class BattleManager : MonoBehaviour
     BattleCameraController battleCameraController;
     ItemInputTest1 itemInput;
 
+    public List<GameObject> dieObj;
+
     [SerializeField] GameObject WinBattleBanner;
     [SerializeField] GameObject LoseBattleBanner;
 
@@ -35,6 +37,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject Get;
 
     private Camera CurrnetCam;
+    [SerializeField] private bool isAgain = false;
 
     private void OnEnable()
     {
@@ -62,6 +65,11 @@ public class BattleManager : MonoBehaviour
         if (isPlayer)
         {
             BattleUI.SetActive(true);
+            if (!isAgain)
+            {
+                FindObjectOfType<BattleFightBtn>().GetComponent<BattleFightBtn>().SetText();
+                isAgain = true;
+            }
             for (int i = 0; i < enemySlotUI.transform.childCount; i++)
             {
                 enemySlotUI.transform.GetChild(i).gameObject.SetActive(false);
@@ -85,16 +93,11 @@ public class BattleManager : MonoBehaviour
 
         if (battleLoader.Players.Count == 0 && !isEnd)
         {
-            if (battleCameraController.gameObject.name == "BattleCamera")
-            {
-                StartCoroutine(battleCameraController.EnemyWinCam_co());
-            }
-
             LoseBattleBanner.SetActive(true);
 
             isCave = false;
 
-            Invoke("BattleEnd", 5f);
+            Invoke("BattleEnd", 3f);
 
             isEnd = true;
 
@@ -129,6 +132,8 @@ public class BattleManager : MonoBehaviour
 
                 battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(true);
             }
+
+            FindObjectOfType<LevelUpStatus>().LevelUp();
 
             isEnd = true;
         }
@@ -208,8 +213,8 @@ public class BattleManager : MonoBehaviour
     public void PlayerAttack() //플레이어 공격턴
     {
         isPlayer = false;
-
-        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetBool("Attack", true);
+        isAgain = false;
+        battleOrderManager.Order[battleOrderManager.turn].GetComponent<Animator>().SetTrigger("Attack");
 
         BattleUI.SetActive(false);
         //slot 작동
@@ -236,7 +241,9 @@ public class BattleManager : MonoBehaviour
         isPlayer = false;
         BattleUI.SetActive(false);
         slotUI.GetComponent<CloneSlot>().Try();
-
+    }
+    public void RunFalse()
+    {
         Invoke("TurnChange", 1f);
     }
     private void TurnChange()
@@ -302,8 +309,12 @@ public class BattleManager : MonoBehaviour
         battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(true);
     }
     public void ItemGet()
-    {       
-        InventoryController1.instance.playerNum = PlayerNum.Player0;
+    {
+        Text txt = Instantiate(Get, CurrnetCam.WorldToScreenPoint(battleLoader.Players[itemInput.itemTurn].transform.position) + new Vector3(0, 300, 0), Quaternion.identity).GetComponent<Text>();
+        txt.transform.SetParent(GameObject.Find("Canvas").transform);
+        txt.text = "+" + battleLoader.items[0].itemName;
+
+        InventoryController1.instance.playerNum = (PlayerNum)System.Enum.Parse(typeof(PlayerNum), string.Format("Player{0}", battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order));
 
         itemInput.Get(battleLoader.items[0]);
         battleLoader.items.RemoveAt(0);
@@ -324,6 +335,13 @@ public class BattleManager : MonoBehaviour
         {
             EndCheck();
         }
+
+        for(int i = 0; i < dieObj.Count; i++)
+        {
+            Destroy(dieObj[i]);
+        }
+
+        dieObj.Clear();
 
         battleLoader.PrefsDestroy();
         battleOrderManager.End();

@@ -321,7 +321,7 @@ public class MapObjectCreator : MonoBehaviour
                     GameObject temp = Instantiate(forestObj[i]);
                     forestObj[i] = temp;
                     temp.SetActive(true);
-                    temp.transform.position = forestNode[random].transform.position + new Vector3(0, 0.2f, 0);
+                    temp.transform.position = forestNode[random].transform.position + new Vector3(0, 0.1f, 0);
                     temp.transform.SetParent(fixedObjectBox);
 
 
@@ -437,7 +437,7 @@ public class MapObjectCreator : MonoBehaviour
                     GameObject temp = Instantiate(plainsObj[i]);
                     plainsObj[i] = temp;
                     temp.SetActive(true);
-                    temp.transform.position = plainsNode[random].transform.position + new Vector3(0, 0.2f, 0);
+                    temp.transform.position = plainsNode[random].transform.position + new Vector3(0, 0.1f, 0);
                     temp.transform.SetParent(fixedObjectBox);
 
                     break;
@@ -1070,10 +1070,10 @@ public class MapObjectCreator : MonoBehaviour
         {
             for (int j = 0; j < 6; j++)
             {
-                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[4].transform.GetChild(0).gameObject.activeSelf)
+                if (objectIndex[3] == hexMapCreator.hexMembers[centerIndex].neighbors[i].neighbors[j].index && !closeIndex.Contains(objectIndex[3]) && forestObj[3].transform.GetChild(0).gameObject.activeSelf)
                 {
                     closeIndex.Add(objectIndex[3]);
-                    box.Add(forestObj[4]);
+                    box.Add(forestObj[3]);
                     break;
                 }
             }

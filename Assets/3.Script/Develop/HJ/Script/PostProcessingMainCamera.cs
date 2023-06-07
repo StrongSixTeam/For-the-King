@@ -35,11 +35,11 @@ public class PostProcessingMainCamera : MonoBehaviour
         if (!Day) 
         {
             float rTime = 0f;
-            Debug.Log("³·À¸·Î");
+            //Debug.Log("³·À¸·Î");
             while (true)
             {
                 
-                _colorAdjustments.postExposure.Interp(0.39f, -0.9f, rTime);
+                _colorAdjustments.postExposure.Interp(0.4f, -0.9f, rTime);
                 rTime += Time.deltaTime;
                 yield return null;
                 if(rTime > 1)
@@ -53,11 +53,11 @@ public class PostProcessingMainCamera : MonoBehaviour
         else 
         {
             float rTime = 0f;
-            Debug.Log("¹ãÀ¸·Î");
+            //Debug.Log("¹ãÀ¸·Î");
             while (true)
             {
                 
-                _colorAdjustments.postExposure.Interp(-0.9f, 0.39f, rTime);
+                _colorAdjustments.postExposure.Interp(-0.9f, 0.4f, rTime);
                 rTime += Time.deltaTime;
                 yield return null;
                 if (rTime > 1)

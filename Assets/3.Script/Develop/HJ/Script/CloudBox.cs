@@ -39,7 +39,7 @@ public class CloudBox : MonoBehaviour
 
     public void CloudActiveFalse(int hexIndex)
     {
-        zPlusNum = -180;
+        zPlusNum = -240;
 
         for (int z=0; z<8; z++)
         {
