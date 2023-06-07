@@ -39,6 +39,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField] MapObjectCreator mapObjectCreator;
     [SerializeField] CloudBox cloudBox;
     private int mapHexIndex=0;
+    private GlowControl glowControl;
 
     private CameraController cameraController;
 
@@ -52,6 +53,7 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
         cameraController = FindObjectOfType<CameraController>();
+        glowControl = FindObjectOfType<GlowControl>();
         StartCoroutine(LateFindObjectCo());
     }
 
@@ -144,30 +146,36 @@ public class QuestManager : MonoBehaviour
                 //1=우드스모크, 3=신의의식도구, 4=카오스우두머리, 7=눈부신광산, 8=패리드, 10=시체의지하실
                 case 1:
                     mapHexIndex = 1;
+                    glowControl.SetQuestObjectGlow(0, true);
                     break;
                 case 3:
                     mapHexIndex = 2;
                     mapObjectCreator.ShowObject(0);
                     //bool값 true로 바꾸기 -> 충돌 가능
                     FindObjectOfType<EncounterManager>().encounter[2].isShowed = true;
+                    glowControl.SetQuestObjectGlow(1, true);
                     break;
                 case 4:
                     mapHexIndex = 3;
                     mapObjectCreator.ShowObject(1);
                     FindObjectOfType<EncounterManager>().encounter[3].isShowed = true;
+                    glowControl.SetQuestObjectGlow(2, true);
                     break;
                 case 7:
                     mapHexIndex = 4;
                     mapObjectCreator.ShowObject(2);
                     FindObjectOfType<EncounterManager>().encounter[4].isShowed = true;
+                    glowControl.SetQuestObjectGlow(3, true);
                     break;
                 case 8:
                     mapHexIndex = 5;
+                    glowControl.SetQuestObjectGlow(4, true);
                     break;
                 case 10:
                     mapHexIndex = 8;
                     mapObjectCreator.ShowObject(3);
                     FindObjectOfType<EncounterManager>().encounter[8].isShowed = true;
+                    glowControl.SetQuestObjectGlow(5, true);
                     break;
 
             }
