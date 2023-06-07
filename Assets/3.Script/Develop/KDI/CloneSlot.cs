@@ -408,5 +408,6 @@ public class CloneSlot : MonoBehaviour
         highlight.transform.GetChild(SlotController.instance.maxSlotCount - SlotController.instance.success).gameObject.SetActive(false);
         highlight.SetActive(false);
         FindObjectOfType<EncounterManager>().DisableButton();
+        EncounterManager.instance.enemyButtonActive = true;
     }
 }

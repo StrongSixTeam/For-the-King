@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class EnemyRunBtn : MonoBehaviour, IPointerEnterHandler
@@ -8,7 +9,6 @@ public class EnemyRunBtn : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private GameObject slot;
     private EncounterManager encounterManager;
     public int n;
-    public bool active = true;
     [SerializeField] private GameObject highlight;
 
     private void Start()
@@ -18,8 +18,9 @@ public class EnemyRunBtn : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (active)
+        if (encounterManager.enemyButtonActive)
         {
+            GetComponent<Button>().interactable = true;
             for (int i = 0; i < highlight.transform.childCount; i++)
             {
                 highlight.transform.GetChild(i).gameObject.SetActive(false); //불러올때마다 하이라이트 끄기
