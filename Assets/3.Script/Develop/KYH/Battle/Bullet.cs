@@ -148,6 +148,7 @@ public class Bullet : MonoBehaviour
                         }
 
                         Destroy(battleLoader.Players[i]);
+                        battleLoader.Players[i].transform.GetChild(2).gameObject.SetActive(false);
                         battleLoader.Players.RemoveAt(i);
 
                         battleOrderManager.turn -= 1;
@@ -163,6 +164,7 @@ public class Bullet : MonoBehaviour
                     
                     //Destroy(battleLoader.Enemys[i]);
                     battleManager.dieObj.Add(battleLoader.Enemys[i]);
+                    battleLoader.Enemys[i].transform.GetChild(0).gameObject.SetActive(false);
                     battleLoader.Enemys.RemoveAt(i);
                     Destroy(battleLoader.EnemyStats[i].gameObject);
                     battleLoader.EnemyStats.RemoveAt(i);

@@ -19,7 +19,7 @@ public class ChaosBoss : MonoBehaviour
             FindObjectOfType<ChaosControl>().RemoveChaos(false);
 
         }
-        else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2)
+        else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && FindObjectOfType<QuestManager>().questClearCnt < 2)
         {
             FindObjectOfType<QuestManager>().isChaos = true;
         }

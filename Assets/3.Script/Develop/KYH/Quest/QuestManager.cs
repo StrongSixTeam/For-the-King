@@ -268,6 +268,15 @@ public class QuestManager : MonoBehaviour
                     PopUp(questTurn);
                 }
             }
+            if (is2nd)
+            {
+                PopUp(questTurn);
+            }
+            if (is3rd)
+            {
+                PopUp(questTurn);
+                questClearCnt++;
+            }
             return;
         }
         else

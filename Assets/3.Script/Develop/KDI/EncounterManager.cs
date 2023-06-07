@@ -352,6 +352,7 @@ public class EncounterManager : MonoBehaviour
 
         if (FindObjectOfType<QuestManager>().questTurn == 5 || FindObjectOfType<QuestManager>().questTurn == 7)
         {
+            FindObjectOfType<QuestManager>().PopUp("GodLife");
             FindObjectOfType<QuestManager>().questClearCnt++;
         }
     }
