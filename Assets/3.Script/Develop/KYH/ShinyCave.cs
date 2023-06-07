@@ -20,6 +20,7 @@ public class ShinyCave : MonoBehaviour
 
     private void OnDisable()
     {
+        EncounterManager.instance.encounter[4].isCleared = true;
         if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && !FindObjectOfType<QuestManager>().isShinyCave)
         {
             FindObjectOfType<QuestManager>().PopUp("ShinyCave");
