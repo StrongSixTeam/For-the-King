@@ -175,7 +175,7 @@ public class BattleLoader : MonoBehaviour
             Players[i].GetComponent<PlayerController_Jin>().enabled = false;
             Players[i].transform.localScale = new Vector3(1, 1, 1);
 
-            Players[i].GetComponent<Animator>().applyRootMotion = true;
+           
             Players[i].GetComponent<Animator>().SetTrigger("Battle");
 
             if(playerPos == new Vector3(-200f, 0, -38))
