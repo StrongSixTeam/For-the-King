@@ -28,6 +28,8 @@ public class ShinyCave : MonoBehaviour
 
             FindObjectOfType<QuestManager>().isShinyCave = true;
 
+            FindObjectOfType<GlowControl>().SetQuestObjectGlow(3, false);
+
         }
     }
 }

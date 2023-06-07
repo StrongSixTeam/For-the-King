@@ -14,6 +14,8 @@ public class ChaosBoss : MonoBehaviour
 
             FindObjectOfType<QuestManager>().isChaos = false;
 
+            FindObjectOfType<GlowControl>().SetQuestObjectGlow(2, false);
+
         }
         else if(FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2)
         {
