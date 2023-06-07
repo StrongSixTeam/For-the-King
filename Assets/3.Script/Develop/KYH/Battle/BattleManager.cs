@@ -103,6 +103,10 @@ public class BattleManager : MonoBehaviour
 
             isEnd = true;
 
+            AudioManager.instance.BGMPlayer.Stop();
+            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+            AudioManager.instance.BGMPlayer.Play();
+
         }
         if (battleLoader.Enemys.Count == 0 && !isEnd)
         {
@@ -138,6 +142,9 @@ public class BattleManager : MonoBehaviour
             FindObjectOfType<LevelUpStatus>().LevelUp();
 
             isEnd = true;
+            AudioManager.instance.BGMPlayer.Stop();
+            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+            AudioManager.instance.BGMPlayer.Play();
         }
     }
     public void RookAt()

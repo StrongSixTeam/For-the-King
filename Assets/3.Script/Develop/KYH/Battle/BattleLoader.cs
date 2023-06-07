@@ -84,6 +84,8 @@ public class BattleLoader : MonoBehaviour
             case 1:
                 scrollMap = 1;
                 Encounter = GameObject.Find("CaveEnemy01").GetComponent<CaveBattleBox>().enemys01;
+                AudioManager.instance.BGMPlayer.Stop();
+                AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[3].clip;
                 break;
             case 2:
                 scrollMap = 2;
@@ -92,6 +94,8 @@ public class BattleLoader : MonoBehaviour
             case 3:
                 scrollMap = 3;
                 Encounter = GameObject.Find("CaveEnemy02").GetComponent<CaveBattleBox>().enemys01;
+                AudioManager.instance.BGMPlayer.Stop();
+                AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[4].clip;
                 break;
             case 4:
                 scrollMap = 0;
@@ -122,6 +126,7 @@ public class BattleLoader : MonoBehaviour
             FindObjectsOfType<CaveMapPooling>()[i].CameraSet();
         }
 
+        AudioManager.instance.BGMPlayer.Play();
         PrefsInstantiate();
     }
 

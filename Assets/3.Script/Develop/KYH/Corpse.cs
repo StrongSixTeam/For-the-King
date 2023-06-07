@@ -31,5 +31,8 @@ public class Corpse : MonoBehaviour
             FindObjectOfType<ChaosControl>().RemoveChaos(false);
             GameManager.instance.isClear = true;
         }
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+        AudioManager.instance.BGMPlayer.Play();
     }
 }

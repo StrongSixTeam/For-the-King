@@ -417,6 +417,8 @@ public class EncounterManager : MonoBehaviour
         MultiCamera.instance.ToCave();
         astsrPathfinding.ShowRedHexStop();
         GameManager.instance.isBlock = true;
+
+        
     }
 
     public void BattleBtn() //배틀씬으로 이동

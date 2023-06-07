@@ -148,11 +148,17 @@ public class GameManager : MonoBehaviour
 
         if (isClear)
         {
+            AudioManager.instance.BGMPlayer.Stop();
+            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[5].clip;
+            AudioManager.instance.BGMPlayer.Play();
             Ending.SetActive(true);
             Invoke("End", 5f);
         }
         if (isDie)
         {
+            AudioManager.instance.BGMPlayer.Stop();
+            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[6].clip;
+            AudioManager.instance.BGMPlayer.Play();
             BadEnding.SetActive(true);
             Invoke("BadEnd", 5f);
         }

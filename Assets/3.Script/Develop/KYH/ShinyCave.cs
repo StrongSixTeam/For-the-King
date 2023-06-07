@@ -32,5 +32,8 @@ public class ShinyCave : MonoBehaviour
             FindObjectOfType<GlowControl>().SetQuestObjectGlow(3, false);
             FindObjectOfType<ChaosControl>().RemoveChaos(false);
         }
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[1].clip;
+        AudioManager.instance.BGMPlayer.Play();
     }
 }
