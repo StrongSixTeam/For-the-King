@@ -25,10 +25,12 @@ public class CameraController : MonoBehaviour
 
     private QuestManager questManager;
     private PlayerController_Jin player;
+    AudioListener audioListener;
 
     private void Awake()
     {
         questManager = FindObjectOfType<QuestManager>();
+        audioListener = transform.GetComponent<AudioListener>();
     }
     private void Start()
     {
@@ -128,4 +130,13 @@ public class CameraController : MonoBehaviour
         yield break;
     }
 
+    private void OnEnable()
+    {
+        audioListener.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        audioListener.enabled = false;
+    }
 }

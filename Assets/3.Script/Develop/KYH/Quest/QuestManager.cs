@@ -113,7 +113,7 @@ public class QuestManager : MonoBehaviour
         }
         if (questClearCnt == 2 && !is2nd)
         {
-            questTurn = 5;
+            questTurn = 6;
             is2nd = true;
         }
         if (questClearCnt == 3 && !is3rd)
@@ -262,6 +262,11 @@ public class QuestManager : MonoBehaviour
             {
                 isClear = false;
                 isQuest = false;
+
+                if (is3rd)
+                {
+                    PopUp(questTurn);
+                }
             }
             return;
         }
