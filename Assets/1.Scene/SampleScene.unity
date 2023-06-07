@@ -11737,6 +11737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444c8f30e6ff18f4289351cbccfe0ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Get: {fileID: 0}
   move:
   - {fileID: 21300000, guid: eabf456f0e09cdd45915437da8b6d6a0, type: 3}
   - {fileID: 21300000, guid: 13786dc1dbffe1641ae0920117e075fd, type: 3}
@@ -27350,6 +27351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444c8f30e6ff18f4289351cbccfe0ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Get: {fileID: 0}
   move:
   - {fileID: 21300000, guid: eabf456f0e09cdd45915437da8b6d6a0, type: 3}
   - {fileID: 21300000, guid: 13786dc1dbffe1641ae0920117e075fd, type: 3}
@@ -28484,7 +28486,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
