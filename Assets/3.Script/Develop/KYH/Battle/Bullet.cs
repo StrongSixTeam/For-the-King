@@ -44,6 +44,8 @@ public class Bullet : MonoBehaviour
                 other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
+                EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1.5f, 0), null, EffectType.PlayerHit);
+
                 for (int i = 0; i < GameManager.instance.Players.Count; i++)
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
@@ -71,6 +73,8 @@ public class Bullet : MonoBehaviour
                 txt.text = "-" + battleManager.attackDamage;
                 other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
+
+                EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1f, 0), null, EffectType.EnemyHit);
 
                 if (currnetHP <= 0)
                 {
