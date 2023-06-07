@@ -225,7 +225,7 @@ public class InventoryController1 : MonoBehaviour
     public void InventoryShow(int playernum)          // 플레이어 별로 분할된 인벤토리 보여주기
     {
         InventoryReset();
-        coinText.text = GameManager.instance.playerStats[playernum].coins.ToString();
+        coinText.text = GameManager.instance.Players[playernum].GetComponent<PlayerStat>().coins.ToString();
         
         if (playerInventory[playernum].Count < 1) return;
 
@@ -471,13 +471,13 @@ public class InventoryController1 : MonoBehaviour
                             itemCount[(int)playerNum][i]--;
                         }
 
-                        if(GameManager.instance.playerStats[(int)playerNum].nowHp + used.recoveryStat > GameManager.instance.playerStats[(int)playerNum].maxHp)
+                        if(GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxHp)
                         {
-                            GameManager.instance.playerStats[(int)playerNum].nowHp = GameManager.instance.playerStats[(int)playerNum].maxHp;
+                            GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxHp;
                         }
                         else
                         {
-                            GameManager.instance.playerStats[(int)playerNum].nowHp += used.recoveryStat;
+                            GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
                         }
                         break;
 
@@ -880,7 +880,7 @@ public class InventoryController1 : MonoBehaviour
     {
         for(int i = 0; i < playerEquip.Count; i++)
         {
-            playerEquip[i][0] = GameManager.instance.playerStats[i].weapon;
+            playerEquip[i][0] = GameManager.instance.Players[i].GetComponent<PlayerStat>().weapon;
         }
     }
 }
