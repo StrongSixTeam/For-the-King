@@ -72,6 +72,7 @@ public class PlayerUI : MonoBehaviour
                 }
                 else
                 {
+                    playerStat.atk = playerStat.originalAtk;
                     atkText.text = playerStat.originalAtk.ToString();
                 }
                 int extraHp = 0;
