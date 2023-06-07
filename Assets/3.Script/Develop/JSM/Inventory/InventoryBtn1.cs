@@ -50,17 +50,7 @@ public class InventoryBtn1 : MonoBehaviour
         if (!inventory.activeSelf)
         {
             inventory.SetActive(true);
-            GameObject Click = EventSystem.current.currentSelectedGameObject;
-            if((GameManager.instance.nextTurn - 1) < 0)
-            {
-                inventory.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text =
-                GameManager.instance.Players[2].GetComponent<PlayerStat>().name;
-            }
-            else
-            {
-                inventory.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text =
-                GameManager.instance.Players[GameManager.instance.nextTurn - 1].GetComponent<PlayerStat>().name;
-            }
+            inventory.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn].GetComponent<PlayerStat>().name;
             
             if (FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn].transform.tag.Equals("Player0"))
             {

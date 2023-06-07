@@ -229,8 +229,16 @@ public class BattleManager : MonoBehaviour
     }
     public void CalculateAtk()
     {
-        float originalAtk = battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().atk;
-        float resultAtk = originalAtk / battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().weapon.maxSlot * SlotController.instance.success;
+        float originalAtk = GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().atk;
+        float resultAtk;
+        if (GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().weapon != null)
+        {
+            resultAtk = originalAtk / GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().weapon.maxSlot * SlotController.instance.success;
+        }
+        else
+        {
+            resultAtk = 0;
+        }
         attackDamage = (int)resultAtk;
     }
 
