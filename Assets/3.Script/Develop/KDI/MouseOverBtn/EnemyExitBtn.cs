@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class EnemyExitBtn : MonoBehaviour, IPointerEnterHandler
@@ -8,7 +9,6 @@ public class EnemyExitBtn : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private GameObject slot;
     private EncounterManager encounterManager;
     public int n;
-    public bool active = true;
 
     private void Start()
     {
@@ -17,8 +17,9 @@ public class EnemyExitBtn : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (active)
+        if (encounterManager.enemyButtonActive)
         {
+            GetComponent<Button>().interactable = true;
             if (transform.parent.GetChild(1).GetComponent<RightClick>().usedFocus > 0)
             {
                 GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus += transform.parent.GetChild(1).GetComponent<RightClick>().usedFocus;
