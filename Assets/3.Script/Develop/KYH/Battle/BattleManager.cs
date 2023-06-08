@@ -349,12 +349,36 @@ public class BattleManager : MonoBehaviour
         {
             txt.text = "+" + battleLoader.items[0].itemName;
             itemInput.Get(battleLoader.items[0]);
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
+                battleLoader.items[0].itemDetailImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
+                battleLoader.items[0].itemImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
+                battleLoader.items[0].itemName;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
+                battleLoader.items[0].detail_1;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
+                battleLoader.items[0].detail_2;
+            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
+            InventoryController1.instance.detailUI.gameObject.SetActive(true);
             battleLoader.items.RemoveAt(0);
         }
         else
         {
             txt.text = "+" + battleLoader.Gold + "G";
             GameManager.instance.Players[battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().coins += battleLoader.Gold;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemDetailImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemName;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].detail_1;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].detail_2;
+            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
+            InventoryController1.instance.detailUI.gameObject.SetActive(true);
             battleLoader.Gold = 0;
         }
 
@@ -400,7 +424,8 @@ public class BattleManager : MonoBehaviour
                 GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
             }
         }
-
+        InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -143);
+        InventoryController1.instance.detailUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
     private void EndCheck()

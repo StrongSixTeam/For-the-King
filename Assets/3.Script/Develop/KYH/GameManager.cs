@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
         glowControl = FindObjectOfType<GlowControl>();
+        FindObjectOfType<MultiCamera>().StartCloud();
     }
     public void Setting()
     {
@@ -178,17 +179,11 @@ public class GameManager : MonoBehaviour
 
         if (isClear)
         {
-            AudioManager.instance.BGMPlayer.Stop();
-            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[5].clip;
-            AudioManager.instance.BGMPlayer.Play();
             Ending.SetActive(true);
             Invoke("End", 5f);
         }
         if (isDie)
         {
-            AudioManager.instance.BGMPlayer.Stop();
-            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[6].clip;
-            AudioManager.instance.BGMPlayer.Play();
             BadEnding.SetActive(true);
             Invoke("BadEnd", 5f);
         }
@@ -325,10 +320,16 @@ public class GameManager : MonoBehaviour
 
     private void End()
     {
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[5].clip;
+        AudioManager.instance.BGMPlayer.Play();
         SceneManager.LoadScene("EndingScene");
     }
     private void BadEnd()
     {
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[6].clip;
+        AudioManager.instance.BGMPlayer.Play();
         SceneManager.LoadScene("BadEndingScene");
     }
 }

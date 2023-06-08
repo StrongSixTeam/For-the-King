@@ -23,9 +23,21 @@ public class MultiCamera : MonoBehaviour
         cameras[0].gameObject.SetActive(true);
         cameras[1].gameObject.SetActive(false);
         cameras[2].gameObject.SetActive(false);
-        loading[0].SetActive(false);
-        loading[1].SetActive(false);
+        //loading[0].SetActive(false);
+        //loading[1].SetActive(false);
     }
+
+    public void StartCloud()
+    {
+        Invoke("StartCloudOff", 1f);
+    }
+    public void StartCloudOff()
+    {
+        SoundManager.instance.PlayCloud();
+        loadingAnim.SetTrigger("active");
+        Invoke("SetActiveFalse", 0.9f);
+    }
+
 
     public void ChangeCam(int n) //n = 0 main, n = 1 battle, n = 2 cave
     {
@@ -58,6 +70,7 @@ public class MultiCamera : MonoBehaviour
     {
         loading[0].SetActive(true);
         loading[1].SetActive(true);
+        SoundManager.instance.PlayCloud();
         loadingAnim.SetTrigger("active");
         Invoke("Act1", 1f);
     }
@@ -69,6 +82,7 @@ public class MultiCamera : MonoBehaviour
     }
     private void OffCloud()
     {
+        SoundManager.instance.PlayCloud();
         loadingAnim.SetTrigger("active");
         FindObjectOfType<BattleLoader>().FieldBattle();
         Invoke("SetActiveFalse", 1f);
@@ -83,6 +97,7 @@ public class MultiCamera : MonoBehaviour
     {
         loading[0].SetActive(true);
         loading[1].SetActive(true);
+        SoundManager.instance.PlayCloud();
         loadingAnim.SetTrigger("active");
         Invoke("Act2", 1f);
     }
@@ -95,6 +110,7 @@ public class MultiCamera : MonoBehaviour
 
     private void OffCloud2()
     {
+        SoundManager.instance.PlayCloud();
         loadingAnim.SetTrigger("active");
         FindObjectOfType<BattleLoader>().CaveBattle();
         Invoke("SetActiveFalse", 1f);
@@ -106,6 +122,7 @@ public class MultiCamera : MonoBehaviour
     {
         loading[0].SetActive(true);
         loading[1].SetActive(true);
+        SoundManager.instance.PlayCloud();
         loadingAnim.SetTrigger("active");
         Invoke("Act3", 1f);
     }
@@ -118,6 +135,7 @@ public class MultiCamera : MonoBehaviour
     }
     private void OffCloud3()
     {
+        SoundManager.instance.PlayCloud();
         loadingAnim.SetTrigger("active");
         Invoke("SetActiveFalse", 1f);
     }
