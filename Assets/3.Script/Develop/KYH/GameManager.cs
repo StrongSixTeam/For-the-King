@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         timeBarScrolling = FindObjectsOfType<TimeBarScrolling>();
         encounterManager = FindObjectOfType<EncounterManager>();
         glowControl = FindObjectOfType<GlowControl>();
+        FindObjectOfType<MultiCamera>().StartCloud();
     }
     public void Setting()
     {
