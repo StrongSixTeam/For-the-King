@@ -19,7 +19,7 @@ public class PortraitController : MonoBehaviour
     {
         if (GameManager.instance.isSettingDone)
         {
-            count = GameManager.instance.Players.Count - GameManager.instance.dieCnt;
+            count = GameManager.instance.Players.Count;
             CheckPositions();
         }
     }
@@ -31,6 +31,8 @@ public class PortraitController : MonoBehaviour
         }
         else if (count == 2) //전체 플레이어가 두 명
         {
+            
+            
             if (GameManager.instance.Players[0].transform.position == GameManager.instance.Players[1].transform.position)
             {
                 index1 = 0;
