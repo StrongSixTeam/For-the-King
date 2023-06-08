@@ -272,15 +272,47 @@ public class EncounterManager : MonoBehaviour
                 successCalc.GetComponent<SuccessCalc>().Calculate(SlotController.instance.maxSlotCount, SlotController.instance.percent, SlotController.instance.limit);
             }
         }
-        else
+        else //¿¸≈ıæ¿¿Ã∏È
         {
             if (FindObjectOfType<BattleManager>() != null)
             {
-                GameObject player = FindObjectOfType<BattleManager>().FindPlayer(FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn].GetComponent<PlayerStat>().order);
+                GameObject player = GameManager.instance.Players[FindObjectOfType<BattleOrderManager>().Order[FindObjectOfType<BattleOrderManager>().turn].GetComponent<PlayerStat>().order];
                 if (player.GetComponent<PlayerStat>().nowFocus >= 1)
                 {
                     player.GetComponent<PlayerStat>().nowFocus -= 1;
                     SlotController.instance.fixCount += 1;
+                    if (player.GetComponent<PlayerStat>().nowFocus == 1)
+                    {
+                        SlotController.instance.percent += 10;
+                        if (SlotController.instance.percent > 100)
+                        {
+                            SlotController.instance.percent = 100;
+                        }
+                    }
+                    else if (player.GetComponent<PlayerStat>().nowFocus == 2)
+                    {
+                        SlotController.instance.percent += 15;
+                        if (SlotController.instance.percent > 100)
+                        {
+                            SlotController.instance.percent = 100;
+                        }
+                    }
+                    else if (player.GetComponent<PlayerStat>().nowFocus == 3)
+                    {
+                        SlotController.instance.percent += 18;
+                        if (SlotController.instance.percent > 100)
+                        {
+                            SlotController.instance.percent = 100;
+                        }
+                    }
+                    else if (player.GetComponent<PlayerStat>().nowFocus == 4)
+                    {
+                        SlotController.instance.percent += 20;
+                        if (SlotController.instance.percent > 100)
+                        {
+                            SlotController.instance.percent = 100;
+                        }
+                    }
                     fightSlot.GetComponent<CloneSlot>().Initialized();
                 }
             }
@@ -629,11 +661,10 @@ public class EncounterManager : MonoBehaviour
         }
         FindObjectOfType<ItemInputTest1>().Get(FindObjectOfType<ItemInputTest1>().EatItem[6]);
 
+        encounter[17].isCleared = true;
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-        encounter[number].isCleared = true;
         FindObjectOfType<MapObjectCreator>().UseObject(5);
-        encounter[17].isCleared = true;
         GameManager.instance.MainPlayer.GetComponent<PlayerController_Jin>().BeOriginalScale();
         OffMovingUIs();
         
