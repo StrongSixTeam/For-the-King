@@ -9,8 +9,9 @@ public enum EffectType
     PlayerSkill,  //플레이어가 공격할 시 나타나는 스킬 이펙트       
 
     PlayerHit,     //적이 공격할 시 공격받은 플레이어 몸체 쪽에 생기는 이펙트
-    EnemySkill     //적이 공격할 시 나타나는 스킬 이펙트               
+    EnemySkill,     //적이 공격할 시 나타나는 스킬 이펙트               
                   
+    Revival       //부활!!
 
 }
 
@@ -37,6 +38,7 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem enHitEffectprefab;
     public ParticleSystem plSkillEffectprefab;
     public ParticleSystem enSkillEffectprefab;
+    public ParticleSystem revivalEffectprefab;
 
     
     private List<ParticleSystem> effectList = new List<ParticleSystem>();
@@ -65,6 +67,11 @@ public class EffectManager : MonoBehaviour
         else if (effectType==EffectType.EnemySkill)
         {
             targetPrefab = Resources.Load<GameObject>("Stone slash");  
+        }
+
+        else if (effectType==EffectType.Revival)
+        {
+            targetPrefab = Resources.Load<GameObject>("BirthBorder");
         }
 
 
