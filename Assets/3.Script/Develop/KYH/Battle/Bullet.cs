@@ -147,7 +147,6 @@ public class Bullet : MonoBehaviour
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
-                                GameManager.instance.dieCnt++;
                                 Destroy(GameManager.instance.Players[j]);
                                 GameManager.instance.Players.RemoveAt(j);
                             }

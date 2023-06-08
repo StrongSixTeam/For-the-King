@@ -42,7 +42,6 @@ public class GlowControl : MonoBehaviour
 
     public void SetTurnGlow(int player)
     {
-
         switch (player)
         {
             case -1: //¸ðµÎ ²ô±â
