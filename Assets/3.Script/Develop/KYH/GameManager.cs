@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject mainCam;
 
     private int currentNum;
+    public int deadIndex = -1;
 
     private void Start()
     {
@@ -135,12 +136,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Players.Count < currentNum && mainCam.activeSelf && isSettingDone)
-        {
-            nextTurn -= 1;
-
-            TurnChange();
-        }
         //if (isSettingDone && Players[nextTurn] == null && Players.Count > 0 && mainCam.activeSelf)
         //{
         //    if (Players.Count == 2)
@@ -179,19 +174,19 @@ public class GameManager : MonoBehaviour
 
         if (isClear)
         {
-            AudioManager.instance.BGMPlayer.Stop();
-            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[5].clip;
-            AudioManager.instance.BGMPlayer.Play();
             Ending.SetActive(true);
             Invoke("End", 5f);
         }
         if (isDie)
         {
-            AudioManager.instance.BGMPlayer.Stop();
-            AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[6].clip;
-            AudioManager.instance.BGMPlayer.Play();
             BadEnding.SetActive(true);
             Invoke("BadEnd", 5f);
+        }
+        if (Players.Count < currentNum && mainCam.activeSelf && isSettingDone && Players.Count > 0)
+        {
+            nextTurn -= 1;
+
+            TurnChange();
         }
     }
     public void TurnChange()
@@ -326,10 +321,16 @@ public class GameManager : MonoBehaviour
 
     private void End()
     {
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[5].clip;
+        AudioManager.instance.BGMPlayer.Play();
         SceneManager.LoadScene("EndingScene");
     }
     private void BadEnd()
     {
+        AudioManager.instance.BGMPlayer.Stop();
+        AudioManager.instance.BGMPlayer.clip = AudioManager.instance.BGM[6].clip;
+        AudioManager.instance.BGMPlayer.Play();
         SceneManager.LoadScene("BadEndingScene");
     }
 }

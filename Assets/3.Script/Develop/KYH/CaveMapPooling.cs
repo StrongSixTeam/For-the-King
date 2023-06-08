@@ -26,7 +26,7 @@ public class CaveMapPooling : MonoBehaviour
         targetPos = transform.localPosition + new Vector3(0, 0, col.size.z);
         while(Vector3.Distance(transform.localPosition, targetPos) > 0.01f)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, 0.01f);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, 0.02f);
             yield return null;
         }
         transform.localPosition = targetPos;

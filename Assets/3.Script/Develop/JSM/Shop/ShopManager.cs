@@ -46,7 +46,7 @@ public class ShopManager : MonoBehaviour
 
     void CreateShopItem()
     {
-        for (int i = 0; i < InventoryController1.instance.allItemArr.EatItem.Length; i++)
+        for (int i = 0; i < InventoryController1.instance.allItemArr.EatItem.Length - 1; i++)
         {
             shopItemList.Add(InventoryController1.instance.allItemArr.EatItem[i]);
             shopItem = Instantiate(itemPrefab, poolPos, Quaternion.identity);
@@ -110,6 +110,7 @@ public class ShopManager : MonoBehaviour
             transform.GetChild(i).transform.gameObject.SetActive(true);
             
         }
+        InventoryController1.instance.playerNum = (PlayerNum)GameManager.instance.MainPlayer.GetComponent<PlayerStat>().order;
         ComparePrice();
     }
 

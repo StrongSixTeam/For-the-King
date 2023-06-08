@@ -20,7 +20,7 @@ public class ItemInputTest1 : MonoBehaviour
     }
     public Item Stack()
     {
-        Item item = EatItem[Random.Range(0, EatItem.Length)];
+        Item item = EatItem[Random.Range(0, EatItem.Length - 1)];
 
         return item;
     }
