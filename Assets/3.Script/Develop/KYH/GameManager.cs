@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject mainCam;
 
     private int currentNum;
+    public int deadIndex = -1;
 
     private void Start()
     {

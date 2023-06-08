@@ -128,8 +128,8 @@ public class MultiCamera : MonoBehaviour
     }
     private void Act3()
     {
-        EncounterManager.instance.OnMovingUIs();
         ChangeCam(0);
+        EncounterManager.instance.OnMovingUIs();
         Invoke("OffCloud3", 1f);
 
     }
