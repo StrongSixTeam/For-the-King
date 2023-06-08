@@ -19,7 +19,7 @@ public class PortraitController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.isSettingDone)
+        if (GameManager.instance.isSettingDone && GameManager.instance.Players.Count > 0)
         {
             count = GameManager.instance.Players.Count;
             CheckPositions();
