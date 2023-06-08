@@ -14,6 +14,8 @@ public class PortraitController : MonoBehaviour
     int index1 = 0;
     int index2 = 0;
     int index3 = 0;
+    public List<MovingUI> movingUIs;
+    public GameObject camera;
 
     private void Update()
     {
@@ -21,6 +23,26 @@ public class PortraitController : MonoBehaviour
         {
             count = GameManager.instance.Players.Count;
             CheckPositions();
+            if (GameManager.instance.Players.Count != movingUIs.Count && camera.activeSelf)
+            {
+                for(int i =0; i < movingUIs.Count; i++)
+                {
+                    if (!movingUIs[i].gameObject.activeSelf)
+                    {
+                        movingUIs.RemoveAt(GameManager.instance.deadIndex);
+                        movingUIs[i].Player = null;
+                        break;
+                    }
+                }
+                for (int i = 0; i < movingUIs.Count; i++)
+                {
+                    movingUIs[i].order = i;
+                }
+                for (int i = 0; i < GameManager.instance.Players.Count; i++)
+                {
+                    movingUIs[i].Player = GameManager.instance.Players[i].transform;
+                }
+            }
         }
     }
     private void CheckPositions()
