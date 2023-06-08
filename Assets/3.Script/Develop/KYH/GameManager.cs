@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject mainCam;
 
+    private int currentNum;
+
     private void Start()
     {
         //Inventory.gameObject.SetActive(true);
@@ -131,7 +133,8 @@ public class GameManager : MonoBehaviour
                 TurnChange();
             }
         }
-        if (Players.Count <= nextTurn && mainCam.activeSelf && isSettingDone)
+
+        if (Players.Count < currentNum && mainCam.activeSelf && isSettingDone)
         {
             nextTurn -= 1;
 
@@ -192,6 +195,8 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
+        currentNum = Players.Count;
+
         glowControl.SetTurnGlow(Players[nextTurn].GetComponent<PlayerStat>().order);
 
         if (nextTurn == 0 && !isFisrtTurn)
