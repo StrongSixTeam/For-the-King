@@ -22,13 +22,35 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        infoText.text = "µµ¸Á°¡±â";
         if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
         {
-            FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
+            GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
             battleFightBtn.GetComponent<RightClick>().usedFocus = 0;
             GetComponent<RightClick>().usedFocus = 0;
             SlotController.instance.fixCount = 0;
+            slot.GetComponent<CloneSlot>().Initialized();
+        }
+        SetText();
+    }
+    public void SetText()
+    {
+        infoText.text = "µµ¸Á°¡±â";
+        int extraPercent = 0;
+        if (GetComponent<RightClick>().usedFocus == 1)
+        {
+            extraPercent = 10;
+        }
+        else if (GetComponent<RightClick>().usedFocus == 2)
+        {
+            extraPercent = 15;
+        }
+        else if (GetComponent<RightClick>().usedFocus == 3)
+        {
+            extraPercent = 18;
+        }
+        else if (GetComponent<RightClick>().usedFocus == 4)
+        {
+            extraPercent = 20;
         }
         slot.GetComponent<CloneSlot>().isShowText = false;
         slot.GetComponent<CloneSlot>().runOut = true;
@@ -36,6 +58,11 @@ public class BattleRunBtn : MonoBehaviour, IPointerEnterHandler
         SlotController.instance.limit = 2;
         SlotController.instance.type = SlotController.Type.move;
         SlotController.instance.percent = GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().speed;
+        SlotController.instance.percent += extraPercent;
+        if (SlotController.instance.percent > 100)
+        {
+            SlotController.instance.percent = 100;
+        }
         slot.SetActive(true);
         icons[0].transform.localScale = new Vector3(1f, 1f, 1f);
         icons[1].transform.localScale = new Vector3(1f, 1f, 1f);
