@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class CloneSlot : MonoBehaviour
 {
+    private AudioSource audioSource;
+    public AudioClip audioSuccess;
+    public AudioClip audioFail;
+
     [SerializeField] private GameObject Get;
     private bool isSuccess = false;
     public Sprite[] move; //이동 UI 이미지
@@ -18,6 +22,12 @@ public class CloneSlot : MonoBehaviour
     public bool hasLimit = true;
     public bool runOut = false;
     public bool playerTurn = true;
+
+    private void Awake()
+    {
+        TryGetComponent<AudioSource>(out audioSource);
+    }
+
     public void Initialized()
     {
         isSuccess = false;
@@ -174,6 +184,8 @@ public class CloneSlot : MonoBehaviour
                 transform.GetChild(i).GetChild(1).gameObject.SetActive(true); //고정 이동칸
                 SlotController.instance.fixCount--;
                 SlotController.instance.success++;
+                audioSource.clip = audioSuccess;
+                audioSource.PlayOneShot(audioSource.clip);
                 continue;
             }
             else
@@ -183,11 +195,15 @@ public class CloneSlot : MonoBehaviour
                 {
                     transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
                     SlotController.instance.success++;
+                    audioSource.clip = audioSuccess;
+                    audioSource.PlayOneShot(audioSource.clip);
                 }
                 else
                 {
                     transform.GetChild(i).GetChild(3).gameObject.SetActive(true);
                     SlotController.instance.fail++;
+                    audioSource.clip = audioFail;
+                    audioSource.PlayOneShot(audioSource.clip);
                 }
             }
         }
