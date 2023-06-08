@@ -99,7 +99,9 @@ public class ChaosControl : MonoBehaviour
                 break;
 
             case false: //카오스 제거
-                chaosImageBox[FIFO.Dequeue()].SetActive(false);
+                GameObject temp3 = chaosImageBox[FIFO.Dequeue()];
+                temp3.transform.localPosition += new Vector3(0f, 20f, 0f);
+                temp3.SetActive(false);
                 break;
         }
     }
