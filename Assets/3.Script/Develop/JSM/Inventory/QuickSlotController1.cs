@@ -86,14 +86,30 @@ public class QuickSlotController1 : MonoBehaviour
                 {
                     Used used = InventoryController1.instance.playerInventory[playernum][j] as Used;
                     InventoryController1.instance.itemCount[playernum][j]--;
-                    if (GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp)
+                    if(used.itemName.Equals("½ÅÀÇ ¼ö¿°"))
                     {
-                        GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp;
+                        if (GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp)
+                        {
+                            GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxHp;
+                        }
+                        else
+                        {
+                            GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
+                        }
                     }
-                    else
+
+                    else if (used.itemName.Equals("È²±Ý »Ñ¸®"))
                     {
-                        GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
+                        if (GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowFocus + used.recoveryStat > GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxFocus)
+                        {
+                            GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowFocus = GameManager.instance.Players[playernum].GetComponent<PlayerStat>().maxFocus;
+                        }
+                        else
+                        {
+                            GameManager.instance.Players[playernum].GetComponent<PlayerStat>().nowFocus += (int)used.recoveryStat;
+                        }
                     }
+
                     if (InventoryController1.instance.itemCount[playernum][j] < 1)
                     {
                         InventoryController1.instance.itemCount[playernum].RemoveAt(j);

@@ -123,6 +123,21 @@ public class BattleManager : MonoBehaviour
             }
 
             WinBattleBanner.SetActive(true);
+            
+            #region »πµÊ æ∆¿Ã≈€ UI
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
+                    battleLoader.items[0].itemDetailImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
+                battleLoader.items[0].itemImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
+                battleLoader.items[0].itemName;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
+                battleLoader.items[0].detail_1;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
+                battleLoader.items[0].detail_2;
+            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
+            InventoryController1.instance.detailUI.gameObject.SetActive(true);
+            #endregion
 
             for (int i = 0; i < battleLoader.Players.Count; i++)
             {
@@ -140,6 +155,7 @@ public class BattleManager : MonoBehaviour
 
                 if (itemInput.itemTurn > battleLoader.Players.Count - 1)
                 {
+                    
                     itemInput.itemTurn = 0;
                 }
 
@@ -327,6 +343,40 @@ public class BattleManager : MonoBehaviour
     }
     public void Pass()
     {
+        #region »πµÊ æ∆¿Ã≈€ UI
+        if(battleLoader.items.Count > 0)
+        {
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
+                    battleLoader.items[0].itemDetailImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
+                battleLoader.items[0].itemImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
+                battleLoader.items[0].itemName;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
+                battleLoader.items[0].detail_1;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
+                battleLoader.items[0].detail_2;
+            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
+            InventoryController1.instance.detailUI.gameObject.SetActive(true);
+        }
+
+        else if (battleLoader.items.Count <= 0 && battleLoader.Gold > 0)
+        {
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemDetailImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemImage;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemName;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].detail_1;
+            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
+                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].detail_2;
+            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
+            InventoryController1.instance.detailUI.gameObject.SetActive(true);
+        }
+        #endregion
+
         battleLoader.currentItemInputUI[itemInput.itemTurn].SetActive(false);
 
         itemInput.itemTurn++;
@@ -349,36 +399,13 @@ public class BattleManager : MonoBehaviour
         {
             txt.text = "+" + battleLoader.items[0].itemName;
             itemInput.Get(battleLoader.items[0]);
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
-                battleLoader.items[0].itemDetailImage;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
-                battleLoader.items[0].itemImage;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
-                battleLoader.items[0].itemName;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
-                battleLoader.items[0].detail_1;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
-                battleLoader.items[0].detail_2;
-            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
-            InventoryController1.instance.detailUI.gameObject.SetActive(true);
+            
             battleLoader.items.RemoveAt(0);
         }
         else
         {
             txt.text = "+" + battleLoader.Gold + "G";
             GameManager.instance.Players[battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().coins += battleLoader.Gold;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
-                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemDetailImage;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().sprite =
-                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemImage;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text =
-                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].itemName;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text =
-                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].detail_1;
-            InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text =
-                InventoryController1.instance.allItemArr.EatItem[InventoryController1.instance.allItemArr.EatItem.Length - 1].detail_2;
-            InventoryController1.instance.detailUI.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 10);
-            InventoryController1.instance.detailUI.gameObject.SetActive(true);
             battleLoader.Gold = 0;
         }
 
