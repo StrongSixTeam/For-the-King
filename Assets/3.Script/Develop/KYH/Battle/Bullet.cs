@@ -151,6 +151,7 @@ public class Bullet : MonoBehaviour
                             {
                                 Destroy(GameManager.instance.Players[j]);
                                 GameManager.instance.Players.RemoveAt(j);
+                                FindObjectOfType<AstsrPathfinding>().playerController.RemoveAt(j);
                             }
                         }
 

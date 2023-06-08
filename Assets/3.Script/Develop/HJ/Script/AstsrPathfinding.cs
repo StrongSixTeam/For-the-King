@@ -27,7 +27,7 @@ public class AstsrPathfinding : MonoBehaviour
     public int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
     //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정
-    [SerializeField] List<PlayerController_Jin> playerController = new List<PlayerController_Jin>();
+    public List<PlayerController_Jin> playerController = new List<PlayerController_Jin>();
     //GameObject[] playerObject;
 
     [SerializeField] GameObject hexCursorRadPrefab;
