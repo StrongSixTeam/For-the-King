@@ -539,12 +539,15 @@ public class EncounterManager : MonoBehaviour
 
     public void SanctumPrayBtn()
     {
+        
         if (number == 9)
         {
             SanctumFocusBtn();
             encounter[number].isCleared = true;
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.focus;
             FindObjectOfType<MapObjectCreator>().UseObject(1);
+            EffectManager.Instance.PlayEffect(FindObjectOfType<MapObjectCreator>().sanctumObj[0].transform.position, null, EffectType.Sanctum);
+
         }
         else if (number == 10)
         {
@@ -552,6 +555,7 @@ public class EncounterManager : MonoBehaviour
             encounter[number].isCleared = true;
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.life;
             FindObjectOfType<MapObjectCreator>().UseObject(2);
+            EffectManager.Instance.PlayEffect(FindObjectOfType<MapObjectCreator>().sanctumObj[1].transform.position, null, EffectType.Sanctum);
         }
         else if (number == 11)
         {
@@ -559,6 +563,7 @@ public class EncounterManager : MonoBehaviour
             encounter[number].isCleared = true;
             GameManager.instance.MainPlayer.GetComponent<PlayerStat>().whichSanctum = PlayerStat.Sanctum.wisdom;
             FindObjectOfType<MapObjectCreator>().UseObject(3);
+            EffectManager.Instance.PlayEffect(FindObjectOfType<MapObjectCreator>().sanctumObj[2].transform.position, null, EffectType.Sanctum);
         }
     }
 
