@@ -123,7 +123,7 @@ public class BattleManager : MonoBehaviour
             }
 
             WinBattleBanner.SetActive(true);
-            GameManager.instance.Players[battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().coins += battleLoader.Gold;
+            
             #region »πµÊ æ∆¿Ã≈€ UI
             InventoryController1.instance.detailUI.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite =
                     battleLoader.items[0].itemDetailImage;
@@ -343,7 +343,6 @@ public class BattleManager : MonoBehaviour
     }
     public void Pass()
     {
-        GameManager.instance.Players[battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().coins += battleLoader.Gold;
         #region »πµÊ æ∆¿Ã≈€ UI
         if(battleLoader.items.Count > 0)
         {
@@ -406,6 +405,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             txt.text = "+" + battleLoader.Gold + "G";
+            GameManager.instance.Players[battleLoader.Players[itemInput.itemTurn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().coins += battleLoader.Gold;
             battleLoader.Gold = 0;
         }
 
