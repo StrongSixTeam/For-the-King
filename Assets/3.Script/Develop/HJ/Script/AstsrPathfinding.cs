@@ -27,8 +27,8 @@ public class AstsrPathfinding : MonoBehaviour
     public int WhoseTurn; //0, 1, 2 플레이어 턴 지정 (누구의 playerController에 접근할건지)
 
     //PlayerSpawner가 SetPlayerCount(), SetPlayer()로 설정
-    [SerializeField] PlayerController_Jin[] playerController;
-    GameObject[] playerObject;
+    [SerializeField] List<PlayerController_Jin> playerController = new List<PlayerController_Jin>();
+    //GameObject[] playerObject;
 
     [SerializeField] GameObject hexCursorRadPrefab;
     [SerializeField] GameObject hexCursorGreenPrefab;
@@ -73,22 +73,22 @@ public class AstsrPathfinding : MonoBehaviour
         Cursor.SetCursor(cursotImage, Vector2.zero, CursorMode.ForceSoftware);
     }
 
-    public void SetPlayerCount(int playerCount)
-    {
-        playerController = new PlayerController_Jin[playerCount];
-        playerObject = new GameObject[playerCount];
-    }
+    //public void SetPlayerCount(int playerCount)
+    //{
+    //    playerController = new PlayerController_Jin[playerCount];
+    //    playerObject = new GameObject[playerCount];
+    //}
 
     public void SetPlayer(int index, PlayerController_Jin player, GameObject playerObj)
     {
-        playerController[index] = player;
-        playerObject[index] = playerObj;
+        playerController.Add(player);
+        //playerObject[index] = playerObj;
     }
 
     public List<GameObject> GetPlayerHexNums(PlayerController_Jin calledPlayer, int myHexNum)
     {
         List<GameObject> players = new List<GameObject>();
-        for (int i = 0; i < playerController.Length; i++)
+        for (int i = 0; i < playerController.Count; i++)
         {
             //호출한 본인을 제외한 플레이어
             if (playerController[i] != calledPlayer)
