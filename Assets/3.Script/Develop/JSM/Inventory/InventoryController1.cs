@@ -430,15 +430,29 @@ public class InventoryController1 : MonoBehaviour
                         {
                             itemCount[(int)playerNum][i]--;
                         }
-
-                        if(GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxHp)
+                        if(used.itemName.Equals("신의 수염"))
                         {
-                            GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxHp;
+                            if (GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp + used.recoveryStat > GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxHp)
+                            {
+                                GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxHp;
+                            }
+                            else
+                            {
+                                GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
+                            }
                         }
-                        else
+                        else if (used.itemName.Equals("황금 뿌리"))
                         {
-                            GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowHp += used.recoveryStat;
+                            if (GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowFocus + used.recoveryStat > GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxFocus)
+                            {
+                                GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowFocus = GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().maxFocus;
+                            }
+                            else
+                            {
+                                GameManager.instance.Players[(int)playerNum].GetComponent<PlayerStat>().nowFocus += (int)used.recoveryStat;
+                            }
                         }
+                        
                         break;
 
                     case ItemType.스크롤:
