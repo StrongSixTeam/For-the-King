@@ -7,6 +7,9 @@ public class SlotController : MonoBehaviour
 {
     public static SlotController instance = null;
 
+    public AudioClip audioSuccess;
+    public AudioClip audioFail;
+    private AudioSource audioSource;
     public Sprite[] move; //이동 UI 이미지
     public Sprite[] attackBlackSmith; //공격 UI 이미지 - 대장장이
     public Sprite[] attackHunter; //공격 UI 이미지 - 사냥꾼
@@ -26,6 +29,7 @@ public class SlotController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        TryGetComponent<AudioSource>(out audioSource);
     }
     public enum Type
     {
@@ -125,6 +129,8 @@ public class SlotController : MonoBehaviour
                 transform.GetChild(i).GetChild(1).gameObject.SetActive(true); //고정 이동칸
                 fixCount--;
                 success++;
+                audioSource.clip = audioSuccess;
+                audioSource.PlayOneShot(audioSource.clip);
                 continue;
             }
             else
@@ -134,11 +140,15 @@ public class SlotController : MonoBehaviour
                 {
                     transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
                     success++;
+                    audioSource.clip = audioSuccess;
+                    audioSource.PlayOneShot(audioSource.clip);
                 }
                 else
                 {
                     transform.GetChild(i).GetChild(3).gameObject.SetActive(true);
                     fail++;
+                    audioSource.clip = audioFail;
+                    audioSource.PlayOneShot(audioSource.clip);
                 }
             }
         }
