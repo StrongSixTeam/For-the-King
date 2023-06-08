@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
                     battleManager.attackDamage = 0;
                 }
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
                 //EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1.5f, 0), null, EffectType.PlayerHit);
@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
                     {
-                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
 
                         float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
 
@@ -125,7 +125,7 @@ public class Bullet : MonoBehaviour
                     {
                         GameManager.instance.currentLife--;
 
-                        battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                        battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = (int)battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                         battleLoader.Players[i].GetComponent<Animator>().SetBool("Die", false);
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Revive");
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Battle");
@@ -134,7 +134,7 @@ public class Bullet : MonoBehaviour
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
-                                GameManager.instance.Players[j].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                                GameManager.instance.Players[j].GetComponent<PlayerStat>().nowHp = (int)GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                             }
                         }
 
