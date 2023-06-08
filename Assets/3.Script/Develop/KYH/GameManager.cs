@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject mainCam;
 
-    public int dieCnt = 0;
+    private int currentNum;
 
     private void Start()
     {
@@ -133,42 +133,45 @@ public class GameManager : MonoBehaviour
                 TurnChange();
             }
         }
-        if (MainPlayer == null && Players.Count > 0 && mainCam.activeSelf && isSettingDone)
+
+        if (Players.Count < currentNum && mainCam.activeSelf && isSettingDone)
         {
+            nextTurn -= 1;
+
             TurnChange();
         }
-        if (isSettingDone && Players[nextTurn] == null && Players.Count > 0 && mainCam.activeSelf)
-        {
-            if (Players.Count == 2)
-            {
-                if (nextTurn == 0)
-                {
-                    nextTurn = 1;
-                }
-                else if (nextTurn == 1)
-                {
-                    nextTurn = 0;
-                }
-            }
-            else if(Players.Count == 3)
-            {
-                if (nextTurn == 0)
-                {
-                    nextTurn = 1;
-                }
-                else if (nextTurn == 1)
-                {
-                    nextTurn = 2;
-                }
-                else if (nextTurn == 2)
-                {
-                    nextTurn = 0;
-                }
-            }
+        //if (isSettingDone && Players[nextTurn] == null && Players.Count > 0 && mainCam.activeSelf)
+        //{
+        //    if (Players.Count == 2)
+        //    {
+        //        if (nextTurn == 0)
+        //        {
+        //            nextTurn = 1;
+        //        }
+        //        else if (nextTurn == 1)
+        //        {
+        //            nextTurn = 0;
+        //        }
+        //    }
+        //    else if(Players.Count == 3)
+        //    {
+        //        if (nextTurn == 0)
+        //        {
+        //            nextTurn = 1;
+        //        }
+        //        else if (nextTurn == 1)
+        //        {
+        //            nextTurn = 2;
+        //        }
+        //        else if (nextTurn == 2)
+        //        {
+        //            nextTurn = 0;
+        //        }
+        //    }
 
-        }
+        //}
 
-        if (currentLife <= 0 && Players.Count == dieCnt && mainCam.activeSelf)
+        if (currentLife <= 0 && Players.Count == 0 && mainCam.activeSelf)
         {
             isDie = true;
         }
@@ -186,7 +189,9 @@ public class GameManager : MonoBehaviour
     }
     public void TurnChange()
     {
-        glowControl.SetTurnGlow(nextTurn);
+        currentNum = Players.Count;
+
+        glowControl.SetTurnGlow(Players[nextTurn].GetComponent<PlayerStat>().order);
 
         if (nextTurn == 0 && !isFisrtTurn)
         {

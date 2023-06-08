@@ -126,6 +126,8 @@ public class Bullet : MonoBehaviour
                     {
                         GameManager.instance.currentLife--;
 
+                        EffectManager.Instance.PlayEffect(battleLoader.Players[i].transform.position, null, EffectType.Revival);
+
                         battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = (int)battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                         battleLoader.Players[i].GetComponent<Animator>().SetBool("Die", false);
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Revive");
@@ -147,7 +149,6 @@ public class Bullet : MonoBehaviour
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
-                                GameManager.instance.dieCnt++;
                                 Destroy(GameManager.instance.Players[j]);
                                 GameManager.instance.Players.RemoveAt(j);
                             }

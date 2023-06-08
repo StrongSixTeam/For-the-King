@@ -194,7 +194,7 @@ public class AstsrPathfinding : MonoBehaviour
                 WhoseTurn = GameManager.instance.nextTurn - 1;
                 if (WhoseTurn < 0)
                 {
-                    WhoseTurn = PlayerPrefs.GetInt("PlayerCnt") - 1;
+                    WhoseTurn = GameManager.instance.Players.Count - 1;
                 }
             }
 
