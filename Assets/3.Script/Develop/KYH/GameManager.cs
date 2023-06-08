@@ -136,12 +136,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Players.Count < currentNum && mainCam.activeSelf && isSettingDone)
-        {
-            nextTurn -= 1;
-
-            TurnChange();
-        }
         //if (isSettingDone && Players[nextTurn] == null && Players.Count > 0 && mainCam.activeSelf)
         //{
         //    if (Players.Count == 2)
@@ -187,6 +181,12 @@ public class GameManager : MonoBehaviour
         {
             BadEnding.SetActive(true);
             Invoke("BadEnd", 5f);
+        }
+        if (Players.Count < currentNum && mainCam.activeSelf && isSettingDone && Players.Count > 0)
+        {
+            nextTurn -= 1;
+
+            TurnChange();
         }
     }
     public void TurnChange()
