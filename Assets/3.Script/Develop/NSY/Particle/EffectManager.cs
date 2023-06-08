@@ -6,10 +6,10 @@ using UnityEngine;
 public enum EffectType
 {
     EnemyHit,     //플레이어가 공격할 시 공격받은 적 몸체 쪽에 생기는 이펙트
-                
+    PlayerSkill,  //플레이어가 공격할 시 나타나는 스킬 이펙트       
 
-    PlayerHit     //적이 공격할 시 공격받은 플레이어 몸체 쪽에 생기는 이펙트
-                   
+    PlayerHit,     //적이 공격할 시 공격받은 플레이어 몸체 쪽에 생기는 이펙트
+    EnemySkill     //적이 공격할 시 나타나는 스킬 이펙트               
                   
 
 }
@@ -35,13 +35,10 @@ public class EffectManager : MonoBehaviour
 
     public ParticleSystem plHitEffectprefab;
     public ParticleSystem enHitEffectprefab;
+    public ParticleSystem plSkillEffectprefab;
+    public ParticleSystem enSkillEffectprefab;
 
-    // public ParticleSystem plFleshEffectprefab;
-    // public ParticleSystem plSpaceEffectprefab;
-
-    // public ParticleSystem enFleshEffectprefab;
-    // public ParticleSystem enSpaceEffectprefab;
-
+    
     private List<ParticleSystem> effectList = new List<ParticleSystem>();
 
 
@@ -58,6 +55,16 @@ public class EffectManager : MonoBehaviour
         else if (effectType == EffectType.EnemyHit)
         {
             targetPrefab = Resources.Load<GameObject>("Hit_02");
+        }
+
+        else if (effectType==EffectType.PlayerSkill)
+        {
+            targetPrefab = Resources.Load<GameObject>("Electro slash");
+        }
+        
+        else if (effectType==EffectType.EnemySkill)
+        {
+            targetPrefab = Resources.Load<GameObject>("Stone slash");  
         }
 
 
