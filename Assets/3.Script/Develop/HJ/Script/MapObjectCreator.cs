@@ -43,7 +43,7 @@ public class MapObjectCreator : MonoBehaviour
 
     public GameObject[] forestObj = new GameObject[5];
     public GameObject[] plainsObj = new GameObject[4];
-    private GameObject[] sanctumObj = new GameObject[3];
+    public GameObject[] sanctumObj = new GameObject[3];
     private GameObject[] randomObj = new GameObject[6];
     private GameObject[] ObstacleObj = new GameObject[9];
 

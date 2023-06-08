@@ -11,7 +11,10 @@ public enum EffectType
     PlayerHit,     //적이 공격할 시 공격받은 플레이어 몸체 쪽에 생기는 이펙트
     EnemySkill,     //적이 공격할 시 나타나는 스킬 이펙트               
                   
-    Revival       //부활!!
+    Revival,       //부활!!
+
+    Sanctum   //성소 이펙트 
+
 
 }
 
@@ -39,6 +42,7 @@ public class EffectManager : MonoBehaviour
     public ParticleSystem plSkillEffectprefab;
     public ParticleSystem enSkillEffectprefab;
     public ParticleSystem revivalEffectprefab;
+    public ParticleSystem sanctumEffectprefab;
 
     
     private List<ParticleSystem> effectList = new List<ParticleSystem>();
@@ -74,6 +78,10 @@ public class EffectManager : MonoBehaviour
             targetPrefab = Resources.Load<GameObject>("BirthBorder");
         }
 
+        else if (effectType==EffectType.Sanctum)
+        {
+            targetPrefab = Resources.Load<GameObject>("BirthBottomRings");
+        }
 
         var obj = Instantiate(targetPrefab, pos, Quaternion.identity);
 
