@@ -28,6 +28,7 @@ public class PortraitUI : MonoBehaviour
             if (!set)
             {
                 portrait.sprite = GameManager.instance.Players[order].GetComponent<PlayerStat>().portrait;
+                set = true;
             }
         }
     }
