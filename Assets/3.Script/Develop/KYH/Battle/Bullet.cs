@@ -125,7 +125,7 @@ public class Bullet : MonoBehaviour
                     {
                         GameManager.instance.currentLife--;
 
-                        battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                        battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = (int)battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                         battleLoader.Players[i].GetComponent<Animator>().SetBool("Die", false);
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Revive");
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Battle");
@@ -134,7 +134,7 @@ public class Bullet : MonoBehaviour
                         {
                             if (GameManager.instance.Players[j].GetComponent<PlayerStat>().name.Equals(battleLoader.Players[i].GetComponent<PlayerStat>().name))
                             {
-                                GameManager.instance.Players[j].GetComponent<PlayerStat>().nowHp = GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
+                                GameManager.instance.Players[j].GetComponent<PlayerStat>().nowHp = (int)GameManager.instance.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                             }
                         }
 
