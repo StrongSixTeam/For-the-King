@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
                 other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
-                //EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1.5f, 0), null, EffectType.PlayerHit);
+                EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1.5f, 0), null, EffectType.PlayerHit);
 
                 for (int i = 0; i < GameManager.instance.Players.Count; i++)
                 {
@@ -74,7 +74,8 @@ public class Bullet : MonoBehaviour
                 other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
-                //EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1f, 0), null, EffectType.EnemyHit);
+                EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1f, 0), null, EffectType.PlayerSkill);
+                EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1f, 0), null, EffectType.EnemyHit);
 
                 if (currnetHP <= 0)
                 {
@@ -148,7 +149,7 @@ public class Bullet : MonoBehaviour
                             {
                                 GameManager.instance.dieCnt++;
                                 Destroy(GameManager.instance.Players[j]);
-                                //GameManager.instance.Players.RemoveAt(j);
+                                GameManager.instance.Players.RemoveAt(j);
                             }
                         }
 
