@@ -126,6 +126,8 @@ public class Bullet : MonoBehaviour
                     {
                         GameManager.instance.currentLife--;
 
+                        EffectManager.Instance.PlayEffect(battleLoader.Players[i].transform.position, null, EffectType.Revival);
+
                         battleLoader.Players[i].GetComponent<PlayerStat>().nowHp = (int)battleLoader.Players[i].GetComponent<PlayerStat>().maxHp * 0.5f;
                         battleLoader.Players[i].GetComponent<Animator>().SetBool("Die", false);
                         battleLoader.Players[i].GetComponent<Animator>().SetTrigger("Revive");
