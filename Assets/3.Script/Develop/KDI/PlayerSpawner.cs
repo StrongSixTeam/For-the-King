@@ -33,7 +33,7 @@ public class PlayerSpawner : MonoBehaviour
         startPos = FindObjectOfType<HexMapCreator>().hexMembers[startIndex].transform.position + new Vector3(0f, 0.1f, 0f);
 
         astsrPathfinding = FindObjectOfType<AstsrPathfinding>();
-        astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
+        //astsrPathfinding.SetPlayerCount(PlayerPrefs.GetInt("PlayerCnt"));
 
         playerUI = FindObjectsOfType<PlayerUI>();
         playerUIs = FindObjectsOfType<PlayerUI>();

@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
                     battleManager.attackDamage = 0;
                 }
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
                 other.GetComponent<Animator>().SetBool("Hit", true);
 
                 //EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1.5f, 0), null, EffectType.PlayerHit);
@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
                 {
                     if (other.GetComponent<PlayerStat>().name.Equals(GameManager.instance.Players[i].GetComponent<PlayerStat>().name))
                     {
-                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage;
+                        GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp -= battleManager.attackDamage + 100;
 
                         float currnetHP = GameManager.instance.Players[i].GetComponent<PlayerStat>().nowHp;
 
