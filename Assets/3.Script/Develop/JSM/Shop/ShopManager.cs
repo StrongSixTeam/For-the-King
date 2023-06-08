@@ -110,6 +110,7 @@ public class ShopManager : MonoBehaviour
             transform.GetChild(i).transform.gameObject.SetActive(true);
             
         }
+        InventoryController1.instance.playerNum = (PlayerNum)GameManager.instance.MainPlayer.GetComponent<PlayerStat>().order;
         ComparePrice();
     }
 
