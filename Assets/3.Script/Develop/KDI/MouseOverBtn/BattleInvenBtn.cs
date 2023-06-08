@@ -26,16 +26,14 @@ public class BattleInvenBtn : MonoBehaviour, IPointerEnterHandler
         infoText.text = "소지품 살펴보기";
         if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
         {
-            FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
+            GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().nowFocus += battleFightBtn.GetComponent<RightClick>().usedFocus;
             battleFightBtn.GetComponent<RightClick>().usedFocus = 0;
-            GetComponent<RightClick>().usedFocus = 0;
             SlotController.instance.fixCount = 0;
         }
-        if (battleFightBtn.GetComponent<RightClick>().usedFocus > 0)
+        if (battleRunBtn.GetComponent<RightClick>().usedFocus > 0)
         {
-            FindObjectOfType<BattleManager>().FindPlayer(battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order).GetComponent<PlayerStat>().nowFocus += battleRunBtn.GetComponent<RightClick>().usedFocus;
+            GameManager.instance.Players[battleOrderManager.Order[battleOrderManager.turn].GetComponent<PlayerStat>().order].GetComponent<PlayerStat>().nowFocus += battleRunBtn.GetComponent<RightClick>().usedFocus;
             battleRunBtn.GetComponent<RightClick>().usedFocus = 0;
-            GetComponent<RightClick>().usedFocus = 0;
             SlotController.instance.fixCount = 0;
         }
         slot.SetActive(false);
