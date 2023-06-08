@@ -1897,6 +1897,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioButton: {fileID: 8300000, guid: c7e10ad69b6bbbe44b5f54c81e282e74, type: 3}
+  audioCloud: {fileID: 8300000, guid: 40e8837bfb1c8cc4cb07051287e5566e, type: 3}
+  audioTurn: {fileID: 8300000, guid: a79bb4589baefaa4bb57baf2f86ea942, type: 3}
 --- !u!4 &300062584
 Transform:
   m_ObjectHideFlags: 0
@@ -2113,6 +2115,7 @@ RectTransform:
   - {fileID: 116109451}
   - {fileID: 337778992}
   - {fileID: 687788433}
+  - {fileID: 8337259541062103719}
   - {fileID: 1427500731}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -2931,7 +2934,6 @@ MonoBehaviour:
   Ending: {fileID: 337778991}
   BadEnding: {fileID: 687788432}
   mainCam: {fileID: 963194225}
-  dieCnt: 0
 --- !u!4 &514105501
 Transform:
   m_ObjectHideFlags: 0
@@ -5433,7 +5435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1547, y: 0}
+  m_AnchoredPosition: {x: 2840, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &966559624
@@ -8486,7 +8488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1819, y: 0}
+  m_AnchoredPosition: {x: -2949, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1363983475
@@ -9340,7 +9342,7 @@ RectTransform:
   - {fileID: 1357105811}
   - {fileID: 965329381}
   m_Father: {fileID: 354772817}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -23376,6 +23378,7 @@ MonoBehaviour:
   enHitEffectprefab: {fileID: 2095545764296474701, guid: f745c19b43ff159488253c589cdb508b, type: 3}
   plSkillEffectprefab: {fileID: 0}
   enSkillEffectprefab: {fileID: 0}
+  revivalEffectprefab: {fileID: 0}
 --- !u!224 &3076824762120435243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35910,8 +35913,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 8337259541062103719}
+  m_Children: []
   m_Father: {fileID: 1713013735274477222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42374,7 +42376,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 300062583}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: PlayBtn
+        m_MethodName: PlayTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -42444,12 +42446,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6909424464268964526}
-  m_RootOrder: 0
+  m_Father: {fileID: 354772817}
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 838, y: -65.9}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 66, y: -35}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8337259541062103722
