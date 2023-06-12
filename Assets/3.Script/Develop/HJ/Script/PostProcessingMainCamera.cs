@@ -11,7 +11,7 @@ public class PostProcessingMainCamera : MonoBehaviour
 
     private void Start()
     {
-        _postProcessVolume = FindObjectOfType<Volume>();
+        _postProcessVolume = GetComponent<Volume>();
         _postProcessVolume.profile.TryGet(out _colorAdjustments);
     }
 
