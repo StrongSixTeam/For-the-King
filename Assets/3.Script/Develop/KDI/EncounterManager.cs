@@ -596,15 +596,7 @@ public class EncounterManager : MonoBehaviour
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-        if (GameManager.instance.currentLife != GameManager.instance.maxLife)
-        {
-            GameManager.instance.currentLife += 1;
-        }
-        else if (GameManager.instance.maxLife < 5)
-        {
-            GameManager.instance.maxLife += 1;
-            GameManager.instance.currentLife = GameManager.instance.maxLife;
-        }
+        GameManager.instance.maxLife += 1;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp += 10;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;

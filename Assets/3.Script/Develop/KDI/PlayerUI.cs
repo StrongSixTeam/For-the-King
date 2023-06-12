@@ -101,6 +101,10 @@ public class PlayerUI : MonoBehaviour
                 {
                     extraHp = 0;
                 }
+                if (playerStat.nowHp > playerStat.maxHp)
+                {
+                    playerStat.nowHp = playerStat.maxHp;
+                }
                 playerStat.def = playerStat.originalDef + extraDef;
                 defText.text = ((int)playerStat.def).ToString();
 
