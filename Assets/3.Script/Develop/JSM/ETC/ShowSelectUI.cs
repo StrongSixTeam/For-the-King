@@ -19,7 +19,7 @@ public class ShowSelectUI : MonoBehaviour
         GameObject Click = EventSystem.current.currentSelectedGameObject;
         ItemType itemtype = (ItemType)System.Enum.Parse(typeof(ItemType), Click.transform.tag);
         point = Input.mousePosition;
-        InventoryController1.instance.itemSelectUI.transform.position = new Vector3(point.x + 95f, point.y - 120, 0f);
+        InventoryController1.instance.itemSelectUI.transform.position = new Vector3(point.x + 95f, point.y - 75, 0f);
 
         switch (itemtype)
         {
