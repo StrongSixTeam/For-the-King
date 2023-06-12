@@ -71,7 +71,7 @@ public class Bullet : MonoBehaviour
             else //적이 맞을때
             {
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1f, 0), null, EffectType.PlayerSkill);
@@ -168,7 +168,18 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp <= 0)
                 {
-                    FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    if (EncounterManager.instance.enemyNumber >= 0 && EncounterManager.instance.enemyNumber <= 11)
+                    {
+                        FindObjectOfType<MapObjectCreator>().objectIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    }
+                    else if (EncounterManager.instance.enemyNumber > 11 && EncounterManager.instance.enemyNumber <= 15) //12 ~ 15
+                    {
+                        FindObjectOfType<MapObjectCreator>().randomObjectIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    }
+                    else if (EncounterManager.instance.number >= 0)
+                    {
+                        FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    }
                     
                     //Destroy(battleLoader.Enemys[i]);
                     battleManager.dieObj.Add(battleLoader.Enemys[i]);
