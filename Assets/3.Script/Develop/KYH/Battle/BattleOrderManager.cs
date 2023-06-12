@@ -11,7 +11,7 @@ public class BattleOrderManager : MonoBehaviour
     [SerializeField] Sprite PBground;
     [SerializeField] Sprite EBground;
 
-    List<int> order = new List<int>();
+    public List<int> order = new List<int>();
     public List<GameObject> Order = new List<GameObject>();
     public int turn = -1; //전투 스크립트에서 관리
 
@@ -65,8 +65,11 @@ public class BattleOrderManager : MonoBehaviour
                 if (order[i] < order[l])
                 {
                     temp = Order[i];
+                    int o = order[i];
                     Order[i] = Order[l];
+                    order[i] = order[l];
                     Order[l] = temp;
+                    order[l] = o;
                 }
             }
         }
