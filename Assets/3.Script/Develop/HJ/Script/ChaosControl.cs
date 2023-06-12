@@ -11,7 +11,7 @@ public class ChaosControl : MonoBehaviour
     int chaosTurn = 5; //카오스 생성 턴
     int maxChaosCount = 0; //카오스가 끝까지 간 경우 ++
 
-    public int endBarIndex;
+    int endBarIndex;
 
     Queue<int> FIFO = new Queue<int>();
 
@@ -60,10 +60,10 @@ public class ChaosControl : MonoBehaviour
 
     IEnumerator CreateChaosCo(int i)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.7f);
         chaosImageBox[i].SetActive(true);
         chaosImageBox[i].transform.SetParent(parentsBar[endBarIndex]);
-        chaosImageBox[i].transform.localPosition = new Vector3(0f, 0.1f, 0f);
+        chaosImageBox[i].transform.localPosition = Vector3.zero;
         FIFO.Enqueue(i);
         yield break;
     }
