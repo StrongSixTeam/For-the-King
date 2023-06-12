@@ -350,7 +350,7 @@ public class InventoryController1 : MonoBehaviour
     {
         isEquip = false;
         isUsed = false;
-        itemSelectUI.transform.GetChild(4).GetChild(0).GetComponent<Image>().sprite = actImage;
+        itemSelectUI.transform.GetChild(2).GetChild(0).GetComponent<Image>().sprite = actImage;
         itemSelectUI.gameObject.SetActive(false);
         itemName = "";
     }
@@ -746,8 +746,8 @@ public class InventoryController1 : MonoBehaviour
 
     public void QuitItemUnequipUI()
     {
-        itemSelectUI.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = actImage;
-        itemSelectUI.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = actImage;
+        equipItemSelectUI.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = actImage;
+        equipItemSelectUI.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = actImage;
         equipItemSelectUI.gameObject.SetActive(false);
     }
     public void UnEquipItem()               // 장비창에 있는 장비 클릭 시 생성되는 컨택스트 메뉴에서 탈착 버튼 눌렀을 때 실행되는 함수
