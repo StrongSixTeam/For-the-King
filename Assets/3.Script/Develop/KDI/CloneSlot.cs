@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CloneSlot : MonoBehaviour
 {
+    public GameObject battleFightBtn;
     private AudioSource audioSource;
     public AudioClip audioSuccess;
     public AudioClip audioFail;
@@ -372,6 +373,7 @@ public class CloneSlot : MonoBehaviour
         }
         else //공격씬이면
         {
+            Invoke("ResetFocus", 1f);
             if (runOut) //공격씬에서 도주하면
             {
                 Invoke("slotsOff", 1f);
@@ -447,6 +449,10 @@ public class CloneSlot : MonoBehaviour
                 }
             }
         }
+    }
+    private void ResetFocus()
+    {
+        battleFightBtn.GetComponent<RightClick>().usedFocus = 0;
     }
 
     private void turnChange()

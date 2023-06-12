@@ -71,7 +71,7 @@ public class Bullet : MonoBehaviour
             else //적이 맞을때
             {
                 txt.text = "-" + battleManager.attackDamage;
-                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage + 100;
+                other.GetComponent<EnemyStat>().nowHp -= battleManager.attackDamage;
                 float currnetHP = other.GetComponent<EnemyStat>().nowHp;
 
                 EffectManager.Instance.PlayEffect(other.transform.position + new Vector3(0, 1f, 0), null, EffectType.PlayerSkill);
