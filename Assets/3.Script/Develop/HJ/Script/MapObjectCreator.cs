@@ -887,8 +887,8 @@ public class MapObjectCreator : MonoBehaviour
                 forestObj[4].transform.GetChild(1).localScale = new Vector3(1f, 1f, 1f);
                 yield break;
             case 3:
-                plainsObj[3].GetComponent<MeshRenderer>().enabled = true;
                 plainsObj[3].transform.localScale = Vector3.zero;
+                plainsObj[3].GetComponent<MeshRenderer>().enabled = true;
                 for (int i = 0; i < 20; i++)
                 {
                     plainsObj[3].transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
