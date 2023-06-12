@@ -47,7 +47,7 @@ public class EncounterManager : MonoBehaviour
         encounter[2].isShowed = false;
         encounter[3].isShowed = false;
         encounter[4].isShowed = false;
-        encounter[7].isShowed = false;
+        encounter[8].isShowed = false;
         for (int i = 0; i < encounter.Length; i++)
         {
             encounter[i].isCleared = false;
