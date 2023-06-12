@@ -13,6 +13,9 @@ public class EncounterManager : MonoBehaviour
     public Text txtContext;
     public Text txtExtraContext;
 
+    public int battleBtn = 0; //0: run, 1: fight
+    public Text accuracy;
+
     [SerializeField] private Transform parent;
     public EncounterContent[] encounter;
     public EncounterContent[] enemies;
@@ -281,7 +284,7 @@ public class EncounterManager : MonoBehaviour
                 {
                     player.GetComponent<PlayerStat>().nowFocus -= 1;
                     SlotController.instance.fixCount += 1;
-                    if (player.GetComponent<PlayerStat>().nowFocus == 1)
+                    if (SlotController.instance.fixCount == 1)
                     {
                         SlotController.instance.percent += 10;
                         if (SlotController.instance.percent > 100)
@@ -289,7 +292,7 @@ public class EncounterManager : MonoBehaviour
                             SlotController.instance.percent = 100;
                         }
                     }
-                    else if (player.GetComponent<PlayerStat>().nowFocus == 2)
+                    else if (SlotController.instance.fixCount == 2)
                     {
                         SlotController.instance.percent += 15;
                         if (SlotController.instance.percent > 100)
@@ -297,7 +300,7 @@ public class EncounterManager : MonoBehaviour
                             SlotController.instance.percent = 100;
                         }
                     }
-                    else if (player.GetComponent<PlayerStat>().nowFocus == 3)
+                    else if (SlotController.instance.fixCount == 3)
                     {
                         SlotController.instance.percent += 18;
                         if (SlotController.instance.percent > 100)
@@ -305,7 +308,7 @@ public class EncounterManager : MonoBehaviour
                             SlotController.instance.percent = 100;
                         }
                     }
-                    else if (player.GetComponent<PlayerStat>().nowFocus == 4)
+                    else if (SlotController.instance.fixCount == 4)
                     {
                         SlotController.instance.percent += 20;
                         if (SlotController.instance.percent > 100)
@@ -314,9 +317,14 @@ public class EncounterManager : MonoBehaviour
                         }
                     }
                     fightSlot.GetComponent<CloneSlot>().Initialized();
+                    accuracy.text = SlotController.instance.percent + "%";
                 }
             }
         }
+    }
+    public void SetString()
+    {
+        accuracy.text = SlotController.instance.percent + "%";
     }
 
     private SlotController.Type StringToType(string some)
