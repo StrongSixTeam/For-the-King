@@ -301,6 +301,10 @@ public class GameManager : MonoBehaviour
 
     public void SetLifeUI()
     {
+        if (currentLife > maxLife)
+        {
+            currentLife = maxLife;
+        }
         for (int i = 0; i < LifeUI.transform.childCount; i++)
         {
             LifeUI.transform.GetChild(i).gameObject.SetActive(false);
