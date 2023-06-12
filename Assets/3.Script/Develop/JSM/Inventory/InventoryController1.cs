@@ -337,6 +337,7 @@ public class InventoryController1 : MonoBehaviour
         {
             transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().sprite = category[i].itemImage;
             transform.GetChild(i).GetChild(0).GetChild(1).GetComponent<Text>().text = category[i].itemName + " " + categoryCnt[i].ToString();
+            transform.GetChild(i).GetChild(0).transform.tag = category[i].itemType.ToString();
             transform.GetChild(i).gameObject.SetActive(true);
         }
     }
