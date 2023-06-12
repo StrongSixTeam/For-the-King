@@ -592,7 +592,7 @@ public class EncounterManager : MonoBehaviour
     {
         Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
         txt.transform.SetParent(GameObject.Find("Canvas").transform);
-        txt.text = "+ 2 추가체력\n\n+ Hp 10 회복";
+        txt.text = "+ 1 추가체력\n\n+ Hp 10 회복";
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
