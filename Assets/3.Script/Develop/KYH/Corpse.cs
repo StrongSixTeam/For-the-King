@@ -25,7 +25,7 @@ public class Corpse : MonoBehaviour
     private void OnDisable()
     {
         EncounterManager.instance.encounter[8].isCleared = true;
-        if (FindObjectOfType<QuestManager>() != null && FindObjectOfType<QuestManager>().questTurn > 2 && isEnd)
+        if (isEnd)
         {
             FindObjectOfType<GlowControl>().SetQuestObjectGlow(5, false);
             FindObjectOfType<ChaosControl>().RemoveChaos(false);
