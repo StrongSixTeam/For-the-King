@@ -97,7 +97,7 @@ public class PlayerController_Jin : MonoBehaviour
         {
             if (quest.questTurn == 9)
             {
-                quest.PopUp("Farid");
+                quest.PopUp("Parid");
                 quest.questTurn = 10;
                 glowControl.SetQuestObjectGlow(4, false);
             }
