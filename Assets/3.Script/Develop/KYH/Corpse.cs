@@ -17,8 +17,8 @@ public class Corpse : MonoBehaviour
     {
         if (CaveEnemy02.enemys01.Count == 0 && CaveEnemy02.enemys02.Count == 0 && CaveEnemy02.enemys03.Count == 0)
         {
-            Destroy(gameObject);
             isEnd = true;
+            Destroy(gameObject);
         }
     }
 
