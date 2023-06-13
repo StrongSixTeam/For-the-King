@@ -13,6 +13,9 @@ public class EncounterManager : MonoBehaviour
     public Text txtContext;
     public Text txtExtraContext;
 
+    public int battleBtn = 0; //0: run, 1: fight
+    public Text accuracy;
+
     [SerializeField] private Transform parent;
     public EncounterContent[] encounter;
     public EncounterContent[] enemies;
@@ -44,7 +47,7 @@ public class EncounterManager : MonoBehaviour
         encounter[2].isShowed = false;
         encounter[3].isShowed = false;
         encounter[4].isShowed = false;
-        encounter[7].isShowed = false;
+        encounter[8].isShowed = false;
         for (int i = 0; i < encounter.Length; i++)
         {
             encounter[i].isCleared = false;
@@ -281,7 +284,7 @@ public class EncounterManager : MonoBehaviour
                 {
                     player.GetComponent<PlayerStat>().nowFocus -= 1;
                     SlotController.instance.fixCount += 1;
-                    if (player.GetComponent<PlayerStat>().nowFocus == 1)
+                    if (SlotController.instance.fixCount == 1)
                     {
                         SlotController.instance.percent += 10;
                         if (SlotController.instance.percent > 100)
@@ -289,7 +292,7 @@ public class EncounterManager : MonoBehaviour
                             SlotController.instance.percent = 100;
                         }
                     }
-                    else if (player.GetComponent<PlayerStat>().nowFocus == 2)
+                    else if (SlotController.instance.fixCount == 2)
                     {
                         SlotController.instance.percent += 15;
                         if (SlotController.instance.percent > 100)
@@ -297,7 +300,7 @@ public class EncounterManager : MonoBehaviour
                             SlotController.instance.percent = 100;
                         }
                     }
-                    else if (player.GetComponent<PlayerStat>().nowFocus == 3)
+                    else if (SlotController.instance.fixCount == 3)
                     {
                         SlotController.instance.percent += 18;
                         if (SlotController.instance.percent > 100)
@@ -305,7 +308,7 @@ public class EncounterManager : MonoBehaviour
                             SlotController.instance.percent = 100;
                         }
                     }
-                    else if (player.GetComponent<PlayerStat>().nowFocus == 4)
+                    else if (SlotController.instance.fixCount == 4)
                     {
                         SlotController.instance.percent += 20;
                         if (SlotController.instance.percent > 100)
@@ -314,9 +317,14 @@ public class EncounterManager : MonoBehaviour
                         }
                     }
                     fightSlot.GetComponent<CloneSlot>().Initialized();
+                    accuracy.text = SlotController.instance.percent + "%";
                 }
             }
         }
+    }
+    public void SetString()
+    {
+        accuracy.text = SlotController.instance.percent + "%";
     }
 
     private SlotController.Type StringToType(string some)
@@ -584,19 +592,12 @@ public class EncounterManager : MonoBehaviour
     {
         Text txt = Instantiate(Get, FindObjectOfType<Camera>().WorldToScreenPoint(GameManager.instance.MainPlayer.transform.position) + new Vector3(0, 100, 0), Quaternion.identity).GetComponent<Text>();
         txt.transform.SetParent(GameObject.Find("Canvas").transform);
-        txt.text = "+ 2 추가체력\n\n+ Hp 10 회복";
+        txt.text = "+ 1 추가체력\n\n+ Hp 10 회복";
         slot.SetActive(false);
         parent.GetChild(1).gameObject.SetActive(false); //EncountUI off
         parent.GetChild(2).gameObject.SetActive(false); //SlotUI off
-        if (GameManager.instance.currentLife != GameManager.instance.maxLife)
-        {
-            GameManager.instance.currentLife += 1;
-        }
-        else if (GameManager.instance.maxLife < 5)
-        {
-            GameManager.instance.maxLife += 1;
-            GameManager.instance.currentLife = GameManager.instance.maxLife;
-        }
+        GameManager.instance.maxLife += 1;
+        GameManager.instance.currentLife = GameManager.instance.maxLife;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp += 10;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowFocus = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxFocus;
         GameManager.instance.MainPlayer.GetComponent<PlayerStat>().nowHp = GameManager.instance.MainPlayer.GetComponent<PlayerStat>().maxHp;

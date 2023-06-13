@@ -101,6 +101,10 @@ public class PlayerUI : MonoBehaviour
                 {
                     extraHp = 0;
                 }
+                if (playerStat.nowHp > playerStat.maxHp)
+                {
+                    playerStat.nowHp = playerStat.maxHp;
+                }
                 playerStat.def = playerStat.originalDef + extraDef;
                 defText.text = ((int)playerStat.def).ToString();
 
@@ -129,6 +133,10 @@ public class PlayerUI : MonoBehaviour
 
     private void SetFocus()
     {
+        if (playerStat.nowFocus > playerStat.maxFocus)
+        {
+            playerStat.nowFocus = playerStat.maxFocus;
+        }
         for (int i = 0; i < playerStat.maxFocus; i++)
         {
             focus.transform.GetChild(i).gameObject.SetActive(true);

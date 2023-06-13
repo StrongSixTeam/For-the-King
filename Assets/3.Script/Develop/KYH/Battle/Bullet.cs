@@ -168,7 +168,18 @@ public class Bullet : MonoBehaviour
             {
                 if (battleLoader.Enemys[i].GetComponent<EnemyStat>().nowHp <= 0)
                 {
-                    FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    if (EncounterManager.instance.enemyNumber >= 0 && EncounterManager.instance.enemyNumber <= 11)
+                    {
+                        FindObjectOfType<MapObjectCreator>().objectIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    }
+                    else if (EncounterManager.instance.enemyNumber > 11 && EncounterManager.instance.enemyNumber <= 15) //12 ~ 15
+                    {
+                        FindObjectOfType<MapObjectCreator>().randomObjectIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    }
+                    else if (EncounterManager.instance.number >= 0)
+                    {
+                        FindObjectOfType<MapObjectCreator>().randomMonsterIndex[FindObjectOfType<PlayerController_Jin>().monsterIndex] = 0;
+                    }
                     
                     //Destroy(battleLoader.Enemys[i]);
                     battleManager.dieObj.Add(battleLoader.Enemys[i]);

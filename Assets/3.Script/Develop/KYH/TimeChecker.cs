@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeChecker : MonoBehaviour
 {
-    [SerializeField] private bool Day = true;
+    private bool Day = true;
     [SerializeField] private MapObjectCreator mapObjectCreator;
     ChaosControl chaosController;
 
